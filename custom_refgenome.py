@@ -1,9 +1,11 @@
 import korflib
-import os
 import sys
 
+#Make sure command line has 2 arguments
 assert(len(sys.argv) == 2)
-def wrap(seq, step=80):
+
+#
+def wrap(seq, step=60):
 	for i in range(0, len(seq), step):
 		print(seq[i:i+step])
 for id, seq in korflib.read_fasta(sys.argv[1]):
