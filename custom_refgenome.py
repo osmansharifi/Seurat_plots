@@ -12,15 +12,15 @@ def wrap(seq, step=60):
 #Read in fasta file and change specific sequences into Ns
 for id, seq in korflib.read_fasta(sys.argv[1]):
 	if id.startswith("X"):
-		beg = 10
-		end = 30
-		mut = 16
+		beg = 74026592
+		end = 74085597
+		mut = 74085586
 		mx = seq[:beg] + "N"*(end-beg) + seq[end:]
 		print(f">{id}")
 		wrap(mx)
-		print(">A")
+		print(">Mecp2_e1")
 		wrap(seq[beg:end])
-		print(">B")
+		print(">Mecp2_e2")
 		wrap(seq[beg:mut] + "t" + seq[mut+1:end])
 	else:
 		print(f">{id}")
