@@ -4,12 +4,14 @@ import sys
 #Make sure command line has 2 arguments
 assert(len(sys.argv) == 2)
 
-#
+#Make the length of each sequence line 60 bases long
 def wrap(seq, step=60):
 	for i in range(0, len(seq), step):
 		print(seq[i:i+step])
+		
+#Read in fasta file and change specific sequences into Ns
 for id, seq in korflib.read_fasta(sys.argv[1]):
-	if id.startswith("chromX"):
+	if id.startswith("X"):
 		beg = 10
 		end = 30
 		mut = 16
