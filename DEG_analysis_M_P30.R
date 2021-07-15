@@ -79,7 +79,7 @@ after_subset_cell_counts_df <- data.frame(after_subset_cell_counts)
 # Order values so bars appear in descending value order
 after_subset_cell_counts_df$Var1 <- reorder(after_subset_cell_counts_df$Var1,-after_subset_cell_counts_df$Freq)
 # Create grouped bar plot
-ggplot(after_subset_cell_counts_df, aes(fill=Var2, y=Freq, x=Var1)) + 
+ggplot(after_subset_cell_counts_df, aes(fill=sample_name, y=Freq, x=Var1)) + 
   geom_bar(position="stack", stat="identity") +
   ggtitle("Cell Counts Per Condition After Subsetting") +
   xlab("Cell Types") +
@@ -103,7 +103,7 @@ DimPlot(experiment.aggregate, reduction = "umap", group.by = "orig.ident") +
 experiment.aggregate@meta.data$new.ident <- plyr::mapvalues(
   x = experiment.aggregate@meta.data$orig.ident, 
   from = c("MUT_M_P30_CORT1", "MUT_M_P30_CORT2", "WT_M_P30_CORT1", "WT_M_P30_CORT2"), 
-  to = c("MUT_M_P30", "MUT_M_P30", "WT_M_P30", "WT_M_P30")
+  to = c("MUT_M_P30_CORT", "MUT_M_P30_CORT", "WT_M_P30_CORT", "WT_M_P30_CORT")
 )
 
 ## See counts for orig.ident and validate that they're combined correctly for new.idents
