@@ -14,7 +14,7 @@ for id, seq in korflib.read_fasta(sys.argv[1]):
 	if id.startswith("X"):
 		beg = 74036400
 		end = 74085786		#exon beg is 74085691 
-		mut = 74085586
+		mut = 74085586		#the T at this site was changed to A
 		mx = seq[:beg] + "N"*(end-beg) + seq[end:]
 		print(f">{id}")
 		wrap(mx)
