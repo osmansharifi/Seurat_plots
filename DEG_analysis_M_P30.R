@@ -5,13 +5,14 @@ library(MAST)
 library(glue)
 library(ComplexHeatmap)
 library(cowplot)
+library(ggplot2)
 
 ################################################################################
 # Visualization and data preparation
 # By Osman Sharifi & Viktoria Haghani
 
 ## Load in data
-load('rett_P30_with_labels_proportions.rda')
+load('/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/rett_P30_with_labels_proportions.rda')
 experiment.aggregate
 Idents(experiment.aggregate) <- 'celltype.call'
 # Values represent cell numbers for each cell type
@@ -56,7 +57,7 @@ VlnPlot(experiment.aggregate, features = "percent.mito") +
 after_subset_cell_counts <- table(Idents(experiment.aggregate), experiment.aggregate$orig.ident)
 
 ## See changes in cell number after subsetting
-# Çall table to compare cells before G2M, S, and mt exclusion
+# ?all table to compare cells before G2M, S, and mt exclusion
 before_subset_cell_counts
 # Generate a data frame from the table
 before_subset_cell_counts_df <- data.frame(before_subset_cell_counts)
@@ -70,7 +71,7 @@ ggplot(before_subset_cell_counts_df, aes(fill=Var2, y=Freq, x=Var1)) +
   ylab("Number of Cells") +
   ylim(0, 3000) +
   theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))
-# Çall table to compare cells left after  G2M, S, and mt exclusion
+# ?all table to compare cells left after  G2M, S, and mt exclusion
 after_subset_cell_counts 
 # Generate a data frame from the table
 after_subset_cell_counts_df <- data.frame(after_subset_cell_counts)
