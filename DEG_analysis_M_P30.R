@@ -2,17 +2,20 @@ library(Seurat)
 library(DESeq2)
 library(limma)
 library(MAST)
-library(glue)
 library(ComplexHeatmap)
 library(cowplot)
 library(ggplot2)
+library(BioVenn)
+library(biomaRt)
+library(glue)
+
 
 ################################################################################
 # Visualization and data preparation
 # By Osman Sharifi & Viktoria Haghani
 
 ## Load in data
-load('/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/rett_P30_with_labels_proportions.rda')
+load('rett_P30_with_labels_proportions.rda')
 experiment.aggregate
 Idents(experiment.aggregate) <- 'celltype.call'
 # Values represent cell numbers for each cell type
@@ -21,7 +24,7 @@ before_subset_cell_counts <- table(Idents(experiment.aggregate), experiment.aggr
 ## Subset cells in G1 and visualize UMAP
 # Visualize UMAP
 pcs.use <- 10
-experiment.aggregate<- RunUMAP(experiment.aggregate, dims = 1:pcs.use)
+experiment.aggregate <- RunUMAP(experiment.aggregate, dims = 1:pcs.use)
 # This will show us total cells including those in G2M and S phase
 DimPlot(experiment.aggregate, reduction = "umap", group.by = "cell.cycle") +
   ggtitle("Cell Type Grouping Including G2M and S Phase Cells")
@@ -57,13 +60,13 @@ VlnPlot(experiment.aggregate, features = "percent.mito") +
 after_subset_cell_counts <- table(Idents(experiment.aggregate), experiment.aggregate$orig.ident)
 
 ## See changes in cell number after subsetting
-# ?all table to compare cells before G2M, S, and mt exclusion
+# Çall table to compare cells before G2M, S, and mt exclusion
 before_subset_cell_counts
 # Generate a data frame from the table
 before_subset_cell_counts_df <- data.frame(before_subset_cell_counts)
 # Order values so bars appear in descending value order
 before_subset_cell_counts_df$Var1 <- reorder(before_subset_cell_counts_df$Var1,-before_subset_cell_counts_df$Freq)
-sample_name <- before_subset_cell_counts_df$Var2 
+sample_name <- before_subset_cell_counts_df$Var2
 # Create grouped bar plot
 ggplot(before_subset_cell_counts_df, aes(fill=sample_name, y=Freq, x=Var1)) + 
   geom_bar(position="stack", stat="identity") +
@@ -72,12 +75,13 @@ ggplot(before_subset_cell_counts_df, aes(fill=sample_name, y=Freq, x=Var1)) +
   ylab("Number of Cells") +
   ylim(0, 3000) +
   theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))
-# ?all table to compare cells left after  G2M, S, and mt exclusion
+# Çall table to compare cells left after  G2M, S, and mt exclusion
 after_subset_cell_counts 
 # Generate a data frame from the table
 after_subset_cell_counts_df <- data.frame(after_subset_cell_counts)
 # Order values so bars appear in descending value order
 after_subset_cell_counts_df$Var1 <- reorder(after_subset_cell_counts_df$Var1,-after_subset_cell_counts_df$Freq)
+sample_name <- after_subset_cell_counts_df$Var2
 # Create grouped bar plot
 ggplot(after_subset_cell_counts_df, aes(fill=sample_name, y=Freq, x=Var1)) + 
   geom_bar(position="stack", stat="identity") +
@@ -133,14 +137,15 @@ DEG_data <- list()
 for(test in tests) {
   for(cell_type in cell_types)
   {
+    
     file_name <- glue('{cell_type}_{test}_DEG')
     DEG_data[[length(DEG_data) + 1]] <- file_name
     file <- glue('{file_name}_only_stat_sig.csv')
-    # This writes directly to a value called "file_name" instead of the variable; need to fix it later
     file_name <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30", group.by = "new.ident", subset.ident = cell_type, test.use = test)
-    #file_name <- subset(x = file_name, subset = p_val_adj < 0.05)
+    file_name <- subset(x = file_name, subset = p_val_adj < 0.05)
     write.csv(file_name, file = file)
   }}
+print(DEG_data)
 
 # Read all data from csv files so analysis does not need to be rerun every time
 # Remove genes that are not statistically significant
@@ -148,7 +153,6 @@ for(test in tests) {
 L2_3_IT_wilcox_DEG <- read.csv(file = 'L2_3_IT_wilcox_DEG.csv')
 L2_3_IT_wilcox_DEG <- subset(x = L2_3_IT_wilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(L2_3_IT_wilcox_DEG, file = "L2_3_IT_wilcox_DEG_only_stat_sig.csv")
-L2_3_IT_wilcox_DEG_df <- data.frame(data_frame_list_wilcox_DEG[,c(0,1)])
 
 L6_wilcox_DEG <- read.csv(file = 'L6_wilcox_DEG.csv')
 L6_wilcox_DEG <- subset(x = L6_wilcox_DEG, subset = p_val_adj < 0.05)
@@ -349,21 +353,229 @@ plotDEG = function(DEG_df_wilcox,
 # Limma Analysis
 # By Osman Sharifi
 
+clusterL2_3_IT <- subset(experiment.aggregate, idents = 'L2_3_IT')
+expr_L2_3_IT <- as.matrix(GetAssayData(clusterL2_3_IT))
+# Filter out genes that are 0 for every cell in this cluster
+bad_L2_3_IT <- which(rowSums(expr_L2_3_IT) == 0)
+expr_L2_3_IT <- expr_L2_3_IT[-bad_L2_3_IT,]
+mm_L2_3_IT <- model.matrix(~0 + orig.ident, data = clusterL2_3_IT@meta.data)
+fitL2_3_IT <- lmFit(expr_L2_3_IT, mm_L2_3_IT)  
+head(coef(fitL2_3_IT)) # Means in each sample for each gene
+contr_L2_3_IT<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitL2_3_IT)))
+tmp_L2_3_IT <- contrasts.fit(fitL2_3_IT, contrasts = contr_L2_3_IT)
+tmp_L2_3_IT <- eBayes(tmp_L2_3_IT)
+L2_3_IT_toptable <- topTable(tmp_L2_3_IT, sort.by = "P", n = 20) # Top 20 DE genes
+write.csv(L2_3_IT_toptable, file = "L2_3_IT_limma_top_20.csv")
+L2_3_IT_Limma_stat_sig <- subset(x = L2_3_IT_toptable, subset = adj.P.Val < 0.05)
+write.csv(L2_3_IT_Limma_stat_sig, file = "L2_3_IT_Limma_DEG_only_stat_sig.csv")
+
+clusterL6 <- subset(experiment.aggregate, idents = 'L6')
+expr_L6 <- as.matrix(GetAssayData(clusterL6))
+# Filter out genes that are 0 for every cell in this cluster
+bad_L6 <- which(rowSums(expr_L6) == 0)
+expr_L6 <- expr_L6[-bad_L6,]
+mm_L6 <- model.matrix(~0 + orig.ident, data = clusterL6@meta.data)
+fitL6 <- lmFit(expr_L6, mm_L6)  
+head(coef(fitL6)) # Means in each sample for each gene
+contr_L6<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitL6)))
+tmp_L6 <- contrasts.fit(fitL6, contrasts = contr_L6)
+tmp_L6 <- eBayes(tmp_L6)
+L6_toptable <- topTable(tmp_L6, sort.by = "P", n = 20) # Top 20 DE genes
+write.csv(L6_toptable, file = "L6_limma_top_20.csv")
+L6_Limma_stat_sig <- subset(x = L6_toptable, subset = adj.P.Val < 0.05)
+write.csv(L6_Limma_stat_sig, file = "L6_Limma_DEG_only_stat_sig.csv")
+
+clusterSst <- subset(experiment.aggregate, idents = 'Sst')
+expr_Sst <- as.matrix(GetAssayData(clusterSst))
+# Filter out genes that are 0 for every cell in this cluster
+bad_Sst <- which(rowSums(expr_Sst) == 0)
+expr_Sst <- expr_Sst[-bad_Sst,]
+mm_Sst <- model.matrix(~0 + orig.ident, data = clusterSst@meta.data)
+fitSst <- lmFit(expr_Sst, mm_Sst)  
+head(coef(fitSst)) # Means in each sample for each gene
+contr_Sst<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitSst)))
+tmp_Sst <- contrasts.fit(fitSst, contrasts = contr_Sst)
+tmp_Sst <- eBayes(tmp_Sst)
+Sst_toptable <- topTable(tmp_Sst, sort.by = "P", n = 20) # Top 20 DE genes
+write.csv(Sst_toptable, file = "Sst_limma_top_20.csv")
+Sst_Limma_stat_sig <- subset(x = Sst_toptable, subset = adj.P.Val < 0.05)
+write.csv(Sst_Limma_stat_sig, file = "Sst_Limma_DEG_only_stat_sig.csv")
+
+clusterL5 <- subset(experiment.aggregate, idents = 'L5')
+expr_L5 <- as.matrix(GetAssayData(clusterL5))
+# Filter out genes that are 0 for every cell in this cluster
+bad_L5 <- which(rowSums(expr_L5) == 0)
+expr_L5 <- expr_L5[-bad_L5,]
+mm_L5 <- model.matrix(~0 + orig.ident, data = clusterL5@meta.data)
+fitL5 <- lmFit(expr_L5, mm_L5)  
+head(coef(fitL5)) # Means in each sample for each gene
+contr_L5<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitL5)))
+tmp_L5 <- contrasts.fit(fitL5, contrasts = contr_L5)
+tmp_L5 <- eBayes(tmp_L5)
+L5_toptable <- topTable(tmp_L5, sort.by = "P", n = 20) # Top 20 DE genes
+write.csv(L5_toptable, file = "L5_limma_top_20.csv")
+L5_Limma_stat_sig <- subset(x = L5_toptable, subset = adj.P.Val < 0.05)
+write.csv(L5_Limma_stat_sig, file = "L5_Limma_DEG_only_stat_sig.csv")
+
+clusterL4 <- subset(experiment.aggregate, idents = 'L4')
+expr_L4 <- as.matrix(GetAssayData(clusterL4))
+# Filter out genes that are 0 for every cell in this cluster
+bad_L4 <- which(rowSums(expr_L4) == 0)
+expr_L4 <- expr_L4[-bad_L4,]
+mm_L4 <- model.matrix(~0 + orig.ident, data = clusterL4@meta.data)
+fitL4 <- lmFit(expr_L4, mm_L4)  
+head(coef(fitL4)) # Means in each sample for each gene
+contr_L4<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitL4)))
+tmp_L4 <- contrasts.fit(fitL4, contrasts = contr_L4)
+tmp_L4 <- eBayes(tmp_L4)
+L4_toptable <- topTable(tmp_L4, sort.by = "P", n = 20) # Top 20 DE genes
+write.csv(L4_toptable, file = "L4_limma_top_20.csv")
+L4_Limma_stat_sig <- subset(x = L4_toptable, subset = adj.P.Val < 0.05)
+write.csv(L4_Limma_stat_sig, file = "L4_Limma_DEG_only_stat_sig.csv")
+
+clusterPvalb <- subset(experiment.aggregate, idents = 'Pvalb')
+expr_Pvalb <- as.matrix(GetAssayData(clusterPvalb))
+# Filter out genes that are 0 for every cell in this cluster
+bad_Pvalb <- which(rowSums(expr_Pvalb) == 0)
+expr_Pvalb <- expr_Pvalb[-bad_Pvalb,]
+mm_Pvalb <- model.matrix(~0 + orig.ident, data = clusterPvalb@meta.data)
+fitPvalb <- lmFit(expr_Pvalb, mm_Pvalb)  
+head(coef(fitPvalb)) # Means in each sample for each gene
+contr_Pvalb<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitPvalb)))
+tmp_Pvalb <- contrasts.fit(fitPvalb, contrasts = contr_Pvalb)
+tmp_Pvalb <- eBayes(tmp_Pvalb)
+Pvalb_toptable <- topTable(tmp_Pvalb, sort.by = "P", n = 20) # Top 20 DE genes
+write.csv(Pvalb_toptable, file = "Pvalb_limma_top_20.csv")
+Pvalb_Limma_stat_sig <- subset(x = Pvalb_toptable, subset = adj.P.Val < 0.05)
+write.csv(Pvalb_Limma_stat_sig, file = "Pvalb_Limma_DEG_only_stat_sig.csv")
+
+clusterSncg <- subset(experiment.aggregate, idents = 'Sncg')
+expr_Sncg <- as.matrix(GetAssayData(clusterSncg))
+# Filter out genes that are 0 for every cell in this cluster
+bad_Sncg <- which(rowSums(expr_Sncg) == 0)
+expr_Sncg <- expr_Sncg[-bad_Sncg,]
+mm_Sncg <- model.matrix(~0 + orig.ident, data = clusterSncg@meta.data)
+fitSncg <- lmFit(expr_Sncg, mm_Sncg)  
+head(coef(fitSncg)) # Means in each sample for each gene
+contr_Sncg<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitSncg)))
+tmp_Sncg <- contrasts.fit(fitSncg, contrasts = contr_Sncg)
+tmp_Sncg <- eBayes(tmp_Sncg)
+Sncg_toptable <- topTable(tmp_Sncg, sort.by = "P", n = 20) # Top 20 DE genes
+write.csv(Sncg_toptable, file = "Sncg_limma_top_20.csv")
+Sncg_Limma_stat_sig <- subset(x = Sncg_toptable, subset = adj.P.Val < 0.05)
+write.csv(Sncg_Limma_stat_sig, file = "Sncg_Limma_DEG_only_stat_sig.csv")
+
+clusterNon_neuronal <- subset(experiment.aggregate, idents = 'Non-neuronal')
+expr_Non_neuronal <- as.matrix(GetAssayData(clusterNon_neuronal))
+# Filter out genes that are 0 for every cell in this cluster
+bad_Non_neuronal <- which(rowSums(expr_Non_neuronal) == 0)
+expr_Non_neuronal <- expr_Non_neuronal[-bad_Non_neuronal,]
+mm_Non_neuronal <- model.matrix(~0 + orig.ident, data = clusterNon_neuronal@meta.data)
+fitNon_neuronal <- lmFit(expr_Non_neuronal, mm_Non_neuronal)  
+head(coef(fitNon_neuronal)) # Means in each sample for each gene
+contr_Non_neuronal<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitNon_neuronal)))
+tmp_Non_neuronal <- contrasts.fit(fitNon_neuronal, contrasts = contr_Non_neuronal)
+tmp_Non_neuronal <- eBayes(tmp_Non_neuronal)
+Non_neuronal_toptable <- topTable(tmp_Non_neuronal, sort.by = "P", n = 20) # Top 20 DE genes
+write.csv(Non_neuronal_toptable, file = "Non_neuronal_limma_top_20.csv")
+Non_neuronal_Limma_stat_sig <- subset(x = Non_neuronal_toptable, subset = adj.P.Val < 0.05)
+write.csv(Non_neuronal_Limma_stat_sig, file = "Non_neuronal_Limma_DEG_only_stat_sig.csv")
+
+clusterOligo <- subset(experiment.aggregate, idents = 'Oligo')
+expr_Oligo <- as.matrix(GetAssayData(clusterOligo))
+# Filter out genes that are 0 for every cell in this cluster
+bad_Oligo <- which(rowSums(expr_Oligo) == 0)
+expr_Oligo <- expr_Oligo[-bad_Oligo,]
+mm_Oligo <- model.matrix(~0 + orig.ident, data = clusterOligo@meta.data)
+fitOligo <- lmFit(expr_Oligo, mm_Oligo)  
+head(coef(fitOligo)) # Means in each sample for each gene
+contr_Oligo<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitOligo)))
+tmp_Oligo <- contrasts.fit(fitOligo, contrasts = contr_Oligo)
+tmp_Oligo <- eBayes(tmp_Oligo)
+Oligo_toptable <- topTable(tmp_Oligo, sort.by = "P", n = 20) # Top 20 DE genes
+write.csv(Oligo_toptable, file = "Oligo_limma_top_20.csv")
+Oligo_Limma_stat_sig <- subset(x = Oligo_toptable, subset = adj.P.Val < 0.05)
+write.csv(Oligo_Limma_stat_sig, file = "Oligo_Limma_DEG_only_stat_sig.csv")
+
+clusterVip <- subset(experiment.aggregate, idents = 'Vip')
+expr_Vip <- as.matrix(GetAssayData(clusterVip))
+# Filter out genes that are 0 for every cell in this cluster
+bad_Vip <- which(rowSums(expr_Vip) == 0)
+expr_Vip <- expr_Vip[-bad_Vip,]
+mm_Vip <- model.matrix(~0 + orig.ident, data = clusterVip@meta.data)
+fitVip <- lmFit(expr_Vip, mm_Vip)  
+head(coef(fitVip)) # Means in each sample for each gene
+contr_Vip<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitVip)))
+tmp_Vip <- contrasts.fit(fitVip, contrasts = contr_Vip)
+tmp_Vip <- eBayes(tmp_Vip)
+Vip_toptable <- topTable(tmp_Vip, sort.by = "P", n = 20) # Top 20 DE genes
+write.csv(Vip_toptable, file = "Vip_limma_top_20.csv")
+Vip_Limma_stat_sig <- subset(x = Vip_toptable, subset = adj.P.Val < 0.05)
+write.csv(Vip_Limma_stat_sig, file = "Vip_Limma_DEG_only_stat_sig.csv")
+
+clusterLamp5 <- subset(experiment.aggregate, idents = 'Lamp5')
+expr_Lamp5 <- as.matrix(GetAssayData(clusterLamp5))
+# Filter out genes that are 0 for every cell in this cluster
+bad_Lamp5 <- which(rowSums(expr_Lamp5) == 0)
+expr_Lamp5 <- expr_Lamp5[-bad_Lamp5,]
+mm_Lamp5 <- model.matrix(~0 + orig.ident, data = clusterLamp5@meta.data)
+fitLamp5 <- lmFit(expr_Lamp5, mm_Lamp5)  
+head(coef(fitLamp5)) # Means in each sample for each gene
+contr_Lamp5<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitLamp5)))
+tmp_Lamp5 <- contrasts.fit(fitLamp5, contrasts = contr_Lamp5)
+tmp_Lamp5 <- eBayes(tmp_Lamp5)
+Lamp5_toptable <- topTable(tmp_Lamp5, sort.by = "P", n = 20) # Top 20 DE genes
+write.csv(Lamp5_toptable, file = "Lamp5_limma_top_20.csv")
+Lamp5_Limma_stat_sig <- subset(x = Lamp5_toptable, subset = adj.P.Val < 0.05)
+write.csv(Lamp5_Limma_stat_sig, file = "Lamp5_Limma_DEG_only_stat_sig.csv")
+
 clusterAstro <- subset(experiment.aggregate, idents = 'Astro')
 expr_Astro <- as.matrix(GetAssayData(clusterAstro))
-
 # Filter out genes that are 0 for every cell in this cluster
 bad_Astro <- which(rowSums(expr_Astro) == 0)
 expr_Astro <- expr_Astro[-bad_Astro,]
-
 mm_Astro <- model.matrix(~0 + orig.ident, data = clusterAstro@meta.data)
 fitAstro <- lmFit(expr_Astro, mm_Astro)  
-head(coef(fitAstro)) # means in each sample for each gene
+head(coef(fitAstro)) # Means in each sample for each gene
 contr_Astro<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitAstro)))
 tmp_Astro <- contrasts.fit(fitAstro, contrasts = contr_Astro)
 tmp_Astro <- eBayes(tmp_Astro)
-topTable(tmp_Astro, sort.by = "P", n = 20) # top 20 DE genes
+Astro_toptable <- topTable(tmp_Astro, sort.by = "P", n = 20) # Top 20 DE genes
+write.csv(Astro_toptable, file = "Astro_limma_top_20.csv")
+Astro_Limma_stat_sig <- subset(x = Astro_toptable, subset = adj.P.Val < 0.05)
+write.csv(Astro_Limma_stat_sig, file = "Astro_Limma_DEG_only_stat_sig.csv")
 
+clusterPeri <- subset(experiment.aggregate, idents = 'Peri')
+expr_Peri <- as.matrix(GetAssayData(clusterPeri))
+# Filter out genes that are 0 for every cell in this cluster
+bad_Peri <- which(rowSums(expr_Peri) == 0)
+expr_Peri <- expr_Peri[-bad_Peri,]
+mm_Peri <- model.matrix(~0 + orig.ident, data = clusterPeri@meta.data)
+fitPeri <- lmFit(expr_Peri, mm_Peri)  
+head(coef(fitPeri)) # Means in each sample for each gene
+contr_Peri<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitPeri)))
+tmp_Peri <- contrasts.fit(fitPeri, contrasts = contr_Peri)
+tmp_Peri <- eBayes(tmp_Peri)
+Peri_toptable <- topTable(tmp_Peri, sort.by = "P", n = 20) # Top 20 DE genes
+write.csv(Peri_toptable, file = "Peri_limma_top_20.csv")
+Peri_Limma_stat_sig <- subset(x = Peri_toptable, subset = adj.P.Val < 0.05)
+write.csv(Peri_Limma_stat_sig, file = "Peri_Limma_DEG_only_stat_sig.csv")
+
+clusterEndo <- subset(experiment.aggregate, idents = 'Endo')
+expr_Endo <- as.matrix(GetAssayData(clusterEndo))
+# Filter out genes that are 0 for every cell in this cluster
+bad_Endo <- which(rowSums(expr_Endo) == 0)
+expr_Endo <- expr_Endo[-bad_Endo,]
+mm_Endo <- model.matrix(~0 + orig.ident, data = clusterEndo@meta.data)
+fitEndo <- lmFit(expr_Endo, mm_Endo)  
+head(coef(fitEndo)) # Means in each sample for each gene
+contr_Endo<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitEndo)))
+tmp_Endo <- contrasts.fit(fitEndo, contrasts = contr_Endo)
+tmp_Endo <- eBayes(tmp_Endo)
+Endo_toptable <- topTable(tmp_Endo, sort.by = "P", n = 20) # Top 20 DE genes
+write.csv(Endo_toptable, file = "Endo_limma_top_20.csv")
+Endo_Limma_stat_sig <- subset(x = Endo_toptable, subset = adj.P.Val < 0.05)
+write.csv(Endo_Limma_stat_sig, file = "Endo_Limma_DEG_only_stat_sig.csv")
 
 ################################################################################
 # DESeq2 Analysis
@@ -372,6 +584,8 @@ topTable(tmp_Astro, sort.by = "P", n = 20) # top 20 DE genes
 # Add one count to every RNA count so there are no zeroes in data set for DESeq2 log function (pseudocount)
 # This is necessary because without pseudocounting, DESeq2 will have an error
 experiment.aggregate[["RNA"]]@counts<-as.matrix(experiment.aggregate[["RNA"]]@counts)+1
+
+# Try to get rid of the zeros instead (like bad_Astro from limma)
 
 # Make a list of cell types in the data
 cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non-neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
@@ -382,3 +596,120 @@ for(cell_type in cell_types) {
   file_name <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30", group.by = "new.ident", subset.ident = cell_type, test.use = "DESeq2", slot = "counts")
   write.csv(file_name, file = file)
 }
+
+################################################################################
+# Venn Diagram for Differentially Expressed Genes Per Analysis
+# By Viktoria Haghani
+
+# List of genes differentially expressed per cluster for Limma
+L2_3_IT_Limma_gene_list <- list(rownames(L2_3_IT_Limma_stat_sig))
+L6_Limma_gene_list <- list(rownames(L6_Limma_stat_sig))
+Sst_Limma_gene_list <- list(rownames(Sst_Limma_stat_sig))
+L5_Limma_gene_list <- list(rownames(L5_Limma_stat_sig))
+L4_Limma_gene_list <- list(rownames(L4_Limma_stat_sig))
+Pvalb_Limma_gene_list <- list(rownames(Pvalb_Limma_stat_sig))
+Sncg_Limma_gene_list <- list(rownames(Sncg_Limma_stat_sig))
+Non_neuronal_Limma_gene_list <- list(rownames(Non_neuronal_Limma_stat_sig))
+Oligo_Limma_gene_list <- list(rownames(Oligo_Limma_stat_sig))
+Vip_Limma_gene_list <- list(rownames(Vip_Limma_stat_sig))
+Lamp5_Limma_gene_list <- list(rownames(Lamp5_Limma_stat_sig))
+Astro_Limma_gene_list <- list(rownames(Astro_Limma_stat_sig))
+Peri_Limma_gene_list <- list(rownames(Peri_Limma_stat_sig))
+Endo_Limma_gene_list <- list(rownames(Endo_Limma_stat_sig))
+
+
+# List of genes differentially expressed per cluster for DESeq2
+L2_3_IT_DESeq2_gene_list <- list()
+L6_DESeq2_gene_list <- list()
+Sst_DESeq2_gene_list <- list()
+L5_DESeq2_gene_list <- list()
+L4_DESeq2_gene_list <- list()
+Pvalb_DESeq2_gene_list <- list()
+Sncg_DESeq2_gene_list <- list()
+Non_neuronal_DESeq2_gene_list <- list()
+Oligo_DESeq2_gene_list <- list()
+Vip_DESeq2_gene_list <- list()
+Lamp5_DESeq2_gene_list <- list()
+Astro_DESeq2_gene_list <- list()
+Peri_DESeq2_gene_list <- list()
+Endo_DESeq2_gene_list <- list()
+
+# List of genes differentially expressed per cluster for EdgeR
+L2_3_IT_EdgeR_gene_list <- list()
+L6_EdgeR_gene_list <- list()
+Sst_EdgeR_gene_list <- list()
+L5_EdgeR_gene_list <- list()
+L4_EdgeR_gene_list <- list()
+Pvalb_EdgeR_gene_list <- list()
+Sncg_EdgeR_gene_list <- list()
+Non_neuronal_EdgeR_gene_list <- list()
+Oligo_EdgeR_gene_list <- list()
+Vip_EdgeR_gene_list <- list()
+Lamp5_EdgeR_gene_list <- list()
+Astro_EdgeR_gene_list <- list()
+Peri_EdgeR_gene_list <- list()
+Endo_EdgeR_gene_list <- list()
+
+# Venn Diagram for Limma vs. DESeq2 per cluster
+L2_3_IT_Limma_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+L6_Limma_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Sst_Limma_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+L5_Limma_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+L4_Limma_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Pvalb_Limma_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Sncg_Limma_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Non_neuronal_Limma_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Oligo_Limma_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Vip_Limma_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Lamp5_Limma_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Astro_Limma_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Peri_Limma_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Endo_Limma_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+
+# Venn Diagram for Limma vs. EdgeR per cluster
+L2_3_IT_Limma_vs_EdgeR_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+L6_Limma_vs_EdgeR_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Sst_Limma_vs_EdgeR_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+L5_Limma_vs_EdgeR_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+L4_Limma_vs_EdgeR_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Pvalb_Limma_vs_EdgeR_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Sncg_Limma_vs_EdgeR_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Non_neuronal_Limma_vs_EdgeR_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Oligo_Limma_vs_EdgeR_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Vip_Limma_vs_EdgeR_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Lamp5_Limma_vs_EdgeR_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Astro_Limma_vs_EdgeR_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Peri_Limma_vs_EdgeR_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Endo_Limma_vs_EdgeR_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+
+# Venn Diagram for EdgeR vs. DESeq2 per cluster
+L2_3_IT_EdgeR_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+L6_EdgeR_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Sst_EdgeR_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+L5_EdgeR_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+L4_EdgeR_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Pvalb_EdgeR_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Sncg_EdgeR_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Non_neuronal_EdgeR_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Oligo_EdgeR_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Vip_EdgeR_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Lamp5_EdgeR_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Astro_EdgeR_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Peri_EdgeR_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Endo_EdgeR_vs_DESeq2_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+
+# Venn Diagram for Limma vs. DESeq2 vs. EdgeR per cluster
+L2_3_IT_all_test_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+L6_all_test_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Sst_all_test_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+L5_all_test_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+L4_all_test_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Pvalb_all_test_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Sncg_all_test_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Non_neuronal_all_test_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Oligo_all_test_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Vip_all_test_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Lamp5_all_test_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Astro_all_test_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Peri_all_test_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
+Endo_all_test_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
