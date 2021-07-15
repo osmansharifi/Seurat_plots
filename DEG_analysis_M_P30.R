@@ -21,9 +21,9 @@ before_subset_cell_counts <- table(Idents(experiment.aggregate), experiment.aggr
 ## Subset cells in G1 and visualize UMAP
 # Visualize UMAP
 pcs.use <- 10
-experiment.aggregate_umap <- RunUMAP(experiment.aggregate, dims = 1:pcs.use)
+experiment.aggregate<- RunUMAP(experiment.aggregate, dims = 1:pcs.use)
 # This will show us total cells including those in G2M and S phase
-DimPlot(experiment.aggregate_umap, reduction = "umap", group.by = "cell.cycle") +
+DimPlot(experiment.aggregate, reduction = "umap", group.by = "cell.cycle") +
   ggtitle("Cell Type Grouping Including G2M and S Phase Cells")
 # We want to get rid of the G2M and S phase cells, so subset to keep only G1 cells
 experiment.aggregate <- subset(x = experiment.aggregate, subset = cell.cycle == "G1")
