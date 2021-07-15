@@ -63,8 +63,9 @@ before_subset_cell_counts
 before_subset_cell_counts_df <- data.frame(before_subset_cell_counts)
 # Order values so bars appear in descending value order
 before_subset_cell_counts_df$Var1 <- reorder(before_subset_cell_counts_df$Var1,-before_subset_cell_counts_df$Freq)
+sample_name <- before_subset_cell_counts_df$Var2 
 # Create grouped bar plot
-ggplot(before_subset_cell_counts_df, aes(fill=Var2, y=Freq, x=Var1)) + 
+ggplot(before_subset_cell_counts_df, aes(fill=sample_name, y=Freq, x=Var1)) + 
   geom_bar(position="stack", stat="identity") +
   ggtitle("Cell Counts Per Condition Before Subsetting") +
   xlab("Cell Types") +
