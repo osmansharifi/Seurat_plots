@@ -363,7 +363,7 @@ contr_Astro<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2)
 tmp_Astro <- contrasts.fit(fitAstro, contrasts = contr_Astro)
 tmp_Astro <- eBayes(tmp_Astro)
 topTable(tmp_Astro, sort.by = "P", n = 20) # top 20 DE genes
-# HErere is a random change 
+
 
 ################################################################################
 # DESeq2 Analysis
