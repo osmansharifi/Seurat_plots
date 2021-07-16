@@ -571,7 +571,7 @@ write.csv(Sncg_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/
 Sncg_Limma_stat_sig <- subset(x = Sncg_toptable, subset = adj.P.Val < 0.05)
 write.csv(Sncg_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sncg_Limma_DEG_only_stat_sig.csv")
 
-clusterNon_neuronal <- subset(experiment.aggregate, idents = "Non-Neuronal")
+clusterNon_neuronal <- subset(experiment.aggregate, idents = "Non-neuronal")
 expr_Non_neuronal <- as.matrix(GetAssayData(clusterNon_neuronal))
 # Filter out genes that are 0 for every cell in this cluster
 bad_Non_neuronal <- which(rowSums(expr_Non_neuronal) == 0)
