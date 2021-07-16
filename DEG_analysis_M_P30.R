@@ -137,13 +137,15 @@ DEG_data <- list()
 for(test in tests) {
   for(cell_type in cell_types)
   {
-    
-    file_name <- glue('{cell_type}_{test}_DEG')
-    DEG_data[[length(DEG_data) + 1]] <- file_name
-    file <- glue('{file_name}_only_stat_sig.csv')
-    file_name <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30", group.by = "new.ident", subset.ident = cell_type, test.use = test)
-    file_name <- subset(x = file_name, subset = p_val_adj < 0.05)
-    write.csv(file_name, file = file)
+    name <- glue('{cell_type}_{test}_DEG')
+    DEG_data[[length(DEG_data) + 1]] <- name
+    name <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = cell_type, test.use = test)
+    file_name <- glue('{name}_all_genes.csv')
+    write.csv(name, file = file_name)
+    name <- read.csv(file = file_name)
+    name <- subset(x = name, subset = p_val_adj < 0.05)
+    sig_file_name <- glue('{name}_only_stat_sig.csv')
+    write.csv(name, file = sig_file_name)
   }}
 print(DEG_data)
 
@@ -586,15 +588,17 @@ write.csv(Endo_Limma_stat_sig, file = "Endo_Limma_DEG_only_stat_sig.csv")
 experiment.aggregate[["RNA"]]@counts<-as.matrix(experiment.aggregate[["RNA"]]@counts)+1
 
 # Try to get rid of the zeros instead (like bad_Astro from limma)
+bad_L6 <- which(rowSums(expr_L6) == 0)
+expr_L6 <- expr_L6[-bad_L6,]
 
 # Make a list of cell types in the data
 cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non-neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 # Run DESeq2 test for every cell type cluster
 for(cell_type in cell_types) {
-  file_name <- glue('{cell_type}_DESeq2_DEG') 
+  name <- glue('{cell_type}_DESeq2_DEG') 
   file <- glue('{file_name}.csv')
-  file_name <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30", group.by = "new.ident", subset.ident = cell_type, test.use = "DESeq2", slot = "counts")
-  write.csv(file_name, file = file)
+  name <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30", group.by = "new.ident", subset.ident = cell_type, test.use = "DESeq2", slot = "counts")
+  write.csv(name, file = file)
 }
 
 ################################################################################
