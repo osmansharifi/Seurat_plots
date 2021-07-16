@@ -60,7 +60,7 @@ VlnPlot(experiment.aggregate, features = "percent.mito") +
 after_subset_cell_counts <- table(Idents(experiment.aggregate), experiment.aggregate$orig.ident)
 
 ## See changes in cell number after subsetting
-# Çall table to compare cells before G2M, S, and mt exclusion
+# ?all table to compare cells before G2M, S, and mt exclusion
 before_subset_cell_counts
 # Generate a data frame from the table
 before_subset_cell_counts_df <- data.frame(before_subset_cell_counts)
@@ -75,7 +75,7 @@ ggplot(before_subset_cell_counts_df, aes(fill=sample_name, y=Freq, x=Var1)) +
   ylab("Number of Cells") +
   ylim(0, 3000) +
   theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))
-# Çall table to compare cells left after  G2M, S, and mt exclusion
+# ?all table to compare cells left after  G2M, S, and mt exclusion
 after_subset_cell_counts 
 # Generate a data frame from the table
 after_subset_cell_counts_df <- data.frame(after_subset_cell_counts)
@@ -93,8 +93,12 @@ ggplot(after_subset_cell_counts_df, aes(fill=sample_name, y=Freq, x=Var1)) +
 
 ## Visualize clusters after G2M, S, and mt exclusion
 # Generate UMAP plot with cell types after G1 and mitochondrial subsetting
-DimPlot(experiment.aggregate, reduction = "umap", group.by = "celltype.call", label = TRUE) +
+DimPlot(experiment.aggregate, reduction = "umap", group.by = "celltype.call", label = FALSE) +
   ggtitle("Cell Types After G1 & mt Subsetting")
+  ggplot2::ggsave("Cell Types After G1 & mt Subsetting.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
 # Visualize PCA for cell types after G1 and mitochondrial subsetting
 DimPlot(experiment.aggregate, dims = c(1,2), group.by = "celltype.call", label = TRUE) +
   ggtitle("Cell Types After G1 & mt Subsetting")
