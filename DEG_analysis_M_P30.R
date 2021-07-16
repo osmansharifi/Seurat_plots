@@ -470,8 +470,8 @@ head(coef(fitL2_3_IT)) # Means in each sample for each gene
 contr_L2_3_IT<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitL2_3_IT)))
 tmp_L2_3_IT <- contrasts.fit(fitL2_3_IT, contrasts = contr_L2_3_IT)
 tmp_L2_3_IT <- eBayes(tmp_L2_3_IT)
-L2_3_IT_toptable <- topTable(tmp_L2_3_IT, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(L2_3_IT_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L2_3_IT_limma_top_20.csv")
+L2_3_IT_toptable <- topTable(tmp_L2_3_IT, sort.by = "P", n = 1000) # Top 1000 DE genes
+write.csv(L2_3_IT_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L2_3_IT_limma_top_1000.csv")
 L2_3_IT_Limma_stat_sig <- subset(x = L2_3_IT_toptable, subset = adj.P.Val < 0.05)
 write.csv(L2_3_IT_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L2_3_IT_Limma_DEG_only_stat_sig.csv")
 
@@ -486,8 +486,8 @@ head(coef(fitL6)) # Means in each sample for each gene
 contr_L6<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitL6)))
 tmp_L6 <- contrasts.fit(fitL6, contrasts = contr_L6)
 tmp_L6 <- eBayes(tmp_L6)
-L6_toptable <- topTable(tmp_L6, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(L6_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L6_limma_top_20.csv")
+L6_toptable <- topTable(tmp_L6, sort.by = "P", n = 1000) # Top 1000 DE genes
+write.csv(L6_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L6_limma_top_1000.csv")
 L6_Limma_stat_sig <- subset(x = L6_toptable, subset = adj.P.Val < 0.05)
 write.csv(L6_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L6_Limma_DEG_only_stat_sig.csv")
 
@@ -502,8 +502,8 @@ head(coef(fitSst)) # Means in each sample for each gene
 contr_Sst<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitSst)))
 tmp_Sst <- contrasts.fit(fitSst, contrasts = contr_Sst)
 tmp_Sst <- eBayes(tmp_Sst)
-Sst_toptable <- topTable(tmp_Sst, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Sst_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Sst_limma_top_20.csv")
+Sst_toptable <- topTable(tmp_Sst, sort.by = "P", n = 1000) # Top 1000 DE genes
+write.csv(Sst_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Sst_limma_top_1000.csv")
 Sst_Limma_stat_sig <- subset(x = Sst_toptable, subset = adj.P.Val < 0.05)
 write.csv(Sst_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sst_Limma_DEG_only_stat_sig.csv")
 
@@ -518,8 +518,8 @@ head(coef(fitL5)) # Means in each sample for each gene
 contr_L5<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitL5)))
 tmp_L5 <- contrasts.fit(fitL5, contrasts = contr_L5)
 tmp_L5 <- eBayes(tmp_L5)
-L5_toptable <- topTable(tmp_L5, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(L5_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L5_limma_top_20.csv")
+L5_toptable <- topTable(tmp_L5, sort.by = "P", n = 1000) # Top 1000 DE genes
+write.csv(L5_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L5_limma_top_1000.csv")
 L5_Limma_stat_sig <- subset(x = L5_toptable, subset = adj.P.Val < 0.05)
 write.csv(L5_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L5_Limma_DEG_only_stat_sig.csv")
 
@@ -534,8 +534,8 @@ head(coef(fitL4)) # Means in each sample for each gene
 contr_L4<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitL4)))
 tmp_L4 <- contrasts.fit(fitL4, contrasts = contr_L4)
 tmp_L4 <- eBayes(tmp_L4)
-L4_toptable <- topTable(tmp_L4, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(L4_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L4_limma_top_20.csv")
+L4_toptable <- topTable(tmp_L4, sort.by = "P", n = 1000) # Top 1000 DE genes
+write.csv(L4_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L4_limma_top_1000.csv")
 L4_Limma_stat_sig <- subset(x = L4_toptable, subset = adj.P.Val < 0.05)
 write.csv(L4_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L4_Limma_DEG_only_stat_sig.csv")
 
@@ -550,8 +550,8 @@ head(coef(fitPvalb)) # Means in each sample for each gene
 contr_Pvalb<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitPvalb)))
 tmp_Pvalb <- contrasts.fit(fitPvalb, contrasts = contr_Pvalb)
 tmp_Pvalb <- eBayes(tmp_Pvalb)
-Pvalb_toptable <- topTable(tmp_Pvalb, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Pvalb_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Pvalb_limma_top_20.csv")
+Pvalb_toptable <- topTable(tmp_Pvalb, sort.by = "P", n = 1000) # Top 1000 DE genes
+write.csv(Pvalb_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Pvalb_limma_top_1000.csv")
 Pvalb_Limma_stat_sig <- subset(x = Pvalb_toptable, subset = adj.P.Val < 0.05)
 write.csv(Pvalb_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Pvalb_Limma_DEG_only_stat_sig.csv")
 
@@ -566,8 +566,8 @@ head(coef(fitSncg)) # Means in each sample for each gene
 contr_Sncg<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitSncg)))
 tmp_Sncg <- contrasts.fit(fitSncg, contrasts = contr_Sncg)
 tmp_Sncg <- eBayes(tmp_Sncg)
-Sncg_toptable <- topTable(tmp_Sncg, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Sncg_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Sncg_limma_top_20.csv")
+Sncg_toptable <- topTable(tmp_Sncg, sort.by = "P", n = 1000) # Top 1000 DE genes
+write.csv(Sncg_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Sncg_limma_top_1000.csv")
 Sncg_Limma_stat_sig <- subset(x = Sncg_toptable, subset = adj.P.Val < 0.05)
 write.csv(Sncg_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sncg_Limma_DEG_only_stat_sig.csv")
 
@@ -582,8 +582,8 @@ head(coef(fitNon_neuronal)) # Means in each sample for each gene
 contr_Non_neuronal<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitNon_neuronal)))
 tmp_Non_neuronal <- contrasts.fit(fitNon_neuronal, contrasts = contr_Non_neuronal)
 tmp_Non_neuronal <- eBayes(tmp_Non_neuronal)
-Non_neuronal_toptable <- topTable(tmp_Non_neuronal, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Non_neuronal_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Non_neuronal_limma_top_20.csv")
+Non_neuronal_toptable <- topTable(tmp_Non_neuronal, sort.by = "P", n = 1000) # Top 1000 DE genes
+write.csv(Non_neuronal_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Non_neuronal_limma_top_1000.csv")
 Non_neuronal_Limma_stat_sig <- subset(x = Non_neuronal_toptable, subset = adj.P.Val < 0.05)
 write.csv(Non_neuronal_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Non_neuronal_Limma_DEG_only_stat_sig.csv")
 
@@ -598,8 +598,8 @@ head(coef(fitOligo)) # Means in each sample for each gene
 contr_Oligo<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitOligo)))
 tmp_Oligo <- contrasts.fit(fitOligo, contrasts = contr_Oligo)
 tmp_Oligo <- eBayes(tmp_Oligo)
-Oligo_toptable <- topTable(tmp_Oligo, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Oligo_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Oligo_limma_top_20.csv")
+Oligo_toptable <- topTable(tmp_Oligo, sort.by = "P", n = 1000) # Top 1000 DE genes
+write.csv(Oligo_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Oligo_limma_top_1000.csv")
 Oligo_Limma_stat_sig <- subset(x = Oligo_toptable, subset = adj.P.Val < 0.05)
 write.csv(Oligo_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Oligo_Limma_DEG_only_stat_sig.csv")
 
@@ -614,8 +614,8 @@ head(coef(fitVip)) # Means in each sample for each gene
 contr_Vip<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitVip)))
 tmp_Vip <- contrasts.fit(fitVip, contrasts = contr_Vip)
 tmp_Vip <- eBayes(tmp_Vip)
-Vip_toptable <- topTable(tmp_Vip, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Vip_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Vip_limma_top_20.csv")
+Vip_toptable <- topTable(tmp_Vip, sort.by = "P", n = 1000) # Top 1000 DE genes
+write.csv(Vip_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Vip_limma_top_1000.csv")
 Vip_Limma_stat_sig <- subset(x = Vip_toptable, subset = adj.P.Val < 0.05)
 write.csv(Vip_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Vip_Limma_DEG_only_stat_sig.csv")
 
@@ -630,8 +630,8 @@ head(coef(fitLamp5)) # Means in each sample for each gene
 contr_Lamp5<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitLamp5)))
 tmp_Lamp5 <- contrasts.fit(fitLamp5, contrasts = contr_Lamp5)
 tmp_Lamp5 <- eBayes(tmp_Lamp5)
-Lamp5_toptable <- topTable(tmp_Lamp5, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Lamp5_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Lamp5_limma_top_20.csv")
+Lamp5_toptable <- topTable(tmp_Lamp5, sort.by = "P", n = 1000) # Top 1000 DE genes
+write.csv(Lamp5_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Lamp5_limma_top_1000.csv")
 Lamp5_Limma_stat_sig <- subset(x = Lamp5_toptable, subset = adj.P.Val < 0.05)
 write.csv(Lamp5_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Lamp5_Limma_DEG_only_stat_sig.csv")
 
@@ -646,8 +646,8 @@ head(coef(fitAstro)) # Means in each sample for each gene
 contr_Astro<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitAstro)))
 tmp_Astro <- contrasts.fit(fitAstro, contrasts = contr_Astro)
 tmp_Astro <- eBayes(tmp_Astro)
-Astro_toptable <- topTable(tmp_Astro, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Astro_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Astro_limma_top_20.csv")
+Astro_toptable <- topTable(tmp_Astro, sort.by = "P", n = 1000) # Top 1000 DE genes
+write.csv(Astro_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Astro_limma_top_1000.csv")
 Astro_Limma_stat_sig <- subset(x = Astro_toptable, subset = adj.P.Val < 0.05)
 write.csv(Astro_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Astro_Limma_DEG_only_stat_sig.csv")
 
@@ -662,8 +662,8 @@ head(coef(fitPeri)) # Means in each sample for each gene
 contr_Peri<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitPeri)))
 tmp_Peri <- contrasts.fit(fitPeri, contrasts = contr_Peri)
 tmp_Peri <- eBayes(tmp_Peri)
-Peri_toptable <- topTable(tmp_Peri, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Peri_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Peri_limma_top_20.csv")
+Peri_toptable <- topTable(tmp_Peri, sort.by = "P", n = 1000) # Top 1000 DE genes
+write.csv(Peri_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Peri_limma_top_1000.csv")
 Peri_Limma_stat_sig <- subset(x = Peri_toptable, subset = adj.P.Val < 0.05)
 write.csv(Peri_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Peri_Limma_DEG_only_stat_sig.csv")
 
@@ -678,8 +678,8 @@ head(coef(fitEndo)) # Means in each sample for each gene
 contr_Endo<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitEndo)))
 tmp_Endo <- contrasts.fit(fitEndo, contrasts = contr_Endo)
 tmp_Endo <- eBayes(tmp_Endo)
-Endo_toptable <- topTable(tmp_Endo, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Endo_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Endo_limma_top_20.csv")
+Endo_toptable <- topTable(tmp_Endo, sort.by = "P", n = 1000) # Top 1000 DE genes
+write.csv(Endo_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Endo_limma_top_1000.csv")
 Endo_Limma_stat_sig <- subset(x = Endo_toptable, subset = adj.P.Val < 0.05)
 write.csv(Endo_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Endo_Limma_DEG_only_stat_sig.csv")
 
@@ -815,20 +815,20 @@ Peri_EdgeR_gene_list <- list(rownames(Peri_EdgeR_DEG_stat_sig))
 Endo_EdgeR_gene_list <- list(rownames(Endo_EdgeR_DEG_stat_sig))
 
 # Venn Diagram for Limma vs. DESeq2 per cluster
-L2_3_IT_Limma_vs_DESeq2_venn <- draw.venn(L2_3_IT_Limma_gene_list, L2_3_IT_DESeq2_gene_list, xtitle = "Genes Identified by Limma", ytitle = "Genes Identified by DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for L2_3_IT", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/L2_3_IT_Limma_vs_DESeq2_venn")
-L6_Limma_vs_DESeq2_venn <- draw.venn(L6_Limma_gene_list, L6_DESeq2_gene_list, xtitle = "Genes Identified by Limma", ytitle = "Genes Identified by DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for L6", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/L6_Limma_vs_DESeq2_venn")
-Sst_Limma_vs_DESeq2_venn <- draw.venn(Sst_Limma_gene_list, Sst_DESeq2_gene_list, xtitle = "Genes Identified by Limma", ytitle = "Genes Identified by DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Sst", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Sst_Limma_vs_DESeq2_venn")
-L5_Limma_vs_DESeq2_venn <- draw.venn(L5_Limma_gene_list, L5_DESeq2_gene_list, xtitle = "Genes Identified by Limma", ytitle = "Genes Identified by DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for L5", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/L5_Limma_vs_DESeq2_venn")
-L4_Limma_vs_DESeq2_venn <- draw.venn(L4_Limma_gene_list, L4_DESeq2_gene_list, xtitle = "Genes Identified by Limma", ytitle = "Genes Identified by DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for L4", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/L4_Limma_vs_DESeq2_venn")
-Pvalb_Limma_vs_DESeq2_venn <- draw.venn(Pvalb_Limma_gene_list, Pvalb_DESeq2_gene_list, xtitle = "Genes Identified by Limma", ytitle = "Genes Identified by DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Pvalb", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Pvalb_Limma_vs_DESeq2_venn")
-Sncg_Limma_vs_DESeq2_venn <- draw.venn(Sncg_Limma_gene_list, Sncg_DESeq2_gene_list, xtitle = "Genes Identified by Limma", ytitle = "Genes Identified by DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Sncg", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Sncg_Limma_vs_DESeq2_venn")
-Non_neuronal_Limma_vs_DESeq2_venn <- draw.venn(Non_neuronal_Limma_gene_list, Non_neuronal_DESeq2_gene_list, xtitle = "Genes Identified by Limma", ytitle = "Genes Identified by DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Non_neuronal", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Non_neuronal_Limma_vs_DESeq2_venn")
-Oligo_Limma_vs_DESeq2_venn <- draw.venn(Oligo_Limma_gene_list, Oligo_DESeq2_gene_list, xtitle = "Genes Identified by Limma", ytitle = "Genes Identified by DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Oligo", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Oligo_Limma_vs_DESeq2_venn")
-Vip_Limma_vs_DESeq2_venn <- draw.venn(Vip_Limma_gene_list, Vip_DESeq2_gene_list, xtitle = "Genes Identified by Limma", ytitle = "Genes Identified by DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Vip", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Vip_Limma_vs_DESeq2_venn")
-Lamp5_Limma_vs_DESeq2_venn <- draw.venn(Lamp5_Limma_gene_list, Lamp5_DESeq2_gene_list, xtitle = "Genes Identified by Limma", ytitle = "Genes Identified by DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Lamp5", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Lamp5_Limma_vs_DESeq2_venn")
-Astro_Limma_vs_DESeq2_venn <- draw.venn(Astro_Limma_gene_list, Astro_DESeq2_gene_list, xtitle = "Genes Identified by Limma", ytitle = "Genes Identified by DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Astro", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Astro_Limma_vs_DESeq2_venn")
-Peri_Limma_vs_DESeq2_venn <- draw.venn(Peri_Limma_gene_list, Peri_DESeq2_gene_list, xtitle = "Genes Identified by Limma", ytitle = "Genes Identified by DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Peri", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Peri_Limma_vs_DESeq2_venn")
-Endo_Limma_vs_DESeq2_venn <- draw.venn(Endo_Limma_gene_list, Endo_DESeq2_gene_list, xtitle = "Genes Identified by Limma", ytitle = "Genes Identified by DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Endo", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Endo_Limma_vs_DESeq2_venn")
+L2_3_IT_Limma_vs_DESeq2_venn <- draw.venn(L2_3_IT_Limma_gene_list[[1]], L2_3_IT_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for L2_3_IT", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/L2_3_IT_Limma_vs_DESeq2_venn.pdf")
+L6_Limma_vs_DESeq2_venn <- draw.venn(L6_Limma_gene_list[[1]], L6_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for L6", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/L6_Limma_vs_DESeq2_venn.pdf")
+Sst_Limma_vs_DESeq2_venn <- draw.venn(Sst_Limma_gene_list[[1]], Sst_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Sst", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Sst_Limma_vs_DESeq2_venn.pdf")
+L5_Limma_vs_DESeq2_venn <- draw.venn(L5_Limma_gene_list[[1]], L5_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for L5", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/L5_Limma_vs_DESeq2_venn.pdf")
+L4_Limma_vs_DESeq2_venn <- draw.venn(L4_Limma_gene_list[[1]], L4_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for L4", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/L4_Limma_vs_DESeq2_venn.pdf")
+Pvalb_Limma_vs_DESeq2_venn <- draw.venn(Pvalb_Limma_gene_list[[1]], Pvalb_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Pvalb", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Pvalb_Limma_vs_DESeq2_venn.pdf")
+Sncg_Limma_vs_DESeq2_venn <- draw.venn(Sncg_Limma_gene_list[[1]], Sncg_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Sncg", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Sncg_Limma_vs_DESeq2_venn.pdf")
+Non_neuronal_Limma_vs_DESeq2_venn <- draw.venn(Non_neuronal_Limma_gene_list[[1]], Non_neuronal_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Non_neuronal", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Non_neuronal_Limma_vs_DESeq2_venn.pdf")
+Oligo_Limma_vs_DESeq2_venn <- draw.venn(Oligo_Limma_gene_list[[1]], Oligo_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Oligo", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Oligo_Limma_vs_DESeq2_venn.pdf")
+Vip_Limma_vs_DESeq2_venn <- draw.venn(Vip_Limma_gene_list[[1]], Vip_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Vip", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Vip_Limma_vs_DESeq2_venn.pdf")
+Lamp5_Limma_vs_DESeq2_venn <- draw.venn(Lamp5_Limma_gene_list[[1]], Lamp5_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Lamp5", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Lamp5_Limma_vs_DESeq2_venn.pdf")
+Astro_Limma_vs_DESeq2_venn <- draw.venn(Astro_Limma_gene_list[[1]], Astro_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Astro", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Astro_Limma_vs_DESeq2_venn.pdf")
+Peri_Limma_vs_DESeq2_venn <- draw.venn(Peri_Limma_gene_list[[1]], Peri_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Peri", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Peri_Limma_vs_DESeq2_venn.pdf")
+Endo_Limma_vs_DESeq2_venn <- draw.venn(Endo_Limma_gene_list[[1]], Endo_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Endo", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Endo_Limma_vs_DESeq2_venn.pdf")
 
 # Venn Diagram for Limma vs. EdgeR per cluster
 L2_3_IT_Limma_vs_EdgeR_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
