@@ -5,8 +5,7 @@ library(MAST)
 library(ComplexHeatmap)
 library(cowplot)
 library(ggplot2)
-library(BioVenn)
-library(biomaRt)
+library(ggVennDiagram)
 
 
 ################################################################################
@@ -815,6 +814,10 @@ Peri_EdgeR_gene_list <- list(rownames(Peri_EdgeR_DEG_stat_sig))
 Endo_EdgeR_gene_list <- list(rownames(Endo_EdgeR_DEG_stat_sig))
 
 # Venn Diagram for Limma vs. DESeq2 per cluster
+L2_3_IT_Limma_vs_DESeq2_venn <- list(L2_3_IT_Limma_gene_list[[1]], L2_3_IT_DESeq2_gene_list[[1]])
+ggVennDiagram(L2_3_IT_Limma_vs_DESeq2_venn, label_alpha = 0, category.names = c("Limma", "DESeq2")) +
+  ggtitle("Differentially Expressed Genes Identified by Limma and DESeq2 for L2_3_IT")
+
 L2_3_IT_Limma_vs_DESeq2_venn <- draw.venn(L2_3_IT_Limma_gene_list[[1]], L2_3_IT_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for L2_3_IT", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/L2_3_IT_Limma_vs_DESeq2_venn.pdf")
 L6_Limma_vs_DESeq2_venn <- draw.venn(L6_Limma_gene_list[[1]], L6_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for L6", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/L6_Limma_vs_DESeq2_venn.pdf")
 Sst_Limma_vs_DESeq2_venn <- draw.venn(Sst_Limma_gene_list[[1]], Sst_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Sst", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Sst_Limma_vs_DESeq2_venn.pdf")
