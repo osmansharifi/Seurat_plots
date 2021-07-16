@@ -692,64 +692,64 @@ write.csv(Endo_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat
 experiment.aggregate[["RNA"]]@counts<-as.matrix(experiment.aggregate[["RNA"]]@counts)+1
 
 L2_3_IT_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L2_3_IT", test.use = "DESeq2", slot = "counts")
-write.csv("L2_3_IT_DESeq2_DEG", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L2_3_IT_DESeq2_DEG_all_genes.csv")
+write.csv(L2_3_IT_DESeq2_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L2_3_IT_DESeq2_DEG_all_genes.csv")
 L2_3_IT_DESeq2_DEG_stat_sig <- subset(x = L2_3_IT_DESeq2_DEG, subset = p_val_adj < 0.05)
-write.csv("L2_3_IT_DESeq2_DEG_stat_sig", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L2_3_IT_DESeq2_DEG_stat_sig.csv")
+write.csv(L2_3_IT_DESeq2_DEG_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L2_3_IT_DESeq2_DEG_stat_sig.csv")
 
 L6_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L6", test.use = "DESeq2", slot = "counts")
-write.csv("L6_DESeq2_DEG", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L6_DESeq2_DEG_all_genes.csv")
+write.csv(L6_DESeq2_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L6_DESeq2_DEG_all_genes.csv")
 L6_DESeq2_DEG_stat_sig <- subset(x = L6_DESeq2_DEG, subset = p_val_adj < 0.05)
-write.csv("L6_DESeq2_DEG_stat_sig", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L6_DESeq2_DEG_stat_sig.csv")
+write.csv(L6_DESeq2_DEG_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L6_DESeq2_DEG_stat_sig.csv")
 
 Sst_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Sst", test.use = "DESeq2", slot = "counts")
-write.csv("Sst_DESeq2_DEG", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Sst_DESeq2_DEG_all_genes.csv")
+write.csv(Sst_DESeq2_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Sst_DESeq2_DEG_all_genes.csv")
 Sst_DESeq2_DEG_stat_sig <- subset(x = Sst_DESeq2_DEG, subset = p_val_adj < 0.05)
-write.csv("Sst_DESeq2_DEG_stat_sig", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sst_DESeq2_DEG_stat_sig.csv")
+write.csv(Sst_DESeq2_DEG_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sst_DESeq2_DEG_stat_sig.csv")
 
 L5_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L5", test.use = "DESeq2", slot = "counts")
-write.csv("L5_DESeq2_DEG", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L5_DESeq2_DEG_all_genes.csv")
+write.csv(L5_DESeq2_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L5_DESeq2_DEG_all_genes.csv")
 L5_DESeq2_DEG_stat_sig <- subset(x = L5_DESeq2_DEG, subset = p_val_adj < 0.05)
-write.csv("L5_DESeq2_DEG_stat_sig", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L5_DESeq2_DEG_stat_sig.csv")
+write.csv(L5_DESeq2_DEG_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L5_DESeq2_DEG_stat_sig.csv")
 
 L4_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L4", test.use = "DESeq2", slot = "counts")
-write.csv("L4_DESeq2_DEG", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L4_DESeq2_DEG_all_genes.csv")
+write.csv(L4_DESeq2_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L4_DESeq2_DEG_all_genes.csv")
 L4_DESeq2_DEG_stat_sig <- subset(x = L4_DESeq2_DEG, subset = p_val_adj < 0.05)
-write.csv("L4_DESeq2_DEG_stat_sig", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L4_DESeq2_DEG_stat_sig.csv")
+write.csv(L4_DESeq2_DEG_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L4_DESeq2_DEG_stat_sig.csv")
 
 Pvalb_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Pvalb", test.use = "DESeq2", slot = "counts")
-write.csv("Pvalb_DESeq2_DEG", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Pvalb_DESeq2_DEG_all_genes.csv")
+write.csv(Pvalb_DESeq2_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Pvalb_DESeq2_DEG_all_genes.csv")
 Pvalb_DESeq2_DEG_stat_sig <- subset(x = Pvalb_DESeq2_DEG, subset = p_val_adj < 0.05)
-write.csv("Pvalb_DESeq2_DEG_stat_sig", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Pvalb_DESeq2_DEG_stat_sig.csv")
+write.csv(Pvalb_DESeq2_DEG_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Pvalb_DESeq2_DEG_stat_sig.csv")
 
 Sncg_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Sncg", test.use = "DESeq2", slot = "counts")
-write.csv("Sncg_DESeq2_DEG", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Sncg_DESeq2_DEG_all_genes.csv")
+write.csv(Sncg_DESeq2_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Sncg_DESeq2_DEG_all_genes.csv")
 Sncg_DESeq2_DEG_stat_sig <- subset(x = Sncg_DESeq2_DEG, subset = p_val_adj < 0.05)
-write.csv("Sncg_DESeq2_DEG_stat_sig", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sncg_DESeq2_DEG_stat_sig.csv")
+write.csv(Sncg_DESeq2_DEG_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sncg_DESeq2_DEG_stat_sig.csv")
 
-Non_neuronal_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Non_neuronal", test.use = "DESeq2", slot = "counts")
-write.csv("Non_neuronal_DESeq2_DEG", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Non_neuronal_DESeq2_DEG_all_genes.csv")
+Non_neuronal_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Non-neuronal", test.use = "DESeq2", slot = "counts")
+write.csv(Non_neuronal_DESeq2_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Non_neuronal_DESeq2_DEG_all_genes.csv")
 Non_neuronal_DESeq2_DEG_stat_sig <- subset(x = Non_neuronal_DESeq2_DEG, subset = p_val_adj < 0.05)
-write.csv("Non_neuronal_DESeq2_DEG_stat_sig", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Non_neuronal_DESeq2_DEG_stat_sig.csv")
+write.csv(Non_neuronal_DESeq2_DEG_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Non_neuronal_DESeq2_DEG_stat_sig.csv")
 
 Oligo_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Oligo", test.use = "DESeq2", slot = "counts")
-write.csv("Oligo_DESeq2_DEG", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Oligo_DESeq2_DEG_all_genes.csv")
+write.csv(Oligo_DESeq2_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Oligo_DESeq2_DEG_all_genes.csv")
 Oligo_DESeq2_DEG_stat_sig <- subset(x = Oligo_DESeq2_DEG, subset = p_val_adj < 0.05)
-write.csv("Oligo_DESeq2_DEG_stat_sig", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Oligo_DESeq2_DEG_stat_sig.csv")
+write.csv(Oligo_DESeq2_DEG_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Oligo_DESeq2_DEG_stat_sig.csv")
 
 Vip_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Vip", test.use = "DESeq2", slot = "counts")
-write.csv("Vip_DESeq2_DEG", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Vip_DESeq2_DEG_all_genes.csv")
+write.csv(Vip_DESeq2_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Vip_DESeq2_DEG_all_genes.csv")
 Vip_DESeq2_DEG_stat_sig <- subset(x = Vip_DESeq2_DEG, subset = p_val_adj < 0.05)
-write.csv("Vip_DESeq2_DEG_stat_sig", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Vip_DESeq2_DEG_stat_sig.csv")
+write.csv(Vip_DESeq2_DEG_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Vip_DESeq2_DEG_stat_sig.csv")
 
 Lamp5_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Lamp5", test.use = "DESeq2", slot = "counts")
-write.csv("Lamp5_DESeq2_DEG", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Lamp5_DESeq2_DEG_all_genes.csv")
+write.csv(Lamp5_DESeq2_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Lamp5_DESeq2_DEG_all_genes.csv")
 Lamp5_DESeq2_DEG_stat_sig <- subset(x = Lamp5_DESeq2_DEG, subset = p_val_adj < 0.05)
-write.csv("Lamp5_DESeq2_DEG_stat_sig", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Lamp5_DESeq2_DEG_stat_sig.csv")
+write.csv(Lamp5_DESeq2_DEG_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Lamp5_DESeq2_DEG_stat_sig.csv")
 
 Astro_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Astro", test.use = "DESeq2", slot = "counts")
-write.csv("Astro_DESeq2_DEG", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Astro_DESeq2_DEG_all_genes.csv")
+write.csv(Astro_DESeq2_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Astro_DESeq2_DEG_all_genes.csv")
 Astro_DESeq2_DEG_stat_sig <- subset(x = Astro_DESeq2_DEG, subset = p_val_adj < 0.05)
-write.csv("Astro_DESeq2_DEG_stat_sig", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Astro_DESeq2_DEG_stat_sig.csv")
+write.csv(Astro_DESeq2_DEG_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Astro_DESeq2_DEG_stat_sig.csv")
 
 Peri_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Peri", test.use = "DESeq2", slot = "counts")
 write.csv("Peri_DESeq2_DEG", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Peri_DESeq2_DEG_all_genes.csv")
@@ -757,9 +757,9 @@ Peri_DESeq2_DEG_stat_sig <- subset(x = Peri_DESeq2_DEG, subset = p_val_adj < 0.0
 write.csv("Peri_DESeq2_DEG_stat_sig", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Peri_DESeq2_DEG_stat_sig.csv")
 
 Endo_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Endo", test.use = "DESeq2", slot = "counts")
-write.csv("Endo_DESeq2_DEG", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Endo_DESeq2_DEG_all_genes.csv")
+write.csv(Endo_DESeq2_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Endo_DESeq2_DEG_all_genes.csv")
 Endo_DESeq2_DEG_stat_sig <- subset(x = Endo_DESeq2_DEG, subset = p_val_adj < 0.05)
-write.csv("Endo_DESeq2_DEG_stat_sig", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Endo_DESeq2_DEG_stat_sig.csv")
+write.csv(Endo_DESeq2_DEG_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Endo_DESeq2_DEG_stat_sig.csv")
 
 ################################################################################
 # Venn Diagram for Differentially Expressed Genes Per Analysis
