@@ -6,7 +6,7 @@ library(ComplexHeatmap)
 library(cowplot)
 library(ggplot2)
 library(ggVennDiagram)
-
+library(edgeR)
 
 ################################################################################
 # Visualization and data preparation
