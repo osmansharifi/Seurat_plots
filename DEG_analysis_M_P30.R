@@ -7,7 +7,6 @@ library(cowplot)
 library(ggplot2)
 library(BioVenn)
 library(biomaRt)
-library(glue)
 
 
 ################################################################################
@@ -692,19 +691,10 @@ write.csv(Endo_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat
 # This is necessary because without pseudocounting, DESeq2 will have an error
 experiment.aggregate[["RNA"]]@counts<-as.matrix(experiment.aggregate[["RNA"]]@counts)+1
 
-# Try to get rid of the zeros instead (like bad_Astro from limma)
-bad_L6 <- which(rowSums(expr_L6) == 0)
-expr_L6 <- expr_L6[-bad_L6,]
-
-# Make a list of cell types in the data
-cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non-neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
-# Run DESeq2 test for every cell type cluster
-for(cell_type in cell_types) {
-  name <- glue('{cell_type}_DESeq2_DEG') 
-  file <- glue('{file_name}.csv')
-  name <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30", group.by = "new.ident", subset.ident = cell_type, test.use = "DESeq2", slot = "counts")
-  write.csv(name, file = file)
-}
+L6_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L6", test.use = "DESeq2", slot = "counts")
+write.csv("L6_DESeq2_DEG", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L6_DESeq2_DEG_all_genes.csv")
+L6_DESeq2_DEG_stat_sig <- subset(x = L6_DESeq2_DEG, subset = p_val_adj < 0.05)
+write.csv("L6_DESeq2_DEG_stat_sig", file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L6_DESeq2_DEG_stat_sig.csv")
 
 ################################################################################
 # Venn Diagram for Differentially Expressed Genes Per Analysis
