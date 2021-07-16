@@ -460,229 +460,229 @@ plotDEG = function(DEG_df_wilcox,
 # Limma Analysis
 # By Osman Sharifi
 
-clusterL2_3_IT <- subset(experiment.aggregate, idents = 'L2_3_IT')
+clusterL2_3_IT <- subset(experiment.aggregate, idents = "L2_3_IT")
 expr_L2_3_IT <- as.matrix(GetAssayData(clusterL2_3_IT))
 # Filter out genes that are 0 for every cell in this cluster
 bad_L2_3_IT <- which(rowSums(expr_L2_3_IT) == 0)
 expr_L2_3_IT <- expr_L2_3_IT[-bad_L2_3_IT,]
 mm_L2_3_IT <- model.matrix(~0 + orig.ident, data = clusterL2_3_IT@meta.data)
-fitL2_3_IT <- lmFit(expr_L2_3_IT, mm_L2_3_IT)  
+fitL2_3_IT <- lmFit(expr_L2_3_IT, mm_L2_3_IT)
 head(coef(fitL2_3_IT)) # Means in each sample for each gene
 contr_L2_3_IT<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitL2_3_IT)))
 tmp_L2_3_IT <- contrasts.fit(fitL2_3_IT, contrasts = contr_L2_3_IT)
 tmp_L2_3_IT <- eBayes(tmp_L2_3_IT)
 L2_3_IT_toptable <- topTable(tmp_L2_3_IT, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(L2_3_IT_toptable, file = "L2_3_IT_limma_top_20.csv")
+write.csv(L2_3_IT_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L2_3_IT_limma_top_20.csv")
 L2_3_IT_Limma_stat_sig <- subset(x = L2_3_IT_toptable, subset = adj.P.Val < 0.05)
-write.csv(L2_3_IT_Limma_stat_sig, file = "L2_3_IT_Limma_DEG_only_stat_sig.csv")
+write.csv(L2_3_IT_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L2_3_IT_Limma_DEG_only_stat_sig.csv")
 
-clusterL6 <- subset(experiment.aggregate, idents = 'L6')
+clusterL6 <- subset(experiment.aggregate, idents = "L6")
 expr_L6 <- as.matrix(GetAssayData(clusterL6))
 # Filter out genes that are 0 for every cell in this cluster
 bad_L6 <- which(rowSums(expr_L6) == 0)
 expr_L6 <- expr_L6[-bad_L6,]
 mm_L6 <- model.matrix(~0 + orig.ident, data = clusterL6@meta.data)
-fitL6 <- lmFit(expr_L6, mm_L6)  
+fitL6 <- lmFit(expr_L6, mm_L6)
 head(coef(fitL6)) # Means in each sample for each gene
 contr_L6<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitL6)))
 tmp_L6 <- contrasts.fit(fitL6, contrasts = contr_L6)
 tmp_L6 <- eBayes(tmp_L6)
 L6_toptable <- topTable(tmp_L6, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(L6_toptable, file = "L6_limma_top_20.csv")
+write.csv(L6_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L6_limma_top_20.csv")
 L6_Limma_stat_sig <- subset(x = L6_toptable, subset = adj.P.Val < 0.05)
-write.csv(L6_Limma_stat_sig, file = "L6_Limma_DEG_only_stat_sig.csv")
+write.csv(L6_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L6_Limma_DEG_only_stat_sig.csv")
 
-clusterSst <- subset(experiment.aggregate, idents = 'Sst')
+clusterSst <- subset(experiment.aggregate, idents = "Sst")
 expr_Sst <- as.matrix(GetAssayData(clusterSst))
 # Filter out genes that are 0 for every cell in this cluster
 bad_Sst <- which(rowSums(expr_Sst) == 0)
 expr_Sst <- expr_Sst[-bad_Sst,]
 mm_Sst <- model.matrix(~0 + orig.ident, data = clusterSst@meta.data)
-fitSst <- lmFit(expr_Sst, mm_Sst)  
+fitSst <- lmFit(expr_Sst, mm_Sst)
 head(coef(fitSst)) # Means in each sample for each gene
 contr_Sst<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitSst)))
 tmp_Sst <- contrasts.fit(fitSst, contrasts = contr_Sst)
 tmp_Sst <- eBayes(tmp_Sst)
 Sst_toptable <- topTable(tmp_Sst, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Sst_toptable, file = "Sst_limma_top_20.csv")
+write.csv(Sst_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Sst_limma_top_20.csv")
 Sst_Limma_stat_sig <- subset(x = Sst_toptable, subset = adj.P.Val < 0.05)
-write.csv(Sst_Limma_stat_sig, file = "Sst_Limma_DEG_only_stat_sig.csv")
+write.csv(Sst_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sst_Limma_DEG_only_stat_sig.csv")
 
-clusterL5 <- subset(experiment.aggregate, idents = 'L5')
+clusterL5 <- subset(experiment.aggregate, idents = "L5")
 expr_L5 <- as.matrix(GetAssayData(clusterL5))
 # Filter out genes that are 0 for every cell in this cluster
 bad_L5 <- which(rowSums(expr_L5) == 0)
 expr_L5 <- expr_L5[-bad_L5,]
 mm_L5 <- model.matrix(~0 + orig.ident, data = clusterL5@meta.data)
-fitL5 <- lmFit(expr_L5, mm_L5)  
+fitL5 <- lmFit(expr_L5, mm_L5)
 head(coef(fitL5)) # Means in each sample for each gene
 contr_L5<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitL5)))
 tmp_L5 <- contrasts.fit(fitL5, contrasts = contr_L5)
 tmp_L5 <- eBayes(tmp_L5)
 L5_toptable <- topTable(tmp_L5, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(L5_toptable, file = "L5_limma_top_20.csv")
+write.csv(L5_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L5_limma_top_20.csv")
 L5_Limma_stat_sig <- subset(x = L5_toptable, subset = adj.P.Val < 0.05)
-write.csv(L5_Limma_stat_sig, file = "L5_Limma_DEG_only_stat_sig.csv")
+write.csv(L5_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L5_Limma_DEG_only_stat_sig.csv")
 
-clusterL4 <- subset(experiment.aggregate, idents = 'L4')
+clusterL4 <- subset(experiment.aggregate, idents = "L4")
 expr_L4 <- as.matrix(GetAssayData(clusterL4))
 # Filter out genes that are 0 for every cell in this cluster
 bad_L4 <- which(rowSums(expr_L4) == 0)
 expr_L4 <- expr_L4[-bad_L4,]
 mm_L4 <- model.matrix(~0 + orig.ident, data = clusterL4@meta.data)
-fitL4 <- lmFit(expr_L4, mm_L4)  
+fitL4 <- lmFit(expr_L4, mm_L4)
 head(coef(fitL4)) # Means in each sample for each gene
 contr_L4<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitL4)))
 tmp_L4 <- contrasts.fit(fitL4, contrasts = contr_L4)
 tmp_L4 <- eBayes(tmp_L4)
 L4_toptable <- topTable(tmp_L4, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(L4_toptable, file = "L4_limma_top_20.csv")
+write.csv(L4_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L4_limma_top_20.csv")
 L4_Limma_stat_sig <- subset(x = L4_toptable, subset = adj.P.Val < 0.05)
-write.csv(L4_Limma_stat_sig, file = "L4_Limma_DEG_only_stat_sig.csv")
+write.csv(L4_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L4_Limma_DEG_only_stat_sig.csv")
 
-clusterPvalb <- subset(experiment.aggregate, idents = 'Pvalb')
+clusterPvalb <- subset(experiment.aggregate, idents = "Pvalb")
 expr_Pvalb <- as.matrix(GetAssayData(clusterPvalb))
 # Filter out genes that are 0 for every cell in this cluster
 bad_Pvalb <- which(rowSums(expr_Pvalb) == 0)
 expr_Pvalb <- expr_Pvalb[-bad_Pvalb,]
 mm_Pvalb <- model.matrix(~0 + orig.ident, data = clusterPvalb@meta.data)
-fitPvalb <- lmFit(expr_Pvalb, mm_Pvalb)  
+fitPvalb <- lmFit(expr_Pvalb, mm_Pvalb)
 head(coef(fitPvalb)) # Means in each sample for each gene
 contr_Pvalb<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitPvalb)))
 tmp_Pvalb <- contrasts.fit(fitPvalb, contrasts = contr_Pvalb)
 tmp_Pvalb <- eBayes(tmp_Pvalb)
 Pvalb_toptable <- topTable(tmp_Pvalb, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Pvalb_toptable, file = "Pvalb_limma_top_20.csv")
+write.csv(Pvalb_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Pvalb_limma_top_20.csv")
 Pvalb_Limma_stat_sig <- subset(x = Pvalb_toptable, subset = adj.P.Val < 0.05)
-write.csv(Pvalb_Limma_stat_sig, file = "Pvalb_Limma_DEG_only_stat_sig.csv")
+write.csv(Pvalb_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Pvalb_Limma_DEG_only_stat_sig.csv")
 
-clusterSncg <- subset(experiment.aggregate, idents = 'Sncg')
+clusterSncg <- subset(experiment.aggregate, idents = "Sncg")
 expr_Sncg <- as.matrix(GetAssayData(clusterSncg))
 # Filter out genes that are 0 for every cell in this cluster
 bad_Sncg <- which(rowSums(expr_Sncg) == 0)
 expr_Sncg <- expr_Sncg[-bad_Sncg,]
 mm_Sncg <- model.matrix(~0 + orig.ident, data = clusterSncg@meta.data)
-fitSncg <- lmFit(expr_Sncg, mm_Sncg)  
+fitSncg <- lmFit(expr_Sncg, mm_Sncg)
 head(coef(fitSncg)) # Means in each sample for each gene
 contr_Sncg<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitSncg)))
 tmp_Sncg <- contrasts.fit(fitSncg, contrasts = contr_Sncg)
 tmp_Sncg <- eBayes(tmp_Sncg)
 Sncg_toptable <- topTable(tmp_Sncg, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Sncg_toptable, file = "Sncg_limma_top_20.csv")
+write.csv(Sncg_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Sncg_limma_top_20.csv")
 Sncg_Limma_stat_sig <- subset(x = Sncg_toptable, subset = adj.P.Val < 0.05)
-write.csv(Sncg_Limma_stat_sig, file = "Sncg_Limma_DEG_only_stat_sig.csv")
+write.csv(Sncg_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sncg_Limma_DEG_only_stat_sig.csv")
 
-clusterNon_neuronal <- subset(experiment.aggregate, idents = 'Non-neuronal')
+clusterNon_neuronal <- subset(experiment.aggregate, idents = "Non-Neuronal")
 expr_Non_neuronal <- as.matrix(GetAssayData(clusterNon_neuronal))
 # Filter out genes that are 0 for every cell in this cluster
 bad_Non_neuronal <- which(rowSums(expr_Non_neuronal) == 0)
 expr_Non_neuronal <- expr_Non_neuronal[-bad_Non_neuronal,]
 mm_Non_neuronal <- model.matrix(~0 + orig.ident, data = clusterNon_neuronal@meta.data)
-fitNon_neuronal <- lmFit(expr_Non_neuronal, mm_Non_neuronal)  
+fitNon_neuronal <- lmFit(expr_Non_neuronal, mm_Non_neuronal)
 head(coef(fitNon_neuronal)) # Means in each sample for each gene
 contr_Non_neuronal<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitNon_neuronal)))
 tmp_Non_neuronal <- contrasts.fit(fitNon_neuronal, contrasts = contr_Non_neuronal)
 tmp_Non_neuronal <- eBayes(tmp_Non_neuronal)
 Non_neuronal_toptable <- topTable(tmp_Non_neuronal, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Non_neuronal_toptable, file = "Non_neuronal_limma_top_20.csv")
+write.csv(Non_neuronal_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Non_neuronal_limma_top_20.csv")
 Non_neuronal_Limma_stat_sig <- subset(x = Non_neuronal_toptable, subset = adj.P.Val < 0.05)
-write.csv(Non_neuronal_Limma_stat_sig, file = "Non_neuronal_Limma_DEG_only_stat_sig.csv")
+write.csv(Non_neuronal_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Non_neuronal_Limma_DEG_only_stat_sig.csv")
 
-clusterOligo <- subset(experiment.aggregate, idents = 'Oligo')
+clusterOligo <- subset(experiment.aggregate, idents = "Oligo")
 expr_Oligo <- as.matrix(GetAssayData(clusterOligo))
 # Filter out genes that are 0 for every cell in this cluster
 bad_Oligo <- which(rowSums(expr_Oligo) == 0)
 expr_Oligo <- expr_Oligo[-bad_Oligo,]
 mm_Oligo <- model.matrix(~0 + orig.ident, data = clusterOligo@meta.data)
-fitOligo <- lmFit(expr_Oligo, mm_Oligo)  
+fitOligo <- lmFit(expr_Oligo, mm_Oligo)
 head(coef(fitOligo)) # Means in each sample for each gene
 contr_Oligo<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitOligo)))
 tmp_Oligo <- contrasts.fit(fitOligo, contrasts = contr_Oligo)
 tmp_Oligo <- eBayes(tmp_Oligo)
 Oligo_toptable <- topTable(tmp_Oligo, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Oligo_toptable, file = "Oligo_limma_top_20.csv")
+write.csv(Oligo_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Oligo_limma_top_20.csv")
 Oligo_Limma_stat_sig <- subset(x = Oligo_toptable, subset = adj.P.Val < 0.05)
-write.csv(Oligo_Limma_stat_sig, file = "Oligo_Limma_DEG_only_stat_sig.csv")
+write.csv(Oligo_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Oligo_Limma_DEG_only_stat_sig.csv")
 
-clusterVip <- subset(experiment.aggregate, idents = 'Vip')
+clusterVip <- subset(experiment.aggregate, idents = "Vip")
 expr_Vip <- as.matrix(GetAssayData(clusterVip))
 # Filter out genes that are 0 for every cell in this cluster
 bad_Vip <- which(rowSums(expr_Vip) == 0)
 expr_Vip <- expr_Vip[-bad_Vip,]
 mm_Vip <- model.matrix(~0 + orig.ident, data = clusterVip@meta.data)
-fitVip <- lmFit(expr_Vip, mm_Vip)  
+fitVip <- lmFit(expr_Vip, mm_Vip)
 head(coef(fitVip)) # Means in each sample for each gene
 contr_Vip<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitVip)))
 tmp_Vip <- contrasts.fit(fitVip, contrasts = contr_Vip)
 tmp_Vip <- eBayes(tmp_Vip)
 Vip_toptable <- topTable(tmp_Vip, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Vip_toptable, file = "Vip_limma_top_20.csv")
+write.csv(Vip_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Vip_limma_top_20.csv")
 Vip_Limma_stat_sig <- subset(x = Vip_toptable, subset = adj.P.Val < 0.05)
-write.csv(Vip_Limma_stat_sig, file = "Vip_Limma_DEG_only_stat_sig.csv")
+write.csv(Vip_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Vip_Limma_DEG_only_stat_sig.csv")
 
-clusterLamp5 <- subset(experiment.aggregate, idents = 'Lamp5')
+clusterLamp5 <- subset(experiment.aggregate, idents = "Lamp5")
 expr_Lamp5 <- as.matrix(GetAssayData(clusterLamp5))
 # Filter out genes that are 0 for every cell in this cluster
 bad_Lamp5 <- which(rowSums(expr_Lamp5) == 0)
 expr_Lamp5 <- expr_Lamp5[-bad_Lamp5,]
 mm_Lamp5 <- model.matrix(~0 + orig.ident, data = clusterLamp5@meta.data)
-fitLamp5 <- lmFit(expr_Lamp5, mm_Lamp5)  
+fitLamp5 <- lmFit(expr_Lamp5, mm_Lamp5)
 head(coef(fitLamp5)) # Means in each sample for each gene
 contr_Lamp5<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitLamp5)))
 tmp_Lamp5 <- contrasts.fit(fitLamp5, contrasts = contr_Lamp5)
 tmp_Lamp5 <- eBayes(tmp_Lamp5)
 Lamp5_toptable <- topTable(tmp_Lamp5, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Lamp5_toptable, file = "Lamp5_limma_top_20.csv")
+write.csv(Lamp5_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Lamp5_limma_top_20.csv")
 Lamp5_Limma_stat_sig <- subset(x = Lamp5_toptable, subset = adj.P.Val < 0.05)
-write.csv(Lamp5_Limma_stat_sig, file = "Lamp5_Limma_DEG_only_stat_sig.csv")
+write.csv(Lamp5_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Lamp5_Limma_DEG_only_stat_sig.csv")
 
-clusterAstro <- subset(experiment.aggregate, idents = 'Astro')
+clusterAstro <- subset(experiment.aggregate, idents = "Astro")
 expr_Astro <- as.matrix(GetAssayData(clusterAstro))
 # Filter out genes that are 0 for every cell in this cluster
 bad_Astro <- which(rowSums(expr_Astro) == 0)
 expr_Astro <- expr_Astro[-bad_Astro,]
 mm_Astro <- model.matrix(~0 + orig.ident, data = clusterAstro@meta.data)
-fitAstro <- lmFit(expr_Astro, mm_Astro)  
+fitAstro <- lmFit(expr_Astro, mm_Astro)
 head(coef(fitAstro)) # Means in each sample for each gene
 contr_Astro<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitAstro)))
 tmp_Astro <- contrasts.fit(fitAstro, contrasts = contr_Astro)
 tmp_Astro <- eBayes(tmp_Astro)
 Astro_toptable <- topTable(tmp_Astro, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Astro_toptable, file = "Astro_limma_top_20.csv")
+write.csv(Astro_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Astro_limma_top_20.csv")
 Astro_Limma_stat_sig <- subset(x = Astro_toptable, subset = adj.P.Val < 0.05)
-write.csv(Astro_Limma_stat_sig, file = "Astro_Limma_DEG_only_stat_sig.csv")
+write.csv(Astro_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Astro_Limma_DEG_only_stat_sig.csv")
 
-clusterPeri <- subset(experiment.aggregate, idents = 'Peri')
+clusterPeri <- subset(experiment.aggregate, idents = "Peri")
 expr_Peri <- as.matrix(GetAssayData(clusterPeri))
 # Filter out genes that are 0 for every cell in this cluster
 bad_Peri <- which(rowSums(expr_Peri) == 0)
 expr_Peri <- expr_Peri[-bad_Peri,]
 mm_Peri <- model.matrix(~0 + orig.ident, data = clusterPeri@meta.data)
-fitPeri <- lmFit(expr_Peri, mm_Peri)  
+fitPeri <- lmFit(expr_Peri, mm_Peri)
 head(coef(fitPeri)) # Means in each sample for each gene
 contr_Peri<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitPeri)))
 tmp_Peri <- contrasts.fit(fitPeri, contrasts = contr_Peri)
 tmp_Peri <- eBayes(tmp_Peri)
 Peri_toptable <- topTable(tmp_Peri, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Peri_toptable, file = "Peri_limma_top_20.csv")
+write.csv(Peri_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Peri_limma_top_20.csv")
 Peri_Limma_stat_sig <- subset(x = Peri_toptable, subset = adj.P.Val < 0.05)
-write.csv(Peri_Limma_stat_sig, file = "Peri_Limma_DEG_only_stat_sig.csv")
+write.csv(Peri_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Peri_Limma_DEG_only_stat_sig.csv")
 
-clusterEndo <- subset(experiment.aggregate, idents = 'Endo')
+clusterEndo <- subset(experiment.aggregate, idents = "Endo")
 expr_Endo <- as.matrix(GetAssayData(clusterEndo))
 # Filter out genes that are 0 for every cell in this cluster
 bad_Endo <- which(rowSums(expr_Endo) == 0)
 expr_Endo <- expr_Endo[-bad_Endo,]
 mm_Endo <- model.matrix(~0 + orig.ident, data = clusterEndo@meta.data)
-fitEndo <- lmFit(expr_Endo, mm_Endo)  
+fitEndo <- lmFit(expr_Endo, mm_Endo)
 head(coef(fitEndo)) # Means in each sample for each gene
 contr_Endo<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitEndo)))
 tmp_Endo <- contrasts.fit(fitEndo, contrasts = contr_Endo)
 tmp_Endo <- eBayes(tmp_Endo)
 Endo_toptable <- topTable(tmp_Endo, sort.by = "P", n = 20) # Top 20 DE genes
-write.csv(Endo_toptable, file = "Endo_limma_top_20.csv")
+write.csv(Endo_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Endo_limma_top_20.csv")
 Endo_Limma_stat_sig <- subset(x = Endo_toptable, subset = adj.P.Val < 0.05)
-write.csv(Endo_Limma_stat_sig, file = "Endo_Limma_DEG_only_stat_sig.csv")
+write.csv(Endo_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Endo_Limma_DEG_only_stat_sig.csv")
 
 ################################################################################
 # DESeq2 Analysis
