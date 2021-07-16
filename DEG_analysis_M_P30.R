@@ -130,6 +130,7 @@ DimPlot(experiment.aggregate, reduction = "umap", group.by = "new.ident") +
 # DEG analysis using tests from Seurat (Wilcoxon and MAST)
 # By Viktoria Haghani
 
+###### For loop to be made ###### 
 # Make a list of all DE tests being used through Seurat
 # Can also use "bimod", "roc", "t", "poisson", "negbinom", and "LR"
 tests <- list("wilcox", "MAST")
@@ -137,215 +138,237 @@ tests <- list("wilcox", "MAST")
 cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 # Make a list to store names of the data generated
 DEG_data <- list()
-
-# For loop to be made 
 # Run every test for every cell type cluster
 for(test in tests) {
   for(cell_type in cell_types)
   {
-    DEG_data[[length(DEG_data) + 1]] <- glue('{cell_type}_{test}_DEG')
+    print(test)
+    print(cell_type)
   }}
-# Use data names from DEG data downstream if needed; get rid of it if not
-print(DEG_data)
 
-# Read all data from csv files so analysis does not need to be rerun every time
-# Remove genes that are not statistically significant
-# Write a for-loop for this eventually
 L2_3_IT_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L2_3_IT", test.use = "wilcox")
 write.csv(L2_3_IT_wilcox_DEG, file = "L2_3_IT_wilcox_DEG_all_genes.csv")
-L2_3_IT_wilcox_DEG <- read.csv(file = 'L2_3_IT_wilcox_DEG.csv')
-L2_3_IT_wilcox_DEG <- subset(x = L2_3_IT_wilcox_DEG, subset = p_val_adj < 0.05)
+L2_3_IT_wilcox_DEG <- read.csv(file = "L2_3_IT_wilcox_DEG.csv")
+L2_3_IT_wilcox_DEG <- subset(x = L2_3_IT_wilcoxwilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(L2_3_IT_wilcox_DEG, file = "L2_3_IT_wilcox_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- L2_3_IT_wilcox_DEG
+L2_3_IT_wilcox_DEG_stat_sig <- read.csv(file = "L2_3_IT_wilcox_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- L2_3_IT_wilcox_DEG_stat_sig
 
 L6_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L6", test.use = "wilcox")
 write.csv(L6_wilcox_DEG, file = "L6_wilcox_DEG_all_genes.csv")
-L6_wilcox_DEG <- read.csv(file = 'L6_wilcox_DEG.csv')
-L6_wilcox_DEG <- subset(x = L6_wilcox_DEG, subset = p_val_adj < 0.05)
+L6_wilcox_DEG <- read.csv(file = "L6_wilcox_DEG.csv")
+L6_wilcox_DEG <- subset(x = L6_wilcoxwilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(L6_wilcox_DEG, file = "L6_wilcox_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- L6_wilcox_DEG
+L6_wilcox_DEG_stat_sig <- read.csv(file = "L6_wilcox_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- L6_wilcox_DEG_stat_sig
 
 Sst_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Sst", test.use = "wilcox")
 write.csv(Sst_wilcox_DEG, file = "Sst_wilcox_DEG_all_genes.csv")
-Sst_wilcox_DEG <- read.csv(file = 'Sst_wilcox_DEG.csv')
-Sst_wilcox_DEG <- subset(x = Sst_wilcox_DEG, subset = p_val_adj < 0.05)
+Sst_wilcox_DEG <- read.csv(file = "Sst_wilcox_DEG.csv")
+Sst_wilcox_DEG <- subset(x = Sst_wilcoxwilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Sst_wilcox_DEG, file = "Sst_wilcox_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Sst_wilcox_DEG
+Sst_wilcox_DEG_stat_sig <- read.csv(file = "Sst_wilcox_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Sst_wilcox_DEG_stat_sig
 
 L5_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L5", test.use = "wilcox")
 write.csv(L5_wilcox_DEG, file = "L5_wilcox_DEG_all_genes.csv")
-L5_wilcox_DEG <- read.csv(file = 'L5_wilcox_DEG.csv')
-L5_wilcox_DEG <- subset(x = L5_wilcox_DEG, subset = p_val_adj < 0.05)
+L5_wilcox_DEG <- read.csv(file = "L5_wilcox_DEG.csv")
+L5_wilcox_DEG <- subset(x = L5_wilcoxwilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(L5_wilcox_DEG, file = "L5_wilcox_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- L5_wilcox_DEG
+L5_wilcox_DEG_stat_sig <- read.csv(file = "L5_wilcox_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- L5_wilcox_DEG_stat_sig
 
 L4_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L4", test.use = "wilcox")
 write.csv(L4_wilcox_DEG, file = "L4_wilcox_DEG_all_genes.csv")
-L4_wilcox_DEG <- read.csv(file = 'L4_wilcox_DEG.csv')
-L4_wilcox_DEG <- subset(x = L4_wilcox_DEG, subset = p_val_adj < 0.05)
+L4_wilcox_DEG <- read.csv(file = "L4_wilcox_DEG.csv")
+L4_wilcox_DEG <- subset(x = L4_wilcoxwilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(L4_wilcox_DEG, file = "L4_wilcox_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- L4_wilcox_DEG
+L4_wilcox_DEG_stat_sig <- read.csv(file = "L4_wilcox_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- L4_wilcox_DEG_stat_sig
 
 Pvalb_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Pvalb", test.use = "wilcox")
 write.csv(Pvalb_wilcox_DEG, file = "Pvalb_wilcox_DEG_all_genes.csv")
-Pvalb_wilcox_DEG <- read.csv(file = 'Pvalb_wilcox_DEG.csv')
-Pvalb_wilcox_DEG <- subset(x = Pvalb_wilcox_DEG, subset = p_val_adj < 0.05)
+Pvalb_wilcox_DEG <- read.csv(file = "Pvalb_wilcox_DEG.csv")
+Pvalb_wilcox_DEG <- subset(x = Pvalb_wilcoxwilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Pvalb_wilcox_DEG, file = "Pvalb_wilcox_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Pvalb_wilcox_DEG
+Pvalb_wilcox_DEG_stat_sig <- read.csv(file = "Pvalb_wilcox_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Pvalb_wilcox_DEG_stat_sig
 
 Sncg_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Sncg", test.use = "wilcox")
 write.csv(Sncg_wilcox_DEG, file = "Sncg_wilcox_DEG_all_genes.csv")
-Sncg_wilcox_DEG <- read.csv(file = 'Sncg_wilcox_DEG.csv')
-Sncg_wilcox_DEG <- subset(x = Sncg_wilcox_DEG, subset = p_val_adj < 0.05)
+Sncg_wilcox_DEG <- read.csv(file = "Sncg_wilcox_DEG.csv")
+Sncg_wilcox_DEG <- subset(x = Sncg_wilcoxwilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Sncg_wilcox_DEG, file = "Sncg_wilcox_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Sncg_wilcox_DEG
+Sncg_wilcox_DEG_stat_sig <- read.csv(file = "Sncg_wilcox_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Sncg_wilcox_DEG_stat_sig
 
-Non_neuronal_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Non-neuronal", test.use = "wilcox")
+Non_neuronal_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Non_neuronal", test.use = "wilcox")
 write.csv(Non_neuronal_wilcox_DEG, file = "Non_neuronal_wilcox_DEG_all_genes.csv")
-Non_neuronal_wilcox_DEG <- read.csv(file = 'Non_neuronal_wilcox_DEG.csv')
-Non_neuronal_wilcox_DEG <- subset(x = Non_neuronal_wilcox_DEG, subset = p_val_adj < 0.05)
+Non_neuronal_wilcox_DEG <- read.csv(file = "Non_neuronal_wilcox_DEG.csv")
+Non_neuronal_wilcox_DEG <- subset(x = Non_neuronal_wilcoxwilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Non_neuronal_wilcox_DEG, file = "Non_neuronal_wilcox_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Non_neuronal_wilcox_DEG
+Non_neuronal_wilcox_DEG_stat_sig <- read.csv(file = "Non_neuronal_wilcox_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Non_neuronal_wilcox_DEG_stat_sig
 
 Oligo_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Oligo", test.use = "wilcox")
 write.csv(Oligo_wilcox_DEG, file = "Oligo_wilcox_DEG_all_genes.csv")
-Oligo_wilcox_DEG <- read.csv(file = 'Oligo_wilcox_DEG.csv')
-Oligo_wilcox_DEG <- subset(x = Oligo_wilcox_DEG, subset = p_val_adj < 0.05)
+Oligo_wilcox_DEG <- read.csv(file = "Oligo_wilcox_DEG.csv")
+Oligo_wilcox_DEG <- subset(x = Oligo_wilcoxwilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Oligo_wilcox_DEG, file = "Oligo_wilcox_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Oligo_wilcox_DEG
+Oligo_wilcox_DEG_stat_sig <- read.csv(file = "Oligo_wilcox_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Oligo_wilcox_DEG_stat_sig
 
 Vip_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Vip", test.use = "wilcox")
 write.csv(Vip_wilcox_DEG, file = "Vip_wilcox_DEG_all_genes.csv")
-Vip_wilcox_DEG <- read.csv(file = 'Vip_wilcox_DEG.csv')
-Vip_wilcox_DEG <- subset(x = Vip_wilcox_DEG, subset = p_val_adj < 0.05)
+Vip_wilcox_DEG <- read.csv(file = "Vip_wilcox_DEG.csv")
+Vip_wilcox_DEG <- subset(x = Vip_wilcoxwilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Vip_wilcox_DEG, file = "Vip_wilcox_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Vip_wilcox_DEG
+Vip_wilcox_DEG_stat_sig <- read.csv(file = "Vip_wilcox_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Vip_wilcox_DEG_stat_sig
 
 Lamp5_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Lamp5", test.use = "wilcox")
 write.csv(Lamp5_wilcox_DEG, file = "Lamp5_wilcox_DEG_all_genes.csv")
-Lamp5_wilcox_DEG <- read.csv(file = 'Lamp5_wilcox_DEG.csv')
-Lamp5_wilcox_DEG <- subset(x = Lamp5_wilcox_DEG, subset = p_val_adj < 0.05)
+Lamp5_wilcox_DEG <- read.csv(file = "Lamp5_wilcox_DEG.csv")
+Lamp5_wilcox_DEG <- subset(x = Lamp5_wilcoxwilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Lamp5_wilcox_DEG, file = "Lamp5_wilcox_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Lamp5_wilcox_DEG
+Lamp5_wilcox_DEG_stat_sig <- read.csv(file = "Lamp5_wilcox_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Lamp5_wilcox_DEG_stat_sig
 
 Astro_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Astro", test.use = "wilcox")
 write.csv(Astro_wilcox_DEG, file = "Astro_wilcox_DEG_all_genes.csv")
-Astro_wilcox_DEG <- read.csv(file = 'Astro_wilcox_DEG.csv')
-Astro_wilcox_DEG <- subset(x = Astro_wilcox_DEG, subset = p_val_adj < 0.05)
+Astro_wilcox_DEG <- read.csv(file = "Astro_wilcox_DEG.csv")
+Astro_wilcox_DEG <- subset(x = Astro_wilcoxwilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Astro_wilcox_DEG, file = "Astro_wilcox_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Astro_wilcox_DEG
+Astro_wilcox_DEG_stat_sig <- read.csv(file = "Astro_wilcox_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Astro_wilcox_DEG_stat_sig
 
 Peri_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Peri", test.use = "wilcox")
 write.csv(Peri_wilcox_DEG, file = "Peri_wilcox_DEG_all_genes.csv")
-Peri_wilcox_DEG <- read.csv(file = 'Peri_wilcox_DEG.csv')
-Peri_wilcox_DEG <- subset(x = Peri_wilcox_DEG, subset = p_val_adj < 0.05)
+Peri_wilcox_DEG <- read.csv(file = "Peri_wilcox_DEG.csv")
+Peri_wilcox_DEG <- subset(x = Peri_wilcoxwilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Peri_wilcox_DEG, file = "Peri_wilcox_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Peri_wilcox_DEG
+Peri_wilcox_DEG_stat_sig <- read.csv(file = "Peri_wilcox_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Peri_wilcox_DEG_stat_sig
 
 Endo_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Endo", test.use = "wilcox")
 write.csv(Endo_wilcox_DEG, file = "Endo_wilcox_DEG_all_genes.csv")
-Endo_wilcox_DEG <- read.csv(file = 'Endo_wilcox_DEG.csv')
-Endo_wilcox_DEG <- subset(x = Endo_wilcox_DEG, subset = p_val_adj < 0.05)
+Endo_wilcox_DEG <- read.csv(file = "Endo_wilcox_DEG.csv")
+Endo_wilcox_DEG <- subset(x = Endo_wilcoxwilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Endo_wilcox_DEG, file = "Endo_wilcox_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Endo_wilcox_DEG
+Endo_wilcox_DEG_stat_sig <- read.csv(file = "Endo_wilcox_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Endo_wilcox_DEG_stat_sig
 
 L2_3_IT_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L2_3_IT", test.use = "MAST")
 write.csv(L2_3_IT_MAST_DEG, file = "L2_3_IT_MAST_DEG_all_genes.csv")
-L2_3_IT_MAST_DEG <- read.csv(file = 'L2_3_IT_MAST_DEG.csv')
-L2_3_IT_MAST_DEG <- subset(x = L2_3_IT_MAST_DEG, subset = p_val_adj < 0.05)
+L2_3_IT_MAST_DEG <- read.csv(file = "L2_3_IT_MAST_DEG.csv")
+L2_3_IT_MAST_DEG <- subset(x = L2_3_IT_MASTMAST_DEG, subset = p_val_adj < 0.05)
 write.csv(L2_3_IT_MAST_DEG, file = "L2_3_IT_MAST_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- L2_3_IT_MAST_DEG
+L2_3_IT_MAST_DEG_stat_sig <- read.csv(file = "L2_3_IT_MAST_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- L2_3_IT_MAST_DEG_stat_sig
 
 L6_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L6", test.use = "MAST")
 write.csv(L6_MAST_DEG, file = "L6_MAST_DEG_all_genes.csv")
-L6_MAST_DEG <- read.csv(file = 'L6_MAST_DEG.csv')
-L6_MAST_DEG <- subset(x = L6_MAST_DEG, subset = p_val_adj < 0.05)
+L6_MAST_DEG <- read.csv(file = "L6_MAST_DEG.csv")
+L6_MAST_DEG <- subset(x = L6_MASTMAST_DEG, subset = p_val_adj < 0.05)
 write.csv(L6_MAST_DEG, file = "L6_MAST_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- L6_MAST_DEG
+L6_MAST_DEG_stat_sig <- read.csv(file = "L6_MAST_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- L6_MAST_DEG_stat_sig
 
 Sst_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Sst", test.use = "MAST")
 write.csv(Sst_MAST_DEG, file = "Sst_MAST_DEG_all_genes.csv")
-Sst_MAST_DEG <- read.csv(file = 'Sst_MAST_DEG.csv')
-Sst_MAST_DEG <- subset(x = Sst_MAST_DEG, subset = p_val_adj < 0.05)
+Sst_MAST_DEG <- read.csv(file = "Sst_MAST_DEG.csv")
+Sst_MAST_DEG <- subset(x = Sst_MASTMAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Sst_MAST_DEG, file = "Sst_MAST_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Sst_MAST_DEG
+Sst_MAST_DEG_stat_sig <- read.csv(file = "Sst_MAST_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Sst_MAST_DEG_stat_sig
 
 L5_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L5", test.use = "MAST")
 write.csv(L5_MAST_DEG, file = "L5_MAST_DEG_all_genes.csv")
-L5_MAST_DEG <- read.csv(file = 'L5_MAST_DEG.csv')
-L5_MAST_DEG <- subset(x = L5_MAST_DEG, subset = p_val_adj < 0.05)
+L5_MAST_DEG <- read.csv(file = "L5_MAST_DEG.csv")
+L5_MAST_DEG <- subset(x = L5_MASTMAST_DEG, subset = p_val_adj < 0.05)
 write.csv(L5_MAST_DEG, file = "L5_MAST_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- L5_MAST_DEG
+L5_MAST_DEG_stat_sig <- read.csv(file = "L5_MAST_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- L5_MAST_DEG_stat_sig
 
 L4_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L4", test.use = "MAST")
 write.csv(L4_MAST_DEG, file = "L4_MAST_DEG_all_genes.csv")
-L4_MAST_DEG <- read.csv(file = 'L4_MAST_DEG.csv')
-L4_MAST_DEG <- subset(x = L4_MAST_DEG, subset = p_val_adj < 0.05)
+L4_MAST_DEG <- read.csv(file = "L4_MAST_DEG.csv")
+L4_MAST_DEG <- subset(x = L4_MASTMAST_DEG, subset = p_val_adj < 0.05)
 write.csv(L4_MAST_DEG, file = "L4_MAST_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- L4_MAST_DEG
+L4_MAST_DEG_stat_sig <- read.csv(file = "L4_MAST_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- L4_MAST_DEG_stat_sig
 
 Pvalb_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Pvalb", test.use = "MAST")
 write.csv(Pvalb_MAST_DEG, file = "Pvalb_MAST_DEG_all_genes.csv")
-Pvalb_MAST_DEG <- read.csv(file = 'Pvalb_MAST_DEG.csv')
-Pvalb_MAST_DEG <- subset(x = Pvalb_MAST_DEG, subset = p_val_adj < 0.05)
+Pvalb_MAST_DEG <- read.csv(file = "Pvalb_MAST_DEG.csv")
+Pvalb_MAST_DEG <- subset(x = Pvalb_MASTMAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Pvalb_MAST_DEG, file = "Pvalb_MAST_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Pvalb_MAST_DEG
+Pvalb_MAST_DEG_stat_sig <- read.csv(file = "Pvalb_MAST_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Pvalb_MAST_DEG_stat_sig
 
 Sncg_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Sncg", test.use = "MAST")
 write.csv(Sncg_MAST_DEG, file = "Sncg_MAST_DEG_all_genes.csv")
-Sncg_MAST_DEG <- read.csv(file = 'Sncg_MAST_DEG.csv')
-Sncg_MAST_DEG <- subset(x = Sncg_MAST_DEG, subset = p_val_adj < 0.05)
+Sncg_MAST_DEG <- read.csv(file = "Sncg_MAST_DEG.csv")
+Sncg_MAST_DEG <- subset(x = Sncg_MASTMAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Sncg_MAST_DEG, file = "Sncg_MAST_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Sncg_MAST_DEG
+Sncg_MAST_DEG_stat_sig <- read.csv(file = "Sncg_MAST_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Sncg_MAST_DEG_stat_sig
 
-Non_neuronal_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Non-neuronal", test.use = "MAST")
+Non_neuronal_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Non_neuronal", test.use = "MAST")
 write.csv(Non_neuronal_MAST_DEG, file = "Non_neuronal_MAST_DEG_all_genes.csv")
-Non_neuronal_MAST_DEG <- read.csv(file = 'Non_neuronal_MAST_DEG.csv')
-Non_neuronal_MAST_DEG <- subset(x = Non_neuronal_MAST_DEG, subset = p_val_adj < 0.05)
+Non_neuronal_MAST_DEG <- read.csv(file = "Non_neuronal_MAST_DEG.csv")
+Non_neuronal_MAST_DEG <- subset(x = Non_neuronal_MASTMAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Non_neuronal_MAST_DEG, file = "Non_neuronal_MAST_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Non_neuronal_MAST_DEG
+Non_neuronal_MAST_DEG_stat_sig <- read.csv(file = "Non_neuronal_MAST_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Non_neuronal_MAST_DEG_stat_sig
 
 Oligo_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Oligo", test.use = "MAST")
 write.csv(Oligo_MAST_DEG, file = "Oligo_MAST_DEG_all_genes.csv")
-Oligo_MAST_DEG <- read.csv(file = 'Oligo_MAST_DEG.csv')
-Oligo_MAST_DEG <- subset(x = Oligo_MAST_DEG, subset = p_val_adj < 0.05)
+Oligo_MAST_DEG <- read.csv(file = "Oligo_MAST_DEG.csv")
+Oligo_MAST_DEG <- subset(x = Oligo_MASTMAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Oligo_MAST_DEG, file = "Oligo_MAST_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Oligo_MAST_DEG
+Oligo_MAST_DEG_stat_sig <- read.csv(file = "Oligo_MAST_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Oligo_MAST_DEG_stat_sig
 
 Vip_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Vip", test.use = "MAST")
 write.csv(Vip_MAST_DEG, file = "Vip_MAST_DEG_all_genes.csv")
-Vip_MAST_DEG <- read.csv(file = 'Vip_MAST_DEG.csv')
-Vip_MAST_DEG <- subset(x = Vip_MAST_DEG, subset = p_val_adj < 0.05)
+Vip_MAST_DEG <- read.csv(file = "Vip_MAST_DEG.csv")
+Vip_MAST_DEG <- subset(x = Vip_MASTMAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Vip_MAST_DEG, file = "Vip_MAST_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Vip_MAST_DEG
+Vip_MAST_DEG_stat_sig <- read.csv(file = "Vip_MAST_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Vip_MAST_DEG_stat_sig
 
 Lamp5_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Lamp5", test.use = "MAST")
 write.csv(Lamp5_MAST_DEG, file = "Lamp5_MAST_DEG_all_genes.csv")
-Lamp5_MAST_DEG <- read.csv(file = 'Lamp5_MAST_DEG.csv')
-Lamp5_MAST_DEG <- subset(x = Lamp5_MAST_DEG, subset = p_val_adj < 0.05)
+Lamp5_MAST_DEG <- read.csv(file = "Lamp5_MAST_DEG.csv")
+Lamp5_MAST_DEG <- subset(x = Lamp5_MASTMAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Lamp5_MAST_DEG, file = "Lamp5_MAST_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Lamp5_MAST_DEG
+Lamp5_MAST_DEG_stat_sig <- read.csv(file = "Lamp5_MAST_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Lamp5_MAST_DEG_stat_sig
 
 Astro_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Astro", test.use = "MAST")
 write.csv(Astro_MAST_DEG, file = "Astro_MAST_DEG_all_genes.csv")
-Astro_MAST_DEG <- read.csv(file = 'Astro_MAST_DEG.csv')
-Astro_MAST_DEG <- subset(x = Astro_MAST_DEG, subset = p_val_adj < 0.05)
+Astro_MAST_DEG <- read.csv(file = "Astro_MAST_DEG.csv")
+Astro_MAST_DEG <- subset(x = Astro_MASTMAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Astro_MAST_DEG, file = "Astro_MAST_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Astro_MAST_DEG
+Astro_MAST_DEG_stat_sig <- read.csv(file = "Astro_MAST_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Astro_MAST_DEG_stat_sig
 
 Peri_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Peri", test.use = "MAST")
 write.csv(Peri_MAST_DEG, file = "Peri_MAST_DEG_all_genes.csv")
-Peri_MAST_DEG <- read.csv(file = 'Peri_MAST_DEG.csv')
-Peri_MAST_DEG <- subset(x = Peri_MAST_DEG, subset = p_val_adj < 0.05)
+Peri_MAST_DEG <- read.csv(file = "Peri_MAST_DEG.csv")
+Peri_MAST_DEG <- subset(x = Peri_MASTMAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Peri_MAST_DEG, file = "Peri_MAST_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Peri_MAST_DEG
+Peri_MAST_DEG_stat_sig <- read.csv(file = "Peri_MAST_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Peri_MAST_DEG_stat_sig
 
 Endo_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Endo", test.use = "MAST")
 write.csv(Endo_MAST_DEG, file = "Endo_MAST_DEG_all_genes.csv")
-Endo_MAST_DEG <- read.csv(file = 'Endo_MAST_DEG.csv')
-Endo_MAST_DEG <- subset(x = Endo_MAST_DEG, subset = p_val_adj < 0.05)
+Endo_MAST_DEG <- read.csv(file = "Endo_MAST_DEG.csv")
+Endo_MAST_DEG <- subset(x = Endo_MASTMAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Endo_MAST_DEG, file = "Endo_MAST_DEG_only_stat_sig.csv")
-DEG_data[[length(DEG_data) + 1]] <- Endo_MAST_DEG
+Endo_MAST_DEG_stat_sig <- read.csv(file = "Endo_MAST_DEG_only_stat_sig.csv")
+DEG_data[[length(DEG_data) + 1]] <- Endo_MAST_DEG_stat_sig
 
 # Make a heatmap with rows and columns separated by a predefined label using ComplexHeatmap
 plotDEG = function(data,       # Data matrix
