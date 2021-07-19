@@ -149,7 +149,6 @@ write.csv(L2_3_IT_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_g
 L2_3_IT_wilcox_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L2_3_IT_wilcox_DEG_all_genes.csv")
 L2_3_IT_wilcox_DEG <- subset(x = L2_3_IT_wilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(L2_3_IT_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L2_3_IT_wilcox_DEG_only_stat_sig.csv")
-L2_3_IT_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L2_3_IT_wilcox_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- L2_3_IT_wilcox_DEG_stat_sig
 
 L6_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L6", test.use = "wilcox")
@@ -157,7 +156,6 @@ write.csv(L6_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/
 L6_wilcox_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L6_wilcox_DEG_all_genes.csv")
 L6_wilcox_DEG <- subset(x = L6_wilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(L6_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L6_wilcox_DEG_only_stat_sig.csv")
-L6_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L6_wilcox_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- L6_wilcox_DEG_stat_sig
 
 Sst_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Sst", test.use = "wilcox")
@@ -165,7 +163,6 @@ write.csv(Sst_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes
 Sst_wilcox_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Sst_wilcox_DEG_all_genes.csv")
 Sst_wilcox_DEG <- subset(x = Sst_wilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Sst_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sst_wilcox_DEG_only_stat_sig.csv")
-Sst_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sst_wilcox_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Sst_wilcox_DEG_stat_sig
 
 L5_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L5", test.use = "wilcox")
@@ -173,7 +170,6 @@ write.csv(L5_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/
 L5_wilcox_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L5_wilcox_DEG_all_genes.csv")
 L5_wilcox_DEG <- subset(x = L5_wilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(L5_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L5_wilcox_DEG_only_stat_sig.csv")
-L5_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L5_wilcox_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- L5_wilcox_DEG_stat_sig
 
 L4_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L4", test.use = "wilcox")
@@ -181,7 +177,6 @@ write.csv(L4_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/
 L4_wilcox_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L4_wilcox_DEG_all_genes.csv")
 L4_wilcox_DEG <- subset(x = L4_wilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(L4_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L4_wilcox_DEG_only_stat_sig.csv")
-L4_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L4_wilcox_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- L4_wilcox_DEG_stat_sig
 
 Pvalb_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Pvalb", test.use = "wilcox")
@@ -189,7 +184,6 @@ write.csv(Pvalb_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_gen
 Pvalb_wilcox_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Pvalb_wilcox_DEG_all_genes.csv")
 Pvalb_wilcox_DEG <- subset(x = Pvalb_wilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Pvalb_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Pvalb_wilcox_DEG_only_stat_sig.csv")
-Pvalb_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Pvalb_wilcox_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Pvalb_wilcox_DEG_stat_sig
 
 Sncg_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Sncg", test.use = "wilcox")
@@ -197,7 +191,6 @@ write.csv(Sncg_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_gene
 Sncg_wilcox_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Sncg_wilcox_DEG_all_genes.csv")
 Sncg_wilcox_DEG <- subset(x = Sncg_wilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Sncg_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sncg_wilcox_DEG_only_stat_sig.csv")
-Sncg_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sncg_wilcox_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Sncg_wilcox_DEG_stat_sig
 
 Non_neuronal_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Non_neuronal", test.use = "wilcox")
@@ -205,7 +198,6 @@ write.csv(Non_neuronal_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/
 Non_neuronal_wilcox_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Non_neuronal_wilcox_DEG_all_genes.csv")
 Non_neuronal_wilcox_DEG <- subset(x = Non_neuronal_wilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Non_neuronal_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Non_neuronal_wilcox_DEG_only_stat_sig.csv")
-Non_neuronal_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Non_neuronal_wilcox_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Non_neuronal_wilcox_DEG_stat_sig
 
 Oligo_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Oligo", test.use = "wilcox")
@@ -213,7 +205,6 @@ write.csv(Oligo_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_gen
 Oligo_wilcox_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Oligo_wilcox_DEG_all_genes.csv")
 Oligo_wilcox_DEG <- subset(x = Oligo_wilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Oligo_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Oligo_wilcox_DEG_only_stat_sig.csv")
-Oligo_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Oligo_wilcox_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Oligo_wilcox_DEG_stat_sig
 
 Vip_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Vip", test.use = "wilcox")
@@ -221,7 +212,6 @@ write.csv(Vip_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes
 Vip_wilcox_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Vip_wilcox_DEG_all_genes.csv")
 Vip_wilcox_DEG <- subset(x = Vip_wilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Vip_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Vip_wilcox_DEG_only_stat_sig.csv")
-Vip_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Vip_wilcox_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Vip_wilcox_DEG_stat_sig
 
 Lamp5_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Lamp5", test.use = "wilcox")
@@ -229,7 +219,6 @@ write.csv(Lamp5_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_gen
 Lamp5_wilcox_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Lamp5_wilcox_DEG_all_genes.csv")
 Lamp5_wilcox_DEG <- subset(x = Lamp5_wilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Lamp5_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Lamp5_wilcox_DEG_only_stat_sig.csv")
-Lamp5_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Lamp5_wilcox_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Lamp5_wilcox_DEG_stat_sig
 
 Astro_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Astro", test.use = "wilcox")
@@ -237,7 +226,6 @@ write.csv(Astro_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_gen
 Astro_wilcox_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Astro_wilcox_DEG_all_genes.csv")
 Astro_wilcox_DEG <- subset(x = Astro_wilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Astro_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Astro_wilcox_DEG_only_stat_sig.csv")
-Astro_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Astro_wilcox_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Astro_wilcox_DEG_stat_sig
 
 Peri_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Peri", test.use = "wilcox")
@@ -245,7 +233,6 @@ write.csv(Peri_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_gene
 Peri_wilcox_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Peri_wilcox_DEG_all_genes.csv")
 Peri_wilcox_DEG <- subset(x = Peri_wilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Peri_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Peri_wilcox_DEG_only_stat_sig.csv")
-Peri_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Peri_wilcox_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Peri_wilcox_DEG_stat_sig
 
 Endo_wilcox_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Endo", test.use = "wilcox")
@@ -253,7 +240,6 @@ write.csv(Endo_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_gene
 Endo_wilcox_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Endo_wilcox_DEG_all_genes.csv")
 Endo_wilcox_DEG <- subset(x = Endo_wilcox_DEG, subset = p_val_adj < 0.05)
 write.csv(Endo_wilcox_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Endo_wilcox_DEG_only_stat_sig.csv")
-Endo_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Endo_wilcox_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Endo_wilcox_DEG_stat_sig
 
 L2_3_IT_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L2_3_IT", test.use = "MAST")
@@ -261,7 +247,6 @@ write.csv(L2_3_IT_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_gen
 L2_3_IT_MAST_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L2_3_IT_MAST_DEG_all_genes.csv")
 L2_3_IT_MAST_DEG <- subset(x = L2_3_IT_MAST_DEG, subset = p_val_adj < 0.05)
 write.csv(L2_3_IT_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L2_3_IT_MAST_DEG_only_stat_sig.csv")
-L2_3_IT_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L2_3_IT_MAST_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- L2_3_IT_MAST_DEG_stat_sig
 
 L6_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L6", test.use = "MAST")
@@ -269,7 +254,6 @@ write.csv(L6_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L6
 L6_MAST_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L6_MAST_DEG_all_genes.csv")
 L6_MAST_DEG <- subset(x = L6_MAST_DEG, subset = p_val_adj < 0.05)
 write.csv(L6_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L6_MAST_DEG_only_stat_sig.csv")
-L6_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L6_MAST_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- L6_MAST_DEG_stat_sig
 
 Sst_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Sst", test.use = "MAST")
@@ -277,7 +261,6 @@ write.csv(Sst_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/S
 Sst_MAST_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Sst_MAST_DEG_all_genes.csv")
 Sst_MAST_DEG <- subset(x = Sst_MAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Sst_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sst_MAST_DEG_only_stat_sig.csv")
-Sst_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sst_MAST_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Sst_MAST_DEG_stat_sig
 
 L5_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L5", test.use = "MAST")
@@ -285,7 +268,6 @@ write.csv(L5_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L5
 L5_MAST_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L5_MAST_DEG_all_genes.csv")
 L5_MAST_DEG <- subset(x = L5_MAST_DEG, subset = p_val_adj < 0.05)
 write.csv(L5_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L5_MAST_DEG_only_stat_sig.csv")
-L5_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L5_MAST_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- L5_MAST_DEG_stat_sig
 
 L4_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "L4", test.use = "MAST")
@@ -293,7 +275,6 @@ write.csv(L4_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L4
 L4_MAST_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L4_MAST_DEG_all_genes.csv")
 L4_MAST_DEG <- subset(x = L4_MAST_DEG, subset = p_val_adj < 0.05)
 write.csv(L4_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L4_MAST_DEG_only_stat_sig.csv")
-L4_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L4_MAST_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- L4_MAST_DEG_stat_sig
 
 Pvalb_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Pvalb", test.use = "MAST")
@@ -301,7 +282,6 @@ write.csv(Pvalb_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes
 Pvalb_MAST_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Pvalb_MAST_DEG_all_genes.csv")
 Pvalb_MAST_DEG <- subset(x = Pvalb_MAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Pvalb_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Pvalb_MAST_DEG_only_stat_sig.csv")
-Pvalb_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Pvalb_MAST_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Pvalb_MAST_DEG_stat_sig
 
 Sncg_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Sncg", test.use = "MAST")
@@ -309,7 +289,6 @@ write.csv(Sncg_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/
 Sncg_MAST_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Sncg_MAST_DEG_all_genes.csv")
 Sncg_MAST_DEG <- subset(x = Sncg_MAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Sncg_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sncg_MAST_DEG_only_stat_sig.csv")
-Sncg_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sncg_MAST_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Sncg_MAST_DEG_stat_sig
 
 Non_neuronal_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Non_neuronal", test.use = "MAST")
@@ -317,7 +296,6 @@ write.csv(Non_neuronal_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/al
 Non_neuronal_MAST_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Non_neuronal_MAST_DEG_all_genes.csv")
 Non_neuronal_MAST_DEG <- subset(x = Non_neuronal_MAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Non_neuronal_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Non_neuronal_MAST_DEG_only_stat_sig.csv")
-Non_neuronal_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Non_neuronal_MAST_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Non_neuronal_MAST_DEG_stat_sig
 
 Oligo_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Oligo", test.use = "MAST")
@@ -325,7 +303,6 @@ write.csv(Oligo_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes
 Oligo_MAST_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Oligo_MAST_DEG_all_genes.csv")
 Oligo_MAST_DEG <- subset(x = Oligo_MAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Oligo_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Oligo_MAST_DEG_only_stat_sig.csv")
-Oligo_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Oligo_MAST_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Oligo_MAST_DEG_stat_sig
 
 Vip_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Vip", test.use = "MAST")
@@ -333,7 +310,6 @@ write.csv(Vip_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/V
 Vip_MAST_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Vip_MAST_DEG_all_genes.csv")
 Vip_MAST_DEG <- subset(x = Vip_MAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Vip_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Vip_MAST_DEG_only_stat_sig.csv")
-Vip_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Vip_MAST_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Vip_MAST_DEG_stat_sig
 
 Lamp5_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Lamp5", test.use = "MAST")
@@ -341,7 +317,6 @@ write.csv(Lamp5_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes
 Lamp5_MAST_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Lamp5_MAST_DEG_all_genes.csv")
 Lamp5_MAST_DEG <- subset(x = Lamp5_MAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Lamp5_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Lamp5_MAST_DEG_only_stat_sig.csv")
-Lamp5_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Lamp5_MAST_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Lamp5_MAST_DEG_stat_sig
 
 Astro_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Astro", test.use = "MAST")
@@ -349,7 +324,6 @@ write.csv(Astro_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes
 Astro_MAST_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Astro_MAST_DEG_all_genes.csv")
 Astro_MAST_DEG <- subset(x = Astro_MAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Astro_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Astro_MAST_DEG_only_stat_sig.csv")
-Astro_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Astro_MAST_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Astro_MAST_DEG_stat_sig
 
 Peri_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Peri", test.use = "MAST")
@@ -357,7 +331,6 @@ write.csv(Peri_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/
 Peri_MAST_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Peri_MAST_DEG_all_genes.csv")
 Peri_MAST_DEG <- subset(x = Peri_MAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Peri_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Peri_MAST_DEG_only_stat_sig.csv")
-Peri_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Peri_MAST_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Peri_MAST_DEG_stat_sig
 
 Endo_MAST_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Endo", test.use = "MAST")
@@ -365,8 +338,39 @@ write.csv(Endo_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/
 Endo_MAST_DEG <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Endo_MAST_DEG_all_genes.csv")
 Endo_MAST_DEG <- subset(x = Endo_MAST_DEG, subset = p_val_adj < 0.05)
 write.csv(Endo_MAST_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Endo_MAST_DEG_only_stat_sig.csv")
-Endo_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Endo_MAST_DEG_only_stat_sig.csv")
 DEG_data[[length(DEG_data) + 1]] <- Endo_MAST_DEG_stat_sig
+
+# Read in data to work with for Wilcoxon analysis (so analysis does not need to be rerun)
+L2_3_IT_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L2_3_IT_wilcox_DEG_only_stat_sig.csv")
+L6_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L6_wilcox_DEG_only_stat_sig.csv")
+Sst_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sst_wilcox_DEG_only_stat_sig.csv")
+L5_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L5_wilcox_DEG_only_stat_sig.csv")
+L4_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L4_wilcox_DEG_only_stat_sig.csv")
+Pvalb_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Pvalb_wilcox_DEG_only_stat_sig.csv")
+Sncg_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sncg_wilcox_DEG_only_stat_sig.csv")
+Non_neuronal_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Non_neuronal_wilcox_DEG_only_stat_sig.csv")
+Oligo_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Oligo_wilcox_DEG_only_stat_sig.csv")
+Vip_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Vip_wilcox_DEG_only_stat_sig.csv")
+Lamp5_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Lamp5_wilcox_DEG_only_stat_sig.csv")
+Astro_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Astro_wilcox_DEG_only_stat_sig.csv")
+Peri_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Peri_wilcox_DEG_only_stat_sig.csv")
+Endo_wilcox_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Endo_wilcox_DEG_only_stat_sig.csv")
+
+# Read in data to work with for MAST analysis (so analysis does not need to be rerun)
+L2_3_IT_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L2_3_IT_MAST_DEG_only_stat_sig.csv")
+L6_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L6_MAST_DEG_only_stat_sig.csv")
+Sst_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sst_MAST_DEG_only_stat_sig.csv")
+L5_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L5_MAST_DEG_only_stat_sig.csv")
+L4_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L4_MAST_DEG_only_stat_sig.csv")
+Pvalb_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Pvalb_MAST_DEG_only_stat_sig.csv")
+Sncg_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sncg_MAST_DEG_only_stat_sig.csv")
+Non_neuronal_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Non_neuronal_MAST_DEG_only_stat_sig.csv")
+Oligo_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Oligo_MAST_DEG_only_stat_sig.csv")
+Vip_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Vip_MAST_DEG_only_stat_sig.csv")
+Lamp5_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Lamp5_MAST_DEG_only_stat_sig.csv")
+Astro_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Astro_MAST_DEG_only_stat_sig.csv")
+Peri_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Peri_MAST_DEG_only_stat_sig.csv")
+Endo_MAST_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Endo_MAST_DEG_only_stat_sig.csv")
 
 # Make a heatmap with rows and columns separated by a predefined label using ComplexHeatmap
 plotDEG = function(data,       # Data matrix
@@ -682,6 +686,22 @@ write.csv(Endo_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/
 Endo_Limma_stat_sig <- subset(x = Endo_toptable, subset = adj.P.Val < 0.05)
 write.csv(Endo_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Endo_Limma_DEG_only_stat_sig.csv")
 
+# Read in data to work with for Limma analysis (so analysis does not need to be rerun)
+L2_3_IT_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L2_3_IT_Limma_DEG_only_stat_sig.csv")
+L6_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L6_Limma_DEG_only_stat_sig.csv")
+Sst_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sst_Limma_DEG_only_stat_sig.csv")
+L5_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L5_Limma_DEG_only_stat_sig.csv")
+L4_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L4_Limma_DEG_only_stat_sig.csv")
+Pvalb_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Pvalb_Limma_DEG_only_stat_sig.csv")
+Sncg_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sncg_Limma_DEG_only_stat_sig.csv")
+Non_neuronal_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Non_neuronal_Limma_DEG_only_stat_sig.csv")
+Oligo_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Oligo_Limma_DEG_only_stat_sig.csv")
+Vip_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Vip_Limma_DEG_only_stat_sig.csv")
+Lamp5_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Lamp5_Limma_DEG_only_stat_sig.csv")
+Astro_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Astro_Limma_DEG_only_stat_sig.csv")
+Peri_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Peri_Limma_DEG_only_stat_sig.csv")
+Endo_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Endo_Limma_DEG_only_stat_sig.csv")
+
 ################################################################################
 # DESeq2 Analysis
 # By Viktoria Haghani
@@ -759,6 +779,22 @@ Endo_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT",
 write.csv(Endo_DESeq2_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Endo_DESeq2_DEG_all_genes.csv")
 Endo_DESeq2_DEG_stat_sig <- subset(x = Endo_DESeq2_DEG, subset = p_val_adj < 0.05)
 write.csv(Endo_DESeq2_DEG_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Endo_DESeq2_DEG_stat_sig.csv")
+
+# Read in data to work with for DESeq2 analysis (so analysis does not need to be rerun)
+L2_3_IT_DESeq2_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L2_3_IT_DESeq2_DEG_stat_sig.csv")
+L6_DESeq2_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L6_DESeq2_DEG_stat_sig.csv")
+Sst_DESeq2_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sst_DESeq2_DEG_stat_sig.csv")
+L5_DESeq2_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L5_DESeq2_DEG_stat_sig.csv")
+L4_DESeq2_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L4_DESeq2_DEG_stat_sig.csv")
+Pvalb_DESeq2_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Pvalb_DESeq2_DEG_stat_sig.csv")
+Sncg_DESeq2_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sncg_DESeq2_DEG_stat_sig.csv")
+Non_neuronal_DESeq2_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Non_neuronal_DESeq2_DEG_stat_sig.csv")
+Oligo_DESeq2_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Oligo_DESeq2_DEG_stat_sig.csv")
+Vip_DESeq2_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Vip_DESeq2_DEG_stat_sig.csv")
+Lamp5_DESeq2_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Lamp5_DESeq2_DEG_stat_sig.csv")
+Astro_DESeq2_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Astro_DESeq2_DEG_stat_sig.csv")
+Peri_DESeq2_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Peri_DESeq2_DEG_stat_sig.csv")
+Endo_DESeq2_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Endo_DESeq2_DEG_stat_sig.csv")
 
 ################################################################################
 # Venn Diagram for Differentially Expressed Genes Per Analysis
