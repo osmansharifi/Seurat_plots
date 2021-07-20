@@ -734,15 +734,24 @@ dge$samples <- meta_dge
 dge <- calcNormFactors(dge)
 design <- model.matrix(~0+group, data=dge$samples)
 head(design)
-dge <- estimateDisp(dge, design = design)    
+dge <- estimateDisp(dge, design = design)
+
+# After
 fit <- glmFit(dge, design = design)
 # Differential expression testing
 my.contrasts <- makeContrasts(MUT_vs_WT = groupMUT_M_P30_CORT-groupWT_M_P30_CORT, levels=design)
-#qlf.contrast <- glmQLFTest(fit, contrast=my.contrasts)
 qlf.contrast <- glmLRT(fit, contrast = my.contrasts)
 qlf.contrast.toptags <- topTags(qlf.contrast$table, n = 1000, adjust.method = "BH", sort.by = "Pvalue", p.value=1)
 head(qlf.contrast.toptags)
 #write.csv(qlf.contrast.toptags, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L2_3_IT_EdgeR_DEG_all_genes.csv")
+
+# Before
+fit <- glmQLFit(dge, design = design)
+# Differential expression testing
+my.contrasts <- makeContrasts(MUT_vs_WT = groupMUT_M_P30_CORT-groupWT_M_P30_CORT, levels=design)
+qlf.contrast <- glmQLFTest(fit, contrast=my.contrasts)
+head(qlf.contrast$table)
+write.csv(qlf.contrast$table, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L2_3_IT_EdgeR_DEG_all_genes.csv")
 
 ################################################################################
 # DESeq2 Analysis
