@@ -731,14 +731,16 @@ levels(meta_dge$group)
 meta_dge$group <- relevel(meta_dge$group, "MUT_M_P30_CORT")
 dge$samples <- meta_dge
 
+
 # Model fit
 dge <- calcNormFactors(dge)
 design <- model.matrix(~0+group, data=dge$samples)
+head(design)
 dge <- estimateDisp(dge, design = design)    
 fit <- glmQLFit(dge, design = design)
 
 # Differential expression testing
-my.contrasts <- makeContrasts(MUT_vs_WT = MUT_M_P30_CORT-WT_M_P30_CORT, levels=design)
+my.contrasts <- makeContrasts(MUT_vs_WT = groupMUT_M_P30_CORT-groupWT_M_P30_CORT, levels=design)
 qlf.contrast <- glmQLFTest(fit, contrast=my.contrasts[,"MUT_vs_WT"])
 head(qlf.contrast$table)
 
