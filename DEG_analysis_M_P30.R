@@ -1236,7 +1236,7 @@ counts <- as.matrix(Endo_edgeR_obj@assays$RNA@counts)
 counts <- counts[Matrix::rowSums(counts >= 1) >= 1, ]
 # Subset the meta data for filtered gene/cells
 metadata <- Endo_edgeR_obj@meta.data
-metadata <- metadata[,c("nCount_RNA", "new.ident")]
+metadata <- metadata[,c("nCount_RNA", "orig.ident")]
 metadata <- metadata[colnames(counts),]
 # Make single cell experiment
 sce <- SingleCellExperiment(assays = counts, 
@@ -1246,9 +1246,9 @@ dge <- convertTo(sce, type="edgeR", assay.type = 1)
 meta_dge <- dge$samples
 meta_dge <- meta_dge[,c("lib.size","norm.factors")]
 meta_dge <- cbind(meta_dge, metadata)
-meta_dge$group <- factor(meta_dge$new.ident)
+meta_dge$group <- factor(meta_dge$orig.ident)
 levels(meta_dge$group)
-meta_dge$group <- relevel(meta_dge$group, "MUT_M_P30_CORT")
+meta_dge$group <- relevel(meta_dge$group, "MUT_M_P30_CORT1", "MUT_M_P30_CORT2", "WT_M_P30_CORT1", "WT_M_P30_CORT2")
 dge$samples <- meta_dge
 # Model fit
 dge <- calcNormFactors(dge)
@@ -1257,7 +1257,7 @@ head(design)
 dge <- estimateDisp(dge, design = design)
 fit <- glmQLFit(dge, design = design)
 # Differential expression testing
-my.contrasts <- makeContrasts(MUT_vs_WT = groupWT_M_P30_CORT-groupMUT_M_P30_CORT, levels=design)
+my.contrasts <- makeContrasts(MUT_vs_WT = c(groupWT_M_P30_CORT1+groupWT_M_P30_CORT2) - c(groupMUT_M_P30_CORT1+groupMUT_M_P30_CORT2), levels=design)
 qlf.contrast <- glmQLFTest(fit, contrast=my.contrasts)
 ## All genes
 # Use Benjamini-Hochberg correction for p-values
