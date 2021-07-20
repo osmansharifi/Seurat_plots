@@ -9,6 +9,7 @@ library(ggplot2)
 library(ggVennDiagram)
 library(edgeR)
 library(udunits2)
+library(scran)
 
 ################################################################################
 # Visualization and data preparation
@@ -60,7 +61,7 @@ VlnPlot(experiment.aggregate, features = "percent.mito") +
 after_subset_cell_counts <- table(Idents(experiment.aggregate), experiment.aggregate$orig.ident)
 
 ## See changes in cell number after subsetting
-# ?all table to compare cells before G2M, S, and mt exclusion
+# Call table to compare cells before G2M, S, and mt exclusion
 before_subset_cell_counts
 # Generate a data frame from the table
 before_subset_cell_counts_df <- data.frame(before_subset_cell_counts)
@@ -75,7 +76,7 @@ ggplot(before_subset_cell_counts_df, aes(fill=sample_name, y=Freq, x=Var1)) +
   ylab("Number of Cells") +
   ylim(0, 3000) +
   theme(axis.text.x=element_text(angle=90,hjust=1,vjust=0.5))
-# ?all table to compare cells left after  G2M, S, and mt exclusion
+# Call table to compare cells left after  G2M, S, and mt exclusion
 after_subset_cell_counts 
 # Generate a data frame from the table
 after_subset_cell_counts_df <- data.frame(after_subset_cell_counts)
@@ -708,28 +709,26 @@ Endo_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/sta
 # EdgeR Analysis
 # By Viktoria Haghani
 
-# Subset Seurat object 
-#seurat_to_edgeR_object <- subset(experiment.aggregate, subset = seurat_cluster == 0)
-
 # Generate a count matrix 
 counts <- as.matrix(experiment.aggregate@assays$RNA@counts)
 counts <- counts[Matrix::rowSums(counts >= 1) >= 1, ]
 # Subset the meta data for filtered gene/cells
 metadata <- experiment.aggregate@meta.data
-metadata <- metadata[,c("nCount_RNA", "celltype.call")]
+metadata <- metadata[,c("nCount_RNA", "new.ident")]
 metadata <- metadata[colnames(counts),]
 
 # Make single cell experiment
 sce <- SingleCellExperiment(assays = counts, 
                             colData = metadata)
 
-# Convert to edgR object
+# Convert to edgeR object
 dge <- convertTo(sce, type="edgeR", assay.type = 1)
 meta_dge <- dge$samples
 meta_dge <- meta_dge[,c("lib.size","norm.factors")]
 meta_dge <- cbind(meta_dge, metadata)
-meta_dge$group <- factor(meta_dge$cell_info)
-meta_dge$group <- relevel(meta_dge$group, "KO")
+meta_dge$group <- factor(meta_dge$new.ident)
+levels(meta_dge$group)
+meta_dge$group <- relevel(meta_dge$group, "MUT_M_P30_CORT")
 dge$samples <- meta_dge
 
 # Model fit
