@@ -737,7 +737,7 @@ head(design)
 dge <- estimateDisp(dge, design = design)
 fit <- glmQLFit(dge, design = design)
 # Differential expression testing
-my.contrasts <- makeContrasts(MUT_vs_WT = groupMUT_M_P30_CORT-groupWT_M_P30_CORT, levels=design)
+my.contrasts <- makeContrasts(MUT_vs_WT = groupWT_M_P30_CORT-groupMUT_M_P30_CORT, levels=design)
 qlf.contrast <- glmQLFTest(fit, contrast=my.contrasts)
 ## All genes
 # Use Benjamini-Hochberg correction for p-values
@@ -1257,14 +1257,14 @@ head(design)
 dge <- estimateDisp(dge, design = design)
 fit <- glmQLFit(dge, design = design)
 # Differential expression testing
-my.contrasts <- makeContrasts(MUT_vs_WT = groupMUT_M_P30_CORT-groupWT_M_P30_CORT, levels=design)
+my.contrasts <- makeContrasts(MUT_vs_WT = groupWT_M_P30_CORT-groupMUT_M_P30_CORT, levels=design)
 qlf.contrast <- glmQLFTest(fit, contrast=my.contrasts)
 ## All genes
 # Use Benjamini-Hochberg correction for p-values
 qlf.contrast.all.genes <- topTags(qlf.contrast, n = 1000, adjust.method = "BH", sort.by = "PValue", p.value = 1)
 # Note that topTags() outputs adjusted p-values in the FDR column
 head(qlf.contrast.all.genes$table)
-write.csv(qlf.contrast.all.genes$table, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Endo_EdgeR_DEG_all_genes.csv")
+#write.csv(qlf.contrast.all.genes$table, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Endo_EdgeR_DEG_all_genes.csv")
 ## Only statistically significant genes
 Endo_EdgeR_stat_sig <- subset(x = qlf.contrast.all.genes$table, subset = FDR < 0.05)
 write.csv(Endo_EdgeR_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Endo_EdgeR_DEG_only_stat_sig.csv")
