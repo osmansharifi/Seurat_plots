@@ -709,18 +709,18 @@ Endo_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/sta
 # EdgeR Analysis
 # By Viktoria Haghani
 
+# Subset Seurat object for the cluster
+L2_3_IT_edgeR_obj <- subset(experiment.aggregate, subset = celltype.call == "L2_3_IT")
 # Generate a count matrix 
-counts <- as.matrix(experiment.aggregate@assays$RNA@counts)
+counts <- as.matrix(L2_3_IT_edgeR_obj@assays$RNA@counts)
 counts <- counts[Matrix::rowSums(counts >= 1) >= 1, ]
 # Subset the meta data for filtered gene/cells
-metadata <- experiment.aggregate@meta.data
+metadata <- L2_3_IT_edgeR_obj@meta.data
 metadata <- metadata[,c("nCount_RNA", "new.ident")]
 metadata <- metadata[colnames(counts),]
-
 # Make single cell experiment
 sce <- SingleCellExperiment(assays = counts, 
                             colData = metadata)
-
 # Convert to edgeR object
 dge <- convertTo(sce, type="edgeR", assay.type = 1)
 meta_dge <- dge$samples
@@ -730,19 +730,17 @@ meta_dge$group <- factor(meta_dge$new.ident)
 levels(meta_dge$group)
 meta_dge$group <- relevel(meta_dge$group, "MUT_M_P30_CORT")
 dge$samples <- meta_dge
-
-
 # Model fit
 dge <- calcNormFactors(dge)
 design <- model.matrix(~0+group, data=dge$samples)
 head(design)
 dge <- estimateDisp(dge, design = design)    
 fit <- glmQLFit(dge, design = design)
-
 # Differential expression testing
 my.contrasts <- makeContrasts(MUT_vs_WT = groupMUT_M_P30_CORT-groupWT_M_P30_CORT, levels=design)
-qlf.contrast <- glmQLFTest(fit, contrast=my.contrasts[,"MUT_vs_WT"])
+qlf.contrast <- glmQLFTest(fit, contrast=my.contrasts)
 head(qlf.contrast$table)
+write.csv(qlf.contrast$table, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L2_3_IT_EdgeR_DEG_all_genes.csv")
 
 ################################################################################
 # DESeq2 Analysis
