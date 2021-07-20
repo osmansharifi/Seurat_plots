@@ -1,7 +1,8 @@
 library(Seurat)
-library(DESeq2)
-library(limma)
 library(MAST)
+library(limma)
+library(edgeR)
+library(DESeq2)
 library(ComplexHeatmap)
 library(cowplot)
 library(ggplot2)
@@ -702,6 +703,45 @@ Lamp5_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/st
 Astro_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Astro_Limma_DEG_only_stat_sig.csv")
 Peri_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Peri_Limma_DEG_only_stat_sig.csv")
 Endo_Limma_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Endo_Limma_DEG_only_stat_sig.csv")
+
+################################################################################
+# EdgeR Analysis
+# By Viktoria Haghani
+
+# Subset Seurat object 
+#seurat_to_edgeR_object <- subset(experiment.aggregate, subset = seurat_cluster == 0)
+
+# Generate a count matrix 
+counts <- as.matrix(experiment.aggregate@assays$RNA@counts)
+counts <- counts[Matrix::rowSums(counts >= 1) >= 1, ]
+# Subset the meta data for filtered gene/cells
+metadata <- experiment.aggregate@meta.data
+metadata <- metadata[,c("nCount_RNA", "celltype.call")]
+metadata <- metadata[colnames(counts),]
+
+# Make single cell experiment
+sce <- SingleCellExperiment(assays = counts, 
+                            colData = metadata)
+
+# Convert to edgR object
+dge <- convertTo(sce, type="edgeR", assay.type = 1)
+meta_dge <- dge$samples
+meta_dge <- meta_dge[,c("lib.size","norm.factors")]
+meta_dge <- cbind(meta_dge, metadata)
+meta_dge$group <- factor(meta_dge$cell_info)
+meta_dge$group <- relevel(meta_dge$group, "KO")
+dge$samples <- meta_dge
+
+# Model fit
+dge <- calcNormFactors(dge)
+design <- model.matrix(~0+group, data=dge$samples)
+dge <- estimateDisp(dge, design = design)    
+fit <- glmQLFit(dge, design = design)
+
+# Differential expression testing
+my.contrasts <- makeContrasts(MUT_vs_WT = MUT_M_P30_CORT-WT_M_P30_CORT, levels=design)
+qlf.contrast <- glmQLFTest(fit, contrast=my.contrasts[,"MUT_vs_WT"])
+head(qlf.contrast$table)
 
 ################################################################################
 # DESeq2 Analysis
