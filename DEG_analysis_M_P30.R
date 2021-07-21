@@ -10,6 +10,7 @@ library(ggVennDiagram)
 library(edgeR)
 library(udunits2)
 library(scran)
+library(Rcpp)
 
 ################################################################################
 # Visualization and data preparation
