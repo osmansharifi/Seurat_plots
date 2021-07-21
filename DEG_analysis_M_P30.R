@@ -1273,8 +1273,8 @@ Endo_EdgeR_stat_sig <- subset(x = qlf.contrast.all.genes$table, subset = FDR < 0
 write.csv(Endo_EdgeR_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Endo_EdgeR_DEG_only_stat_sig.csv")
 
 # Read in data to work with for EdgeR analysis (so analysis does not need to be rerun)
-L2_3_IT_EdgeR_stat_sig <- read.csv(file = "~~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L2_3_IT_EdgeR_DEG_only_stat_sig.csv")
-L6_EdgeR_stat_sig <- read.csv(file = "~~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L6_EdgeR_DEG_only_stat_sig.csv")
+L2_3_IT_EdgeR_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L2_3_IT_EdgeR_DEG_only_stat_sig.csv")
+L6_EdgeR_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L6_EdgeR_DEG_only_stat_sig.csv")
 Sst_EdgeR_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sst_EdgeR_DEG_only_stat_sig.csv")
 L5_EdgeR_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L5_EdgeR_DEG_only_stat_sig.csv")
 L4_EdgeR_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/L4_EdgeR_DEG_only_stat_sig.csv")
