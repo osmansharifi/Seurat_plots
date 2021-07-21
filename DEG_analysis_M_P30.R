@@ -1434,7 +1434,8 @@ Endo_EdgeR_gene_list <- Endo_EdgeR_stat_sig$X
 
 # Venn Diagram for Limma vs. DESeq2 per cluster
 L2_3_IT_Limma_vs_DESeq2_venn_list <- list(L2_3_IT_Limma_gene_list, L2_3_IT_DESeq2_gene_list)
-L2_3_IT_Limma_vs_DESeq2_venn <- ggVennDiagram(L2_3_IT_Limma_vs_DESeq2_venn_list[1:2], label_alpha = 0, category.names = c("Limma", "DESeq2")) +
+L2_3_IT_Limma_vs_DESeq2_venn <- ggVennDiagram(L2_3_IT_Limma_vs_DESeq2_venn_list, set_color = c("black", "black"), lwd = 0.8, lty = 1, label_alpha = 0, category.names = c("Limma", "DESeq2")) +
+  ggplot2::scale_fill_gradient(low = "white", high = "blue") +
   ggtitle("Differentially Expressed Genes Identified by Limma and DESeq2 for L2_3_IT")
 ggsave("L2_3_IT_Limma_vs_DESeq2_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
 
