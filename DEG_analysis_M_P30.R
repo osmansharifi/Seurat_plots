@@ -1384,56 +1384,56 @@ Endo_DESeq2_DEG_stat_sig <- read.csv(file = "~/GitHub/snRNA-seq-pipeline/DEG_dat
 # By Viktoria Haghani
 
 # List of genes differentially expressed per cluster for Limma
-L2_3_IT_Limma_gene_list <- list(L2_3_IT_Limma_stat_sig$X)
-L6_Limma_gene_list <- list(L6_Limma_stat_sig$X)
-Sst_Limma_gene_list <- list(Sst_Limma_stat_sig$X)
-L5_Limma_gene_list <- list(L5_Limma_stat_sig$X)
-L4_Limma_gene_list <- list(L4_Limma_stat_sig$X)
-Pvalb_Limma_gene_list <- list(Pvalb_Limma_stat_sig$X)
-Sncg_Limma_gene_list <- list(Sncg_Limma_stat_sig$X)
-Non_neuronal_Limma_gene_list <- list(Non_neuronal_Limma_stat_sig$X)
-Oligo_Limma_gene_list <- list(Oligo_Limma_stat_sig$X)
-Vip_Limma_gene_list <- list(Vip_Limma_stat_sig$X)
-Lamp5_Limma_gene_list <- list(Lamp5_Limma_stat_sig$X)
-Astro_Limma_gene_list <- list(Astro_Limma_stat_sig$X)
-Peri_Limma_gene_list <- list(Peri_Limma_stat_sig$X)
-Endo_Limma_gene_list <- list(Endo_Limma_stat_sig$X)
+L2_3_IT_Limma_gene_list <- L2_3_IT_Limma_stat_sig$X
+L6_Limma_gene_list <- L6_Limma_stat_sig$X
+Sst_Limma_gene_list <- Sst_Limma_stat_sig$X
+L5_Limma_gene_list <- L5_Limma_stat_sig$X
+L4_Limma_gene_list <- L4_Limma_stat_sig$X
+Pvalb_Limma_gene_list <- Pvalb_Limma_stat_sig$X
+Sncg_Limma_gene_list <- Sncg_Limma_stat_sig$X
+Non_neuronal_Limma_gene_list <- Non_neuronal_Limma_stat_sig$X
+Oligo_Limma_gene_list <- Oligo_Limma_stat_sig$X
+Vip_Limma_gene_list <- Vip_Limma_stat_sig$X
+Lamp5_Limma_gene_list <- Lamp5_Limma_stat_sig$X
+Astro_Limma_gene_list <- Astro_Limma_stat_sig$X
+Peri_Limma_gene_list <- Peri_Limma_stat_sig$X
+Endo_Limma_gene_list <- Endo_Limma_stat_sig$X
 
 # List of genes differentially expressed per cluster for DESeq2
-L2_3_IT_DESeq2_gene_list <- list(L2_3_IT_DESeq2_DEG_stat_sig$X)
-L6_DESeq2_gene_list <- list(L6_DESeq2_DEG_stat_sig$X)
-Sst_DESeq2_gene_list <- list(Sst_DESeq2_DEG_stat_sig$X)
-L5_DESeq2_gene_list <- list(L5_DESeq2_DEG_stat_sig$X)
-L4_DESeq2_gene_list <- list(L4_DESeq2_DEG_stat_sig$X)
-Pvalb_DESeq2_gene_list <- list(Pvalb_DESeq2_DEG_stat_sig$X)
-Sncg_DESeq2_gene_list <- list(Sncg_DESeq2_DEG_stat_sig$X)
-Non_neuronal_DESeq2_gene_list <- list(Non_neuronal_DESeq2_DEG_stat_sig$X)
-Oligo_DESeq2_gene_list <- list(Oligo_DESeq2_DEG_stat_sig$X)
-Vip_DESeq2_gene_list <- list(Vip_DESeq2_DEG_stat_sig$X)
-Lamp5_DESeq2_gene_list <- list(Lamp5_DESeq2_DEG_stat_sig$X)
-Astro_DESeq2_gene_list <- list(Astro_DESeq2_DEG_stat_sig$X)
-Peri_DESeq2_gene_list <- list(Peri_DESeq2_DEG_stat_sig$X)
-Endo_DESeq2_gene_list <- list(Endo_DESeq2_DEG_stat_sig$X)
+L2_3_IT_DESeq2_gene_list <- L2_3_IT_DESeq2_DEG_stat_sig$X
+L6_DESeq2_gene_list <- L6_DESeq2_DEG_stat_sig$X
+Sst_DESeq2_gene_list <- Sst_DESeq2_DEG_stat_sig$X
+L5_DESeq2_gene_list <- L5_DESeq2_DEG_stat_sig$X
+L4_DESeq2_gene_list <- L4_DESeq2_DEG_stat_sig$X
+Pvalb_DESeq2_gene_list <- Pvalb_DESeq2_DEG_stat_sig$X
+Sncg_DESeq2_gene_list <- Sncg_DESeq2_DEG_stat_sig$X
+Non_neuronal_DESeq2_gene_list <- Non_neuronal_DESeq2_DEG_stat_sig$X
+Oligo_DESeq2_gene_list <- Oligo_DESeq2_DEG_stat_sig$X
+Vip_DESeq2_gene_list <- Vip_DESeq2_DEG_stat_sig$X
+Lamp5_DESeq2_gene_list <- Lamp5_DESeq2_DEG_stat_sig$X
+Astro_DESeq2_gene_list <- Astro_DESeq2_DEG_stat_sig$X
+Peri_DESeq2_gene_list <- Peri_DESeq2_DEG_stat_sig$X
+Endo_DESeq2_gene_list <- Endo_DESeq2_DEG_stat_sig$X
 
 # List of genes differentially expressed per cluster for EdgeR
-L2_3_IT_EdgeR_gene_list <- list(L2_3_IT_EdgeR_stat_sig$X)
-L6_EdgeR_gene_list <- list(L6_EdgeR_stat_sig$X)
-Sst_EdgeR_gene_list <- list(Sst_EdgeR_stat_sig$X)
-L5_EdgeR_gene_list <- list(L5_EdgeR_stat_sig$X)
-L4_EdgeR_gene_list <- list(L4_EdgeR_stat_sig$X)
-Pvalb_EdgeR_gene_list <- list(Pvalb_EdgeR_stat_sig$X)
-Sncg_EdgeR_gene_list <- list(Sncg_EdgeR_stat_sig$X)
-Non_neuronal_EdgeR_gene_list <- list(Non_neuronal_EdgeR_stat_sig$X)
-Oligo_EdgeR_gene_list <- list(Oligo_EdgeR_stat_sig$X)
-Vip_EdgeR_gene_list <- list(Vip_EdgeR_stat_sig$X)
-Lamp5_EdgeR_gene_list <- list(Lamp5_EdgeR_stat_sig$X)
-Astro_EdgeR_gene_list <- list(Astro_EdgeR_stat_sig$X)
-Peri_EdgeR_gene_list <- list(Peri_EdgeR_stat_sig$X)
-Endo_EdgeR_gene_list <- list(Endo_EdgeR_stat_sig$X)
+L2_3_IT_EdgeR_gene_list <- L2_3_IT_EdgeR_stat_sig$X
+L6_EdgeR_gene_list <- L6_EdgeR_stat_sig$X
+Sst_EdgeR_gene_list <- Sst_EdgeR_stat_sig$X
+L5_EdgeR_gene_list <- L5_EdgeR_stat_sig$X
+L4_EdgeR_gene_list <- L4_EdgeR_stat_sig$X
+Pvalb_EdgeR_gene_list <- Pvalb_EdgeR_stat_sig$X
+Sncg_EdgeR_gene_list <- Sncg_EdgeR_stat_sig$X
+Non_neuronal_EdgeR_gene_list <- Non_neuronal_EdgeR_stat_sig$X
+Oligo_EdgeR_gene_list <- Oligo_EdgeR_stat_sig$X
+Vip_EdgeR_gene_list <- Vip_EdgeR_stat_sig$X
+Lamp5_EdgeR_gene_list <- Lamp5_EdgeR_stat_sig$X
+Astro_EdgeR_gene_list <- Astro_EdgeR_stat_sig$X
+Peri_EdgeR_gene_list <- Peri_EdgeR_stat_sig$X
+Endo_EdgeR_gene_list <- Endo_EdgeR_stat_sig$X
 
 # Venn Diagram for Limma vs. DESeq2 per cluster
 L2_3_IT_Limma_vs_DESeq2_venn_list <- list(L2_3_IT_Limma_gene_list, L2_3_IT_DESeq2_gene_list)
-L2_3_IT_Limma_vs_DESeq2_venn <- ggVennDiagram(L2_3_IT_Limma_vs_DESeq2_venn_list, label_alpha = 0, category.names = c("Limma", "DESeq2")) +
+L2_3_IT_Limma_vs_DESeq2_venn <- ggVennDiagram(L2_3_IT_Limma_vs_DESeq2_venn_list[1:2], label_alpha = 0, category.names = c("Limma", "DESeq2")) +
   ggtitle("Differentially Expressed Genes Identified by Limma and DESeq2 for L2_3_IT")
 ggsave("L2_3_IT_Limma_vs_DESeq2_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
 
