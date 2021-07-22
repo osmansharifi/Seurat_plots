@@ -1,0 +1,36 @@
+---
+study: 
+   - human
+   - mouse
+   - PCB
+mut_status:
+   - WT
+   - MUT
+sex:
+   - M
+   - F
+timepoint:
+   - E18
+   - P30
+   - P60
+   - P120
+   - P150
+brain_region:
+   - hypothalamus
+   - cortex
+   - whole_brain
+cell_type:
+   - L2_3_IT
+   - L6
+   - Sst
+   - L5
+   - L4
+   - Pvalb
+   - Sncg
+   - Non_neuronal
+   - Oligo
+   - Vip
+   - Lamp5
+   - Astro
+   - Peri
+   - Endo
