@@ -1434,41 +1434,102 @@ Endo_EdgeR_gene_list <- Endo_EdgeR_stat_sig$X
 
 # Venn Diagram for Limma vs. DESeq2 per cluster
 L2_3_IT_Limma_vs_DESeq2_venn_list <- list(L2_3_IT_Limma_gene_list, L2_3_IT_DESeq2_gene_list)
-L2_3_IT_Limma_vs_DESeq2_venn <- ggVennDiagram(L2_3_IT_Limma_vs_DESeq2_venn_list, edge_size = 1, label_alpha = 0, category.names = c("Limma", "DESeq2")) +
+L2_3_IT_Limma_vs_DESeq2_venn <- ggVennDiagram(L2_3_IT_Limma_vs_DESeq2_venn_list, color = "black", lwd = 0.8, lty = 1, category.names = c("Limma", "DESeq2")) +
   ggplot2::scale_fill_gradient(low = "white", high = "blue") +
   ggtitle("Differentially Expressed Genes Identified by Limma and DESeq2 for L2_3_IT") +
   theme(plot.title = element_text(hjust = 0.5))
 ggsave("L2_3_IT_Limma_vs_DESeq2_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
 
-L2_3_IT_Limma_vs_DESeq2_venn_list <- list(L2_3_IT_Limma_gene_list, L2_3_IT_DESeq2_gene_list)
-venn <- Venn(L2_3_IT_Limma_vs_DESeq2_venn_list)
-data <- process_data(venn)
-ggplot() +
-  geom_sf(aes(fill = count), data = venn_region(data)) +
-  geom_sf(color="black", size = 1.25, data = venn_setedge(data), show.legend = FALSE) +
-  geom_sf_text(aes(label = c("Limma", "DESeq2")), fontface = "bold", data = venn_setlabel(data)) +
-  geom_sf_label(aes(label = count), data = venn_region(data), alpha = 0) +
+L6_Limma_vs_DESeq2_venn_list <- list(L6_Limma_gene_list, L6_DESeq2_gene_list)
+L6_Limma_vs_DESeq2_venn <- ggVennDiagram(L6_Limma_vs_DESeq2_venn_list, color = "black", lwd = 0.8, lty = 1, category.names = c("Limma", "DESeq2")) +
   ggplot2::scale_fill_gradient(low = "white", high = "blue") +
-  theme_void()
+  ggtitle("Differentially Expressed Genes Identified by Limma and DESeq2 for L6") +
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("L6_Limma_vs_DESeq2_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
 
+Sst_Limma_vs_DESeq2_venn_list <- list(Sst_Limma_gene_list, Sst_DESeq2_gene_list)
+Sst_Limma_vs_DESeq2_venn <- ggVennDiagram(Sst_Limma_vs_DESeq2_venn_list, color = "black", lwd = 0.8, lty = 1, category.names = c("Limma", "DESeq2")) +
+  ggplot2::scale_fill_gradient(low = "white", high = "blue") +
+  ggtitle("Differentially Expressed Genes Identified by Limma and DESeq2 for Sst") +
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("Sst_Limma_vs_DESeq2_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
 
-  
+L5_Limma_vs_DESeq2_venn_list <- list(L5_Limma_gene_list, L5_DESeq2_gene_list)
+L5_Limma_vs_DESeq2_venn <- ggVennDiagram(L5_Limma_vs_DESeq2_venn_list, color = "black", lwd = 0.8, lty = 1, category.names = c("Limma", "DESeq2")) +
+  ggplot2::scale_fill_gradient(low = "white", high = "blue") +
+  ggtitle("Differentially Expressed Genes Identified by Limma and DESeq2 for L5") +
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("L5_Limma_vs_DESeq2_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
 
+L4_Limma_vs_DESeq2_venn_list <- list(L4_Limma_gene_list, L4_DESeq2_gene_list)
+L4_Limma_vs_DESeq2_venn <- ggVennDiagram(L4_Limma_vs_DESeq2_venn_list, color = "black", lwd = 0.8, lty = 1, category.names = c("Limma", "DESeq2")) +
+  ggplot2::scale_fill_gradient(low = "white", high = "blue") +
+  ggtitle("Differentially Expressed Genes Identified by Limma and DESeq2 for L4") +
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("L4_Limma_vs_DESeq2_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
 
-L2_3_IT_Limma_vs_DESeq2_venn <- draw.venn(L2_3_IT_Limma_gene_list[[1]], L2_3_IT_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for L2_3_IT", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/L2_3_IT_Limma_vs_DESeq2_venn.pdf")
-L6_Limma_vs_DESeq2_venn <- draw.venn(L6_Limma_gene_list[[1]], L6_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for L6", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/L6_Limma_vs_DESeq2_venn.pdf")
-Sst_Limma_vs_DESeq2_venn <- draw.venn(Sst_Limma_gene_list[[1]], Sst_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Sst", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Sst_Limma_vs_DESeq2_venn.pdf")
-L5_Limma_vs_DESeq2_venn <- draw.venn(L5_Limma_gene_list[[1]], L5_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for L5", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/L5_Limma_vs_DESeq2_venn.pdf")
-L4_Limma_vs_DESeq2_venn <- draw.venn(L4_Limma_gene_list[[1]], L4_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for L4", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/L4_Limma_vs_DESeq2_venn.pdf")
-Pvalb_Limma_vs_DESeq2_venn <- draw.venn(Pvalb_Limma_gene_list[[1]], Pvalb_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Pvalb", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Pvalb_Limma_vs_DESeq2_venn.pdf")
-Sncg_Limma_vs_DESeq2_venn <- draw.venn(Sncg_Limma_gene_list[[1]], Sncg_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Sncg", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Sncg_Limma_vs_DESeq2_venn.pdf")
-Non_neuronal_Limma_vs_DESeq2_venn <- draw.venn(Non_neuronal_Limma_gene_list[[1]], Non_neuronal_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Non_neuronal", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Non_neuronal_Limma_vs_DESeq2_venn.pdf")
-Oligo_Limma_vs_DESeq2_venn <- draw.venn(Oligo_Limma_gene_list[[1]], Oligo_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Oligo", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Oligo_Limma_vs_DESeq2_venn.pdf")
-Vip_Limma_vs_DESeq2_venn <- draw.venn(Vip_Limma_gene_list[[1]], Vip_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Vip", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Vip_Limma_vs_DESeq2_venn.pdf")
-Lamp5_Limma_vs_DESeq2_venn <- draw.venn(Lamp5_Limma_gene_list[[1]], Lamp5_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Lamp5", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Lamp5_Limma_vs_DESeq2_venn.pdf")
-Astro_Limma_vs_DESeq2_venn <- draw.venn(Astro_Limma_gene_list[[1]], Astro_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Astro", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Astro_Limma_vs_DESeq2_venn.pdf")
-Peri_Limma_vs_DESeq2_venn <- draw.venn(Peri_Limma_gene_list[[1]], Peri_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Peri", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Peri_Limma_vs_DESeq2_venn.pdf")
-Endo_Limma_vs_DESeq2_venn <- draw.venn(Endo_Limma_gene_list[[1]], Endo_DESeq2_gene_list[[1]], NULL, xtitle = "Limma", ytitle = "DESeq2", x_c = "green", y_c = "blue", title="Differentially Expressed Genes Identified by Limma and DESeq2 for Endo", nrtype="abs", subtitle = "", output = "pdf", filename = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams/Endo_Limma_vs_DESeq2_venn.pdf")
+Pvalb_Limma_vs_DESeq2_venn_list <- list(Pvalb_Limma_gene_list, Pvalb_DESeq2_gene_list)
+Pvalb_Limma_vs_DESeq2_venn <- ggVennDiagram(Pvalb_Limma_vs_DESeq2_venn_list, color = "black", lwd = 0.8, lty = 1, category.names = c("Limma", "DESeq2")) +
+  ggplot2::scale_fill_gradient(low = "white", high = "blue") +
+  ggtitle("Differentially Expressed Genes Identified by Limma and DESeq2 for Pvalb") +
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("Pvalb_Limma_vs_DESeq2_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
+
+Sncg_Limma_vs_DESeq2_venn_list <- list(Sncg_Limma_gene_list, Sncg_DESeq2_gene_list)
+Sncg_Limma_vs_DESeq2_venn <- ggVennDiagram(Sncg_Limma_vs_DESeq2_venn_list, color = "black", lwd = 0.8, lty = 1, category.names = c("Limma", "DESeq2")) +
+  ggplot2::scale_fill_gradient(low = "white", high = "blue") +
+  ggtitle("Differentially Expressed Genes Identified by Limma and DESeq2 for Sncg") +
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("Sncg_Limma_vs_DESeq2_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
+
+Non_neuronal_Limma_vs_DESeq2_venn_list <- list(Non_neuronal_Limma_gene_list, Non_neuronal_DESeq2_gene_list)
+Non_neuronal_Limma_vs_DESeq2_venn <- ggVennDiagram(Non_neuronal_Limma_vs_DESeq2_venn_list, color = "black", lwd = 0.8, lty = 1, category.names = c("Limma", "DESeq2")) +
+  ggplot2::scale_fill_gradient(low = "white", high = "blue") +
+  ggtitle("Differentially Expressed Genes Identified by Limma and DESeq2 for Non_neuronal") +
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("Non_neuronal_Limma_vs_DESeq2_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
+
+Oligo_Limma_vs_DESeq2_venn_list <- list(Oligo_Limma_gene_list, Oligo_DESeq2_gene_list)
+Oligo_Limma_vs_DESeq2_venn <- ggVennDiagram(Oligo_Limma_vs_DESeq2_venn_list, color = "black", lwd = 0.8, lty = 1, category.names = c("Limma", "DESeq2")) +
+  ggplot2::scale_fill_gradient(low = "white", high = "blue") +
+  ggtitle("Differentially Expressed Genes Identified by Limma and DESeq2 for Oligo") +
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("Oligo_Limma_vs_DESeq2_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
+
+Vip_Limma_vs_DESeq2_venn_list <- list(Vip_Limma_gene_list, Vip_DESeq2_gene_list)
+Vip_Limma_vs_DESeq2_venn <- ggVennDiagram(Vip_Limma_vs_DESeq2_venn_list, color = "black", lwd = 0.8, lty = 1, category.names = c("Limma", "DESeq2")) +
+  ggplot2::scale_fill_gradient(low = "white", high = "blue") +
+  ggtitle("Differentially Expressed Genes Identified by Limma and DESeq2 for Vip") +
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("Vip_Limma_vs_DESeq2_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
+
+Lamp5_Limma_vs_DESeq2_venn_list <- list(Lamp5_Limma_gene_list, Lamp5_DESeq2_gene_list)
+Lamp5_Limma_vs_DESeq2_venn <- ggVennDiagram(Lamp5_Limma_vs_DESeq2_venn_list, color = "black", lwd = 0.8, lty = 1, category.names = c("Limma", "DESeq2")) +
+  ggplot2::scale_fill_gradient(low = "white", high = "blue") +
+  ggtitle("Differentially Expressed Genes Identified by Limma and DESeq2 for Lamp5") +
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("Lamp5_Limma_vs_DESeq2_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
+
+Astro_Limma_vs_DESeq2_venn_list <- list(Astro_Limma_gene_list, Astro_DESeq2_gene_list)
+Astro_Limma_vs_DESeq2_venn <- ggVennDiagram(Astro_Limma_vs_DESeq2_venn_list, color = "black", lwd = 0.8, lty = 1, category.names = c("Limma", "DESeq2")) +
+  ggplot2::scale_fill_gradient(low = "white", high = "blue") +
+  ggtitle("Differentially Expressed Genes Identified by Limma and DESeq2 for Astro") +
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("Astro_Limma_vs_DESeq2_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
+
+Peri_Limma_vs_DESeq2_venn_list <- list(Peri_Limma_gene_list, Peri_DESeq2_gene_list)
+Peri_Limma_vs_DESeq2_venn <- ggVennDiagram(Peri_Limma_vs_DESeq2_venn_list, color = "black", lwd = 0.8, lty = 1, category.names = c("Limma", "DESeq2")) +
+  ggplot2::scale_fill_gradient(low = "white", high = "blue") +
+  ggtitle("Differentially Expressed Genes Identified by Limma and DESeq2 for Peri") +
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("Peri_Limma_vs_DESeq2_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
+
+Endo_Limma_vs_DESeq2_venn_list <- list(Endo_Limma_gene_list, Endo_DESeq2_gene_list)
+Endo_Limma_vs_DESeq2_venn <- ggVennDiagram(Endo_Limma_vs_DESeq2_venn_list, color = "black", lwd = 0.8, lty = 1, category.names = c("Limma", "DESeq2")) +
+  ggplot2::scale_fill_gradient(low = "white", high = "blue") +
+  ggtitle("Differentially Expressed Genes Identified by Limma and DESeq2 for Endo") +
+  theme(plot.title = element_text(hjust = 0.5))
+ggsave("Endo_Limma_vs_DESeq2_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
 
 # Venn Diagram for Limma vs. EdgeR per cluster
 L2_3_IT_Limma_vs_EdgeR_venn <- draw.venn(list_x, list_y, list_z, subtitle="Example diagram 1", nrtype="abs")
