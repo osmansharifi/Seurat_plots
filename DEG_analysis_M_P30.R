@@ -21,7 +21,8 @@ load('rett_P30_with_labels_proportions.rda')
 experiment.aggregate
 Idents(experiment.aggregate) <- 'celltype.call'
 # Values represent cell numbers for each cell type
-before_subset_cell_counts <- table(Idents(experiment.aggregate), experiment.aggregate$orig.ident) 
+before_subset_cell_counts <- table(Idents(experiment.aggregate), experiment.aggregate$orig.ident)
+experiment.aggregate <- RenameIdents(object = experiment.aggregate, 'Non-neuronal' = 'Non_neuronal')
 
 ## Subset cells in G1 and visualize UMAP
 # Visualize UMAP
@@ -578,7 +579,7 @@ write.csv(Sncg_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/
 Sncg_Limma_stat_sig <- subset(x = Sncg_toptable, subset = adj.P.Val < 0.05)
 write.csv(Sncg_Limma_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sncg_Limma_DEG_only_stat_sig.csv")
 
-clusterNon_neuronal <- subset(experiment.aggregate, idents = "Non-neuronal")
+clusterNon_neuronal <- subset(experiment.aggregate, idents = "Non_neuronal")
 expr_Non_neuronal <- as.matrix(GetAssayData(clusterNon_neuronal))
 # Filter out genes that are 0 for every cell in this cluster
 bad_Non_neuronal <- which(rowSums(expr_Non_neuronal) == 0)
@@ -991,7 +992,7 @@ Sncg_EdgeR_stat_sig <- subset(x = qlf.contrast.all.genes$table, subset = FDR < 0
 write.csv(Sncg_EdgeR_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sncg_EdgeR_DEG_only_stat_sig.csv")
 
 # Subset Seurat object for the cluster
-Non_neuronal_edgeR_obj <- subset(experiment.aggregate, subset = celltype.call == "Non-neuronal")
+Non_neuronal_edgeR_obj <- subset(experiment.aggregate, subset = celltype.call == "Non_neuronal")
 # Generate a count matrix 
 counts <- as.matrix(Non_neuronal_edgeR_obj@assays$RNA@counts)
 counts <- counts[Matrix::rowSums(counts >= 1) >= 1, ]
@@ -1329,7 +1330,7 @@ write.csv(Sncg_DESeq2_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_gene
 Sncg_DESeq2_DEG_stat_sig <- subset(x = Sncg_DESeq2_DEG, subset = p_val_adj < 0.05)
 write.csv(Sncg_DESeq2_DEG_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Sncg_DESeq2_DEG_stat_sig.csv")
 
-Non_neuronal_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Non-neuronal", test.use = "DESeq2", slot = "counts")
+Non_neuronal_DESeq2_DEG <- FindMarkers(experiment.aggregate, ident.1 = "MUT_M_P30_CORT", group.by = "new.ident", subset.ident = "Non_neuronal", test.use = "DESeq2", slot = "counts")
 write.csv(Non_neuronal_DESeq2_DEG, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/Non_neuronal_DESeq2_DEG_all_genes.csv")
 Non_neuronal_DESeq2_DEG_stat_sig <- subset(x = Non_neuronal_DESeq2_DEG, subset = p_val_adj < 0.05)
 write.csv(Non_neuronal_DESeq2_DEG_stat_sig, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/stat_sig/Non_neuronal_DESeq2_DEG_stat_sig.csv")
@@ -1403,7 +1404,7 @@ Lamp5_Limma_gene_list <- Lamp5_Limma_stat_sig$X
 Astro_Limma_gene_list <- Astro_Limma_stat_sig$X
 Peri_Limma_gene_list <- Peri_Limma_stat_sig$X
 Endo_Limma_gene_list <- Endo_Limma_stat_sig$X
-all_Limma_genes <- unique(c(L2_3_IT_Limma_stat_sig$X,
+unique_Limma_genes <- unique(c(L2_3_IT_Limma_stat_sig$X,
                      L6_Limma_stat_sig$X,
                      Sst_Limma_stat_sig$X,
                      L5_Limma_stat_sig$X, 
@@ -1415,8 +1416,20 @@ all_Limma_genes <- unique(c(L2_3_IT_Limma_stat_sig$X,
                      Lamp5_Limma_stat_sig$X,
                      Astro_Limma_stat_sig$X,
                      Peri_Limma_stat_sig$X,
-                     Endo_Limma_stat_sig$X
-                     ))
+                     Endo_Limma_stat_sig$X))
+all_Limma_genes_not_unique <- c(L2_3_IT_Limma_stat_sig$X,
+                            L6_Limma_stat_sig$X,
+                            Sst_Limma_stat_sig$X,
+                            L5_Limma_stat_sig$X, 
+                            L4_Limma_stat_sig$X,
+                            Pvalb_Limma_stat_sig$X,
+                            Non_neuronal_Limma_stat_sig$X,
+                            Oligo_Limma_stat_sig$X,
+                            Vip_Limma_stat_sig$X,
+                            Lamp5_Limma_stat_sig$X,
+                            Astro_Limma_stat_sig$X,
+                            Peri_Limma_stat_sig$X,
+                            Endo_Limma_stat_sig$X)
 
 # List of genes differentially expressed per cluster for DESeq2
 L2_3_IT_DESeq2_gene_list <- L2_3_IT_DESeq2_DEG_stat_sig$X
@@ -1432,7 +1445,7 @@ Lamp5_DESeq2_gene_list <- Lamp5_DESeq2_DEG_stat_sig$X
 Astro_DESeq2_gene_list <- Astro_DESeq2_DEG_stat_sig$X
 Peri_DESeq2_gene_list <- Peri_DESeq2_DEG_stat_sig$X
 Endo_DESeq2_gene_list <- Endo_DESeq2_DEG_stat_sig$X
-all_DESeq2_genes <- unique(c(L2_3_IT_DESeq2_DEG_stat_sig$X,
+unique_DESeq2_genes <- unique(c(L2_3_IT_DESeq2_DEG_stat_sig$X,
                              L6_DESeq2_DEG_stat_sig$X,
                              Sst_DESeq2_DEG_stat_sig$X,
                              L5_DESeq2_DEG_stat_sig$X, 
@@ -1444,8 +1457,7 @@ all_DESeq2_genes <- unique(c(L2_3_IT_DESeq2_DEG_stat_sig$X,
                              Lamp5_DESeq2_DEG_stat_sig$X,
                              Astro_DESeq2_DEG_stat_sig$X,
                              Peri_DESeq2_DEG_stat_sig$X,
-                             Endo_DESeq2_DEG_stat_sig$X
-                             ))
+                             Endo_DESeq2_DEG_stat_sig$X))
 
 # List of genes differentially expressed per cluster for EdgeR
 L2_3_IT_EdgeR_gene_list <- L2_3_IT_EdgeR_stat_sig$X
@@ -1461,7 +1473,7 @@ Lamp5_EdgeR_gene_list <- Lamp5_EdgeR_stat_sig$X
 Astro_EdgeR_gene_list <- Astro_EdgeR_stat_sig$X
 Peri_EdgeR_gene_list <- Peri_EdgeR_stat_sig$X
 Endo_EdgeR_gene_list <- Endo_EdgeR_stat_sig$X
-all_EdgeR_genes <- unique(c(L2_3_IT_EdgeR_stat_sig$X,
+unique_EdgeR_genes <- unique(c(L2_3_IT_EdgeR_stat_sig$X,
                             L6_EdgeR_stat_sig$X,
                             Sst_EdgeR_stat_sig$X,
                             L5_EdgeR_stat_sig$X, 
@@ -1548,12 +1560,12 @@ Lamp5_venn <- ggVennDiagram(Lamp5_venn_list, color = "black", lwd = 0.8, lty = 1
   theme(plot.title = element_text(hjust = 0.5))
 ggsave("Lamp5_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
 
-all_venn_list <- list(all_Limma_genes, all_EdgeR_genes, all_DESeq2_genes)
-all_venn <- ggVennDiagram(all_venn_list, color = "black", lwd = 0.8, lty = 1, category.names = c("Limma", "EdgeR", "DESeq2")) +
+unique_venn_list <- list(unique_Limma_genes, unique_EdgeR_genes, unique_DESeq2_genes)
+unique_genes_venn <- ggVennDiagram(unique_venn_list, color = "black", lwd = 0.8, lty = 1, category.names = c("Limma", "EdgeR", "DESeq2")) +
   ggplot2::scale_fill_gradient(low = "white", high = "blue") +
   ggtitle("Unique Differentially Expressed Genes Identified for All Cell Types") +
   theme(plot.title = element_text(hjust = 0.5))
-ggsave("all_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
+ggsave("unique_genes_venn.pdf", device = "pdf", path = "~/GitHub/snRNA-seq-pipeline/DEG_data/venn_diagrams")
 
 # Show genes identified by all methods for cell types
 Reduce(intersect, list(L2_3_IT_Limma_gene_list, L2_3_IT_DESeq2_gene_list, L2_3_IT_EdgeR_gene_list))
