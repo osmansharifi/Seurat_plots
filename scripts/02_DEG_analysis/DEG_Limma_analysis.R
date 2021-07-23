@@ -9,13 +9,13 @@ library(glue)
 
 # Paths
 data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proportions.rda"
-DEG_data_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma"
+DEG_data_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma/"
 
 # Lists
 cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 
 # Other variables
-metadata_info <- "Mice, Male, P30"
+metadata_info <- "M_MUT_and_WT_M_P30_CORT"
 
 ################################################################################
 ## Data preparation
@@ -30,49 +30,32 @@ Idents(experiment.aggregate) <- 'celltype.call'
 experiment.aggregate <- RenameIdents(object = experiment.aggregate, 'Non-neuronal' = 'Non_neuronal')
 # We want to get rid of the G2M and S phase cells, so subset to keep only G1 cells
 experiment.aggregate <- subset(x = experiment.aggregate, subset = cell.cycle == "G1")
-# Set threshold to 0.5%
+# Set mitochondrial threshold to 0.5%
 experiment.aggregate <- subset(x = experiment.aggregate, subset = percent.mito <= "0.5")
 
 ################################################################################
 ## Limma Analysis
 
 for (cell_type in cell_types){
-  assign(paste0("cluster_", cell_type), subset(experiment.aggregate, idents = cell_type))
+  cluster_cell <- subset(experiment.aggregate, idents = cell_type)
+  expr_cell <- as.matrix(GetAssayData(cluster_cell))
+  # Filter out genes that are 0 for every cell in this cluster
+  bad_cell <- which(rowSums(expr_cell) == 0)
+  expr_cell <- expr_cell[-bad_cell,]
+  mm_cell <- model.matrix(~0 + orig.ident, data = cluster_cell@meta.data)
+  # Fit the model
+  fit_cell <- lmFit(expr_cell, mm_cell)
+  # Means in each sample for each gene
+  head(coef(fit_cell)) 
+  # Contrast WT-MUT accounting for repliicates
+  contr_cell<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fit_cell)))
+  tmp_cell <- contrasts.fit(fit_cell, contrasts = contr_cell)
+  # Use empirical Bayes to calculate the t-statistics
+  tmp_cell <- eBayes(tmp_cell)
+  # Find top 50000 DE genes (should cover all genes)
+  cell_toptable <- topTable(tmp_cell, sort.by = "P", n = 50000) 
+  # Subset data to remove all non-significant genes
+  cell_Limma_DEG <- subset(x = cell_toptable, subset = adj.P.Val < 0.05)
+  # Write data to CSV so analysis does not need to be rerun when working with data
+  write.csv(cell_Limma_DEG, file = glue(DEG_data_dir, cell_type, "_", metadata_info, "_Limma_DEG.csv"))
 }
-
-expr_CELL_TYPE <- as.matrix(GetAssayData(cluster_CELL_TYPE))
-# Filter out genes that are 0 for every cell in this cluster
-bad_CELL_TYPE <- which(rowSums(expr_CELL_TYPE) == 0)
-expr_CELL_TYPE <- expr_CELL_TYPE[-bad_CELL_TYPE,]
-mm_CELL_TYPE <- model.matrix(~0 + orig.ident, data = clusterL2_3_IT@meta.data)
-fit_CELL_TYPE <- lmFit(expr_CELL_TYPE, mm_CELL_TYPE)
-# Means in each sample for each gene
-head(coef(fitL2_3_IT)) 
-# Contrast WT-MUT accounting for repliicates
-contr_CELL_TYPE<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitL2_3_IT)))
-tmp_CELL_TYPE <- contrasts.fit(fitL2_3_IT, contrasts = contr_CELL_TYPE)
-tmp_CELL_TYPE <- eBayes(tmp_CELL_TYPE)
-# Find top 50000 DE genes (should cover all genes)
-CELL_TYPE_toptable <- topTable(tmp_CELL_TYPE, sort.by = "P", n = 50000) 
-# Subset data to remove all non-significant genes
-CELL_TYPE_Limma_DEG <- subset(x = L2_3_IT_toptable, subset = adj.P.Val < 0.05)
-# Write data to CSV so analysis does not need to be rerun when working with data
-write.csv(CELL_TYPE_Limma_DEG, file = DEG_data_dir/CELL_TYPE_Limma_DEG.csv)
-
-
-
-clusterL2_3_IT <- subset(experiment.aggregate, idents = "L2_3_IT")
-expr_L2_3_IT <- as.matrix(GetAssayData(clusterL2_3_IT))
-# Filter out genes that are 0 for every cell in this cluster
-bad_L2_3_IT <- which(rowSums(expr_L2_3_IT) == 0)
-expr_L2_3_IT <- expr_L2_3_IT[-bad_L2_3_IT,]
-mm_L2_3_IT <- model.matrix(~0 + orig.ident, data = clusterL2_3_IT@meta.data)
-fitL2_3_IT <- lmFit(expr_L2_3_IT, mm_L2_3_IT)
-head(coef(fitL2_3_IT)) # Means in each sample for each gene
-contr_L2_3_IT<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitL2_3_IT)))
-tmp_L2_3_IT <- contrasts.fit(fitL2_3_IT, contrasts = contr_L2_3_IT)
-tmp_L2_3_IT <- eBayes(tmp_L2_3_IT)
-L2_3_IT_toptable <- topTable(tmp_L2_3_IT, sort.by = "P", n = 50000) # Top 50000 DE genes (should cover all genes)
-L2_3_IT_Limma_stat_sig <- subset(x = L2_3_IT_toptable, subset = adj.P.Val < 0.05)
-write.csv(L2_3_IT_Limma_stat_sig, file = '~/GitHub/snRNA-seq-pipeline/L2_3_IT_Limma_test.csv')
-
