@@ -1,5 +1,6 @@
 library(Seurat)
 library(limma)
+library(glue)
 
 # By Osman Sharifi & Viktoria Haghani
 
@@ -36,7 +37,28 @@ experiment.aggregate <- subset(x = experiment.aggregate, subset = percent.mito <
 ## Limma Analysis
 
 for (cell_type in cell_types){
+  assign(paste0("cluster_", cell_type), subset(experiment.aggregate, idents = cell_type))
 }
+
+expr_CELL_TYPE <- as.matrix(GetAssayData(cluster_CELL_TYPE))
+# Filter out genes that are 0 for every cell in this cluster
+bad_CELL_TYPE <- which(rowSums(expr_CELL_TYPE) == 0)
+expr_CELL_TYPE <- expr_CELL_TYPE[-bad_CELL_TYPE,]
+mm_CELL_TYPE <- model.matrix(~0 + orig.ident, data = clusterL2_3_IT@meta.data)
+fit_CELL_TYPE <- lmFit(expr_CELL_TYPE, mm_CELL_TYPE)
+# Means in each sample for each gene
+head(coef(fitL2_3_IT)) 
+# Contrast WT-MUT accounting for repliicates
+contr_CELL_TYPE<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitL2_3_IT)))
+tmp_CELL_TYPE <- contrasts.fit(fitL2_3_IT, contrasts = contr_CELL_TYPE)
+tmp_CELL_TYPE <- eBayes(tmp_CELL_TYPE)
+# Find top 50000 DE genes (should cover all genes)
+CELL_TYPE_toptable <- topTable(tmp_CELL_TYPE, sort.by = "P", n = 50000) 
+# Subset data to remove all non-significant genes
+CELL_TYPE_Limma_DEG <- subset(x = L2_3_IT_toptable, subset = adj.P.Val < 0.05)
+# Write data to CSV so analysis does not need to be rerun when working with data
+write.csv(CELL_TYPE_Limma_DEG, file = DEG_data_dir/CELL_TYPE_Limma_DEG.csv)
+
 
 
 clusterL2_3_IT <- subset(experiment.aggregate, idents = "L2_3_IT")
@@ -51,7 +73,6 @@ contr_L2_3_IT<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT
 tmp_L2_3_IT <- contrasts.fit(fitL2_3_IT, contrasts = contr_L2_3_IT)
 tmp_L2_3_IT <- eBayes(tmp_L2_3_IT)
 L2_3_IT_toptable <- topTable(tmp_L2_3_IT, sort.by = "P", n = 50000) # Top 50000 DE genes (should cover all genes)
-write.csv(L2_3_IT_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L2_3_IT_limma_top_1000.csv")
 L2_3_IT_Limma_stat_sig <- subset(x = L2_3_IT_toptable, subset = adj.P.Val < 0.05)
 write.csv(L2_3_IT_Limma_stat_sig, file = '~/GitHub/snRNA-seq-pipeline/L2_3_IT_Limma_test.csv')
 
