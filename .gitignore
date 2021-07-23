@@ -5,4 +5,4 @@
 .DS_Store
 *.Rproj
 *.Rbuildignore
-data/
+raw_data/
