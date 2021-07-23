@@ -32,15 +32,6 @@ experiment.aggregate <- subset(x = experiment.aggregate, subset = cell.cycle == 
 # Set threshold to 0.5%
 experiment.aggregate <- subset(x = experiment.aggregate, subset = percent.mito <= "0.5")
 
-## Reorganize Seurat object identities for DEG analysis
-
-# Create only MUT and WT groups
-experiment.aggregate@meta.data$new.ident <- plyr::mapvalues(
-  x = experiment.aggregate@meta.data$orig.ident, 
-  from = c("MUT_M_P30_CORT1", "MUT_M_P30_CORT2", "WT_M_P30_CORT1", "WT_M_P30_CORT2"), 
-  to = c("MUT_M_P30_CORT", "MUT_M_P30_CORT", "WT_M_P30_CORT", "WT_M_P30_CORT")
-)
-
 ################################################################################
 ## Limma Analysis
 
@@ -59,7 +50,8 @@ head(coef(fitL2_3_IT)) # Means in each sample for each gene
 contr_L2_3_IT<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fitL2_3_IT)))
 tmp_L2_3_IT <- contrasts.fit(fitL2_3_IT, contrasts = contr_L2_3_IT)
 tmp_L2_3_IT <- eBayes(tmp_L2_3_IT)
-L2_3_IT_toptable <- topTable(tmp_L2_3_IT, sort.by = "P", n = 1000) # Top 1000 DE genes
+L2_3_IT_toptable <- topTable(tmp_L2_3_IT, sort.by = "P", n = 50000) # Top 50000 DE genes (should cover all genes)
 write.csv(L2_3_IT_toptable, file = "~/GitHub/snRNA-seq-pipeline/DEG_data/all_genes/L2_3_IT_limma_top_1000.csv")
 L2_3_IT_Limma_stat_sig <- subset(x = L2_3_IT_toptable, subset = adj.P.Val < 0.05)
-write.csv(L2_3_IT_Limma_stat_sig, file = DEG_data_dir/{file.csv})
+write.csv(L2_3_IT_Limma_stat_sig, file = '~/GitHub/snRNA-seq-pipeline/L2_3_IT_Limma_test.csv')
+
