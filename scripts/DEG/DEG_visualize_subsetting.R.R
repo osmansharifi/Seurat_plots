@@ -2,17 +2,22 @@ library(Seurat)
 library(cowplot)
 library(ggplot2)
 
-# Visualization and data preparation
 # By Osman Sharifi & Viktoria Haghani
 
 ################################################################################
+## Variables
 
-data_file <- "~/GitHub/snRNA-seq-pipeline/data/rett_P30_with_labels_proportions.rda"
+# Paths
+data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proportions.rda"
+data_vis_dir <- "~/GitHub/snRNA-seq-pipeline/figures/data_structure_visualization"
+
+# Lists
 cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 
 ################################################################################
+## Visualization and data preparation
 
-## Load in data
+# Load in data
 load('rett_P30_with_labels_proportions.rda')
 experiment.aggregate
 Idents(experiment.aggregate) <- 'celltype.call'
@@ -22,18 +27,20 @@ experiment.aggregate <- RenameIdents(object = experiment.aggregate, 'Non-neurona
 # Rename "Non-neuronal" as "Non_neuronal" for variable name usage
 experiment.aggregate <- RenameIdents(object = experiment.aggregate, 'Non-neuronal' = 'Non_neuronal')
 
-## Subset cells in G1 and visualize UMAP
+# Subset cells in G1 and visualize UMAP
 # Visualize UMAP
 pcs.use <- 10
 experiment.aggregate <- RunUMAP(experiment.aggregate, dims = 1:pcs.use)
 # This will show us total cells including those in G2M and S phase
-DimPlot(experiment.aggregate, reduction = "umap", group.by = "cell.cycle") +
+cell_type_grouping_including_G2M_and_S <- DimPlot(experiment.aggregate, reduction = "umap", group.by = "cell.cycle") +
   ggtitle("Cell Type Grouping Including G2M and S Phase Cells")
+ggsave("cell_type_grouping_including_G2M_and_S.pdf", device = "pdf", path = data_vis_dir)
 # We want to get rid of the G2M and S phase cells, so subset to keep only G1 cells
 experiment.aggregate <- subset(x = experiment.aggregate, subset = cell.cycle == "G1")
 # Generating a UMAP plot to validate that G2M and S phase cells were removed
-DimPlot(experiment.aggregate, reduction = "umap", group.by = "cell.cycle") +
+cell_type_grouping_for_subsetted_data_G1_only <- DimPlot(experiment.aggregate, reduction = "umap", group.by = "cell.cycle") +
   ggtitle("Cell Type Grouping for Subsetted Data (G1 Only)")
+ggsave("cell_type_grouping_for_subsetted_data_G1_only.pdf", device = "pdf", path = data_vis_dir)
 # Validate removal of G1 using phase
 DimPlot(experiment.aggregate, reduction = "umap", group.by = "Phase") +
   ggtitle("Cell Type Grouping for Subsetted Data from Phase")
