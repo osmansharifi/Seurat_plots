@@ -5,12 +5,21 @@ library(ggplot2)
 # Visualization and data preparation
 # By Osman Sharifi & Viktoria Haghani
 
+################################################################################
+
+data_file <- "~/GitHub/snRNA-seq-pipeline/data/rett_P30_with_labels_proportions.rda"
+cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
+
+################################################################################
+
 ## Load in data
 load('rett_P30_with_labels_proportions.rda')
 experiment.aggregate
 Idents(experiment.aggregate) <- 'celltype.call'
 # Values represent cell numbers for each cell type
 before_subset_cell_counts <- table(Idents(experiment.aggregate), experiment.aggregate$orig.ident)
+experiment.aggregate <- RenameIdents(object = experiment.aggregate, 'Non-neuronal' = 'Non_neuronal')
+# Rename "Non-neuronal" as "Non_neuronal" for variable name usage
 experiment.aggregate <- RenameIdents(object = experiment.aggregate, 'Non-neuronal' = 'Non_neuronal')
 
 ## Subset cells in G1 and visualize UMAP
