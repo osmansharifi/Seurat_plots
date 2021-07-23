@@ -1,0 +1,29 @@
+Study,Mutation_Status,Sex,Timepoint,Brain_Region,Data_File,,Key
+M,MUT,M,E18,WB,,,"Study: H = human, M = mouse, PCB = PCB"
+M,MUT,M,P30,HYP,,,"Mutation_Status: MUT = mutant, WT = wild type"
+M,MUT,M,P30,CORT,rett_P30_with_labels_proportions.rda,,"Sex: M = male, F = female"
+M,MUT,M,P60,HYP,,,"Brain_Region: HYP = hypothalamus, CORT = cortex, WB = whole brain"
+M,MUT,M,P60,CORT,,,
+M,MUT,M,P120,HYP,,,
+M,MUT,M,P120,CORT,,,
+M,MUT,F,E18,WB,,,
+M,MUT,F,P30,HYP,,,
+M,MUT,F,P30,CORT,,,
+M,MUT,F,P60,HYP,,,
+M,MUT,F,P60,CORT,,,
+M,MUT,F,P120,HYP,,,
+M,MUT,F,P120,CORT,,,
+M,WT,M,E18,WB,,,
+M,WT,M,P30,HYP,,,
+M,WT,M,P30,CORT,rett_P30_with_labels_proportions.rda,,
+M,WT,M,P60,HYP,,,
+M,WT,M,P60,CORT,,,
+M,WT,M,P120,HYP,,,
+M,WT,M,P120,CORT,,,
+M,WT,F,E18,WB,,,
+M,WT,F,P30,HYP,,,
+M,WT,F,P30,CORT,,,
+M,WT,F,P60,HYP,,,
+M,WT,F,P60,CORT,,,
+M,WT,F,P120,HYP,,,
+M,WT,F,P120,CORT,,,
