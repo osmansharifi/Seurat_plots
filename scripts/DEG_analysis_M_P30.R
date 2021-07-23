@@ -22,6 +22,7 @@ experiment.aggregate
 Idents(experiment.aggregate) <- 'celltype.call'
 # Values represent cell numbers for each cell type
 before_subset_cell_counts <- table(Idents(experiment.aggregate), experiment.aggregate$orig.ident)
+# Rename "Non-neuronal" as "Non_neuronal" for variable name usage
 experiment.aggregate <- RenameIdents(object = experiment.aggregate, 'Non-neuronal' = 'Non_neuronal')
 
 ## Subset cells in G1 and visualize UMAP
