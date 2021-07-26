@@ -8,8 +8,10 @@ library(ggplot2)
 ## Variables
 
 # Paths
-data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proportions.rda"
-data_vis_dir <- "~/GitHub/snRNA-seq-pipeline/figures/data_structure_visualization/M_MUT_and_WT_M_P30_CORT"
+#data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proportions.rda"
+data_file <- "/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/rett_P30_with_labels_proportions.rda"
+#data_vis_dir <- "~/GitHub/snRNA-seq-pipeline/figures/data_structure_visualization/M_MUT_and_WT_M_P30_CORT"
+data_vis_dir <- "/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/reanalyzed"
 
 # Lists
 cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
@@ -139,7 +141,7 @@ ggsave("cell_counts_after_subset.pdf", device = "pdf", path = data_vis_dir, widt
 ## Visualize clusters after G2M, S, and mt exclusion
 
 # Generate UMAP plot with cell types after G1 and mitochondrial subsetting
-cell_types_after_subsetting_G1_mt_subset <- DimPlot(experiment.aggregate, reduction = "umap", group.by = "celltype.call", label = FALSE) +
+cell_types_after_subsetting_G1_mt_subset <- DimPlot(experiment.aggregate, reduction = "umap", group.by = "celltype.call", label = TRUE) +
   ggtitle("Cell Types After G1 & mt Subsetting", subtitle = metadata_info) +
   theme(legend.text = element_text(size = 10)) +
   theme(plot.title = element_text(hjust = 0.5)) +
