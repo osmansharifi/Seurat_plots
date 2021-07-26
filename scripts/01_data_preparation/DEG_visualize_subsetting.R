@@ -8,8 +8,10 @@ library(ggplot2)
 ## Variables
 
 # Paths
-data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proportions.rda"
-data_vis_dir <- "~/GitHub/snRNA-seq-pipeline/figures/data_structure_visualization/M_MUT_and_WT_M_P30_CORT"
+#data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proportions.rda"
+data_file <- "/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/rett_P30_with_labels_proportions.rda"
+#data_vis_dir <- "~/GitHub/snRNA-seq-pipeline/figures/data_structure_visualization/M_MUT_and_WT_M_P30_CORT"
+data_vis_dir <- "/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/reanalyzed"
 
 # Lists
 cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
