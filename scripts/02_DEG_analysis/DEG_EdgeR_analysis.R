@@ -14,7 +14,9 @@ data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proporti
 DEG_data_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/EdgeR/"
 
 # Lists
-cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
+cell_types <- list("Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
+
+#"L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", 
 
 # Other variables
 metadata_info <- "M_MUT_and_WT_M_P30_CORT"
@@ -29,7 +31,7 @@ Idents(experiment.aggregate) <- 'celltype.call'
 
 # Prepare data
 # Rename "Non-neuronal" as "Non_neuronal" for variable name usage
-experiment.aggregate <- RenameIdents(object = experiment.aggregate, 'Non-neuronal' = 'Non_neuronal')
+experiment.aggregate <- RenameIdents(object = experiment.aggregate, "Non-neuronal" = "Non_neuronal")
 # We want to get rid of the G2M and S phase cells, so subset to keep only G1 cells
 experiment.aggregate <- subset(x = experiment.aggregate, subset = cell.cycle == "G1")
 # Set mitochondrial threshold to 0.5%
