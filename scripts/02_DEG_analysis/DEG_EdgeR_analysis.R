@@ -11,8 +11,9 @@ library(glue)
 
 # Paths
 
-data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_E18_with_labels_proportions.rda"
+# data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_E18_with_labels_proportions.rda"
 # data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proportions.rda"
+data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P60_with_labels_proportions.rda"
 
 DEG_data_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/EdgeR/"
 
