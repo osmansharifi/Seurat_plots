@@ -9,15 +9,18 @@ library(ggplot2)
 
 # Paths
 #data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proportions.rda"
-data_file <- "/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/rett_P30_with_labels_proportions.rda"
+#data_file <- "/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/rett_P30_with_labels_proportions.rda"
+data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_E18_with_labels_proportions.rda"
+
 #data_vis_dir <- "~/GitHub/snRNA-seq-pipeline/figures/data_structure_visualization/M_MUT_and_WT_M_P30_CORT"
-data_vis_dir <- "/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/reanalyzed"
+#data_vis_dir <- "/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/reanalyzed"
+data_vis_dir <- "~/GitHub/snRNA-seq-pipeline/figures/data_structure_visualization/M_MUT_and_WT_M_E18_WB"
 
 # Lists
 cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 
 # Other variables
-metadata_info <- "Mice, Male, P30"
+metadata_info <- "Mice, Male, E18, Whole Brain"
 
 ################################################################################
 ## Visualization and data preparation
@@ -161,8 +164,8 @@ ggsave("cell_type_by_orig_ident_after_subset.pdf", device = "pdf", path = data_v
 # Create only MUT and WT groups
 experiment.aggregate@meta.data$new.ident <- plyr::mapvalues(
   x = experiment.aggregate@meta.data$orig.ident, 
-  from = c("MUT_M_P30_CORT1", "MUT_M_P30_CORT2", "WT_M_P30_CORT1", "WT_M_P30_CORT2"), 
-  to = c("MUT_M_P30_CORT", "MUT_M_P30_CORT", "WT_M_P30_CORT", "WT_M_P30_CORT")
+  from = c("MUT_M_E18_WB1", "MUT_M_E18_WB2", "WT_M_E18_WB1", "WT_M_E18_WB2"), 
+  to = c("MUT_M_E18_WB", "MUT_M_E18_WB", "WT_M_E18_WB", "WT_M_E18_WB")
 )
 
 ## See counts for orig.ident and validate that they're combined correctly for new.idents
