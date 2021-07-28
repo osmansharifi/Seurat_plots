@@ -14,9 +14,9 @@ data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proporti
 DEG_data_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/EdgeR/"
 
 # Lists
-cell_types <- list("Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
+cell_types <- list("Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 
-#"L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", 
+#"L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal",
 
 # Other variables
 metadata_info <- "M_MUT_and_WT_M_P30_CORT"
