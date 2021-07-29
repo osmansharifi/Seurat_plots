@@ -13,16 +13,16 @@ library(glue)
 
 # data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_E18_with_labels_proportions.rda"
 # data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proportions.rda"
-# data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P60_with_labels_proportions.rda"
-data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P120_with_labels_proportions3.rda"
+data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P60_with_labels_proportions.rda"
+# data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P120_with_labels_proportions3.rda"
 
 DEG_data_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/EdgeR/"
 
 # Lists
-cell_types <- list("Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
-#"L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", 
+cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
+
 # Other variables
-metadata_info <- "M_MUT_and_WT_M_P120_CORT"
+metadata_info <- "M_MUT_and_WT_M_P60_CORT"
 
 ################################################################################
 ## Data preparation
@@ -63,7 +63,7 @@ for (cell_type in cell_types){
   meta_dge <- cbind(meta_dge, metadata)
   meta_dge$group <- factor(meta_dge$orig.ident)
   levels(meta_dge$group)
-  meta_dge$group <- relevel(meta_dge$group, "MUT_M_P120_CORT1", "MUT_M_P120_CORT2", "WT_M_P120_CORT1", "WT_M_P120_CORT2")
+  meta_dge$group <- relevel(meta_dge$group, "MUT_M_P60_CORT1", "MUT_M_P60_CORT2", "WT_M_P60_CORT1", "WT_M_P60_CORT2")
   dge$samples <- meta_dge
   # Model fit
   dge <- calcNormFactors(dge)
@@ -72,7 +72,7 @@ for (cell_type in cell_types){
   dge <- estimateDisp(dge, design = design)
   fit <- glmQLFit(dge, design = design)
   # Differential expression testing
-  my.contrasts <- makeContrasts(MUT_vs_WT = c(groupWT_M_P120_CORT1+groupWT_M_P120_CORT2) - c(groupMUT_M_P120_CORT1+groupMUT_M_P120_CORT2), levels = design)
+  my.contrasts <- makeContrasts(MUT_vs_WT = c(groupWT_M_P60_CORT1+groupWT_M_P60_CORT2) - c(groupMUT_M_P60_CORT1+groupMUT_M_P60_CORT2), levels = design)
   qlf.contrast <- glmQLFTest(fit, contrast=my.contrasts)
   # Use Benjamini-Hochberg correction for p-values
   qlf.contrast.all.genes <- topTags(qlf.contrast, n = 1000000, adjust.method = "BH", sort.by = "PValue", p.value = 1)
