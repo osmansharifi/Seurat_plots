@@ -17,14 +17,14 @@ EdgeR_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/EdgeR/"
 DESeq2_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/DESeq2/"
 Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma/"
 
-venn_dir <- "~/GitHub/snRNA-seq-pipeline/figures/venn_diagrams/M_MUT_and_WT_M_P60_CORT"
+venn_dir <- "~/GitHub/snRNA-seq-pipeline/figures/venn_diagrams/M_MUT_and_WT_M_P30_CORT"
 
 # Lists
 cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 
 # Other variables
-metadata_info <- "M_MUT_and_WT_M_P60_CORT"
-subtitle_info <- "Mice, Male, P60, Cortex"
+metadata_info <- "M_MUT_and_WT_M_P30_CORT"
+subtitle_info <- "Mice, Male, P30, Cortex"
 
 ################################################################################
 # Venn Diagram for Differentially Expressed Genes Per Analysis
@@ -237,8 +237,6 @@ unique_genes_venn <- ggVennDiagram(unique_venn_list, color = "black", lwd = 0.8,
 ggsave("unique_genes_M_MUT_and_WT_M_P60_CORT_venn.pdf", device = "pdf", path = venn_dir)
 
 # Show genes identified by all methods for cell types
-"Astro", "Peri", "Endo")
-
 Reduce(intersect, list(L2_3_IT_Limma_gene_list, L2_3_IT_DESeq2_gene_list, L2_3_IT_EdgeR_gene_list))
 Reduce(intersect, list(L6_Limma_gene_list, L6_DESeq2_gene_list, L6_EdgeR_gene_list))
 Reduce(intersect, list(Sst_Limma_gene_list, Sst_DESeq2_gene_list, Sst_EdgeR_gene_list))
