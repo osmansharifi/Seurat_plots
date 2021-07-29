@@ -74,7 +74,7 @@ for (cell_type in cell_types){
   my.contrasts <- makeContrasts(MUT_vs_WT = c(groupWT_M_P60_CORT1+groupWT_M_P60_CORT2) - c(groupMUT_M_P60_CORT1+groupMUT_M_P60_CORT2), levels = design)
   qlf.contrast <- glmQLFTest(fit, contrast=my.contrasts)
   # Use Benjamini-Hochberg correction for p-values
-  qlf.contrast.all.genes <- topTags(qlf.contrast, n = 1000, adjust.method = "BH", sort.by = "PValue", p.value = 1)
+  qlf.contrast.all.genes <- topTags(qlf.contrast, n = 1000000, adjust.method = "BH", sort.by = "PValue", p.value = 1)
   # Note that topTags() outputs adjusted p-values in the FDR column
   cell_EdgeR_DEG <- subset(x = qlf.contrast.all.genes$table, subset = FDR < 0.05)
   # Write data to CSV so analysis does not need to be rerun when working with data
