@@ -8,13 +8,11 @@ library(ggplot2)
 ## Variables
 
 # Paths
-# data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_E18_with_labels_proportions.rda"
 # data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proportions.rda"
 # data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P60_with_labels_proportions.rda"
 data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P120_with_labels_proportions3.rda"
 # data_file <- "/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/rett_P30_with_labels_proportions.rda"
 
-# data_vis_dir <- "~/GitHub/snRNA-seq-pipeline/figures/data_structure_visualization/M_MUT_and_WT_M_E18_WB"
 # data_vis_dir <- "~/GitHub/snRNA-seq-pipeline/figures/data_structure_visualization/M_MUT_and_WT_M_P30_CORT"
 # data_vis_dir <- "~/GitHub/snRNA-seq-pipeline/figures/data_structure_visualization/M_MUT_and_WT_M_P60_CORT"
 data_vis_dir <- "~/GitHub/snRNA-seq-pipeline/figures/data_structure_visualization/M_MUT_and_WT_M_P120_CORT"
