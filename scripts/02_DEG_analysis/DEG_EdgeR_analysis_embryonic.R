@@ -11,18 +11,15 @@ library(glue)
 
 # Paths
 
-# data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_E18_with_labels_proportions.rda"
-# data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proportions.rda"
-data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P60_with_labels_proportions.rda"
-# data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P120_with_labels_proportions3.rda"
+data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_E18_with_labels_proportions.rda"
 
-DEG_data_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/EdgeR/"
+DEG_data_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/DESeq2/M_MUT_and_WT_M_E18_WB/"
 
 # Lists
 cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
- 
+
 # Other variables
-metadata_info <- "M_MUT_and_WT_M_P60_CORT"
+metadata_info <- "M_MUT_and_WT_M_E18_WB"
 
 ################################################################################
 ## Data preparation
@@ -32,13 +29,8 @@ load(data_file)
 experiment.aggregate
 Idents(experiment.aggregate) <- 'celltype.call'
 
-# Prepare data
 # Rename "Non-neuronal" as "Non_neuronal" for variable name usage
 experiment.aggregate <- RenameIdents(object = experiment.aggregate, "Non-neuronal" = "Non_neuronal")
-# We want to get rid of the G2M and S phase cells, so subset to keep only G1 cells
-experiment.aggregate <- subset(x = experiment.aggregate, subset = cell.cycle == "G1")
-# Set mitochondrial threshold to 0.5%
-experiment.aggregate <- subset(x = experiment.aggregate, subset = percent.mito <= "0.5")
 
 ################################################################################
 ## EdgeR Analysis

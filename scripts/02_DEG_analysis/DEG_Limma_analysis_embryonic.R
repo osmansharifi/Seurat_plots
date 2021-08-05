@@ -9,18 +9,15 @@ library(glue)
 
 # Paths
 
-# data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_E18_with_labels_proportions.rda"
-# data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proportions.rda"
-# data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P60_with_labels_proportions.rda"
-data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P120_with_labels_proportions3.rda"
+data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_E18_with_labels_proportions.rda"
 
-DEG_data_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma/"
+DEG_data_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma/M_MUT_and_WT_M_E18_WB/"
 
 # Lists
 cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 
 # Other variables
-metadata_info <- "M_MUT_and_WT_M_P120_CORT"
+metadata_info <- "M_MUT_and_WT_M_E18_WB"
 
 ################################################################################
 ## Data preparation
@@ -30,13 +27,8 @@ load(data_file)
 experiment.aggregate
 Idents(experiment.aggregate) <- 'celltype.call'
 
-# Prepare data
 # Rename "Non-neuronal" as "Non_neuronal" for variable name usage
 experiment.aggregate <- RenameIdents(object = experiment.aggregate, 'Non-neuronal' = 'Non_neuronal')
-# We want to get rid of the G2M and S phase cells, so subset to keep only G1 cells
-experiment.aggregate <- subset(x = experiment.aggregate, subset = cell.cycle == "G1")
-# Set mitochondrial threshold to 0.5%
-experiment.aggregate <- subset(x = experiment.aggregate, subset = percent.mito <= "0.5")
 
 ################################################################################
 ## Limma Analysis
@@ -53,7 +45,7 @@ for (cell_type in cell_types){
   # Means in each sample for each gene
   head(coef(fit_cell)) 
   # Contrast WT-MUT accounting for repliicates
-  contr_cell<- makeContrasts(c(orig.identWT_M_P120_CORT1+orig.identWT_M_P120_CORT2) - c(orig.identMUT_M_P120_CORT1+orig.identMUT_M_P120_CORT2), levels = colnames(coef(fit_cell)))
+  contr_cell<- makeContrasts(c(orig.identWT_M_E18_WB1+orig.identWT_M_E18_WB2) - c(orig.identMUT_M_E18_WB1+orig.identMUT_M_E18_WB2), levels = colnames(coef(fit_cell)))
   tmp_cell <- contrasts.fit(fit_cell, contrasts = contr_cell)
   # Use empirical Bayes to calculate the t-statistics
   tmp_cell <- eBayes(tmp_cell)
