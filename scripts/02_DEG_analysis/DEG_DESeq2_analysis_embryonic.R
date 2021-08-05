@@ -9,14 +9,14 @@ library(glue)
 
 # Paths
 
-data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_E18_with_labels_proportions.rda"
+#data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_E18_with_labels_proportions.rda"
+data_file <- "/share/lasallelab/Osman/scAlign_collab/Male_Cortex_labeled/rett_E18_with_labels_proportions.rda"
 
-DEG_data_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/DESeq2/M_MUT_and_WT_M_E18_WB/"
+#DEG_data_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/DESeq2/M_MUT_and_WT_M_E18_WB/"
+DEG_data_dir <- "/share/korflab/home/viki/snRNA-seq-pipeline/DEG_data/DESeq2/M_MUT_and_WT_M_E18_WB/"
 
 # Lists
-cell_types <- list("L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
-
-# "L2_3_IT", 
+cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 
 # Other variables
 metadata_info <- "M_MUT_and_WT_M_E18_WB"
