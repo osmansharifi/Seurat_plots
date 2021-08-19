@@ -4,11 +4,13 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
 
+# Variables need to be changed to reflect data
+# Names of the CSV files being input 
 tab_names = ["M_MUT_and_WT_M_E18_WB_DEG_method_comparison",
             "M_MUT_and_WT_M_P30_CORT_DEG_method_comparison",
             "M_MUT_and_WT_M_P60_CORT_DEG_method_comparison",
             "M_MUT_and_WT_M_P120_CORT_DEG_method_comparison"]
-             
+# Metadata information corresponding to the CSV files (must be in the same order as tab_names)             
 meta_data = ["Male, E18, Whole Brain",
             "Male, P30, Cortex",
             "Male, P60, Cortex",
