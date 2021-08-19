@@ -29,12 +29,10 @@ for tab, metadata in zip(tab_names, meta_data):
     deseq_and_limma = df['DESeq2 & Limma'].tolist()
     deseq_and_edger = df['DESeq2 & EdgeR'].tolist()
     limma_and_edger = df['Limma & EdgeR'].tolist()
-    all_methods_total = df['All Methods'].tolist()
     # Assign scatter plot lines
     one,=plt.plot(cell_types, deseq_total, label = 'DESeq2')
     two,=plt.plot(cell_types, limma_total, label = 'Limma')
     three,=plt.plot(cell_types, edger_total, label = 'EdgeR')
-    ten,=plt.plot(cell_types, all_methods_total, label = 'All Methods')
     # Make scatter plot for all methods
     fontP = FontProperties()
     fontP.set_size('medium')
@@ -43,11 +41,10 @@ for tab, metadata in zip(tab_names, meta_data):
     plt.xticks(rotation = 75)
     plt.ylabel('Number of DEGs')
     plt.subplots_adjust(bottom=0.275)
-    plt.legend([one, two, three, ten],
+    plt.legend([one, two, three],
            ['DESeq2',
            'Limma',
-           'EdgeR',
-           'All Methods'],
+           'EdgeR',],
            bbox_to_anchor=(1.05, 1),
            loc='upper left',
            prop=fontP)  
