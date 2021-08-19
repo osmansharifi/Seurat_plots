@@ -5,43 +5,92 @@ import matplotlib.pyplot as plt
 from matplotlib.font_manager import FontProperties
 
 tab_names = ["M_MUT_and_WT_M_E18_WB_DEG_method_comparison",
-             "M_MUT_and_WT_M_P30_CORT_DEG_method_comparison",
-             "M_MUT_and_WT_M_P60_CORT_DEG_method_comparison",
-             "M_MUT_and_WT_M_P120_CORT_DEG_method_comparison"]
+            "M_MUT_and_WT_M_P30_CORT_DEG_method_comparison",
+            "M_MUT_and_WT_M_P60_CORT_DEG_method_comparison",
+            "M_MUT_and_WT_M_P120_CORT_DEG_method_comparison"]
+             
+meta_data = ["Male, E18, Whole Brain",
+            "Male, P30, Cortex",
+            "Male, P60, Cortex",
+            "Male, P120, Cortex"]
 
-for tab in tab_names:
-   df = pd.read_csv(f'../../DEG_data/{tab}.csv')
-   print(tab)
-   print(df)
-
-'''
-# Make lists using Excel column values
-freq_A = df[' f(A)'].tolist()
-A_rec_one = df['Delta f(A) Rec 0.1'].tolist()
-A_dom_one = df['Delta f(A) Dom 0.1'].tolist()
-A_add_one = df['Delta f(A) Add 0.1'].tolist()
-A_rec_twofive = df['Delta f(A) Rec 0.25'].tolist()
-A_dom_twofive = df['Delta f(A) Dom 0.25'].tolist()
-A_add_twofive = df['Delta f(A) Add 0.25'].tolist()
-
-# Delineate scatter plot lines
-one,= plt.plot(freq_A, A_rec_one, label = 'Recessive Allele S = 0.1')
-two,= plt.plot(freq_A, A_dom_one, label = 'Dominant Allele S = 0.1')
-three,= plt.plot(freq_A, A_add_one, label = 'Additive Allele S = 0.1')
-four,= plt.plot(freq_A, A_rec_twofive, label = 'Recessive Allele S = 0.25')
-five,= plt.plot(freq_A, A_dom_twofive, label = 'Dominant Allele S = 0.25')
-six,= plt.plot(freq_A, A_add_twofive, label = 'Additive Allele S = 0.25')
-
-# Make scatter plot
-fontP = FontProperties()
-fontP.set_size('medium')
-plt.title('Properties of Selection in Large Populations')
-plt.xlabel('Frequency of the Advantageous Allele')
-plt.ylabel('Change in Frequency of the Advantageous Allele')
-plt.legend([one, two, three, four, five, six],
-           ['Recessive Allele S = 0.1', 'Dominant Allele S = 0.1', 'Additive Allele S = 0.1', 'Recessive Allele S = 0.25', 'Dominant Allele S = 0.25', 'Additive Allele S = 0.25'],
+for tab, metadata in zip(tab_names, meta_data):
+    df = pd.read_csv(f'../../DEG_data/{tab}.csv')
+    # Make lists using Excel column values
+    cell_types = df['Cluster'].tolist()
+    deseq_total = df['DESeq2 (tot)'].tolist()
+    limma_total = df['Limma (tot)'].tolist()
+    edger_total = df['EdgeR (tot)'].tolist()
+    deseq_only = df['DESeq2 Only'].tolist()
+    limma_only = df['Limma Only'].tolist()
+    edger_only = df['EdgeR Only'].tolist()
+    deseq_and_limma = df['DESeq2 & Limma'].tolist()
+    deseq_and_edger = df['DESeq2 & EdgeR'].tolist()
+    limma_and_edger = df['Limma & EdgeR'].tolist()
+    all_methods_total = df['All Methods'].tolist()
+    # Assign scatter plot lines
+    one,=plt.plot(cell_types, deseq_total, label = 'DESeq2')
+    two,=plt.plot(cell_types, limma_total, label = 'Limma')
+    three,=plt.plot(cell_types, edger_total, label = 'EdgeR')
+    ten,=plt.plot(cell_types, all_methods_total, label = 'All Methods')
+    # Make scatter plot for all methods
+    fontP = FontProperties()
+    fontP.set_size('medium')
+    plt.title(f'Total DEGs Identified Per Method\n {metadata}')
+    plt.xlabel('Cell Type (Cluster)')
+    plt.xticks(rotation = 75)
+    plt.ylabel('Number of DEGs')
+    plt.subplots_adjust(bottom=0.275)
+    plt.legend([one, two, three, ten],
+           ['DESeq2',
+           'Limma',
+           'EdgeR',
+           'All Methods'],
            bbox_to_anchor=(1.05, 1),
            loc='upper left',
            prop=fontP)  
-plt.show()
-'''
+    plt.savefig(f'../../figures/methods_comparison/{tab}_total.pdf', bbox_inches = "tight", format = "pdf")
+    plt.close()
+    # Make scatter plot for unique DEGs (commands need to be rerun since plt.close() is used)
+    df = pd.read_csv(f'../../DEG_data/{tab}.csv')
+    # Make lists using Excel column values
+    cell_types = df['Cluster'].tolist()
+    deseq_total = df['DESeq2 (tot)'].tolist()
+    limma_total = df['Limma (tot)'].tolist()
+    edger_total = df['EdgeR (tot)'].tolist()
+    deseq_only = df['DESeq2 Only'].tolist()
+    limma_only = df['Limma Only'].tolist()
+    edger_only = df['EdgeR Only'].tolist()
+    deseq_and_limma = df['DESeq2 & Limma'].tolist()
+    deseq_and_edger = df['DESeq2 & EdgeR'].tolist()
+    limma_and_edger = df['Limma & EdgeR'].tolist()
+    all_methods_total = df['All Methods'].tolist()
+    # Assign scatter plot lines 
+    four,=plt.plot(cell_types, deseq_only, label = 'DEGs Unique to DESeq2')
+    five,=plt.plot(cell_types, limma_only, label = 'DEGs Unique to Limma')
+    six,=plt.plot(cell_types, edger_only, label = 'DEGs Unique to EdgeR')
+    seven,=plt.plot(cell_types, deseq_and_limma, label = 'DEGs Unique to DESeq2 and Limma')
+    eight,=plt.plot(cell_types, deseq_and_edger, label = 'DEGs Unique to DESeq2 and EdgeR')
+    nine,=plt.plot(cell_types, limma_and_edger, label = 'DEGs Unique to Limma and EdgeR')
+    ten,=plt.plot(cell_types, all_methods_total, label = 'All Methods')
+    # Make plot
+    fontP = FontProperties()
+    fontP.set_size('medium')
+    plt.title(f'Comparison of Methods Used for DEG Identification\n {metadata}')
+    plt.xlabel('Cell Type (Cluster)')
+    plt.xticks(rotation = 75)
+    plt.ylabel('Number of DEGs')
+    plt.subplots_adjust(bottom=0.275)
+    plt.legend([four, five, six, seven, eight, nine, ten],
+           ['DEGs Unique to DESeq2', 
+           'DEGs Unique to Limma',
+           'DEGs Unique to EdgeR',
+           'DEGs Unique to DESeq2 and Limma',
+           'DEGs Unique to DESeq2 and EdgeR',
+           'DEGs Unique to Limma and EdgeR',
+           'All Methods'],
+           bbox_to_anchor=(1.05, 1),
+           loc='upper left',
+           prop=fontP)  
+    plt.savefig(f'../../figures/methods_comparison/{tab}_unique.pdf', bbox_inches = "tight", format = "pdf")
+    plt.close()
