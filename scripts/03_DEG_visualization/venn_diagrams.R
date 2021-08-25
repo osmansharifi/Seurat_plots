@@ -252,3 +252,8 @@ Reduce(intersect, list(Lamp5_Limma_gene_list, Lamp5_DESeq2_gene_list, Lamp5_Edge
 Reduce(intersect, list(Astro_Limma_gene_list, Astro_DESeq2_gene_list, Astro_EdgeR_gene_list))
 Reduce(intersect, list(Peri_Limma_gene_list, Peri_DESeq2_gene_list, Peri_EdgeR_gene_list))
 Reduce(intersect, list(Endo_Limma_gene_list, Endo_DESeq2_gene_list, Endo_EdgeR_gene_list))
+
+unique_genes <- Reduce(intersect, list(unique_Limma_genes, unique_DESeq2_genes, unique_EdgeR_genes))
+for (unique_gene in unique_genes){
+  print(unique_gene)
+}
