@@ -22,7 +22,7 @@ DEG_data_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma_combat/"
 cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 
 # Other variables
-metadata_info <- "M_MUT_and_WT_M_P130_CORT"
+metadata_info <- "M_MUT_and_WT_M_P30_CORT"
 
 ################################################################################
 ## Data preparation
@@ -64,5 +64,5 @@ for (cell_type in cell_types){
   # Subset data to remove all non-significant genes
   cell_Limma_DEG <- subset(x = cell_toptable, subset = adj.P.Val < 0.05)
   # Write data to CSV so analysis does not need to be rerun when working with data
-  write.csv(cell_Limma_DEG, file = glue(DEG_data_dir, cell_type, "_", metadata_info, "_Limma_DEG.csv"))
+  write.csv(cell_Limma_DEG, file = glue(DEG_data_dir,metadata_info, "/", cell_type, "_", metadata_info, "_Limma_DEG.csv"))
 }
