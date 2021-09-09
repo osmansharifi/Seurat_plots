@@ -12,16 +12,17 @@ library(glue)
 ## Paths for local R session
 # data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_E18_with_labels_proportions.rda"
 # data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proportions.rda"
+data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/P30_male_combat_corrected.RData"
 # data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P60_with_labels_proportions.rda"
 # data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P120_with_labels_proportions3.rda"
-
-DEG_data_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma/"
+# DEG_data_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma/"
+DEG_data_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma_combat/"
 
 # Lists
 cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 
 # Other variables
-metadata_info <- "M_MUT_and_WT_M_P120_CORT"
+metadata_info <- "M_MUT_and_WT_M_P130_CORT"
 
 ################################################################################
 ## Data preparation
@@ -54,7 +55,7 @@ for (cell_type in cell_types){
   # Means in each sample for each gene
   head(coef(fit_cell)) 
   # Contrast WT-MUT accounting for repliicates
-  contr_cell<- makeContrasts(c(orig.identWT_M_P120_CORT1+orig.identWT_M_P120_CORT2) - c(orig.identMUT_M_P120_CORT1+orig.identMUT_M_P120_CORT2), levels = colnames(coef(fit_cell)))
+  contr_cell<- makeContrasts(c(orig.identWT_M_P30_CORT1+orig.identWT_M_P30_CORT2) - c(orig.identMUT_M_P30_CORT1+orig.identMUT_M_P30_CORT2), levels = colnames(coef(fit_cell)))
   tmp_cell <- contrasts.fit(fit_cell, contrasts = contr_cell)
   # Use empirical Bayes to calculate the t-statistics
   tmp_cell <- eBayes(tmp_cell)
