@@ -20,6 +20,10 @@ metadata_info <- "Mice, Male, E18, Whole Brain"
 
 ################################################################################
 ## Visualization 
+library(RColorBrewer)
+library(scales)
+pal <- colorRampPalette(rev(brewer.pal(n = 7, name =   "RdYlBu")))(30)
+show_col(pal)
 
 # No G1 and mt subsetting for embryonic because most cells are cycling
 
