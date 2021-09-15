@@ -3,7 +3,7 @@ library(ComplexHeatmap)
 plotDEG = function(data,       ## Data matrix
                    row.labels, ## Row annotation for data, assumed to be a vector of characters
                    col.labels, ## Column annotation for data, assumed to be a vector of characters
-                   filename="~/DEG_sample_code.png"){
+                   filename="~/P30_Male_cortex.png"){
   column_anno = HeatmapAnnotation(celltype=as.character(col.labels))
   ## Plot proportion heatmap
   DEG.heatmap = Heatmap(data,
