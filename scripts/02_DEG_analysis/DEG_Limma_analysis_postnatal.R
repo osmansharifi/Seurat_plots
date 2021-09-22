@@ -10,8 +10,8 @@ library(glue)
 ## Paths
 
 # data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proportions.rda"
-data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P60_with_labels_proportions.rda"
-# data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P120_with_labels_proportions3.rda"
+# data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P60_with_labels_proportions.rda"
+data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P120_with_labels_proportions3.rda"
 
 # DEG_data_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma/"
 DEG_data_dir_total_genes <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/"
@@ -21,7 +21,7 @@ DEG_data_dir_total_genes <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Li
 cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 
 ## Other variables
-metadata_info <- "M_MUT_and_WT_M_P60_CORT"
+metadata_info <- "M_MUT_and_WT_M_P120_CORT"
 
 ################################################################################
 ## Data preparation
@@ -55,7 +55,7 @@ experiment.aggregate <- subset(x = experiment.aggregate, subset = percent.mito <
 #   # Means in each sample for each gene
 #   head(coef(fit_cell)) 
 #   # Contrast WT-MUT accounting for repliicates
-#   contr_cell<- makeContrasts(c(orig.identWT_M_P60_CORT1+orig.identWT_M_P60_CORT2) - c(orig.identMUT_M_P60_CORT1+orig.identMUT_M_P60_CORT2), levels = colnames(coef(fit_cell)))
+#   contr_cell<- makeContrasts(c(orig.identWT_M_P120_CORT1+orig.identWT_M_P120_CORT2) - c(orig.identMUT_M_P120_CORT1+orig.identMUT_M_P120_CORT2), levels = colnames(coef(fit_cell)))
 #   tmp_cell <- contrasts.fit(fit_cell, contrasts = contr_cell)
 #   # Use empirical Bayes to calculate the t-statistics
 #   tmp_cell <- eBayes(tmp_cell)
@@ -80,7 +80,7 @@ for (cell_type in cell_types){
    # Means in each sample for each gene
    head(coef(fit_cell)) 
    # Contrast WT-MUT accounting for repliicates
-   contr_cell<- makeContrasts(c(orig.identWT_M_P60_CORT1+orig.identWT_M_P60_CORT2) - c(orig.identMUT_M_P60_CORT1+orig.identMUT_M_P60_CORT2), levels = colnames(coef(fit_cell)))
+   contr_cell<- makeContrasts(c(orig.identWT_M_P120_CORT1+orig.identWT_M_P120_CORT2) - c(orig.identMUT_M_P120_CORT1+orig.identMUT_M_P120_CORT2), levels = colnames(coef(fit_cell)))
    tmp_cell <- contrasts.fit(fit_cell, contrasts = contr_cell)
    # Use empirical Bayes to calculate the t-statistics
    tmp_cell <- eBayes(tmp_cell)
