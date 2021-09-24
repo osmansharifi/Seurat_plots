@@ -5,9 +5,11 @@ import csv
 import json
 import matplotlib.pyplot as plt
 import matplotlib.colors as colors
+from matplotlib.patches import Rectangle
 import mpl_toolkits
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 import os
+import re
 import sys
 
 import numpy as np
@@ -42,7 +44,7 @@ parser.add_argument(
 	help='save location for json file containing significant genes plotted')
 parser.add_argument(
 	'--verbose', '-v', required=False, type=int, default=0, metavar='<int>',
-	help='verbosity level, 0 for no progress, 1 for progress messages')
+	help='verbosity level, 0 for no progress messages, 1 for progress messages')
 
 arg = parser.parse_args()
 
@@ -53,12 +55,12 @@ SMALL_SIZE = 9
 MEDIUM_SIZE = 10
 BIGGER_SIZE = 12
 
-plt.rc('font', size=SMALL_SIZE)         # controls default text sizes
-plt.rc('axes', titlesize=SMALL_SIZE)    # fontsize of the axes title
+plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
+plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
 plt.rc('axes', labelsize=SMALL_SIZE)     # fontsize of the x and y labels
 plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
 plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('legend', fontsize=SMALL_SIZE)   # legend fontsize
+plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
 plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 
 def parse_celltype(csvname):
@@ -73,6 +75,7 @@ def read_datacsv(csvpath):
 	with open(csvpath, 'rt') as csvfile:
 		csv_reader = csv.DictReader(csvfile)
 		for row in csv_reader:
+			if re.match(r'^mt-.', row['']): continue
 			sigdic[row['']] = {
 				'pv': float(row['adj.P.Val']),
 				'logfc': float(row['logFC'])}
@@ -139,15 +142,15 @@ def celltype_sort(genes, celltypes, data):
 path = arg.dir
 
 if path[-1] != '/': path += '/'
-
 # collect all the data
 data = dict()
 for dir, subdirs, files in os.walk(path):
+	if dir[-1] != '/': dir += '/'
 	csvs = [f for f in files if 'csv' in f]
 	if len(csvs) == 0: continue
 	
 	dirnames = dir.split('/')
-	cond = dirnames[-1]
+	cond = dirnames[-2]
 	if arg.verbose == 1:
 		print(dirnames)
 		print(cond)
@@ -186,14 +189,17 @@ for cond in data.keys():
 
 	# plotting
 
-	num_genes     = arg.num
+	if arg.num == -1:
+		num_genes = len(sigsorted)
+	else: num_genes = arg.num
 	num_celltypes = len(ctsorted)
 	
 	map = np.zeros((num_genes, num_celltypes))
-	
+	pvmap = np.zeros((num_genes, num_celltypes))
 	for i, siggene in enumerate(sigsorted):
 		if i == num_genes: break
 		for j, celltype in enumerate(ctsorted):
+			pvmap[i, j] = data[cond][celltype][siggene]['pv']
 			if celltype in significant_genes[siggene]:
 				map[i, j] = significant_genes[siggene][celltype]
 			else:
@@ -202,7 +208,7 @@ for cond in data.keys():
 					if siggene in data[cond][celltype]:
 						map[i, j] = data[cond][celltype][siggene]['logfc']
 					else: map[i,j] = 0.0
-
+	
 	# cluster
 	Z_rows = linkage(map, arg.method)
 	Z_cols = linkage(np.transpose(map), arg.method)
@@ -212,17 +218,27 @@ for cond in data.keys():
 	
 	gene_names = [nm for nm in sigsorted.keys()]
 	gene_names = gene_names[:num_genes]
-	print(gene_names)
-	print(len(gene_names))
 	celltype_names = list(ctsorted.keys())
 	
 	gene_labels     = [gene_names[ind] for ind in dn_rows['leaves']]
-	print(gene_labels)
-	print(dn_rows['leaves'])
-	#sys.exit()
-	#gene_labels.reverse()
 	celltype_labels = [celltype_names[ind] for ind in dn_cols['leaves']]
-	#celltype_labels.reverse()
+	
+	print(dn_rows['leaves'])
+	print(dn_cols['leaves'])
+	
+	newpv_map = np.zeros((num_genes, num_celltypes))
+	for i, rg in enumerate(dn_rows['leaves']):
+		for j, ct in enumerate(dn_cols['leaves']):
+			newpv_map[i, j] = pvmap[rg, ct]
+	
+	print(newpv_map)
+	print()
+	print(pvmap)
+	print()
+	
+	bool_map = np.zeros((num_genes, num_celltypes))
+	bool_map[np.where(newpv_map >= 0.05)] = 1
+	print(bool_map)
 	
 	# plotting
 	fontsize_pt = plt.rcParams['figure.titlesize']
@@ -235,7 +251,7 @@ for cond in data.keys():
 	bottom_margin = 0.02
 	
 	figure_height = matrix_height_in / (1 - top_margin - bottom_margin)
-	print(figure_height)
+	
 	plt.tick_params(
 		axis='both',
 		which='major',
@@ -247,7 +263,7 @@ for cond in data.keys():
 	clm = sns.clustermap(
 		map,
 		method=arg.method,
-		figsize=(0.75*figure_height,figure_height),
+		figsize=(12,figure_height),
 		row_cluster=True,
 		col_cluster=True,
 		row_linkage=Z_rows,
@@ -258,16 +274,26 @@ for cond in data.keys():
 		cmap=sns.color_palette('vlag', as_cmap=True),
 		xticklabels=celltype_labels,
 		yticklabels=gene_labels,
-		dendrogram_ratio=(0.10,0.10))
+		dendrogram_ratio=(0.20,0.10))
 	
 	title_str = f'Significant genes by cell type\n{cond}\nTop {arg.num} genes sorted by {arg.sort}'
 	clm.fig.suptitle(title_str)
-	clm.fig.subplots_adjust(top=0.85)
+	clm.fig.subplots_adjust(right=0.80)
 	plt.yticks(rotation=0)
 	clm.ax_heatmap.set_yticklabels(gene_labels)
 	clm.ax_heatmap.set_xticklabels(celltype_labels)
-	clm.ax_cbar.set_position([0.05, 0.8, 0.25*clm.ax_row_dendrogram.get_position().width, 0.10])
+	clm.ax_cbar.set_position([0.90, 0.55, 0.25*clm.ax_row_dendrogram.get_position().width, 0.30])
 	clm.ax_cbar.set_title('logFC')
+	clm.ax_col_dendrogram.set_visible(False)
+	
+	hm = clm.ax_heatmap
+	
+	for i in range(bool_map.shape[0]):
+		for j in range(bool_map.shape[1]):
+			if bool_map[i, j] == 0.:
+				hm.add_patch(Rectangle((j, i), 1, 1, edgecolor='purple', fill=False, lw=1))
+	
+	
 	plt.close(1)
 	filename = arg.figdir+cond+'_'+arg.sort+'_'+str(arg.num)+'.pdf'
 	plt.savefig(filename)
