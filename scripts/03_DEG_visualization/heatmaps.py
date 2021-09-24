@@ -25,7 +25,7 @@ parser.add_argument(
 	'--cutoff', '-c', required=False, type=float, metavar='<float>', default=0.05, 
 	help='significance threshold for adjusted p-value')
 parser.add_argument(
-	'--num', '-n', required=False, type=int, default=20, metavar='<int>',
+	'--num', '-n', required=False, type=int, default=50, metavar='<int>',
 	help='number of significant DEGs to plot across celltypes')
 parser.add_argument(
 	'--method', '-m', required=False, type=str, default='ward', metavar='<str>',
