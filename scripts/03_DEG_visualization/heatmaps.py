@@ -9,6 +9,7 @@ from matplotlib.patches import Rectangle
 import mpl_toolkits
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 import os
+import pandas as pd
 import re
 import sys
 
@@ -16,8 +17,10 @@ import numpy as np
 from scipy.cluster.hierarchy import linkage, dendrogram
 import seaborn as sns
 
+formatter = lambda prog: argparse.HelpFormatter(prog, max_help_position=52)
 parser = argparse.ArgumentParser(
-	description='DEG visualization with significance filtering')
+	description='DEG visualization with significance filtering',
+	formatter_class=formatter)
 parser.add_argument(
 	'--dir', '-d', required=True, type=str, metavar='<path>', 
 	help='path to directory containing DEGs for celltypes within a condition')
@@ -38,10 +41,10 @@ parser.add_argument(
 	help='sort method for significant genes, either max or std')
 parser.add_argument(
 	'--figdir', '-f', required=True, type=str, default=None, metavar='<path>',
-	help='path+name to directory to plot to')
+	help='path to directory to save plots to')
 parser.add_argument(
 	'--save', '-s', required=False, type=str, default=None, metavar='<path>',
-	help='save location for json file containing significant genes plotted')
+	help='save location for json file containing significant genes plotted, in a pandas dataframe')
 parser.add_argument(
 	'--verbose', '-v', required=False, type=int, default=0, metavar='<int>',
 	help='verbosity level, 0 for no progress messages, 1 for progress messages')
@@ -140,8 +143,8 @@ def celltype_sort(genes, celltypes, data):
 	return keys
 
 path = arg.dir
-
 if path[-1] != '/': path += '/'
+
 # collect all the data
 data = dict()
 for dir, subdirs, files in os.walk(path):
@@ -163,7 +166,9 @@ for dir, subdirs, files in os.walk(path):
 		data[cond][celltype_name] = dict()
 		data[cond][celltype_name] = read_datacsv(subpath)
 
+# plot per condition
 for cond in data.keys():
+	# significant genes
 	significant_genes, total = significance_filtering(data[cond], arg.cutoff)
 	
 	if arg.verbose == 1:
@@ -171,6 +176,7 @@ for cond in data.keys():
 		print(len(list(total.keys())))
 		print(len(list(significant_genes.keys())))
 	
+	# sort genes to find genes to plot
 	if arg.sort == 'max':
 		sigsorted = gene_maxsort(
 			list(significant_genes.keys()),
@@ -182,19 +188,18 @@ for cond in data.keys():
 			list(data[cond].keys()),
 			significant_genes)
 	
+	# sort cell types
 	ctsorted = celltype_sort(
 		list(significant_genes.keys()),
 		list(data[cond].keys()),
 		significant_genes)
 
-	# plotting
-
-	if arg.num == -1:
-		num_genes = len(sigsorted)
-	else: num_genes = arg.num
+	# create 2D matrix/map of data to eventually plot
+	if arg.num == -1: num_genes = len(sigsorted)
+	else:             num_genes = arg.num
 	num_celltypes = len(ctsorted)
 	
-	map = np.zeros((num_genes, num_celltypes))
+	map   = np.zeros((num_genes, num_celltypes))
 	pvmap = np.zeros((num_genes, num_celltypes))
 	for i, siggene in enumerate(sigsorted):
 		if i == num_genes: break
@@ -209,7 +214,7 @@ for cond in data.keys():
 						map[i, j] = data[cond][celltype][siggene]['logfc']
 					else: map[i,j] = 0.0
 	
-	# cluster
+	# cluster order the row/col labels because clustering moves rows+cols
 	Z_rows = linkage(map, arg.method)
 	Z_cols = linkage(np.transpose(map), arg.method)
 	
@@ -223,22 +228,25 @@ for cond in data.keys():
 	gene_labels     = [gene_names[ind] for ind in dn_rows['leaves']]
 	celltype_labels = [celltype_names[ind] for ind in dn_cols['leaves']]
 	
-	print(dn_rows['leaves'])
-	print(dn_cols['leaves'])
+	if arg.verbose == 1:
+		print(dn_rows['leaves'])
+		print(dn_cols['leaves'])
 	
 	newpv_map = np.zeros((num_genes, num_celltypes))
+	frame = []
+	dic   = {}
 	for i, rg in enumerate(dn_rows['leaves']):
+		dic = {}
+		dic['gene'] = gene_names[rg]
 		for j, ct in enumerate(dn_cols['leaves']):
+			dic[celltype_names[ct]] = (map[rg, ct], pvmap[rg, ct])
 			newpv_map[i, j] = pvmap[rg, ct]
+		frame.append(dic)
 	
-	print(newpv_map)
-	print()
-	print(pvmap)
-	print()
+	df = pd.DataFrame(frame)
 	
 	bool_map = np.zeros((num_genes, num_celltypes))
 	bool_map[np.where(newpv_map >= 0.05)] = 1
-	print(bool_map)
 	
 	# plotting
 	fontsize_pt = plt.rcParams['figure.titlesize']
@@ -274,7 +282,7 @@ for cond in data.keys():
 		cmap=sns.color_palette('vlag', as_cmap=True),
 		xticklabels=celltype_labels,
 		yticklabels=gene_labels,
-		dendrogram_ratio=(0.20,0.10))
+		dendrogram_ratio=(0.20,0.0))
 	
 	title_str = f'Significant genes by cell type\n{cond}\nTop {arg.num} genes sorted by {arg.sort}'
 	clm.fig.suptitle(title_str)
@@ -295,55 +303,12 @@ for cond in data.keys():
 	
 	
 	plt.close(1)
-	filename = arg.figdir+cond+'_'+arg.sort+'_'+str(arg.num)+'.pdf'
+	if arg.fill: fillstr = 'fill'
+	else:        fillstr = ''
+	filename = arg.figdir+cond+'_'+arg.sort+'_'+fillstr+'_'+str(arg.num)+'.pdf'
 	plt.savefig(filename)
 	plt.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	
+	json_save = arg.save+'plotted_frame'+'_'+cond+'_'+arg.sort+'_'+fillstr+'_'+str(arg.num)+'.json'
+	with open(json_save, 'w') as fw:
+		df.to_json(fw)
