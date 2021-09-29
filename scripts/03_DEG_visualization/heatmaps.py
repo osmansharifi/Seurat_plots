@@ -299,7 +299,7 @@ for cond in data.keys():
 	for i in range(bool_map.shape[0]):
 		for j in range(bool_map.shape[1]):
 			if bool_map[i, j] == 0.:
-				hm.add_patch(Rectangle((j, i), 1, 1, edgecolor='blue', fill=False, lw=1))
+				hm.add_patch(Rectangle((j, i), 1, 1, edgecolor='black', fill=False, lw=1))
 	
 	
 	plt.close(1)
