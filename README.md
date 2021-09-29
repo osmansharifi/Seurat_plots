@@ -22,9 +22,8 @@ Insert gif or link to demo
   
 ## Authors
 
-- [@osmansharifi](https://github.com/osmansharifi), [![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/vikihaghani26)
+- [@osmansharifi](https://github.com/osmansharifi)[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/osmansharifi3)
 - [@keithfraga](https://github.com/xperthunter)
-- [@vikihaghani](https://github.com/vhaghani26)
-- [![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/vikihaghani26)
+- [@vikihaghani](https://github.com/vhaghani26)[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/vikihaghani26)
 
   
