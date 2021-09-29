@@ -18,6 +18,14 @@ This pipeline is developed to analyze 10X single nucleus RNA-seq 5' data from mo
 This table shows the different conditions of samples that were collected to gain insight into Rett syndrome progression overtime. 
 ## Pipeline
 ![Pipeline](https://github.com/osmansharifi/snRNA-seq-pipeline/blob/master/figures/snRNA-seq%20Pipeline.png)
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/osmansharifi/snRNA-seq-pipeline
+```
   
 ## Contributor
 
