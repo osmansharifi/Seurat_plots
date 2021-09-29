@@ -23,5 +23,6 @@ This pipeline is development to analyze 10X single nucleus RNA-seq 5' data from 
 - [@osmansharifi](https://github.com/osmansharifi)[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/osmansharifi3)
 - [@keithfraga](https://github.com/xperthunter)[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/keith-fraga-56b025102)
 - [@vikihaghani](https://github.com/vhaghani26)[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/vikihaghani26)
+- [@iankorf](https://github.com/iankorf)
 
   
