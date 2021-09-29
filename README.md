@@ -14,7 +14,7 @@ This pipeline is developed to analyze 10X single nucleus RNA-seq 5' data from mo
 | **Brain Region**   | whole brain       |Cortex/Hypothalamus |Cortex/Hypothalamus|Cortex/Hypothalamus|
 | **Sex**            | M/F               | M/F                |    M/F            |         M/F       |
 | **Mecp2-e1 Genotype**| -/y  +/y  +/+  -/+|-/y  +/y  +/+  -/+  |-/y  +/y  +/+  -/+ |-/y  +/y  +/+  -/+ |     
-
+This table shows the different conditions of samples that were collected to gain insight into Rett syndrome progression overtime. 
 ## Pipeline
 ![Pipeline](https://github.com/osmansharifi/snRNA-seq-pipeline/blob/master/figures/snRNA-seq%20Pipeline.png)
   
