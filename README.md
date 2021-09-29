@@ -16,9 +16,7 @@ This pipeline is development to analyze 10X single nucleus RNA-seq 5' data from 
 | `Mecp2-e1 Genotype`| -/y  +/y  +/+  -/+|-/y  +/y  +/+  -/+  |-/y  +/y  +/+  -/+ |-/y  +/y  +/+  -/+ |     
 
 ## Pipeline
-
-Insert gif or link to demo
-
+![Pipeline](https://github.com/osmansharifi/snRNA-seq-pipeline/blob/master/figures/snRNA-seq%20Pipeline.png)
   
 ## Authors
 
