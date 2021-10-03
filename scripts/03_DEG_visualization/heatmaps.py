@@ -70,7 +70,7 @@ def parse_celltype(csvname):
 	parts = csvname.split('_')
 	cell_type = ''
 	for p in parts:
-		if p == 'M': return cell_type[:-1]
+		if p == 'M' or p == 'F': return cell_type[:-1]
 		else:        cell_type += p+'_'
 
 def read_datacsv(csvpath):
