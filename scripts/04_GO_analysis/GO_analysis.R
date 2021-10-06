@@ -2,6 +2,8 @@ library(Seurat)
 library(ggplot2)
 library(topGO)
 library(org.Mm.eg.db)
+library(scales)
+library(glue)
 
 # By Osman Sharifi & Viktoria Haghani
 
@@ -16,6 +18,7 @@ data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proporti
 cell_types <- list("L2_3_IT")
 #, "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 topgo_ontologies <- list("BP", "CC", "MF")
+godata_types <- list("GOdataBP", "GOdataCC", "GOdataMF")
 ################################################################################
 
 ## Load the Seurat object
@@ -39,11 +42,31 @@ for (cell_type in cell_types){
   names(geneList) <- all.genes
   for (ont in topgo_ontologies){
     # Create topGOdata object
-    GOdata <- new("topGOdata",
-                    ontology = ont,
-                    allGenes = geneList,
-                    geneSelectionFun = function(x)(x == 1),
-                    annot = annFUN.org, mapping = "org.Mm.eg.db", ID = "symbol")
+    assign(glue('GOdata{ont}'), new("topGOdata",
+                                    ontology = ont,
+                                    allGenes = geneList,
+                                    geneSelectionFun = function(x)(x == 1),
+                                    annot = annFUN.org, mapping = "org.Mm.eg.db", ID = "symbol"))
+  }
+  for (GOdata in godata_types){
+    # Test for enrichment using Fisher's Exact Test
+    resultFisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
+    GenTable(GOdata, Fisher = resultFisher, topNodes = 20, numChar = 60)
+    #Visualize GoTerms
+    results.fisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
+    GenTable(GOdata, Fisher = resultFisher, topNodes = 20, numChar = 50)
+    goEnrichment <- GenTable(
+      GOdata,
+      Fisher = resultFisher,
+      orderBy = "Fisher",
+      topNodes = 20,
+      numChar = 50)
+    goEnrichment$Fisher <- as.numeric(goEnrichment$Fisher)
+    # Filter terms for Fisher p<0.05
+    goEnrichment <- goEnrichment[goEnrichment$Fisher < 0.05,]
+    goEnrichment <- goEnrichment[,c("GO.ID","Term","Fisher")]
+    goEnrichment
+    
   }
 }
 

@@ -17,9 +17,8 @@ goEnrichment$Fisher <- as.numeric(goEnrichment$Fisher)
 goEnrichment <- goEnrichment[goEnrichment$Fisher < 0.05,] # filter terms for Fisher p<0.05
 goEnrichment <- goEnrichment[,c("GO.ID","Term","Fisher")]
 goEnrichment
-	
-require(ggplot2)
-library(scales)
+
+
 
 ntop <- 20
 ggdata <- goEnrichment[1:ntop,]
