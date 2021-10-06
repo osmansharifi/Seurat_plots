@@ -1,32 +1,4 @@
 
-
-# Select genes that are expressed > 0 in at least 75% of cells (somewhat arbitrary definition)
-n.gt.0 <- apply(expr, 1, function(x)length(which(x > 0)))
-expressed.genes <- rownames(expr)[which(n.gt.0/ncol(expr) >= 0.75)]
-all.genes <- rownames(expr)
-
-# define geneList as 1 if gene is in expressed.genes, 0 otherwise
-geneList <- ifelse(all.genes %in% expressed.genes, 1, 0)
-names(geneList) <- all.genes
-
-# Create topGOdata object
-GOdataBP <- new("topGOdata",
-	ontology = "BP", # use biological process ontology
-	allGenes = geneList,
-	geneSelectionFun = function(x)(x == 1),
-  annot = annFUN.org, mapping = "org.Mm.eg.db", ID = "symbol")
-GOdataCC <- new("topGOdata",
-	ontology = "CC", # use biological process ontology
-	allGenes = geneList,
-	geneSelectionFun = function(x)(x == 1),
-  annot = annFUN.org, mapping = "org.Mm.eg.db", ID = "symbol")
-GOdataMF <- new("topGOdata",
-		ontology = "MF", # use biological process ontology
-		allGenes = geneList,
-		geneSelectionFun = function(x)(x == 1),
-    annot = annFUN.org, mapping = "org.Mm.eg.db", ID = "symbol")
-#GOdata <- rbind(GOdataBP,GOdataCC,GOdataMF)
-GOdata <- GOdataBP
 	
 # Test for enrichment using Fisher's Exact Test
 	resultFisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
