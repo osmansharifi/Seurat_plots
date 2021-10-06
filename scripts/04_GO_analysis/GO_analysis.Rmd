@@ -21,7 +21,7 @@ library(ggplot2)
 
 ## Load the Seurat object
 ```{r Load data}
-load("P30_M_Cort_Labeled.RData")
+load("/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/P30_M_Cort_Labeled.RData")
 experiment.aggregate
 Idents(experiment.aggregate) <- "celltype.call"
 options(width = 450)
