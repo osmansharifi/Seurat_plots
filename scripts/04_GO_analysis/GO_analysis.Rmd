@@ -59,7 +59,8 @@ GOdataMF <- new("topGOdata",
 		allGenes = geneList,
 		geneSelectionFun = function(x)(x == 1),
     annot = annFUN.org, mapping = "org.Mm.eg.db", ID = "symbol")
-GOdata <- rbind(GOdataBP,GOdataCC,GOdataMF)
+#GOdata <- rbind(GOdataBP,GOdataCC,GOdataMF)
+GOdata <- GOdataBP
 	
 # Test for enrichment using Fisher's Exact Test
 	resultFisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
