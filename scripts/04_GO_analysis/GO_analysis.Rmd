@@ -21,8 +21,12 @@ library(ggplot2)
 
 ## Load the Seurat object
 ```{r Load data}
+<<<<<<< HEAD
+load("/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/P30_M_Cort_Labeled.RData")
+=======
 data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proportions.rda"
 load(data_file)
+>>>>>>> 97b75f11e3fe6da9fbacb4d26c698ec81b743b18
 experiment.aggregate
 Idents(experiment.aggregate) <- "celltype.call"
 options(width = 450)
