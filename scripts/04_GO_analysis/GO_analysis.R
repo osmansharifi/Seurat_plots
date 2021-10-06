@@ -13,11 +13,16 @@ library(glue)
 ## Paths
 #data_file <- "/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/P30_M_Cort_Labeled.RData"
 data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proportions.rda"
+figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/"
 
 ## Lists
 cell_types <- list("L2_3_IT")
 #, "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 topgo_ontologies <- list("BP", "CC", "MF")
+
+## Other variables
+metadata_info_concise <- "M_MUT_and_WT_M_P30_CORT"
+metadata_info_expanded <- "Male, P30, Cortex"
 ################################################################################
 
 ## Load the Seurat object
@@ -61,8 +66,48 @@ for (cell_type in cell_types){
     goEnrichment$Fisher <- as.numeric(goEnrichment$Fisher)
     # Filter terms for Fisher p<0.05
     goEnrichment <- goEnrichment[goEnrichment$Fisher < 0.05,]
-    assign(glue('{GOdata}_enrichment'), goEnrichment[,c("GO.ID","Term","Fisher")])
+    goEnrichment <- goEnrichment[,c("GO.ID","Term","Fisher")]
+    ntop <- 20
+    ggdata <- goEnrichment[1:ntop,]
+    ggdata$Term <- factor(ggdata$Term, levels = rev(ggdata$Term)) # fixes order
+    ggplot(ggdata,
+           aes(x = Term, y = -log10(Fisher), size = -log10(Fisher), fill = -log10(Fisher))) +
+      expand_limits(y = 1) +
+      geom_point(shape = 21) +
+      scale_size(range = c(2.5,12.5)) +
+      scale_fill_continuous(low = 'royalblue', high = 'red4') +
+      xlab('') + ylab('Enrichment score') +
+      labs(
+        title = 'GO Analysis',
+        subtitle = glue('Top 20 terms ordered by Fisher Exact p-value for {metadata_info_expanded}'),
+        caption = 'Cut-off lines drawn at equivalents of p=0.05, p=0.01, p=0.001') +
+      geom_hline(yintercept = c(-log10(0.05), -log10(0.01), -log10(0.001)),
+                 linetype = c("dotted", "longdash", "solid"),
+                 colour = c("black", "black", "black"),
+                 size = c(0.5, 1.5, 3)) +
+      theme_bw(base_size = 24) +
+      theme(
+        legend.position = 'right',
+        legend.background = element_rect(),
+        plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
+        plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+        plot.caption = element_text(angle = 0, size = 12, face = 'bold', vjust = 1),
+        axis.text.x = element_text(angle = 0, size = 12, face = 'bold', hjust = 1.10),
+        axis.text.y = element_text(angle = 0, size = 12, face = 'bold', vjust = 0.5),
+        axis.title = element_text(size = 12, face = 'bold'),
+        axis.title.x = element_text(size = 12, face = 'bold'),
+        axis.title.y = element_text(size = 12, face = 'bold'),
+        axis.line = element_line(colour = 'black'),
+        # Legend
+        legend.key = element_blank(), # removes the border
+        legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
+        legend.text = element_text(size = 14, face = "bold"), # Text size
+        title = element_text(size = 14, face = "bold")) +
+      coord_flip()
+    b <- deparse(substitute(GOdata))
+    ggplot2::ggsave(glue('{figure_path}{cell_type}_{metadata_info_concise}_{b}_Fisher.pdf'),
+                    device = NULL,
+                    height = 8.5,
+                    width = 12)
   }
 }
-
-
