@@ -1,0 +1,133 @@
+---
+title: "P30_Male_Cortex-PART6"
+author: "Osman Sharifi"
+output:
+    html_document:
+      keep_md: TRUE
+---
+
+Reminder of samples
+
+* MUT_M_P30_CORT1 
+* MUT_M_P30_CORT2 
+* WT_M_P30_CORT1
+* WT_M_P30_CORT2
+
+## Load libraries
+```{r, warning=FALSE,error=FALSE,message=FALSE}
+library(Seurat)
+library(ggplot2)
+```
+
+## Load the Seurat object
+```{r Load data}
+load("P30_M_Cort_Labeled.RData")
+experiment.aggregate
+Idents(experiment.aggregate) <- "celltype.call"
+options(width = 450)
+table(Idents(experiment.aggregate),experiment.aggregate$orig.ident)
+```
+```{r topGO analysis}
+library(topGO)
+# install org.Mm.eg.db from Bioconductor if not already installed (for mouse only)
+clusterL2_3_IT <- subset(experiment.aggregate, idents = 'L2_3_IT')
+expr <- as.matrix(GetAssayData(clusterL2_3_IT))
+
+# Select genes that are expressed > 0 in at least 75% of cells (somewhat arbitrary definition)
+n.gt.0 <- apply(expr, 1, function(x)length(which(x > 0)))
+expressed.genes <- rownames(expr)[which(n.gt.0/ncol(expr) >= 0.75)]
+all.genes <- rownames(expr)
+
+# define geneList as 1 if gene is in expressed.genes, 0 otherwise
+geneList <- ifelse(all.genes %in% expressed.genes, 1, 0)
+names(geneList) <- all.genes
+
+# Create topGOdata object
+GOdataBP <- new("topGOdata",
+	ontology = "BP", # use biological process ontology
+	allGenes = geneList,
+	geneSelectionFun = function(x)(x == 1),
+  annot = annFUN.org, mapping = "org.Mm.eg.db", ID = "symbol")
+GOdataCC <- new("topGOdata",
+	ontology = "CC", # use biological process ontology
+	allGenes = geneList,
+	geneSelectionFun = function(x)(x == 1),
+  annot = annFUN.org, mapping = "org.Mm.eg.db", ID = "symbol")
+GOdataMF <- new("topGOdata",
+		ontology = "MF", # use biological process ontology
+		allGenes = geneList,
+		geneSelectionFun = function(x)(x == 1),
+    annot = annFUN.org, mapping = "org.Mm.eg.db", ID = "symbol")
+GOdata <- rbind(GOdataBP,GOdataCC,GOdataMF)
+	
+# Test for enrichment using Fisher's Exact Test
+	resultFisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
+	GenTable(GOdata, Fisher = resultFisher, topNodes = 20, numChar = 60)
+#Visualize GoTerms
+	
+results.fisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
+GenTable(GOdata, Fisher = resultFisher, topNodes = 20, numChar = 50)
+goEnrichment <- GenTable(
+  GOdata,
+  Fisher = resultFisher,
+  orderBy = "Fisher",
+  topNodes = 20,
+  numChar = 50)
+goEnrichment$Fisher <- as.numeric(goEnrichment$Fisher)
+goEnrichment <- goEnrichment[goEnrichment$Fisher < 0.05,] # filter terms for Fisher p<0.05
+goEnrichment <- goEnrichment[,c("GO.ID","Term","Fisher")]
+goEnrichment
+	
+require(ggplot2)
+library(scales)
+
+ntop <- 20
+ggdata <- goEnrichment[1:ntop,]
+ggdata$Term <- factor(ggdata$Term, levels = rev(ggdata$Term)) # fixes order
+ggplot(ggdata,
+  aes(x = Term, y = -log10(Fisher), size = -log10(Fisher), fill = -log10(Fisher))) +
+
+  expand_limits(y = 1) +
+  geom_point(shape = 21) +
+  scale_size(range = c(2.5,12.5)) +
+  scale_fill_continuous(low = 'royalblue', high = 'red4') +
+
+  xlab('') + ylab('Enrichment score') +
+  labs(
+    title = 'GO Analysis',
+    subtitle = 'Top 20 terms ordered by Fisher Exact p-value',
+    caption = 'Cut-off lines drawn at equivalents of p=0.05, p=0.01, p=0.001') +
+
+  geom_hline(yintercept = c(-log10(0.05), -log10(0.01), -log10(0.001)),
+    linetype = c("dotted", "longdash", "solid"),
+    colour = c("black", "black", "black"),
+    size = c(0.5, 1.5, 3)) +
+
+  theme_bw(base_size = 24) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 12, face = 'bold', vjust = 1),
+
+    axis.text.x = element_text(angle = 0, size = 12, face = 'bold', hjust = 1.10),
+    axis.text.y = element_text(angle = 0, size = 12, face = 'bold', vjust = 0.5),
+    axis.title = element_text(size = 12, face = 'bold'),
+    axis.title.x = element_text(size = 12, face = 'bold'),
+    axis.title.y = element_text(size = 12, face = 'bold'),
+    axis.line = element_line(colour = 'black'),
+
+    #Legend
+    legend.key = element_blank(), # removes the border
+    legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
+    legend.text = element_text(size = 14, face = "bold"), # Text size
+    title = element_text(size = 14, face = "bold")) +
+
+  coord_flip()
+ggplot2::ggsave("L2_3_IT_GOTerms_P30_Cortex_Fisher.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
+
+```
