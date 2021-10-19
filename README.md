@@ -1,7 +1,7 @@
 
 # Single-nucleus RNA-seq 5’ reveals cell-to-cell heterogeneity in Rett Syndrome mouse brain temporally
 
-This pipeline is developed to analyze 10X single nucleus RNA-seq 5' data from mouse brain. It includes mapping of reads via cellranger, preprocessing, DEG analysis, gene ontology analysis, and trajectory analysis.
+This pipeline is developed to analyze 10X single nucleus RNA-seq 5' data from mouse brain. It includes mapping of reads via cellranger, preprocessing, DEG analysis, gene ontology analysis, trajectory analysis and velocity analysis.
 
 
 ## Study Design
