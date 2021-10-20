@@ -99,7 +99,7 @@ trA.integrated <- IntegrateData(anchorset = anchors)
 trA.integrated <- ScaleData(trA.integrated)
 trA.integrated <- RunPCA(trA.integrated)
 trA.integrated <- RunUMAP(trA.integrated, dims = 1:15, reduction.name = "UMAP")
-trA.integrated <- FindNeighbors(trA.integrated, dims = 1:50)
+trA.integrated <- FindNeighbors(trA.integrated, dims = 1:15)
 trA.integrated <- FindClusters(trA.integrated)
 DimPlot(trA.integrated, group.by = c("orig.ident", "ident"))
 ```
