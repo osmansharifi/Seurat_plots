@@ -70,6 +70,8 @@ table(trA$orig.ident)
 Because we don't want to do the exact same thing as we did in the Velocity analysis, lets instead use the Integration technique.
 
 ```{r preproc, warning=FALSE, message=TRUE, error=FALSE}
+load("/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/rett_P30_with_labels_proportions.rda")
+trA <- experiment.aggregate
 # First split the sample by original identity
 trA.list <- SplitObject(trA, split.by = "orig.ident")
 
@@ -96,7 +98,7 @@ trA.integrated <- IntegrateData(anchorset = anchors)
 
 trA.integrated <- ScaleData(trA.integrated)
 trA.integrated <- RunPCA(trA.integrated)
-trA.integrated <- RunUMAP(trA.integrated, dims = 1:50, reduction.name = "UMAP")
+trA.integrated <- RunUMAP(trA.integrated, dims = 1:15, reduction.name = "UMAP")
 trA.integrated <- FindNeighbors(trA.integrated, dims = 1:50)
 trA.integrated <- FindClusters(trA.integrated)
 DimPlot(trA.integrated, group.by = c("orig.ident", "ident"))
