@@ -72,6 +72,7 @@ Because we don't want to do the exact same thing as we did in the Velocity analy
 ```{r preproc, warning=FALSE, message=TRUE, error=FALSE}
 load("/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/rett_P30_with_labels_proportions.rda")
 trA <- experiment.aggregate
+Idents(trA) <- "celltype.call"
 # First split the sample by original identity
 trA.list <- SplitObject(trA, split.by = "orig.ident")
 
@@ -93,7 +94,7 @@ for (i in seq_along(along.with = trA.list)) {
 # find anchors
 anchors <- FindIntegrationAnchors(object.list = trA.list)
 
-# integrate data
+# integrate data\
 trA.integrated <- IntegrateData(anchorset = anchors)
 
 trA.integrated <- ScaleData(trA.integrated)
@@ -101,13 +102,13 @@ trA.integrated <- RunPCA(trA.integrated)
 trA.integrated <- RunUMAP(trA.integrated, dims = 1:15, reduction.name = "UMAP")
 trA.integrated <- FindNeighbors(trA.integrated, dims = 1:15)
 trA.integrated <- FindClusters(trA.integrated)
-DimPlot(trA.integrated, group.by = c("orig.ident", "ident"))
+DimPlot(trA.integrated, group.by = c("orig.ident", "celltype.call"))
 ```
 **QUESTION**
 
 How does this result look different from the result produced in the velocity section?
 
-## Setting up monocle3 cell_data_set object using the SueratWrappers
+## Setting up monocle3 cell_data_set object using the SeuratWrappers
 
 monocle3 uses a `cell_data_set` object, the `as.cell_data_set` function from SeuratWrappers can be used to "convert" a Seurat object to Monocle object. Moving the data calculated in Seurat to the appropriate slots in the Monocle object. 
 
