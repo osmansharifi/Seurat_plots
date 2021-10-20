@@ -99,8 +99,8 @@ trA.integrated <- IntegrateData(anchorset = anchors)
 
 trA.integrated <- ScaleData(trA.integrated)
 trA.integrated <- RunPCA(trA.integrated)
-trA.integrated <- RunUMAP(trA.integrated, dims = 1:15, reduction.name = "UMAP")
-trA.integrated <- FindNeighbors(trA.integrated, dims = 1:15)
+trA.integrated <- RunUMAP(trA.integrated, dims = 1:50, reduction.name = "UMAP")
+trA.integrated <- FindNeighbors(trA.integrated, dims = 1:50)
 trA.integrated <- FindClusters(trA.integrated)
 DimPlot(trA.integrated, group.by = c("orig.ident", "celltype.call"))
 ```
@@ -117,7 +117,7 @@ For trajectory analysis, 'partitions' as well as 'clusters' are needed and so th
 
 ```{r data_conversion, warning=FALSE, message=TRUE, error=FALSE}
 cds <- as.cell_data_set(trA.integrated)
-cds <- cluster_cells(cds, resolution=1e-3)
+cds <- cluster_cells(cds, resolution=1e-5)
 
 #following two lines were added by Matt later
 monocle_clusters <- cds@clusters@listData$UMAP$clusters
@@ -134,7 +134,7 @@ How many clusters are generated at each level?
 
 ### Subsetting partitions
 
-Because partitions are high level separations of the data (yes we have only 1 here). It may make sense to then perform trajectory analysis on each partition separately. To do this we sould go back to Seurat, subset by partition, then back to a CDS
+Because partitions are high level separations of the data (yes we have only 1 here). It may make sense to then perform trajectory analysis on each partition separately. To do this we should go back to Seurat, subset by partition, then back to a CDS
 
 ```{r trajectory, warning=FALSE, message=TRUE, error=FALSE}
 integrated.sub <- subset(as.Seurat(cds, assay = NULL), monocle3_partitions == 1)
@@ -154,12 +154,17 @@ After learning the graph, monocle can plot add the trajectory graph to the cell 
 
 ```{r trajectory_plot, warning=FALSE, message=FALSE, error=FALSE}
 cds@clusters@listData$UMAP$clusters <- trA.integrated$orig.ident # play with labeling of cells 
-
+cds@clusters@listData$UMAP$clusters <- trA.integrated$celltype.call
 plot_cells(cds,
-           color_cells_by = "cluster",
-           label_groups_by_cluster=FALSE,
+           color_cells_by = "celltype.call",
+           label_groups_by_cluster=TRUE,
            label_leaves=FALSE,
            label_branch_points=FALSE)
+ggplot2::ggsave("P30_M_monocle_trajectory.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
+
 ```
 
 Not all of our trajectories are connected. In fact, only clusters that belong to the same partition are connected by a trajectory.
@@ -169,7 +174,7 @@ Not all of our trajectories are connected. In fact, only clusters that belong to
 We can set the root to any one of our clusters by selecting the cells in that cluster to use as the root in the function `order_cells`. All cells that cannot be reached from a trajectory with our selected root will be gray, which represents "infinite" pseudotime.
 
 ```{r pseudotime}
-cds <- order_cells(cds, root_cells = colnames(cds[,clusters(cds) == 4]))
+cds <- order_cells(cds, root_pr_nodes = NULL, root_cells = NULL) #root_cells = colnames(cds[,clusters(cds) == 14]), root_pr_nodes = NULL)
 plot_cells(cds,
            color_cells_by = "pseudotime",
            group_cells_by = "cluster",
@@ -179,6 +184,10 @@ plot_cells(cds,
            label_branch_points=FALSE,
            label_roots = FALSE,
            trajectory_graph_color = "grey60")
+ggplot2::ggsave("P30_M_pseudotime.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
 ```
 
 Here the pseudotime trajectory is rooted in cluster 5. This choice was arbitrary. In reality, you would make the decision about where to root your trajectory based upon what you know about your experiment. If, for example, the markers identified with cluster 1 suggest to you that cluster 1 represents the earliest developmental time point, you would likely root your pseudotime trajectory there. Explore what the pseudotime analysis looks like with the root in different clusters. Because we have not set a seed for the random process of clustering, cluster numbers will differ between R sessions.
