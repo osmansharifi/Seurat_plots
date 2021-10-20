@@ -15,7 +15,7 @@ library(monocle3)
 library(Seurat)
 library(SeuratWrappers)
 library(patchwork)
-#library(dplyr)
+library(dplyr)
 
 set.seed(1234)
 ```
@@ -35,7 +35,7 @@ tol_muted_palette <- c("#332288", "#88CCEE", "#44AA99",
 
 ### Project set-up
 
-Because Seurat is now the most widely used package for single cell data analysis we will want to use Monocle with Seurat. For greater detail on single cell RNA-Seq analysis, see the Introductory course materials [here](https://ucdavis-bioinformatics-training.github.io/2021-August-Single-Cell-RNA-Seq-Analysis/).
+Because Seurat is now the most widely used package for single cell data analysis we will want to use Monocle with Seurat. For greater detail on single cell RNA-Seq analysis.
 
 ## Loading data into Seurat
 
