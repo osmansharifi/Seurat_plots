@@ -264,7 +264,10 @@ ggplot2::ggsave("P30_M_monocle_module125.pdf",
                 width = 12)
 ```
 
-
+## Finally, save the monocle RData
+```{r}
+save(experiment.aggregate, file="monocle.RData")
+```
 # R session information
 ```{r info}
 sessionInfo()
