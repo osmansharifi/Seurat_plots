@@ -209,19 +209,6 @@ Monocle's `graph_test()` function detects genes that vary over a trajectory. Thi
 cds_graph_test_results <- graph_test(cds,
                                      neighbor_graph = "principal_graph",
                                      cores = 8, verbose = FALSE)
-
-cds_graph_test_results <- graph_test(
-                         cds,
-                         neighbor_graph = c("knn", "principal_graph"),
-                         reduction_method = "UMAP",
-                         k = 25,
-                         method = c("Moran_I"),
-                         alternative = "greater",
-                         expression_family = "quasipoisson",
-                         cores = 8,
-                         verbose = FALSE
-                         )
-
 ```
 
  * You may have an issue with this function in newer version of R an rBind Error.
@@ -279,10 +266,11 @@ pheatmap::pheatmap(agg_mat2,
                    treeheight_row = 0,
                    treeheight_col = 0,
                    clustering_method="ward.D2")
+
 ```
 
 ```{r plotmodules}
-gm <- gene_modules[which(gene_modules$module %in% c(1, 2)),]
+gm <- gene_modules[which(gene_modules$module %in% c(1, 2, 5)),]
 plot_cells(cds,
            genes=gm,
            label_cell_groups=FALSE,
