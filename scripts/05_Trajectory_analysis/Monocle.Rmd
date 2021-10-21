@@ -130,7 +130,9 @@ plot_cells(cds,
            color_cells_by = "celltype.call",
            label_groups_by_cluster=TRUE,
            label_leaves=FALSE,
-           label_branch_points=FALSE)
+           label_branch_points=FALSE,
+           cell_size = 0.5,
+           labels_per_group = 1)
 ggplot2::ggsave("P30_M_monocle_trajectory.pdf",
                 device = NULL,
                 height = 8.5,
@@ -145,7 +147,7 @@ Not all of our trajectories are connected. In fact, only clusters that belong to
 We can set the root to any one of our clusters by selecting the cells in that cluster to use as the root in the function `order_cells`. All cells that cannot be reached from a trajectory with our selected root will be gray, which represents "infinite" pseudotime.
 
 ```{r pseudotime}
-cds <- order_cells(cds, root_pr_nodes = NULL, root_cells = colnames(cds[,clusters(cds) == 14]))
+cds <- order_cells(cds, root_pr_nodes = NULL, root_cells = colnames(cds[,clusters(cds) == "Oligo"]))
 plot_cells(cds,
            color_cells_by = "pseudotime",
            group_cells_by = "cluster",
