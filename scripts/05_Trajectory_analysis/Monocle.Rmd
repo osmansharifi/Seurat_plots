@@ -36,35 +36,6 @@ tol_muted_palette <- c("#332288", "#88CCEE", "#44AA99",
 ### Project set-up
 
 Because Seurat is now the most widely used package for single cell data analysis we will want to use Monocle with Seurat. For greater detail on single cell RNA-Seq analysis.
-
-## Loading data into Seurat
-
-```{r, seurat, warning=FALSE, message=TRUE, error=FALSE}
-data_location <- "data_download/"
-samples <- c("sample1", "sample2", "sample3")
-
-raw10x <- lapply(samples, function(i){
-  d10x <- Read10X_h5(file.path(data_location, paste0(i, "_raw_feature_bc_matrix.h5")))
-  colnames(d10x$`Gene Expression`) <- paste(sapply(strsplit(colnames(d10x$`Gene Expression`),split="-"),'[[',1L),i,sep="-")
-  colnames(d10x$`Antibody Capture`) <- paste(sapply(strsplit(colnames(d10x$`Antibody Capture`),split="-"),'[[',1L),i,sep="-")
-  d10x
-})
-names(raw10x) <- samples
-trA <- CreateSeuratObject(do.call("cbind", lapply(raw10x,"[[", "Gene Expression")),
-                          project = "cellranger multi",
-                          min.cells = 0,
-                          min.features = 300,
-                          names.field = 2,
-                          names.delim = "\\-")
-trA$percent_mito <- PercentageFeatureSet(trA, pattern = "^MT-")
-
-trA <- subset(trA, percent_mito <= 10)
-trA <- subset(trA, nCount_RNA <= 10000)
-trA <- subset(trA, nFeature_RNA >= 500)
-table(trA$orig.ident)
-```
-
-
 ## Seurat processing of data
 
 Because we don't want to do the exact same thing as we did in the Velocity analysis, lets instead use the Integration technique.
@@ -174,7 +145,7 @@ Not all of our trajectories are connected. In fact, only clusters that belong to
 We can set the root to any one of our clusters by selecting the cells in that cluster to use as the root in the function `order_cells`. All cells that cannot be reached from a trajectory with our selected root will be gray, which represents "infinite" pseudotime.
 
 ```{r pseudotime}
-cds <- order_cells(cds, root_pr_nodes = NULL, root_cells = NULL) #root_cells = colnames(cds[,clusters(cds) == 14]), root_pr_nodes = NULL)
+cds <- order_cells(cds, root_pr_nodes = NULL, root_cells = colnames(cds[,clusters(cds) == 14]))
 plot_cells(cds,
            color_cells_by = "pseudotime",
            group_cells_by = "cluster",
