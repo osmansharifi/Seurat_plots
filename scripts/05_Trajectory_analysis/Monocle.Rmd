@@ -230,6 +230,10 @@ plot_cells(cds,
            show_trajectory_graph = FALSE,
            label_cell_groups = FALSE,
            label_leaves = FALSE)
+ggplot2::ggsave("P30_M_top6_genes.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
 ```
 
 We can also calculate modules of co-expressed genes. By providing the module-finding function with a list of possible resolutions, we are telling Louvain to perform the clustering at each resolution and select the result with the greatest modularity. Modules will only be calculated for genes that vary as a function of pseudotime.
@@ -266,6 +270,10 @@ pheatmap::pheatmap(agg_mat2,
                    treeheight_row = 0,
                    treeheight_col = 0,
                    clustering_method="ward.D2")
+ggplot2::ggsave("P30_M_monocle_coexpression.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
 
 ```
 
@@ -279,6 +287,10 @@ plot_cells(cds,
            label_roots = FALSE,
            label_leaves = FALSE,
            trajectory_graph_color = "grey60")
+ggplot2::ggsave("P30_M_monocle_module125.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
 ```
 
 
