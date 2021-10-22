@@ -42,6 +42,8 @@ Because we don't want to do the exact same thing as we did in the Velocity analy
 
 ```{r preproc, warning=FALSE, message=TRUE, error=FALSE}
 load("/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/rett_P30_with_labels_proportions.rda")
+#load("/Users/osman/Desktop/LaSalle_lab/Scripts/P60_script/P60_M_Cortex/rett_P60_with_labels_proportions.rda")
+load("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/05_Trajectory_analysis/P30_M_monocle.RData")
 trA <- experiment.aggregate
 Idents(trA) <- "celltype.call"
 # First split the sample by original identity
@@ -70,8 +72,8 @@ trA.integrated <- IntegrateData(anchorset = anchors)
 
 trA.integrated <- ScaleData(trA.integrated)
 trA.integrated <- RunPCA(trA.integrated)
-trA.integrated <- RunUMAP(trA.integrated, dims = 1:50, reduction.name = "UMAP")
-trA.integrated <- FindNeighbors(trA.integrated, dims = 1:50)
+trA.integrated <- RunUMAP(trA.integrated, dims = 1:15, reduction.name = "UMAP")
+trA.integrated <- FindNeighbors(trA.integrated, dims = 1:15)
 trA.integrated <- FindClusters(trA.integrated)
 DimPlot(trA.integrated, group.by = c("orig.ident", "celltype.call"))
 ```
@@ -88,7 +90,7 @@ For trajectory analysis, 'partitions' as well as 'clusters' are needed and so th
 
 ```{r data_conversion, warning=FALSE, message=TRUE, error=FALSE}
 cds <- as.cell_data_set(trA.integrated)
-cds <- cluster_cells(cds, resolution=1e-5)
+cds <- cluster_cells(cds, resolution=1e-4)
 
 #following two lines were added by Matt later
 monocle_clusters <- cds@clusters@listData$UMAP$clusters
@@ -96,7 +98,13 @@ cds@clusters@listData$UMAP$clusters <- trA.integrated$seurat_clusters
 
 p1 <- plot_cells(cds, color_cells_by = "cluster", show_trajectory_graph = FALSE)
 p2 <- plot_cells(cds, color_cells_by = "partition", show_trajectory_graph = FALSE)
-wrap_plots(p1, p2)
+p3 <- plot_cells(cds, color_cells_by = "celltype.call", show_trajectory_graph = FALSE)
+wrap_plots(p1, p2, p3)
+ggplot2::ggsave("P30_M_monocle_partition_highres.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
+
 ```
 
 Spend a moment looking at the cell_data_set object and its slots (using `slotNames`) as well as `cluster_cells`. Try updating the resolution parameter to generate more clusters (try 1e-5, 1e-3, 1e-1, and 0).
