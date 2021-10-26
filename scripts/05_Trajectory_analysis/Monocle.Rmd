@@ -41,15 +41,17 @@ Because Seurat is now the most widely used package for single cell data analysis
 Because we don't want to do the exact same thing as we did in the Velocity analysis, lets instead use the Integration technique.
 
 ```{r preproc, warning=FALSE, message=TRUE, error=FALSE}
-P30 <- load("/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/rett_P30_with_labels_proportions.rda")
-P60 <- load("/Users/osman/Desktop/LaSalle_lab/Scripts/P60_script/P60_M_Cortex/rett_P60_with_labels_proportions.rda")
-P120 <- load("/Users/osman/Desktop/LaSalle_lab/Scripts/P120_script/P120_Male_cortex/rett_P120_with_labels_proportions.rda")
-load("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/05_Trajectory_analysis/P30_M_monocle.RData")
-trA <- experiment.aggregate
+load("/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/rett_P30_with_labels_proportions.rda")
+P30 <- experiment.aggregate
+load("/Users/osman/Desktop/LaSalle_lab/Scripts/P60_script/P60_M_Cortex/rett_P60_with_labels_proportions.rda")
+P60 <- experiment.aggregate
+load("/Users/osman/Desktop/LaSalle_lab/Scripts/P120_script/P120_Male_cortex/rett_P120_with_labels_proportions.rda")
+P120 <- experiment.aggregate
+trA <- merge(P30, y = c(P60, P120), add.cell.ids = c("P30", "P60", "P120"), project = "all_timepoints")
+table(trA$orig.ident)
 Idents(trA) <- "celltype.call"
 # First split the sample by original identity
 trA.list <- SplitObject(trA, split.by = "orig.ident")
-
 # perform standard preprocessing on each object
 for (i in 1:length(trA.list)) {
   trA.list[[i]] <- NormalizeData(trA.list[[i]], verbose = FALSE)
