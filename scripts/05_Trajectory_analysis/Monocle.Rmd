@@ -72,7 +72,6 @@ anchors <- FindIntegrationAnchors(object.list = trA.list)
 
 # integrate data\
 trA.integrated <- IntegrateData(anchorset = anchors)
-
 trA.integrated <- ScaleData(trA.integrated)
 trA.integrated <- RunPCA(trA.integrated)
 trA.integrated <- RunUMAP(trA.integrated, dims = 1:15, reduction.name = "UMAP")
