@@ -77,6 +77,9 @@ trA.integrated <- RunPCA(trA.integrated)
 trA.integrated <- RunUMAP(trA.integrated, dims = 1:15, reduction.name = "UMAP")
 trA.integrated <- FindNeighbors(trA.integrated, dims = 1:15)
 trA.integrated <- FindClusters(trA.integrated)
+all_WT_samples <- subset(x = trA.integrated, subset = (orig.ident == "19_0112_C" | orig.ident == "19_0113_C" | orig.ident == "WT_M_P30_CORT1" | orig.ident == "WT_M_P30_CORT2" | orig.ident == "WT_M_P60_CORT1" | orig.ident == "WT_M_P60_CORT2"))
+all_MUT_samples <- subset(x = trA.integrated, subset = (orig.ident == "19_0112_C" | orig.ident == "19_0113_C" | orig.ident == "WT_M_P30_CORT1" | orig.ident == "WT_M_P30_CORT2" | orig.ident == "WT_M_P60_CORT1" | orig.ident == "WT_M_P60_CORT2"))
+
 DimPlot(trA.integrated, group.by = c("orig.ident", "celltype.call"))
 ```
 **QUESTION**
@@ -92,13 +95,13 @@ For trajectory analysis, 'partitions' as well as 'clusters' are needed and so th
 
 ```{r data_conversion, warning=FALSE, message=TRUE, error=FALSE}
 cds <- as.cell_data_set(trA.integrated)
-cds <- cluster_cells(cds, resolution=1e-4)
+cds <- cluster_cells(cds, resolution=1e-3)
 
 #following two lines were added by Matt later
 monocle_clusters <- cds@clusters@listData$UMAP$clusters
 cds@clusters@listData$UMAP$clusters <- trA.integrated$seurat_clusters
 
-p1 <- plot_cells(cds, color_cells_by = "cluster", show_trajectory_graph = FALSE)
+p1 <- plot_cells(cds, color_cells_by = "orig.ident", show_trajectory_graph = FALSE)
 p2 <- plot_cells(cds, color_cells_by = "partition", show_trajectory_graph = FALSE)
 p3 <- plot_cells(cds, color_cells_by = "celltype.call", show_trajectory_graph = FALSE)
 wrap_plots(p1, p2, p3)
