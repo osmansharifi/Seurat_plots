@@ -42,11 +42,15 @@ Because we don't want to do the exact same thing as we did in the Velocity analy
 
 ```{r preproc, warning=FALSE, message=TRUE, error=FALSE}
 load("/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/rett_P30_with_labels_proportions.rda")
+#load("/share/lasallelab/Osman/scAlign_collab/Male_Cortex_labeled/rett_P30_with_labels_proportions.rda")
 P30 <- experiment.aggregate
 load("/Users/osman/Desktop/LaSalle_lab/Scripts/P60_script/P60_M_Cortex/rett_P60_with_labels_proportions.rda")
+#load("/share/lasallelab/Osman/scAlign_collab/Male_Cortex_labeled/rett_P60_with_labels_proportions.rda")
 P60 <- experiment.aggregate
 load("/Users/osman/Desktop/LaSalle_lab/Scripts/P120_script/P120_Male_cortex/rett_P120_with_labels_proportions.rda")
+#load("/share/lasallelab/Osman/scAlign_collab/Male_Cortex_labeled/rett_P120_with_labels_proportions.rda")
 P120 <- experiment.aggregate
+levels(x = P120$orig.ident) <- c("WT_M_P120_CORT1", "WT_M_P120_CORT2", "MUT_M_P120_CORT1", "MUT_M_P120_CORT2")
 trA <- merge(P30, y = c(P60, P120), add.cell.ids = c("P30", "P60", "P120"), project = "all_timepoints")
 table(trA$orig.ident)
 Idents(trA) <- "celltype.call"
@@ -77,10 +81,12 @@ trA.integrated <- RunPCA(trA.integrated)
 trA.integrated <- RunUMAP(trA.integrated, dims = 1:15, reduction.name = "UMAP")
 trA.integrated <- FindNeighbors(trA.integrated, dims = 1:15)
 trA.integrated <- FindClusters(trA.integrated)
-all_WT_samples <- subset(x = trA.integrated, subset = (orig.ident == "19_0112_C" | orig.ident == "19_0113_C" | orig.ident == "WT_M_P30_CORT1" | orig.ident == "WT_M_P30_CORT2" | orig.ident == "WT_M_P60_CORT1" | orig.ident == "WT_M_P60_CORT2"))
-all_MUT_samples <- subset(x = trA.integrated, subset = (orig.ident == "19_0112_C" | orig.ident == "19_0113_C" | orig.ident == "WT_M_P30_CORT1" | orig.ident == "WT_M_P30_CORT2" | orig.ident == "WT_M_P60_CORT1" | orig.ident == "WT_M_P60_CORT2"))
-
+all_WT_samples <- subset(x = trA.integrated, subset = (orig.ident == "WT_M_P30_CORT1" | orig.ident == "WT_M_P30_CORT2" | orig.ident == "WT_M_P60_CORT1" | orig.ident == "WT_M_P60_CORT2" | orig.ident == "19_0112_C" | orig.ident == "19_0113_C"))
+all_MUT_samples <- subset(x = trA.integrated, subset = (orig.ident == "MUT_M_P30_CORT1" | orig.ident == "MUT_M_P30_CORT2" | orig.ident == "MUT_M_P60_CORT1" | orig.ident == "MUT_M_P60_CORT2" | orig.ident == "19_0114_C" | orig.ident == "19_0117_C"))
 DimPlot(trA.integrated, group.by = c("orig.ident", "celltype.call"))
+WT_UMAP <- DimPlot(all_WT_samples, group.by = "orig.ident")
+MUT_UMAP <- DimPlot(all_MUT_samples, group.by = "orig.ident")
+wrap_plots(WT_UMAP, MUT_UMAP)
 ```
 **QUESTION**
 
