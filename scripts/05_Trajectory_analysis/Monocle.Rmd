@@ -100,18 +100,27 @@ monocle3 uses a `cell_data_set` object, the `as.cell_data_set` function from Seu
 For trajectory analysis, 'partitions' as well as 'clusters' are needed and so the Monocle cluster_cells function must also be performed. Monocle's clustering technique is more of a community based algorithm and actually uses the uMap plot (sort of) in its routine and partitions are more well separated groups using a statistical test from [Alex Wolf et al](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1663-x), 
 
 ```{r data_conversion, warning=FALSE, message=TRUE, error=FALSE}
-cds <- as.cell_data_set(trA.integrated)
-cds <- cluster_cells(cds, resolution=1e-3)
+cds_WT <- as.cell_data_set(all_WT_samples)
+cds_WT <- cluster_cells(cds_WT, resolution=1e-1)
+
+cds_MUT <- as.cell_data_set(all_MUT_samples)
+cds_MUT <- cluster_cells(cds_MUT, resolution=1e-1)
 
 #following two lines were added by Matt later
-monocle_clusters <- cds@clusters@listData$UMAP$clusters
-cds@clusters@listData$UMAP$clusters <- trA.integrated$seurat_clusters
+monocle_clusters_WT <- cds_WT@clusters@listData$UMAP$clusters
+cds_WT@clusters@listData$UMAP$clusters <- all_WT_samples$seurat_clusters
 
-p1 <- plot_cells(cds, color_cells_by = "orig.ident", show_trajectory_graph = FALSE)
-p2 <- plot_cells(cds, color_cells_by = "partition", show_trajectory_graph = FALSE)
-p3 <- plot_cells(cds, color_cells_by = "celltype.call", show_trajectory_graph = FALSE)
-wrap_plots(p1, p2, p3)
-ggplot2::ggsave("P30_M_monocle_partition_highres.pdf",
+monocle_clusters_MUT <- cds_MUT@clusters@listData$UMAP$clusters
+cds_MUT@clusters@listData$UMAP$clusters <- all_MUT_samples$seurat_clusters
+
+p1 <- plot_cells(cds_WT, color_cells_by = "orig.ident", show_trajectory_graph = FALSE)
+p2 <- plot_cells(cds_WT, color_cells_by = "partition", show_trajectory_graph = FALSE)
+p3 <- plot_cells(cds_WT, color_cells_by = "celltype.call", show_trajectory_graph = FALSE)
+p4 <- plot_cells(cds_MUT, color_cells_by = "orig.ident", show_trajectory_graph = FALSE)
+p5 <- plot_cells(cds_MUT, color_cells_by = "partition", show_trajectory_graph = FALSE)
+p6 <- plot_cells(cds_MUT, color_cells_by = "celltype.call", show_trajectory_graph = FALSE)
+wrap_plots(p1, p2, p3,p4, p5, p6)
+ggplot2::ggsave("Postnatal_M_monocle_partition_highres.pdf",
                 device = NULL,
                 height = 8.5,
                 width = 12)
@@ -127,8 +136,11 @@ How many clusters are generated at each level?
 Because partitions are high level separations of the data (yes we have only 1 here). It may make sense to then perform trajectory analysis on each partition separately. To do this we should go back to Seurat, subset by partition, then back to a CDS
 
 ```{r trajectory, warning=FALSE, message=TRUE, error=FALSE}
-integrated.sub <- subset(as.Seurat(cds, assay = NULL), monocle3_partitions == 1)
-cds <- as.cell_data_set(integrated.sub)
+integrated.sub_WT <- subset(as.Seurat(cds_WT, assay = NULL), monocle3_partitions == 1)
+cds_WT <- as.cell_data_set(integrated.sub_WT)
+
+integrated.sub_MUT <- subset(as.Seurat(cds_MUT, assay = NULL), monocle3_partitions == 1)
+cds_MUT <- as.cell_data_set(integrated.sub_MUT)
 ```
 
 
@@ -137,21 +149,32 @@ cds <- as.cell_data_set(integrated.sub)
 In a data set like this one, cells were not harvested in a time series, but may not have all been at the same developmental stage. Monocle offers trajectory analysis to model the relationships between groups of cells as a trajectory of gene expression changes. The first step in trajectory analysis is the `learn_graph()` function. This may be time consuming.
 
 ```{r learngraph, results='hide', message=FALSE, warning=FALSE, error=FALSE}
-cds <- learn_graph(cds, use_partition = TRUE, verbose = FALSE)
+cds_WT <- learn_graph(cds_WT, use_partition = TRUE, verbose = FALSE)
+cds_MUT <- learn_graph(cds_MUT, use_partition = TRUE, verbose = FALSE)
 ```
 
 After learning the graph, monocle can plot add the trajectory graph to the cell plot.
 
 ```{r trajectory_plot, warning=FALSE, message=FALSE, error=FALSE}
-cds@clusters@listData$UMAP$clusters <- trA.integrated$orig.ident # play with labeling of cells 
-cds@clusters@listData$UMAP$clusters <- trA.integrated$celltype.call
-plot_cells(cds,
+cds_WT@clusters@listData$UMAP$clusters <- all_WT_samples$orig.ident # play with labeling of cells 
+cds_WT@clusters@listData$UMAP$clusters <- all_WT_samples$celltype.call
+p7 <- plot_cells(cds_WT,
            color_cells_by = "celltype.call",
            label_groups_by_cluster=TRUE,
            label_leaves=FALSE,
            label_branch_points=FALSE,
            cell_size = 0.5,
            labels_per_group = 1)
+cds_MUT@clusters@listData$UMAP$clusters <- all_MUT_samples$orig.ident # play with labeling of cells 
+cds_MUT@clusters@listData$UMAP$clusters <- all_MUT_samples$celltype.call
+p8 <- plot_cells(cds_MUT,
+           color_cells_by = "celltype.call",
+           label_groups_by_cluster=TRUE,
+           label_leaves=FALSE,
+           label_branch_points=FALSE,
+           cell_size = 0.5,
+           labels_per_group = 1)
+wrap_plots(p7,p8)
 ggplot2::ggsave("P30_M_monocle_trajectory.pdf",
                 device = NULL,
                 height = 8.5,
@@ -166,8 +189,8 @@ Not all of our trajectories are connected. In fact, only clusters that belong to
 We can set the root to any one of our clusters by selecting the cells in that cluster to use as the root in the function `order_cells`. All cells that cannot be reached from a trajectory with our selected root will be gray, which represents "infinite" pseudotime.
 
 ```{r pseudotime}
-cds <- order_cells(cds, root_pr_nodes = NULL, root_cells = colnames(cds[,clusters(cds) == "Oligo"]))
-plot_cells(cds,
+cds_WT <- order_cells(cds_WT, root_pr_nodes = NULL, root_cells = colnames(cds_WT[,clusters(cds_WT) == "L2_3_IT"]))
+p9 <- plot_cells(cds_WT,
            color_cells_by = "pseudotime",
            group_cells_by = "cluster",
            label_cell_groups = FALSE,
@@ -176,6 +199,17 @@ plot_cells(cds,
            label_branch_points=FALSE,
            label_roots = FALSE,
            trajectory_graph_color = "grey60")
+cds_MUT <- order_cells(cds_MUT, root_pr_nodes = NULL, root_cells = colnames(cds_MUT[,clusters(cds_MUT) == "L2_3_IT"]))
+p10 <- plot_cells(cds_MUT,
+           color_cells_by = "pseudotime",
+           group_cells_by = "cluster",
+           label_cell_groups = FALSE,
+           label_groups_by_cluster=FALSE,
+           label_leaves=FALSE,
+           label_branch_points=FALSE,
+           label_roots = FALSE,
+           trajectory_graph_color = "grey60")
+wrap_plots(p9, p10)
 ggplot2::ggsave("P30_M_pseudotime.pdf",
                 device = NULL,
                 height = 8.5,
