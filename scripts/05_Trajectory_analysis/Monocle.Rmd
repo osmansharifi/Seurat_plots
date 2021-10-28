@@ -173,7 +173,8 @@ p8 <- plot_cells(cds_MUT,
            label_leaves=FALSE,
            label_branch_points=FALSE,
            cell_size = 0.5,
-           labels_per_group = 1)
+           labels_per_group = 1,
+           label_cell_groups = FALSE)
 wrap_plots(p7,p8)
 ggplot2::ggsave("Postnatal_M_monocle_trajectory.pdf",
                 device = NULL,
@@ -189,7 +190,7 @@ Not all of our trajectories are connected. In fact, only clusters that belong to
 We can set the root to any one of our clusters by selecting the cells in that cluster to use as the root in the function `order_cells`. All cells that cannot be reached from a trajectory with our selected root will be gray, which represents "infinite" pseudotime.
 
 ```{r pseudotime}
-cds_WT <- order_cells(cds_WT, root_pr_nodes = NULL, root_cells = colnames(cds_WT[,clusters(cds_WT) == "L2_3_IT"]))
+cds_WT <- order_cells(cds_WT, root_pr_nodes = NULL, root_cells = colnames(cds_WT[,clusters(cds_WT) == "Peri"]))
 p9 <- plot_cells(cds_WT,
            color_cells_by = "pseudotime",
            group_cells_by = "cluster",
@@ -199,7 +200,7 @@ p9 <- plot_cells(cds_WT,
            label_branch_points=FALSE,
            label_roots = FALSE,
            trajectory_graph_color = "grey60")
-cds_MUT <- order_cells(cds_MUT, root_pr_nodes = NULL, root_cells = colnames(cds_MUT[,clusters(cds_MUT) == "L2_3_IT"]))
+cds_MUT <- order_cells(cds_MUT, root_pr_nodes = NULL, root_cells = colnames(cds_MUT[,clusters(cds_MUT) == "Peri"]))
 p10 <- plot_cells(cds_MUT,
            color_cells_by = "pseudotime",
            group_cells_by = "cluster",
@@ -210,7 +211,7 @@ p10 <- plot_cells(cds_MUT,
            label_roots = FALSE,
            trajectory_graph_color = "grey60")
 wrap_plots(p9, p10)
-ggplot2::ggsave("P30_M_pseudotime.pdf",
+ggplot2::ggsave("Postnatal_M_pseudotime.pdf",
                 device = NULL,
                 height = 8.5,
                 width = 12)
