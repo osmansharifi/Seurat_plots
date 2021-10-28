@@ -101,10 +101,10 @@ For trajectory analysis, 'partitions' as well as 'clusters' are needed and so th
 
 ```{r data_conversion, warning=FALSE, message=TRUE, error=FALSE}
 cds_WT <- as.cell_data_set(all_WT_samples)
-cds_WT <- cluster_cells(cds_WT, resolution=1e-1)
+cds_WT <- cluster_cells(cds_WT, resolution = NULL)
 
 cds_MUT <- as.cell_data_set(all_MUT_samples)
-cds_MUT <- cluster_cells(cds_MUT, resolution=1e-1)
+cds_MUT <- cluster_cells(cds_MUT, resolution = NULL)
 
 #following two lines were added by Matt later
 monocle_clusters_WT <- cds_WT@clusters@listData$UMAP$clusters
@@ -113,10 +113,10 @@ cds_WT@clusters@listData$UMAP$clusters <- all_WT_samples$seurat_clusters
 monocle_clusters_MUT <- cds_MUT@clusters@listData$UMAP$clusters
 cds_MUT@clusters@listData$UMAP$clusters <- all_MUT_samples$seurat_clusters
 
-p1 <- plot_cells(cds_WT, color_cells_by = "orig.ident", show_trajectory_graph = FALSE)
+p1 <- plot_cells(cds_WT, color_cells_by = "orig.ident", show_trajectory_graph = FALSE, label_cell_groups = FALSE, alpha = 1)
 p2 <- plot_cells(cds_WT, color_cells_by = "partition", show_trajectory_graph = FALSE)
 p3 <- plot_cells(cds_WT, color_cells_by = "celltype.call", show_trajectory_graph = FALSE)
-p4 <- plot_cells(cds_MUT, color_cells_by = "orig.ident", show_trajectory_graph = FALSE)
+p4 <- plot_cells(cds_MUT, color_cells_by = "orig.ident", show_trajectory_graph = FALSE, label_cell_groups = FALSE, alpha = 1)
 p5 <- plot_cells(cds_MUT, color_cells_by = "partition", show_trajectory_graph = FALSE)
 p6 <- plot_cells(cds_MUT, color_cells_by = "celltype.call", show_trajectory_graph = FALSE)
 wrap_plots(p1, p2, p3,p4, p5, p6)
@@ -175,7 +175,7 @@ p8 <- plot_cells(cds_MUT,
            cell_size = 0.5,
            labels_per_group = 1)
 wrap_plots(p7,p8)
-ggplot2::ggsave("P30_M_monocle_trajectory.pdf",
+ggplot2::ggsave("Postnatal_M_monocle_trajectory.pdf",
                 device = NULL,
                 height = 8.5,
                 width = 12)
