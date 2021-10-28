@@ -190,7 +190,7 @@ Not all of our trajectories are connected. In fact, only clusters that belong to
 We can set the root to any one of our clusters by selecting the cells in that cluster to use as the root in the function `order_cells`. All cells that cannot be reached from a trajectory with our selected root will be gray, which represents "infinite" pseudotime.
 
 ```{r pseudotime}
-cds_WT <- order_cells(cds_WT, root_pr_nodes = NULL, root_cells = colnames(cds_WT[,clusters(cds_WT) == "Peri"]))
+cds_WT <- order_cells(cds_WT, root_pr_nodes = NULL, root_cells = colnames(cds_WT[,clusters(cds_WT) == "L2_3_IT"]))
 p9 <- plot_cells(cds_WT,
            color_cells_by = "pseudotime",
            group_cells_by = "cluster",
@@ -200,7 +200,7 @@ p9 <- plot_cells(cds_WT,
            label_branch_points=FALSE,
            label_roots = FALSE,
            trajectory_graph_color = "grey60")
-cds_MUT <- order_cells(cds_MUT, root_pr_nodes = NULL, root_cells = colnames(cds_MUT[,clusters(cds_MUT) == "Peri"]))
+cds_MUT <- order_cells(cds_MUT, root_pr_nodes = NULL, root_cells = colnames(cds_MUT[,clusters(cds_MUT) == "L2_3_IT"]))
 p10 <- plot_cells(cds_MUT,
            color_cells_by = "pseudotime",
            group_cells_by = "cluster",
@@ -222,6 +222,9 @@ Here the pseudotime trajectory is rooted in cluster 5. This choice was arbitrary
 
 We can export this data to the Seurat object and visualize
 ```{r}
+integrated.sub_WT <- as.Seurat(cds_WT, assay = NULL)
+integrated.sub_WT$monocle3_clusters
+FeaturePlot(integrated.sub_WT, "monocle3_pseudotime")
 integrated.sub <- as.Seurat(cds, assay = NULL)
 integrated.sub$monocle3_clusters
 FeaturePlot(integrated.sub, "monocle3_pseudotime")
@@ -233,7 +236,10 @@ FeaturePlot(integrated.sub, "monocle3_pseudotime")
 Monocle's `graph_test()` function detects genes that vary over a trajectory. This may run very slowly. Adjust the number of cores as needed.
 
 ```{r graphtest, results='hide', error=FALSE, message=FALSE, warning=FALSE}
-cds_graph_test_results <- graph_test(cds,
+cds_graph_test_results_WT <- graph_test(cds_WT,
+                                     neighbor_graph = "principal_graph",
+                                     cores = 8, verbose = FALSE)
+cds_graph_test_results_MUT <- graph_test(cds_MUT,
                                      neighbor_graph = "principal_graph",
                                      cores = 8, verbose = FALSE)
 ```
@@ -246,18 +252,25 @@ cds_graph_test_results <- graph_test(cds,
 The output of this function is a table. We can look at the expression of some of these genes overlaid on the trajectory plot.
 
 ```{r variablepseudo, results="hide", warning=FALSE, message=FALSE}
-rowData(cds)$gene_short_name <- row.names(rowData(cds))
-
-head(cds_graph_test_results, error=FALSE, message=FALSE, warning=FALSE)
-
-deg_ids <- rownames(subset(cds_graph_test_results[order(cds_graph_test_results$morans_I, decreasing = TRUE),], q_value < 0.05))
-
-plot_cells(cds,
-           genes=head(deg_ids),
+rowData(cds_WT)$gene_short_name <- row.names(rowData(cds_WT))
+head(cds_graph_test_results_WT, error=FALSE, message=FALSE, warning=FALSE)
+deg_ids_WT <- rownames(subset(cds_graph_test_results_WT[order(cds_graph_test_results_WT$morans_I, decreasing = TRUE),], q_value < 0.05))
+p10 <- plot_cells(cds_WT,
+           genes=head(deg_ids_WT),
            show_trajectory_graph = FALSE,
            label_cell_groups = FALSE,
            label_leaves = FALSE)
-ggplot2::ggsave("P30_M_top6_genes.pdf",
+
+rowData(cds_MUT)$gene_short_name <- row.names(rowData(cds_MUT))
+head(cds_graph_test_results_MUT, error=FALSE, message=FALSE, warning=FALSE)
+deg_ids_MUT <- rownames(subset(cds_graph_test_results_MUT[order(cds_graph_test_results_MUT$morans_I, decreasing = TRUE),], q_value < 0.05))
+p11 <- plot_cells(cds_MUT,
+           genes=head(deg_ids_MUT),
+           show_trajectory_graph = FALSE,
+           label_cell_groups = FALSE,
+           label_leaves = FALSE)
+wrap_plots(p10, p11)
+ggplot2::ggsave("Postnate_M_top6_genes.pdf",
                 device = NULL,
                 height = 8.5,
                 width = 12)
@@ -268,28 +281,56 @@ We can also calculate modules of co-expressed genes. By providing the module-fin
 This heatmap displays the association of each gene module with each cell type.
 
 ```{r cellmodules}
-gene_modules <- find_gene_modules(cds[deg_ids,],
+gene_modules_WT <- find_gene_modules(cds_WT[deg_ids_WT,],
                                   resolution=c(10^seq(-6,-1)))
-table(gene_modules$module)
-cell_groups <- data.frame(cell = row.names(colData(cds)),
-                             cell_group = colData(cds)$orig.ident)
-agg_mat <- aggregate_gene_expression(cds,
-                                     gene_group_df = gene_modules,
-                                     cell_group_df = cell_groups)
-dim(agg_mat)
-row.names(agg_mat) <- paste0("Module ", row.names(agg_mat))
-pheatmap::pheatmap(agg_mat,
+table(gene_modules_WT$module)
+cell_groups_WT <- data.frame(cell = row.names(colData(cds_WT)),
+                             cell_group = colData(cds_WT)$orig.ident)
+agg_mat_WT <- aggregate_gene_expression(cds_WT,
+                                     gene_group_df = gene_modules_WT,
+                                     cell_group_df = cell_groups_WT)
+dim(agg_mat_WT)
+row.names(agg_mat_WT) <- paste0("Module ", row.names(agg_mat_WT))
+pheatmap::pheatmap(agg_mat_WT,
                    scale="column",
                    treeheight_row = 0,
                    treeheight_col = 0,
                    clustering_method="ward.D2")
+
+gene_modules_MUT <- find_gene_modules(cds_MUT[deg_ids_MUT,],
+                                  resolution=c(10^seq(-6,-1)))
+table(gene_modules_MUT$module)
+cell_groups_MUT <- data.frame(cell = row.names(colData(cds_MUT)),
+                             cell_group = colData(cds_MUT)$orig.ident)
+agg_mat_MUT <- aggregate_gene_expression(cds_MUT,
+                                     gene_group_df = gene_modules_MUT,
+                                     cell_group_df = cell_groups_MUT)
+dim(agg_mat_MUT)
+row.names(agg_mat_MUT) <- paste0("Module ", row.names(agg_mat_MUT))
+pheatmap::pheatmap(agg_mat_MUT,
+                   scale="column",
+                   treeheight_row = 0,
+                   treeheight_col = 0,
+                   clustering_method="ward.D2")
+
 ```
 We can also display the relationship between gene modules and monocle clusters as a heatmap.
 
 ```{r clustermodules}
+cluster_groups_WT <- data.frame(cell = row.names(colData(cds_WT)),
+                             cluster_group = cds_WT@clusters$UMAP[[2]])
+agg_mat2_WT <- aggregate_gene_expression(cds_WT, gene_modules_WT, cluster_groups_WT)
+dim(agg_mat2_WT)
+row.names(agg_mat2) <- paste0("Module ", row.names(agg_mat2))
+pheatmap::pheatmap(agg_mat2,
+                   scale="column",
+                   treeheight_row = 0,
+                   treeheight_col = 0,
+                   clustering_method="ward.D2")
+
 cluster_groups <- data.frame(cell = row.names(colData(cds)),
                              cluster_group = cds@clusters$UMAP[[2]])
-agg_mat2 <- aggregate_gene_expression(cds, gene_modules, cluster_groups)
+agg_mat2 <- aggregate_gene_expression(cds_WT, gene_modules_WT, cluster_groups_WT)
 dim(agg_mat2)
 row.names(agg_mat2) <- paste0("Module ", row.names(agg_mat2))
 pheatmap::pheatmap(agg_mat2,
