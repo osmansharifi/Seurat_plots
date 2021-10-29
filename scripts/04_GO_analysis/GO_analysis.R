@@ -35,6 +35,7 @@ experiment.aggregate <- RenameIdents(object = experiment.aggregate, 'Non-neurona
 table(Idents(experiment.aggregate),experiment.aggregate$orig.ident)
 
 for (cell_type in cell_types){
+  # Create a Seurat object containing only one cell tpye
   cell_cluster <- subset(experiment.aggregate, idents = cell_type)
   expr <- as.matrix(GetAssayData(cell_cluster))
   # Select genes that are expressed > 0 in at least 75% of cells (somewhat arbitrary definition)
@@ -53,7 +54,11 @@ for (cell_type in cell_types){
                                     annot = annFUN.org, mapping = "org.Mm.eg.db", ID = "symbol"))
   }
   godata_types <- list(GOdataBP, GOdataCC, GOdataMF)
-  for (GOdata in godata_types){
+  godata_names <- list("GOdataBP", "GOdataCC", "GOdataMF")
+
+  # Left off here; need to figure out parallel iterations so I can use the godata names to save files
+  # Need to figure out for loop
+  for (GOdata in godata_types, godata_name in godata_names){
     # Test for enrichment using Fisher's Exact Test and visualize GO terms
     resultFisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
     GenTable(GOdata, Fisher = resultFisher, topNodes = 20, numChar = 60)
@@ -104,8 +109,7 @@ for (cell_type in cell_types){
         legend.text = element_text(size = 14, face = "bold"), # Text size
         title = element_text(size = 14, face = "bold")) +
       coord_flip()
-    b <- deparse(substitute(GOdata))
-    ggplot2::ggsave(glue('{figure_path}{cell_type}_{metadata_info_concise}_{b}_Fisher.pdf'),
+    ggplot2::ggsave(glue('{figure_path}{cell_type}_{metadata_info_concise}_{godata_name}_Fisher.pdf'),
                     device = NULL,
                     height = 8.5,
                     width = 12)
