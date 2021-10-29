@@ -4,6 +4,7 @@ library(topGO)
 library(org.Mm.eg.db)
 library(scales)
 library(glue)
+library(foreach)
 
 # By Osman Sharifi & Viktoria Haghani
 
@@ -13,11 +14,10 @@ library(glue)
 ## Paths
 #data_file <- "/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/P30_M_Cort_Labeled.RData"
 data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proportions.rda"
-figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/"
+figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/"
 
 ## Lists
-cell_types <- list("L2_3_IT")
-#, "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
+cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 topgo_ontologies <- list("BP", "CC", "MF")
 
 ## Other variables
@@ -35,6 +35,7 @@ experiment.aggregate <- RenameIdents(object = experiment.aggregate, 'Non-neurona
 table(Idents(experiment.aggregate),experiment.aggregate$orig.ident)
 
 for (cell_type in cell_types){
+  # Create a Seurat object containing only one cell tpye
   cell_cluster <- subset(experiment.aggregate, idents = cell_type)
   expr <- as.matrix(GetAssayData(cell_cluster))
   # Select genes that are expressed > 0 in at least 75% of cells (somewhat arbitrary definition)
@@ -53,7 +54,8 @@ for (cell_type in cell_types){
                                     annot = annFUN.org, mapping = "org.Mm.eg.db", ID = "symbol"))
   }
   godata_types <- list(GOdataBP, GOdataCC, GOdataMF)
-  for (GOdata in godata_types){
+  godata_names <- list("GOdataBP", "GOdataCC", "GOdataMF")
+  foreach(GOdata = godata_types, godata_name = godata_names) %do% {
     # Test for enrichment using Fisher's Exact Test and visualize GO terms
     resultFisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
     GenTable(GOdata, Fisher = resultFisher, topNodes = 20, numChar = 60)
@@ -78,7 +80,7 @@ for (cell_type in cell_types){
       scale_fill_continuous(low = 'royalblue', high = 'red4') +
       xlab('') + ylab('Enrichment score') +
       labs(
-        title = 'GO Analysis',
+        title = glue('GO Analysis using ', godata_name, ' for ', cell_type),
         subtitle = glue('Top 20 terms ordered by Fisher Exact p-value for {metadata_info_expanded}'),
         caption = 'Cut-off lines drawn at equivalents of p=0.05, p=0.01, p=0.001') +
       geom_hline(yintercept = c(-log10(0.05), -log10(0.01), -log10(0.001)),
@@ -104,8 +106,7 @@ for (cell_type in cell_types){
         legend.text = element_text(size = 14, face = "bold"), # Text size
         title = element_text(size = 14, face = "bold")) +
       coord_flip()
-    b <- deparse(substitute(GOdata))
-    ggplot2::ggsave(glue('{figure_path}{cell_type}_{metadata_info_concise}_{b}_Fisher.pdf'),
+    ggplot2::ggsave(glue('{figure_path}{cell_type}_{metadata_info_concise}_{godata_name}_Fisher.pdf'),
                     device = NULL,
                     height = 8.5,
                     width = 12)
