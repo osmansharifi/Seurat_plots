@@ -4,6 +4,7 @@ library(topGO)
 library(org.Mm.eg.db)
 library(scales)
 library(glue)
+library(foreach)
 
 # By Osman Sharifi & Viktoria Haghani
 
@@ -55,10 +56,7 @@ for (cell_type in cell_types){
   }
   godata_types <- list(GOdataBP, GOdataCC, GOdataMF)
   godata_names <- list("GOdataBP", "GOdataCC", "GOdataMF")
-
-  # Left off here; need to figure out parallel iterations so I can use the godata names to save files
-  # Need to figure out for loop
-  for (GOdata in godata_types, godata_name in godata_names){
+  foreach(GOdata = godata_types, godata_name = godata_names) %do% {
     # Test for enrichment using Fisher's Exact Test and visualize GO terms
     resultFisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
     GenTable(GOdata, Fisher = resultFisher, topNodes = 20, numChar = 60)
@@ -83,7 +81,7 @@ for (cell_type in cell_types){
       scale_fill_continuous(low = 'royalblue', high = 'red4') +
       xlab('') + ylab('Enrichment score') +
       labs(
-        title = 'GO Analysis',
+        title = glue('GO Analysis using ', godata_name),
         subtitle = glue('Top 20 terms ordered by Fisher Exact p-value for {metadata_info_expanded}'),
         caption = 'Cut-off lines drawn at equivalents of p=0.05, p=0.01, p=0.001') +
       geom_hline(yintercept = c(-log10(0.05), -log10(0.01), -log10(0.001)),
