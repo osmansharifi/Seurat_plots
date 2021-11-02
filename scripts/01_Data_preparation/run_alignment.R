@@ -6,7 +6,7 @@ load("/share/lasallelab/Osman/scAlign_collab/processed/mouse.rda")
 
 ## Load in Osman data
 load('/share/lasallelab/Osman/scAlign_collab/clusters_seurat_object.RData')
-osman = experiment.aggregate.regress
+rett_female = experiment.aggregate
 
 ## Common genes
 mouse <- FindVariableFeatures(mouse, do.plot = F, nFeature=3000)
