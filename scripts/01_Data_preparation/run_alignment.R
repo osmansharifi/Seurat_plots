@@ -3,14 +3,20 @@ library(SingleCellExperiment)
 
 ## Load in mouse
 load("/share/lasallelab/rett_female/scAlign_collab/processed/mouse.rda")
-
+load("/Users/osman/Box Sync/single_nucleus_RNA-seq/rda_scAlign/mouse.rda")
+load('')
 ## Load in rett_female data
 load('/share/lasallelab/rett_female/scAlign_collab/clusters_seurat_object.RData')
+load('/Users/osman/Desktop/LaSalle_lab/Scripts/All_female_samples/all_female_preLabel.RData')
 rett_female = experiment.aggregate
-
+rett_female.data = as.matrix(rett_female@assays$RNA@counts); rownames(rett_female.data) = toupper(rownames(rett_female.data))
+rett_female = CreateSeuratObject(rett_female.data)
+rett_female = NormalizeData(rett_female)
+rett_female = ScaleData(rett_female)
+Idents(rett_female) = Idents(rett_female)
 ## Common genes
-mouse <- FindVariableFeatures(mouse, do.plot = F, nFeature=3000)
-rett_female <- FindVariableFeatures(rett_female, do.plot = F, nFeature=3000)
+mouse <- FindVariableFeatures(mouse, nFeature=3000, selection.method = "vst")
+rett_female <- FindVariableFeatures(rett_female, nFeature=3000, selection.method = "vst")
 genes.use = Reduce(intersect, list(VariableFeatures(mouse),
                                    VariableFeatures(rett_female),
                                    rownames(mouse),
