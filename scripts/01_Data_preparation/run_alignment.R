@@ -3,11 +3,11 @@ library(SingleCellExperiment)
 
 ## Load in mouse
 load("/share/lasallelab/Osman/scAlign_collab/processed/mouse.rda")
-load("/Users/osman/Box Sync/single_nucleus_RNA-seq/rda_scAlign/mouse.rda")
-load('')
+#load("/Users/osman/Box Sync/single_nucleus_RNA-seq/rda_scAlign/mouse.rda")
+
 ## Load in rett_female data
 load('/share/lasallelab/Osman/scAlign_collab/Cortex/all_female_preLabel.RData')
-load('/Users/osman/Desktop/LaSalle_lab/Scripts/All_female_samples/all_female_preLabel.RData')
+#load('/Users/osman/Desktop/LaSalle_lab/Scripts/All_female_samples/all_female_preLabel.RData')
 rett_female = experiment.aggregate
 rett_female.data = as.matrix(rett_female@assays$RNA@counts); rownames(rett_female.data) = toupper(rownames(rett_female.data))
 rett_female = CreateSeuratObject(rett_female.data)
