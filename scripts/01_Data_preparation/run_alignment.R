@@ -15,8 +15,8 @@ rett_female = NormalizeData(rett_female)
 rett_female = ScaleData(rett_female)
 Idents(rett_female) = Idents(rett_female)
 ## Common genes
-mouse <- FindVariableFeatures(mouse, nFeature=3000, selection.method = "vst")
-rett_female <- FindVariableFeatures(rett_female, nFeature=3000, selection.method = "vst")
+mouse <- FindVariableFeatures(mouse, nFeature_RNA=3000)
+rett_female <- FindVariableFeatures(rett_female, nFeature_RNA=3000)
 genes.use = Reduce(intersect, list(VariableFeatures(mouse),
                                    VariableFeatures(rett_female),
                                    rownames(mouse),
