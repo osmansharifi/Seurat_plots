@@ -4,7 +4,7 @@ library(SingleCellExperiment)
 ## Load in mouse
 load("/share/lasallelab/Osman/scAlign_collab/processed/mouse.rda")
 #load("/Users/osman/Box Sync/single_nucleus_RNA-seq/rda_scAlign/mouse.rda")
-
+mouse <- obj
 ## Load in rett_female data
 load('/share/lasallelab/Osman/scAlign_collab/Cortex/all_female_preLabel.RData')
 #load('/Users/osman/Desktop/LaSalle_lab/Scripts/All_female_samples/all_female_preLabel.RData')
