@@ -47,7 +47,7 @@ ggplot2::ggsave("unaligned_allen_female.pdf",
 ################################################################################
 ## Seurat alignment
 ################################################################################
-rett.anchors <- FindIntegrationAnchors(object.list = list(mouse, experiment.aggregate), dims = 1:30)
+rett.anchors <- FindIntegrationAnchors(object.list = list(mouse, rett_female), dims = 1:30)
 rett.integrated <- IntegrateData(anchorset = rett.anchors, dims = 1:30)
 DefaultAssay(rett.integrated) <- "integrated"
 
