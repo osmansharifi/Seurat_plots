@@ -20,7 +20,7 @@ combined.object <- ScaleData(combined.object, do.scale=T, do.center=T, display.p
 
 ## Run PCA and UMAP
 combined.object = RunPCA(combined.object)
-combined.object = RunUMAP(combined.object, dims.use = 1:30, max_iter=2000)
+combined.object = RunUMAP(combined.object, dims = 1:30)
 
 ## Plot tsne results
 plot.me <- data.frame(x=combined.object@reductions$umap@cell.embeddings[,1],
