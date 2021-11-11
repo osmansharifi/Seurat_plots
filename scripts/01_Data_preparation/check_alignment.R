@@ -19,7 +19,7 @@ combined.object <- merge(mouse, rett_female, add.cell.ids = c("ALLEN", "rett_fem
 combined.object <- ScaleData(combined.object, do.scale=T, do.center=T, display.progress = T)
 
 ## Run PCA and UMAP
-combined.object = RunPCA(combined.object, do.print=FALSE)
+combined.object = RunPCA(combined.object)
 combined.object = RunUMAP(combined.object, dims.use = 1:30, max_iter=2000)
 
 ## Plot tsne results
