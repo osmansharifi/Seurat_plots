@@ -3,19 +3,19 @@ library(cowplot)
 library(Seurat)
 
 ## Load in mouse
-load("/share/lasallelab/Osman/scAlign_collab/processed/mouse.rda")
+load("/share/lasallelab/rett_female/scAlign_collab/processed/mouse.rda")
 
-## Load in Osman data
-load('/share/lasallelab/Osman/scAlign_collab/clusters_seurat_object.RData')
+## Load in rett_female data
+load('/share/lasallelab/rett_female/scAlign_collab/clusters_seurat_object.RData')
 
-osman = experiment.aggregate.regress
+rett_female = experiment.aggregate.regress
 
 ## Find var genes
 mouse <- FindVariableFeatures(mouse, do.plot = F, nFeature=3000)
-osman <- FindVariableFeatures(osman, do.plot = F, nFeature=3000)
+rett_female <- FindVariableFeatures(rett_female, do.plot = F, nFeature=3000)
 
 ## Combine our Seurat objects
-combined.object <- merge(mouse, osman, add.cell.ids = c("ALLEN", "OSMAN"), project = "RETT")
+combined.object <- merge(mouse, rett_female, add.cell.ids = c("ALLEN", "rett_female"), project = "RETT")
 combined.object <- ScaleData(combined.object, do.scale=T, do.center=T, display.progress = T)
 
 ## Run PCA and UMAP
@@ -59,7 +59,7 @@ rett.integrated <- RunUMAP(rett.integrated, reduction = "pca", dims = 1:30)
 p1 <- DimPlot(rett.integrated, reduction = "umap", group.by = "tech")
 p2 <- DimPlot(rett.integrated, reduction = "umap", group.by = "celltype", label = TRUE, repel = TRUE) + NoLegend()
 ## Save
-png("/share/lasallelab/Osman/scAlign_collab/seurat_alignment.png", width=12, height=12, res=150,  units="in")
+png("/share/lasallelab/rett_female/scAlign_collab/seurat_alignment.png", width=12, height=12, res=150,  units="in")
 plot_grid(p1, p2)
 dev.off()
 
