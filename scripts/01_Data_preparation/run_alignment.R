@@ -13,7 +13,7 @@ rett_female.data = as.matrix(rett_female@assays$RNA@counts); rownames(rett_femal
 rett_female = CreateSeuratObject(rett_female.data)
 rett_female = NormalizeData(rett_female)
 rett_female = ScaleData(rett_female)
-Idents(rett_female) = Idents(rett_female)
+
 ## Common genes
 mouse <- FindVariableFeatures(mouse, nFeature_RNA=3000)
 rett_female <- FindVariableFeatures(rett_female, nFeature_RNA=3000)
