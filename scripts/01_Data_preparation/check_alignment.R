@@ -4,11 +4,11 @@ library(Seurat)
 
 ## Load in mouse
 load("/share/lasallelab/rett_female/scAlign_collab/processed/mouse.rda")
-
+mouse <- obj
 ## Load in rett_female data
 load('/share/lasallelab/rett_female/scAlign_collab/clusters_seurat_object.RData')
 
-rett_female = experiment.aggregate.regress
+rett_female = experiment.aggregate
 
 ## Find var genes
 mouse <- FindVariableFeatures(mouse, do.plot = F, nFeature=3000)
