@@ -57,18 +57,18 @@ Idents(trA) <- "celltype.call"
 # First split the sample by original identity
 trA.list <- SplitObject(trA, split.by = "orig.ident")
 # perform standard preprocessing on each object
-for (i in 1:length(trA.list)) {
-  trA.list[[i]] <- NormalizeData(trA.list[[i]], verbose = FALSE)
-  trA.list[[i]] <- FindVariableFeatures(
-    trA.list[[i]], selection.method = "vst",
+for (i in 1:length(all_male.list)) {
+  all_male.list[[i]] <- NormalizeData(all_male.list[[i]], verbose = FALSE)
+  all_male.list[[i]] <- FindVariableFeatures(
+    all_male.list[[i]], selection.method = "vst",
     nfeatures = 2000, verbose = FALSE
   )
 }
 
-features <- SelectIntegrationFeatures(trA.list)
-for (i in seq_along(along.with = trA.list)) {
-    trA.list[[i]] <- ScaleData(trA.list[[i]], features = features)
-    trA.list[[i]] <- RunPCA(trA.list[[i]], features = features)
+features <- SelectIntegrationFeatures(all_male.list)
+for (i in seq_along(along.with = all_male.list)) {
+    all_male.list[[i]] <- ScaleData(all_male.list[[i]], features = features)
+    all_male.list[[i]] <- RunPCA(all_male.list[[i]], features = features)
 }
 
 # find anchors
