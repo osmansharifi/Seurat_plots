@@ -47,25 +47,26 @@ metadata_info_expanded <- "Male, P120, Cortex"
 #table(Idents(experiment.aggregate),experiment.aggregate$orig.ident)
 
 
+typeof(geneList)
+geneList
 
 
 for (cell_type in cell_types){
   # Read in significant DEGs per cell type identified by Limma
   signif_DEGs <- read.csv(file = glue(Limma_DEG_dir, cell_type, "_", metadata_info_concise, "_Limma_DEG.csv"))
-  
-  
-  
+  # Define geneList
+  geneList <- cbind(signif_DEGs$X)
   
   # Create a Seurat object containing only one cell type
-  cell_cluster <- subset(experiment.aggregate, idents = cell_type)
-  expr <- as.matrix(GetAssayData(cell_cluster))
+  #cell_cluster <- subset(experiment.aggregate, idents = cell_type)
+  #expr <- as.matrix(GetAssayData(cell_cluster))
   # Select genes that are expressed > 0 in at least 75% of cells (somewhat arbitrary definition)
-  n.gt.0 <- apply(expr, 1, function(x)length(which(x > 0)))
-  expressed.genes <- rownames(expr)[which(n.gt.0/ncol(expr) >= 0.75)]
-  all.genes <- rownames(expr)
+  #n.gt.0 <- apply(expr, 1, function(x)length(which(x > 0)))
+  #expressed.genes <- rownames(expr)[which(n.gt.0/ncol(expr) >= 0.75)]
+  #all.genes <- rownames(expr)
   # Define geneList as 1 if gene is in expressed.genes, 0 otherwise
-  geneList <- ifelse(all.genes %in% expressed.genes, 1, 0)
-  names(geneList) <- all.genes
+  #geneList <- ifelse(all.genes %in% expressed.genes, 1, 0)
+  #names(geneList) <- all.genes
   
   
   
