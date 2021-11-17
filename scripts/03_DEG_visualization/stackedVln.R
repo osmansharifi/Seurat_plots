@@ -2,7 +2,7 @@ library(Seurat)
 library(patchwork)
 library(ggplot2)
 
-load("seuratobj")
+load("/Users/osman/Desktop/LaSalle_lab/Scripts/All_female_samples/all_female_cortex_labeled.RData")
 modify_vlnplot<- function(obj, 
                           feature, 
                           pt.size = 0, 
@@ -48,10 +48,12 @@ StackedVlnPlot<- function(obj, features,
   return(p)
 }
 
-features<- c("SLC17A7", "GAD2", "AQP4", "MYT1", "COL1A2", "CLDN5", "OPALIN", "CX3CR1", "CD3E")
+
+features<- c("Slc17a7", "Gad2", "Myt1", "Opalin", "Vip", "Sst", "Npy", "Plp1")
+
 mouse_colors_list <- c("dodgerblue", "navy", "forestgreen", "darkorange2", "darkorchid3", "orchid",
                        "orange", "gold", "gray")
 
-StackedVlnPlot(obj = pbmc, features = features)
-
-StackedVlnPlot(obj = pbmc, features = features, colors_use = mouse_colors_list )
+StackedVlnPlot(obj = all_female.query, features = features, group.by = "predicted.id")
+StackedVlnPlot(obj = all_female.query, features = cortex_layers)
+StackedVlnPlot(obj = all_female.query, features = features, colors_use = mouse_colors_list )
