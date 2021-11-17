@@ -55,7 +55,7 @@ for (cell_type in cell_types){
   # Read in significant DEGs per cell type identified by Limma
   signif_DEGs <- read.csv(file = glue(Limma_DEG_dir, cell_type, "_", metadata_info_concise, "_Limma_DEG.csv"))
   # Define geneList
-  geneList <- as.character(signif_DEGs$X)
+  geneList <- cbind(signif_DEGs$X)
   
   # Create a Seurat object containing only one cell type
   #cell_cluster <- subset(experiment.aggregate, idents = cell_type)
