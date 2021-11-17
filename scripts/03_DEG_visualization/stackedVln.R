@@ -2,6 +2,7 @@ library(Seurat)
 library(patchwork)
 library(ggplot2)
 
+load("seuratobj")
 modify_vlnplot<- function(obj, 
                           feature, 
                           pt.size = 0, 
@@ -47,10 +48,7 @@ StackedVlnPlot<- function(obj, features,
   return(p)
 }
 
-features<- c("CD3E", "MS4A1", "CD8A", "CD8B", "LYZ", "LGALS3", "S100A8", "GNLY",
-             "NKG7", "KLRB1", "FCGR3A", "FCER1A", "CST3")
-
-gene_list_plot <- c("SLC17A7", "GAD2", "AQP4", "MYT1", "COL1A2", "CLDN5", "OPALIN", "CX3CR1", "CD3E")
+features<- c("SLC17A7", "GAD2", "AQP4", "MYT1", "COL1A2", "CLDN5", "OPALIN", "CX3CR1", "CD3E")
 human_colors_list <- c("dodgerblue", "navy", "forestgreen", "darkorange2", "darkorchid3", "orchid",
                        "orange", "gold", "gray")
 
