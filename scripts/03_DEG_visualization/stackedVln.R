@@ -49,11 +49,10 @@ StackedVlnPlot<- function(obj, features,
 }
 
 
-features<- c("Slc17a7", "Gad2", "Myt1", "Opalin", "Vip", "Sst", "Npy", "Plp1")
+features<- c("Gad1", "Vip", "Sst", "Pvalb")
 
 mouse_colors_list <- c("dodgerblue", "navy", "forestgreen", "darkorange2", "darkorchid3", "orchid",
                        "orange", "gold", "gray")
 
 StackedVlnPlot(obj = all_female.query, features = features, group.by = "predicted.id")
-StackedVlnPlot(obj = all_female.query, features = cortex_layers)
 StackedVlnPlot(obj = all_female.query, features = features, colors_use = mouse_colors_list )
