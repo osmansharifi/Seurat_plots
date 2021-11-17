@@ -1,4 +1,4 @@
-library(Seurat)
+#library(Seurat)
 library(ggplot2)
 library(topGO)
 library(org.Mm.eg.db)
@@ -12,30 +12,51 @@ library(foreach)
 ## Variables
 
 ## Paths
-#data_file <- "/Users/osman/Desktop/LaSalle_lab/Scripts/P30_script/P30_Male_Cortex/P30_M_Cort_Labeled.RData"
-data_file <- "~/GitHub/snRNA-seq-pipeline/raw_data/rett_P30_with_labels_proportions.rda"
+#Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma/M_MUT_and_WT_M_E18_WB/"
+#Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma/M_MUT_and_WT_M_P30_CORT/"
+#Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma/M_MUT_and_WT_M_P60_CORT/"
+Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma/M_MUT_and_WT_M_P120_CORT/"
+
 figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/"
+
 
 ## Lists
 cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 topgo_ontologies <- list("BP", "CC", "MF")
 
+
 ## Other variables
-metadata_info_concise <- "M_MUT_and_WT_M_P30_CORT"
-metadata_info_expanded <- "Male, P30, Cortex"
+#metadata_info_concise <- "M_MUT_and_WT_M_E18_WB"
+#metadata_info_concise <- "M_MUT_and_WT_M_P30_CORT"
+#metadata_info_concise <- "M_MUT_and_WT_M_P60_CORT"
+metadata_info_concise <- "M_MUT_and_WT_M_P120_CORT"
+
+#metadata_info_expanded <- "Male, E18, Whole Brain"
+#metadata_info_expanded <- "Male, P30, Cortex"
+#metadata_info_expanded <- "Male, P60, Cortex"
+metadata_info_expanded <- "Male, P120, Cortex"
 ################################################################################
 
 ## Load the Seurat object
-load(data_file)
-experiment.aggregate
-Idents(experiment.aggregate) <- "celltype.call"
-options(width = 450)
+#load(data_file)
+#experiment.aggregate
+#Idents(experiment.aggregate) <- "celltype.call"
+#options(width = 450)
 # Rename "Non-neuronal" as "Non_neuronal" for variable name usage
-experiment.aggregate <- RenameIdents(object = experiment.aggregate, 'Non-neuronal' = 'Non_neuronal')
-table(Idents(experiment.aggregate),experiment.aggregate$orig.ident)
+#experiment.aggregate <- RenameIdents(object = experiment.aggregate, 'Non-neuronal' = 'Non_neuronal')
+#table(Idents(experiment.aggregate),experiment.aggregate$orig.ident)
+
+
+
 
 for (cell_type in cell_types){
-  # Create a Seurat object containing only one cell tpye
+  # Read in significant DEGs per cell type identified by Limma
+  signif_DEGs <- read.csv(file = glue(Limma_DEG_dir, cell_type, "_", metadata_info_concise, "_Limma_DEG.csv"))
+  
+  
+  
+  
+  # Create a Seurat object containing only one cell type
   cell_cluster <- subset(experiment.aggregate, idents = cell_type)
   expr <- as.matrix(GetAssayData(cell_cluster))
   # Select genes that are expressed > 0 in at least 75% of cells (somewhat arbitrary definition)
@@ -45,6 +66,11 @@ for (cell_type in cell_types){
   # Define geneList as 1 if gene is in expressed.genes, 0 otherwise
   geneList <- ifelse(all.genes %in% expressed.genes, 1, 0)
   names(geneList) <- all.genes
+  
+  
+  
+  
+  
   for (ont in topgo_ontologies){
     # Create topGOdata object
     assign(glue('GOdata{ont}'), new("topGOdata",
