@@ -49,9 +49,9 @@ StackedVlnPlot<- function(obj, features,
 }
 
 features<- c("SLC17A7", "GAD2", "AQP4", "MYT1", "COL1A2", "CLDN5", "OPALIN", "CX3CR1", "CD3E")
-human_colors_list <- c("dodgerblue", "navy", "forestgreen", "darkorange2", "darkorchid3", "orchid",
+mouse_colors_list <- c("dodgerblue", "navy", "forestgreen", "darkorange2", "darkorchid3", "orchid",
                        "orange", "gold", "gray")
 
 StackedVlnPlot(obj = pbmc, features = features)
 
-StackedVlnPlot(obj = pbmc, features = gene_list_plot, colors_use = human_colors_list )
+StackedVlnPlot(obj = pbmc, features = gene_list_plot, colors_use = mouse_colors_list )
