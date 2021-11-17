@@ -1,10 +1,10 @@
-#library(Seurat)
-library(ggplot2)
 library(topGO)
 library(org.Mm.eg.db)
-library(scales)
-library(glue)
 library(foreach)
+library(glue)
+library(ggplot2)
+library(scales)
+library(tidyverse)
 
 # By Osman Sharifi & Viktoria Haghani
 
@@ -37,38 +37,20 @@ metadata_info_concise <- "M_MUT_and_WT_M_P120_CORT"
 metadata_info_expanded <- "Male, P120, Cortex"
 ################################################################################
 
-## Load the Seurat object
-#load(data_file)
-#experiment.aggregate
-#Idents(experiment.aggregate) <- "celltype.call"
-#options(width = 450)
-# Rename "Non-neuronal" as "Non_neuronal" for variable name usage
-#experiment.aggregate <- RenameIdents(object = experiment.aggregate, 'Non-neuronal' = 'Non_neuronal')
-#table(Idents(experiment.aggregate),experiment.aggregate$orig.ident)
-
-
 typeof(geneList)
-geneList
+head(geneList)
 
 
 for (cell_type in cell_types){
+
+  
   # Read in significant DEGs per cell type identified by Limma
   signif_DEGs <- read.csv(file = glue(Limma_DEG_dir, cell_type, "_", metadata_info_concise, "_Limma_DEG.csv"))
   # Define geneList
-  geneList <- cbind(signif_DEGs$X)
-  
-  # Create a Seurat object containing only one cell type
-  #cell_cluster <- subset(experiment.aggregate, idents = cell_type)
-  #expr <- as.matrix(GetAssayData(cell_cluster))
-  # Select genes that are expressed > 0 in at least 75% of cells (somewhat arbitrary definition)
-  #n.gt.0 <- apply(expr, 1, function(x)length(which(x > 0)))
-  #expressed.genes <- rownames(expr)[which(n.gt.0/ncol(expr) >= 0.75)]
-  #all.genes <- rownames(expr)
-  # Define geneList as 1 if gene is in expressed.genes, 0 otherwise
-  #geneList <- ifelse(all.genes %in% expressed.genes, 1, 0)
-  #names(geneList) <- all.genes
-  
-  
+  geneList <- as.vector(signif_DEGs[,c(1,6)])
+  geneList <- geneList %>% remove_rownames %>% column_to_rownames(var="X")
+  geneList$adj.P.Val <- as.numeric(geneList$adj.P.Val)
+
   
   
   
@@ -139,3 +121,4 @@ for (cell_type in cell_types){
                     width = 12)
   }
 }
+
