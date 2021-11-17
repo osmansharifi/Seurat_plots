@@ -54,4 +54,4 @@ mouse_colors_list <- c("dodgerblue", "navy", "forestgreen", "darkorange2", "dark
 
 StackedVlnPlot(obj = pbmc, features = features)
 
-StackedVlnPlot(obj = pbmc, features = gene_list_plot, colors_use = mouse_colors_list )
+StackedVlnPlot(obj = pbmc, features = features, colors_use = mouse_colors_list )
