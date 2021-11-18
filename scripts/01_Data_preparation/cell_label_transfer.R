@@ -14,14 +14,14 @@ all_male.reference <- NormalizeData(all_male.reference)
 all_male.reference <- FindVariableFeatures(all_male.reference)
 all_male.reference <- ScaleData(all_male.reference)
 
-pbmc.query <- NormalizeData(pbmc.query)
-pbmc.query <- FindVariableFeatures(pbmc.query)
-pbmc.query <- ScaleData(pbmc.query)
+PCB_female.query <- NormalizeData(PCB_female.query)
+PCB_female.query <- FindVariableFeatures(PCB_female.query)
+PCB_female.query <- ScaleData(PCB_female.query)
 
 # find anchors
-anchors <- FindTransferAnchors(reference = pbmc.reference, query = pbmc.query)
+anchors <- FindTransferAnchors(reference = all_male.reference, query = PCB_female.query)
 
 # transfer labels
-predictions <- TransferData(anchorset = anchors, refdata = pbmc.reference$seurat_annotations)
-pbmc.query <- AddMetaData(object = pbmc.query, metadata = predictions)
+celltype <- TransferData(anchorset = anchors, refdata = all_male.reference$celltype.call)
+PCB_female.query <- AddMetaData(object = PCB_female.query, metadata = celltype)
 }
