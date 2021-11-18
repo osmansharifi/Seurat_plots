@@ -1,10 +1,13 @@
-if (FALSE) {
-# to install the SeuratData package see https://github.com/satijalab/seurat-data
-library(SeuratData)
-data("pbmc3k")
+# load libraries
+library(scAlign)
 
-# for demonstration, split the object into reference and query
-pbmc.reference <- pbmc3k[, 1:1350]
+# run alignment function
+if (FALSE) {
+#load Seurat Objects
+load("/share/lasallelab/Osman/test_alignment/all_male_samples.RData")
+all_male.reference <- all_male
+load("/share/lasallelab/Osman/2021_PEBBLES_Cortex/PCB_FEMALE_CLUSTERS.RData")
+
 pbmc.query <- pbmc3k[, 1351:2700]
 
 # perform standard preprocessing on each object
