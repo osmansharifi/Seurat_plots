@@ -37,18 +37,14 @@ metadata_info_concise <- "M_MUT_and_WT_M_P120_CORT"
 metadata_info_expanded <- "Male, P120, Cortex"
 ################################################################################
 
-typeof(geneList)
-head(geneList)
-geneList
-
-
 for (cell_type in cell_types){
   # Read in significant DEGs per cell type identified by Limma
   signif_DEGs <- read.csv(file = glue(Limma_DEG_dir, cell_type, "_", metadata_info_concise, "_Limma_DEG.csv"))
   # Define geneList
-  geneList <- as.vector(signif_DEGs[,c(1,6)])
-  geneList <- geneList %>% remove_rownames %>% column_to_rownames(var="X")
-  geneList$adj.P.Val <- as.double(geneList$adj.P.Val)
+  #geneList <- as.vector(signif_DEGs[,c(1,6)])
+  #geneList <- geneList %>% remove_rownames %>% column_to_rownames(var="X")
+  #geneList$adj.P.Val <- as.numeric(geneList$adj.P.Val)
+  geneList <- structure(as.numeric(signif_DEGs$adj.P.Val), names=signif_DEGs$X)
     
   for (ont in topgo_ontologies){
     # Create topGOdata object
