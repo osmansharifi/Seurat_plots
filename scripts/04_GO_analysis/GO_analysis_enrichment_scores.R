@@ -21,7 +21,7 @@ figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_score
 
 
 ## Lists
-cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
+cell_types <- list("L2_3_IT") #, "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 topgo_ontologies <- list("BP", "CC", "MF")
 
 
@@ -41,9 +41,6 @@ for (cell_type in cell_types){
   # Read in significant DEGs per cell type identified by Limma
   signif_DEGs <- read.csv(file = glue(Limma_DEG_dir, cell_type, "_", metadata_info_concise, "_Limma_DEG.csv"))
   # Define geneList
-  #geneList <- as.vector(signif_DEGs[,c(1,6)])
-  #geneList <- geneList %>% remove_rownames %>% column_to_rownames(var="X")
-  #geneList$adj.P.Val <- as.numeric(geneList$adj.P.Val)
   geneList <- structure(as.numeric(signif_DEGs$adj.P.Val), names=signif_DEGs$X)
     
   for (ont in topgo_ontologies){
@@ -60,6 +57,11 @@ for (cell_type in cell_types){
     # Test for enrichment using Fisher's Exact Test and visualize GO terms
     resultFisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
     GenTable(GOdata, Fisher = resultFisher, topNodes = 20, numChar = 60)
+    
+    
+    # Figure out how to save GenTable
+    
+    
     goEnrichment <- GenTable(
       GOdata,
       Fisher = resultFisher,
