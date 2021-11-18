@@ -7,13 +7,12 @@ if (FALSE) {
 load("/share/lasallelab/Osman/test_alignment/all_male_samples.RData")
 all_male.reference <- all_male
 load("/share/lasallelab/Osman/2021_PEBBLES_Cortex/PCB_FEMALE_CLUSTERS.RData")
-
-pbmc.query <- pbmc3k[, 1351:2700]
+PCB_female.query <- experiment.aggregate
 
 # perform standard preprocessing on each object
-pbmc.reference <- NormalizeData(pbmc.reference)
-pbmc.reference <- FindVariableFeatures(pbmc.reference)
-pbmc.reference <- ScaleData(pbmc.reference)
+all_male.reference <- NormalizeData(all_male.reference)
+all_male.reference <- FindVariableFeatures(all_male.reference)
+all_male.reference <- ScaleData(all_male.reference)
 
 pbmc.query <- NormalizeData(pbmc.query)
 pbmc.query <- FindVariableFeatures(pbmc.query)
