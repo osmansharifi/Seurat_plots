@@ -39,20 +39,17 @@ metadata_info_expanded <- "Male, P120, Cortex"
 
 typeof(geneList)
 head(geneList)
-
-columns(org.Mm.eg.db)
-head(org.Mm.eg.db)
-names(org.Mm.eg.db)
+geneList
 
 
 for (cell_type in cell_types){
-  geneUniverse <- names(SOMETHING WITH ALL GENES)
   # Read in significant DEGs per cell type identified by Limma
   signif_DEGs <- read.csv(file = glue(Limma_DEG_dir, cell_type, "_", metadata_info_concise, "_Limma_DEG.csv"))
-  # Define genes of interest (list of gene names)
-  genesOfInterest <- as.character(signif_DEGs$X)
-  # Make geneList
-  geneList <- factor(as.integer(geneUniverse %in% genesOfInterest))
+  # Define geneList
+  geneList <- as.vector(signif_DEGs[,c(1,6)])
+  geneList <- geneList %>% remove_rownames %>% column_to_rownames(var="X")
+  geneList$adj.P.Val <- as.double(geneList$adj.P.Val)
+    
   for (ont in topgo_ontologies){
     # Create topGOdata object
     assign(glue('GOdata{ont}'), new("topGOdata",
