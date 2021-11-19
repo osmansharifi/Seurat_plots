@@ -51,6 +51,11 @@ StackedVlnPlot<- function(obj, features,
 features<- c("Gad1", "Slc17a7", "Vip", "Sst", "Pvalb", "Slc1a3", "Olig1", "Slc30a3", "Rorb", "Cux2")
 StackedVlnPlot(obj = all_female.query, features = features, group.by = "predicted.id")
 
+ggplot2::ggsave("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/figures/seurat_figures/female/all_female_gene_marker_vln.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
+
 mouse_colors_list <- c("dodgerblue", "navy", "forestgreen", "darkorange2", "darkorchid3", "orchid",
                        "orange", "gold", "gray")
 StackedVlnPlot(obj = all_female.query, features = features, colors_use = mouse_colors_list )
