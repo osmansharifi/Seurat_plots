@@ -24,6 +24,6 @@ anchors <- FindTransferAnchors(reference = all_male.reference, query = PCB_femal
 # transfer labels
 celltype <- TransferData(anchorset = anchors, refdata = all_male.reference$celltype.call)
 PCB_female.query <- AddMetaData(object = PCB_female.query, metadata = celltype)
-}
 all_female_pebbles <- PCB_female.query
+}
 save(all_female_pebbles, file="all_female_pebbles_labeled.RData")
