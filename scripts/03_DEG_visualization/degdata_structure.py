@@ -103,4 +103,5 @@ all_data/
 	all csvs
 	celltype_M/F_MUT_and_WT_M/F_timepoint_region_Limma_DEG.csv
 	sex, celltype, timepoint, region, gene, logfc, pv
+	example of file name = Astro_M_MUT_and_WT_M_E18_WB_Limma_DEG.csv
 """
