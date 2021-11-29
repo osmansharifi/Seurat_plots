@@ -78,27 +78,6 @@ print(df.shape)
 
 df.to_csv(arg.output)
 
-# data = dict()
-# for dir, subdirs, files in os.walk(path):
-# 	if dir[-1] != '/': dir += '/'
-# 	csvs = [f for f in files if 'csv' in f]
-# 	if len(csvs) == 0: continue
-# 	
-# 	dirnames = dir.split('/')
-# 	cond = dirnames[-2]
-# 	if arg.verbose == 1:
-# 		print(dirnames)
-# 		print(cond)
-# 	assert(len(subdirs) == 0)
-# 	
-# 	data[cond] = dict()
-# 	for celltype in files:
-# 		subpath = dir + '/' + celltype
-# 		celltype_name = parse_celltype(celltype)
-# 		data[cond][celltype_name] = dict()
-# 		data[cond][celltype_name] = read_datacsv(subpath)
-# 
-
 """
 all_data/
 	all csvs

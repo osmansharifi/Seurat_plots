@@ -39,16 +39,16 @@ parser.add_argument(
 	help='path to dataframe for all the degs to plot')
 parser.add_argument(
 	'--celltypes', '-c', required=False, nargs='+', type=str,
-	help='celltypes to plot')
+	default=False, help='celltypes to plot')
 parser.add_argument(
 	'--sex', '-s', required=False, type=str, metavar='<str>',
-	help='desired sex to filter by (M/F)')
+	default=False, help='desired sex to filter by (M/F)')
 parser.add_argument(
 	'--timepoint', '-t', required=False, type=str, nargs='+',
-	help='timepoints to filter by')
+	default=False, help='timepoints to filter by')
 parser.add_argument(
 	'--region', '-r', required=False, type=str, nargs='+',
-	help='brain regions to filter by')
+	default=False, help='brain regions to filter by')
 parser.add_argument(
 	'--cutoff', '-u', required=False, type=float, metavar='<float>', default=0.05, 
 	help='significance threshold for adjusted p-value')
@@ -77,25 +77,25 @@ parser.add_argument(
 def celltype_name(row, arg):
 	ct = ''
 	ct = row['celltype']
-	if arg.sex == None: ct += '_'+row['sex']
-	if arg.timepoint is not None:
+	if arg.sex: ct += '_'+row['sex']
+	if arg.timepoint:
 		if len(arg.timepoint) > 1: ct += '_'+row['timepoint']
-	elif arg.timepoint is None:
+	else:
 		ct += '_'+row['timepoint']
 	if arg.region:
 		if len(arg.region) > 1: ct += '_'+row['region']
-	print(ct)
 	return ct
 
 arg = parser.parse_args()
 
 df = pd.read_csv(arg.frame)
-#df.drop(labels = 'Unnamed: 0')
+df = df.drop(labels = 'Unnamed: 0', axis=1)
 print(df.head(5))
 print(df.columns)
 print(df.shape)
-
+print(arg)
 newdf = pd.DataFrame()
+print(newdf.empty)
 if arg.celltypes:
 	newdf = df.loc[df['celltype'].isin(arg.celltypes)]
 
@@ -111,9 +111,14 @@ if arg.region:
 	if newdf.empty: newdf = df.loc[df['region'].isin(arg.region)]
 	else:			newdf = newdf.loc[newdf['region'].isin(arg.region)]
 
-if ~newdf.empty:
+if not newdf.empty:
+	print('not empty')
 	df = newdf
-df.head(5)
+
+print(df.head(5))
+print(df.columns)
+print(df.shape)
+#sys.exit()
 
 df['ct_name'] = df.apply(lambda x: celltype_name(x, arg), axis=1)
 print(df.tail(5))
