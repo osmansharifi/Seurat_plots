@@ -78,19 +78,19 @@ def celltype_name(row, arg):
 	ct = ''
 	ct = row['celltype']
 	if arg.sex == None: ct += '_'+row['sex']
-	if arg.timepoint:
+	if arg.timepoint is not None:
 		if len(arg.timepoint) > 1: ct += '_'+row['timepoint']
-	else:
+	elif arg.timepoint is None:
 		ct += '_'+row['timepoint']
 	if arg.region:
 		if len(arg.region) > 1: ct += '_'+row['region']
-	
+	print(ct)
 	return ct
 
 arg = parser.parse_args()
 
 df = pd.read_csv(arg.frame)
-
+#df.drop(labels = 'Unnamed: 0')
 print(df.head(5))
 print(df.columns)
 print(df.shape)
@@ -113,6 +113,7 @@ if arg.region:
 
 if ~newdf.empty:
 	df = newdf
+df.head(5)
 
 df['ct_name'] = df.apply(lambda x: celltype_name(x, arg), axis=1)
 print(df.tail(5))
