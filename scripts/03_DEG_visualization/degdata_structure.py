@@ -52,11 +52,12 @@ for file in os.listdir(arg.dir):
 	
 	celltype = parse_celltype(file)
 	
-	splitted = file.split('_MUT_and_WT_')
+	splitted = file.split('_M_MUT_and_WT_')
 	assert(len(splitted) == 2)
 	
-	sex = splitted[0].split('_')[-1]
+	#sex = splitted[0].split('_')[-1]
 	rem_meta = splitted[1].split('_')
+	sex = rem_meta[0]
 	timepoint = rem_meta[1]
 	region = rem_meta[2]
 	
