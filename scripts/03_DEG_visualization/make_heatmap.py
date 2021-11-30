@@ -77,13 +77,17 @@ parser.add_argument(
 def celltype_name(row, arg):
 	ct = ''
 	ct = row['celltype']
-	if arg.sex: ct += '_'+row['sex']
-	if arg.timepoint:
-		if len(arg.timepoint) > 1: ct += '_'+row['timepoint']
-	else:
-		ct += '_'+row['timepoint']
-	if arg.region:
-		if len(arg.region) > 1: ct += '_'+row['region']
+	ct += '_'+row['sex']
+	ct += '_'+row['timepoint']
+	ct += '_'+row['region']
+	# if arg.sex: ct += '_'+row['sex']
+# 	else: ct += '_'+row['sex']
+# 	if arg.timepoint:
+# 		if len(arg.timepoint) > 1: ct += '_'+row['timepoint']
+# 	else:
+# 		ct += '_'+row['timepoint']
+# 	if arg.region:
+# 		if len(arg.region) > 1: ct += '_'+row['region']
 	return ct
 
 arg = parser.parse_args()
@@ -180,7 +184,7 @@ for i, siggene in enumerate(sig_genes.keys()):
 		print(siggene, celltype)
 		try:
 			down = df.loc[(siggene, celltype)]
-			#print(down)
+			print(down)
 		except:
 			down = pd.DataFrame()
 			print('not down')
