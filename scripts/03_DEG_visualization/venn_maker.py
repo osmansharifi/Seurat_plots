@@ -40,3 +40,10 @@ plt.savefig('/Users/osman/Documents/GitHub/snRNA-seq-pipeline/figures/venn_diagr
 #Extract genes that are the intersection
 print(len(set1.intersection(set2)))
 print(set1.intersection(set2))
+
+#check if a particular gene is present at the intersection
+if 'AC149090.1' in set1.intersection(set2):
+    print('Gene found at the intersection')
+else:
+    print('Gene does not exist at the intersection')
+    
