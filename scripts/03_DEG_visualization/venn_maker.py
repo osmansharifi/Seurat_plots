@@ -42,8 +42,15 @@ print(len(set1.intersection(set2)))
 print(set1.intersection(set2))
 
 #check if a particular gene is present at the intersection
-if 'AC149090.1' in set1.intersection(set2):
+if 'Mbp' in set1.intersection(set2):
     print('Gene found at the intersection')
 else:
     print('Gene does not exist at the intersection')
-    
+
+#export a csv file containing the genes at the intersection
+gene_list = list(set1.intersection(set2))
+with open('intersection_genes_test.csv', 'w') as fp:
+    fp.write('intersection genes for males and females' + '\n')
+    for gene in gene_list:
+        fp.write(gene + '\n')
+            
