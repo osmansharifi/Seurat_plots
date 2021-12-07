@@ -6,7 +6,7 @@ import argparse
 
 # setup
 parser = argparse.ArgumentParser(
-	description='This will make a venn diagram of DEGs')
+	description='This program will make a venn diagram of DEGs')
 # required arguments
 parser.add_argument('--csv', required=True, type=str,
 	metavar='<str>', help='path to CSV containing DEGs ending with .csv')
