@@ -165,7 +165,7 @@ for siggene in sig_genes:
 		
 		filtered_results.append(dic)
 
-filtered_df = pd.DataFrame(filtered_results).reset_index()
+filtered_df = pd.DataFrame(filtered_results)
 print(filtered_df.head(5))
 print(filtered_df.columns)
 print(filtered_df.shape)
