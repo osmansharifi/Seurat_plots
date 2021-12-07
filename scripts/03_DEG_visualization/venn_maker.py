@@ -9,13 +9,13 @@ parser = argparse.ArgumentParser(
 	description='This will make a venn diagram of DEGs')
 # required arguments
 parser.add_argument('--csv', required=True, type=str,
-	metavar='<str>', help='path to CSV containing DEGs')
+	metavar='<str>', help='path to CSV containing DEGs ending with .csv')
 parser.add_argument('--pdf', required=True, type=str,
-	metavar='<str>', help='path to pdf output file')
+	metavar='<str>', help='path to pdf output file ending with .pdf')
 parser.add_argument('--pv', required=False, type=float, default=0.05,
-	metavar='<float>', help='set the p-value cuttoff [%(default).2f]')
+	metavar='<float>', help='set the p-value cuttoff, default value is set to [%(default).2f]')
 parser.add_argument('--logfc', required=False, type=float, default=0.7,
-	metavar='<float>', help='set the logFC cutoff [%(default).1f]')
+	metavar='<float>', help='set the logFC cutoff, default value is set to [%(default).1f]')
 # finalization
 arg = parser.parse_args()
 
