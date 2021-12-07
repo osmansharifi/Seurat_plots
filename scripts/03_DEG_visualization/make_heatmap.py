@@ -11,9 +11,6 @@ import sys
 from natsort import natsorted
 import numpy as np
 
-pd.set_option('display.max_columns', None)
-pd.set_option('display.max_rows', None)
-
 formatter = lambda prog: argparse.HelpFormatter(prog, max_help_position=30)
 parser = argparse.ArgumentParser(
 	description='DEG visualization with significance filtering',
@@ -45,22 +42,20 @@ parser.add_argument(
 		('fill in plot with actual logFC value on places where gene is not in'),
 		('celltype, otherwise fill with 0'))))
 parser.add_argument(
-	'--sort', '-o', required=False, type=str, default='max', metavar='<str>',
-	help='sort method for significant genes, either max or std')
-parser.add_argument(
-	'--figdir', '-g', required=False, type=str, default=None, metavar='<path>',
-	help='path to directory to save plot to')
-parser.add_argument(
-	'--save', '-v', required=False, type=str, default=None, metavar='<path>',
+	'--save', '-v', required=True, type=str, metavar='<path>',
 	help=''.join((
-		('save location for json file containing significant genes plotted.'),
-		('JSON is the serialized pandas dataframe after significance filter'))))
+		('save location for csv files containing significant genes plotted.'),
+		('csv is the serialized pandas dataframe after significance filter'))))
 parser.add_argument(
-	'--pdf', required=False, type=str, default=None, metavar='<str>',
-	help='name to save pdf plot')
-parser.add_argument(
-	'--verbose', '-b', required=False, type=int, default=0, metavar='<int>',
-	help='verbosity level, 0 for no progress messages, 1 for progress messages')
+	'--pdf', '-d', required=True, type=str, metavar='<str>',
+	help='name and path to save pdf plot')
+parser.add_argument('--verbose', '-b', required=False, type=int, default=0,
+	metavar='<int>',
+	help='verbosity level, 0 for no progress message, 1 for progress message')
+parser.add_argument('--rotate', '-o', action='store_true',
+	help='whether to rotate heatmap plot by -90 degrees in R')
+parser.add_argument('--title', '-e', required=True, type=str,
+	nargs='+', help='title for plot')
 
 def celltype_name(row, arg):
 	ct = ''
@@ -71,6 +66,15 @@ def celltype_name(row, arg):
 	return ct
 
 arg = parser.parse_args()
+
+save_path = arg.pdf.split('/')
+save_dir = '/'.join(save_path[:-1])
+save_name = save_path[-1].split('.')[0]
+assert(os.path.isdir(save_dir))
+
+if arg.save.endswith('.csv'):
+	print('saving of frames need to go to a directory, not a file')
+	sys.exit()
 
 df = pd.read_csv(arg.frame)
 df = df.drop(labels = 'Unnamed: 0', axis=1)
@@ -145,165 +149,54 @@ for sg in sig_genes:
 		if ct not in celltypes: celltypes[ct] = True
 
 df = df.set_index(['gene','ct_name'])
-filtered_results = []
+filtered_logfc = []
+filtered_pv    = []
 for siggene in sig_genes:
+	diclog = dict()
+	dicpv  = dict()
+	diclog['gene'] = siggene
+	dicpv['gene']  = siggene
 	for celltype in natsorted(celltypes.keys()):
-		dic = dict()
-		dic['gene'] = siggene
-		dic['celltype'] = celltype
-		dic['logfc']    = None
-		dic['pv']       = None
+		assert(celltype not in diclog)
+		assert(celltype not in dicpv)
+		diclog[celltype] = None
+		dicpv[celltype]  = None
 		
 		try:
 			down = df.loc[(siggene, celltype)]
-			dic['pv'] = down.pv
-			dic['logfc'] = down.logfc
+			dicpv[celltype] = down.pv
+			diclog[celltype] = down.logfc
 		except:
 			down = pd.DataFrame()
-			dic['logfc'] = 0.0
-			dic['pv']    = 1.0
+			dicpv[celltype] = 0.0
+			diclog[celltype]   = 1.0
 		
-		filtered_results.append(dic)
+	filtered_logfc.append(diclog)
+	filtered_pv.append(dicpv)
 
-filtered_df = pd.DataFrame(filtered_results)
-print(filtered_df.head(5))
-print(filtered_df.columns)
-print(filtered_df.shape)
+fdf_logfc = pd.DataFrame(filtered_logfc)
+print(fdf_logfc.head(5))
+print(fdf_logfc.columns)
+print(fdf_logfc.shape)
+fdf_logfc.to_csv('tmp_sn_logfc.csv')
 
-filtered_df.to_csv('tmp_sn.csv')
+fdf_pv = pd.DataFrame(filtered_pv)
+print(fdf_pv.head(5))
+print(fdf_pv.columns)
+print(fdf_pv.shape)
+fdf_pv.to_csv('tmp_sn_pv.csv')
 
-# cmd = f"r_heatmaps.R -f tmp_sn.csv -s {save} -l"
-# os.system(cmd)
-# 
-# if you didnt save the dataframe -- delete it
-# otherwise rename
-# os.remove("tmp_sn.csv")
+cmd = ''.join((
+	f"r_heatmaps.R -l tmp_sn_logfc.csv -p tmp_sn_pv.csv -s {arg.pdf}",
+	f" -t {' '.join(arg.title)}"))
 
-"""
-gene_1: celltype logfc pvalue
+if arg.rotate:
+	cmd += ' -r'
 
-		if down.empty:
-			if not arg.fill:
-				dic[celltype] = 0.0
-				dic
-			else:
-				if down.empty: 
-					#print(f'not in df {siggene} {celltype}')
-					dic['logfc'] = 0.0
-					dic['pv']    = 1.0
-				else:
-					dic['logfc'] = down.logfc
-					dic['pv']     = down.pv
+print(cmd)
+os.system(cmd)
+os.remove("tmp_sn_logfc.csv")
+os.remove("tmp_sn_pv.csv")
 
-"""
-
-
-# #sys.exit()
-# # cluster order the row labels because clustering moves rows
-# Z_rows = linkage(map, 'ward')
-# 
-# dn_rows = dendrogram(Z_rows)
-# 	
-# gene_names = [nm for nm in sig_genes.keys()]
-# celltype_names = list(natsorted(celltypes.keys()))
-# 
-# gene_labels = [gene_names[ind] for ind in dn_rows['leaves']]
-# 
-# newpv_map = np.zeros((num_genes, num_celltypes))
-# frame = []
-# dic   = {}
-# for i, rg in enumerate(dn_rows['leaves']):
-# 	dic = {}
-# 	dic['gene'] = gene_names[rg]
-# 	for j, ct in enumerate(celltype_names):
-# 		dic[ct] = (map[rg, j], pvmap[rg, j])
-# 		newpv_map[i, j] = pvmap[rg, j]
-# 	frame.append(dic)
-# 
-# plot_df = pd.DataFrame(frame)
-# print(plot_df)
-# 
-# #sys.exit()
-# bool_map = np.zeros((num_genes, num_celltypes))
-# bool_map[np.where(newpv_map >= 0.05)] = 1
-# 
-# # plotting
-# fontsize_pt = plt.rcParams['figure.titlesize']
-# dpi = float(200)
-# 
-# matrix_height_pt = fontsize_pt * 2.5 * map.shape[0]
-# matrix_height_in = matrix_height_pt / dpi
-# matrix_width_pt = fontsize_pt * 3.0 * map.shape[1]
-# matrix_width_in = matrix_width_pt / dpi
-# print(matrix_height_in, matrix_width_in)
-# print(map.shape)
-# #sys.exit()
-# #top_margin = 0.02
-# #bottom_margin = 0.02
-# 
-# figure_height = matrix_height_in / (1 - 0.2)
-# figure_width = matrix_width_in / (1 - 0.5) 
-# 
-# plt.rc('font', size=matrix_height_in * dpi * 0.01)
-# plt.rc('figure', titlesize=matrix_width_in * dpi * 0.02)
-# 
-# plt.tick_params(
-# 	axis='both',
-# 	which='major',
-# 	labelbottom=True,
-# 	bottom=True,
-# 	top=True,
-# 	labeltop=True)
-# 
-# clm = sns.clustermap(
-# 	map,
-# 	method='ward',
-# 	figsize=(figure_width,figure_height),
-# 	row_cluster=True,
-# 	col_cluster=False,
-# 	row_linkage=Z_rows,
-# 	z_score=None,
-# 	standard_scale=None,
-# 	norm=colors.TwoSlopeNorm(vmin=np.amin(map), vcenter=0, vmax=np.amax(map)),
-# 	cmap=sns.color_palette('vlag', as_cmap=True),
-# 	xticklabels=celltype_names,
-# 	yticklabels=gene_labels,
-# 	dendrogram_ratio=(0.10,0.0))
-# 
-# title_str = f'Top {arg.num} genes'
-# 
-# clm.fig.suptitle(title_str)
-# clm.fig.subplots_adjust(right=0.50, top=0.90)
-# plt.yticks(rotation=0)
-# clm.ax_heatmap.set_yticklabels(gene_labels)
-# clm.ax_heatmap.set_xticklabels(celltype_names)
-# clm.ax_cbar.set_position([0.90, 0.40, 0.50*clm.ax_row_dendrogram.get_position().width, 0.30])
-# clm.ax_cbar.set_title('logFC')
-# clm.ax_col_dendrogram.set_visible(False)
-# 
-# hm = clm.ax_heatmap
-# 
-# for i in range(bool_map.shape[0]):
-# 	for j in range(bool_map.shape[1]):
-# 		if bool_map[i, j] == 0.:
-# 			hm.add_patch(Rectangle((j, i), 1, 1, edgecolor='black', fill=False, lw=1))
-# plt.close(1)
-# #plt.show()
-# plt.savefig(arg.pdf)
-# plt.close()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+fdf_logfc.to_csv(f"{arg.save}_logfc.csv")
+fdf_pv.to_csv(f"{arg.save}_pv.csv")
