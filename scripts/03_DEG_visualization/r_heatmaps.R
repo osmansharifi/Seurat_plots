@@ -38,7 +38,7 @@ map = grid.grabExpr(
 			m,
  			col = col_fun,
  			row_names_gp=gpar(fontsize=4),
- 			column_names_gp=gpar(fontsize=8),
+ 			column_names_gp=gpar(fontsize=6),
  			heatmap_legend_param = list(title="logFC"),
  			cell_fun = function(j, i, x, y, width, height, fill) {
  				if( pvm[i, j] <= 0.05 ) {
