@@ -42,7 +42,7 @@ map = grid.grabExpr(
  			heatmap_legend_param = list(title="logFC"),
  			cell_fun = function(j, i, x, y, width, height, fill) {
  				if( pvm[i, j] <= 0.05 ) {
- 					grid.text(print("*"), x, y, gp = gpar(fontsize=9))
+ 					grid.text(print("*"), x, y+height/2, gp = gpar(fontsize=9)) #grid.text(print("*"), x, y, gp = gpar(fontsize=9)) 
  				}
 			},
 			column_title = paste(args$title, sep="", collapse=" ")
