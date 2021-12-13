@@ -19,9 +19,11 @@ Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma/M_MUT_and_WT_M_P120
 
 figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/"
 
+gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_M_P120_CORT/"
+
 
 ## Lists
-cell_types <- list("L2_3_IT") #, "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
+cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 topgo_ontologies <- list("BP", "CC", "MF")
 
 
@@ -56,12 +58,8 @@ for (cell_type in cell_types){
   foreach(GOdata = godata_types, godata_name = godata_names) %do% {
     # Test for enrichment using Fisher's Exact Test and visualize GO terms
     resultFisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
-    GenTable(GOdata, Fisher = resultFisher, topNodes = 20, numChar = 60)
-    
-    
-    # Figure out how to save GenTable
-    
-    
+    GenTable <- GenTable(GOdata, Fisher = resultFisher, topNodes = 20, numChar = 60)
+    write.csv(GenTable, file = glue(gentable_path, cell_type, "_", metadata_info_concise, "_", ont, "_gentable.csv"))
     goEnrichment <- GenTable(
       GOdata,
       Fisher = resultFisher,
