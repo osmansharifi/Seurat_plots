@@ -15,11 +15,11 @@ library(tidyverse)
 #Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_E18_WB/"
 #Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_P30_CORT/"
 #Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_P60_CORT/"
-Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_P120_CORT/"
+Limma_DEG_dir <- "~/Documents/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_P120_CORT/"
 
-figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/M_MUT_and_WT_M_P120_CORT/"
+figure_path <- "~/Documents/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/M_MUT_and_WT_M_P120_CORT/"
 
-gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_M_P120_CORT/"
+gentable_path <- "~/Documents/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_M_P120_CORT/"
 
 ## Lists
 cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
@@ -63,6 +63,7 @@ for (cell_type in cell_types){
     # Test for enrichment using Fisher's Exact Test and visualize GO terms
     resultFisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
     GenTable <- GenTable(GOdata, Fisher = resultFisher, topNodes = 20, numChar = 60)
+    # GenTable contains 6 columns; annotated = # of genes that belong to the GO term, Significant = 
     write.csv(GenTable, file = glue(gentable_path, cell_type, "_", metadata_info_concise, "_", ont, "_gentable.csv"))
     goEnrichment <- GenTable(
       GOdata,
