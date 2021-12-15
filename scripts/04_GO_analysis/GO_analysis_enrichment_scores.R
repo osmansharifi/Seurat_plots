@@ -17,7 +17,7 @@ library(tidyverse)
 #Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_P60_CORT/"
 Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_P120_CORT/"
 
-figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/"
+figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/M_MUT_and_WT_M_P120_CORT/"
 
 gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_M_P120_CORT/"
 
@@ -57,9 +57,11 @@ for (cell_type in cell_types){
                                     geneSelectionFun = function(x)(x == 1),
                                     annot = annFUN.org, mapping = "org.Mm.eg.db", ID = "symbol"))
   }
+  
   godata_types <- list(GOdataBP, GOdataCC, GOdataMF)
   godata_names <- list("GOdataBP", "GOdataCC", "GOdataMF")
-  foreach(GOdata = godata_types, godata_name = godata_names) %do% {
+  
+  foreach(GOdata = godata_types, godata_name = godata_names, ont = topgo_ontologies) %do% {
     # Test for enrichment using Fisher's Exact Test and visualize GO terms
     resultFisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
     GenTable <- GenTable(GOdata, Fisher = resultFisher, topNodes = 20, numChar = 60)
