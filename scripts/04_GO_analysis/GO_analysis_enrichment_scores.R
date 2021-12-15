@@ -63,7 +63,7 @@ for (cell_type in cell_types){
     # Test for enrichment using Fisher's Exact Test and visualize GO terms
     resultFisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
     GenTable <- GenTable(GOdata, Fisher = resultFisher, topNodes = 20, numChar = 60)
-    # GenTable contains 6 columns; annotated = # of genes that belong to the GO term, Significant = 
+    # GenTable contains 6 columns; annotated = # of genes that belong to the GO term, Significant = # of Sig DEGs present in the term
     write.csv(GenTable, file = glue(gentable_path, cell_type, "_", metadata_info_concise, "_", ont, "_gentable.csv"))
     goEnrichment <- GenTable(
       GOdata,
