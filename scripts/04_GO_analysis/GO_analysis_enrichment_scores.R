@@ -21,11 +21,9 @@ figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_score
 
 gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_M_P120_CORT/"
 
-
 ## Lists
 cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 topgo_ontologies <- list("BP", "CC", "MF")
-
 
 ## Other variables
 #metadata_info_concise <- "M_MUT_and_WT_M_E18_WB"
