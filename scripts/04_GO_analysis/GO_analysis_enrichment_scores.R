@@ -12,10 +12,10 @@ library(tidyverse)
 ## Variables
 
 ## Paths
-#Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma/M_MUT_and_WT_M_E18_WB/"
-#Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma/M_MUT_and_WT_M_P30_CORT/"
-#Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma/M_MUT_and_WT_M_P60_CORT/"
-Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma/M_MUT_and_WT_M_P120_CORT/"
+#Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_E18_WB/"
+#Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_P30_CORT/"
+#Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_P60_CORT/"
+Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_P120_CORT/"
 
 figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/"
 
@@ -23,7 +23,7 @@ gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_W
 
 
 ## Lists
-cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro") #, "Peri", "Endo") 
+cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 topgo_ontologies <- list("BP", "CC", "MF")
 
 
@@ -40,8 +40,12 @@ metadata_info_expanded <- "Male, P120, Cortex"
 ################################################################################
 
 for (cell_type in cell_types){
-  # Read in significant DEGs per cell type identified by Limma
+  # Read in total genes per cell type identified by Limma
   signif_DEGs <- read.csv(file = glue(Limma_DEG_dir, cell_type, "_", metadata_info_concise, "_Limma_DEG.csv"))
+  # If gene is significant, replace adjusted p-value with 1
+  signif_DEGs$adj.P.Val <- replace(signif_DEGs$adj.P.Val, signif_DEGs$adj.P.Val <= 0.05, 1)
+  # If gene is not significant, replace adjusted p-value with 0
+  signif_DEGs$adj.P.Val <- replace(signif_DEGs$adj.P.Val, signif_DEGs$adj.P.Val != 1, 0)
   # Define geneList
   geneList <- structure(as.numeric(signif_DEGs$adj.P.Val), names=signif_DEGs$X)
     
