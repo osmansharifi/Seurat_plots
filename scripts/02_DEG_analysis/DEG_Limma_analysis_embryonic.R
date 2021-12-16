@@ -20,7 +20,8 @@ DEG_data_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/Limma/M_MUT_and_WT_F_E18_W
 cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo") 
 
 # Other variables
-metadata_info <- "M_MUT_and_WT_F_E18_WB"
+# metadata_info <- "M_MUT_and_WT_F_E18_WB" # For males
+metadata_info <- "M_MUT_and_WT_F_E18_WB" # For females
 
 ################################################################################
 ## Data preparation
