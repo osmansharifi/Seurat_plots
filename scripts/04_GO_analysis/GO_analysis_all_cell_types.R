@@ -205,6 +205,8 @@ go_data <- list(Astro_E18_WB_BP,
             Vip_P120_CORT_CC,
             Vip_P120_CORT_MF)
 
+new_go_data <- lapply(go_data, transform, metadata = deparse(substitute(go_data)))
+
 # create fake data
 #set.seed(1024) # keep reproducibility
 #go <- paste0("GO", sample(1000:2000, 5))
