@@ -1,3 +1,42 @@
+# By Osman Sharifi & Viktoria Haghani
+
+# Note that GO_analysis_enrichment_scores.R should be run before running this script
+# This script reads in the GO Terms previously identified
+
+################################################################################
+## Variables
+
+#Paths
+go_data_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/"
+figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/"
+
+# Lists
+concise_metadatas <- list("M_MUT_and_WT_M_E18_WB", "M_MUT_and_WT_M_P30_CORT", "M_MUT_and_WT_M_P60_CORT", "M_MUT_and_WT_M_P120_CORT")
+cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo")
+ont_types <- list("BP", "CC", "MF")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 library(topGO)
 library(org.Mm.eg.db)
 library(foreach)
@@ -31,10 +70,7 @@ topgo_ontologies <- list("BP", "CC", "MF")
 #metadata_info_concise <- "M_MUT_and_WT_M_P60_CORT"
 metadata_info_concise <- "M_MUT_and_WT_M_P120_CORT"
 
-#metadata_info_expanded <- "Male, E18, Whole Brain"
-#metadata_info_expanded <- "Male, P30, Cortex"
-#metadata_info_expanded <- "Male, P60, Cortex"
-metadata_info_expanded <- "Male, P120, Cortex"
+metadata_info_expanded <- "All Cell Types and Time Points for Males"
 ################################################################################
 
 for (cell_type in cell_types){
