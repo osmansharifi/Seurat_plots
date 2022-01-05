@@ -205,7 +205,18 @@ go_data <- list(Astro_E18_WB_BP,
             Vip_P120_CORT_CC,
             Vip_P120_CORT_MF)
 
-new_go_data <- lapply(go_data, transform, metadata = deparse(substitute(go_data)))
+#new_go_data <- lapply(go_data, transform, metadata = DATAFRAME_NAME)
+
+#for (data in go_data) {
+#  print(data)
+#}
+
+
+
+
+
+
+# Visualize GO Data
 
 # create fake data
 #set.seed(1024) # keep reproducibility
