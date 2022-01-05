@@ -21,6 +21,8 @@ go_ontologies <- list("BP", "CC", "MF")
 
 # Variable
 metadata <- "M_MUT_and_WT_M"
+plot_title <- "GO Analysis"
+plot_subtitle <- "All Cell Types, Time Points, and Ontologies for Male Mice"
 
 ################################################################################
 
@@ -202,3 +204,22 @@ go_data <- list(Astro_E18_WB_BP,
             Vip_P120_CORT_BP,
             Vip_P120_CORT_CC,
             Vip_P120_CORT_MF)
+
+# create fake data
+set.seed(1024) # keep reproducibility
+go <- paste0("GO", sample(1000:2000, 5))
+data <- data.frame("GOs" = rep(go, 2), 
+                   "Condition" = rep(c("A", "B"), each = 5),
+                   "GeneRatio" = 1 / sample(10, 10), 
+                   "p.adjust" = 0.05 / sample(10, 10))
+
+# plot: dot plot
+ggplot(data = data, aes(x = Condition, y = GOs, 
+                        color = `p.adjust`, size = GeneRatio)) + 
+  geom_point() +
+  scale_color_gradient(low = "red", high = "blue") +
+  theme_bw() + 
+  ylab("") + 
+  xlab("Cell Types for Each Time Point") + 
+  labs(title = plot_title,
+       subtitle = plot_subtitle)
