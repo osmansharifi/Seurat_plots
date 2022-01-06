@@ -26,7 +26,7 @@ plot_subtitle <- "All Cell Types, Time Points, and Ontologies for Male Mice"
 
 ################################################################################
 
-# Make an empty list to store the names of the data frames
+# Make an empty list to store the names of the data frames as characters
 go_data_names <- list()
 
 # Read in GO Data
@@ -35,10 +35,36 @@ for (time_point in time_points){
     for (ont in go_ontologies){
       # Read in all GO Data
       assign(glue(cell_type, "_", time_point, "_", ont), read.csv(file = glue(go_data_path, metadata, "_", time_point, "/", cell_type, "_", metadata, "_", time_point, "_", ont, "_gentable.csv")))
+      # Add the data as characters to a list for use of data frame names
       go_data_names <- append(go_data_names, glue(cell_type, "_", time_point, "_", ont))
+      
+      go_data <- append(go_data, as.name(glue(cell_type, "_", time_point, "_", ont)))
     }
   }
 }
+
+# Make an empty list to store the data frames
+go_data <- list()
+
+for (one_name in go_data_names){
+  go_data <- append(go_data, as.name(one_name))
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # List of go_data data frames
 go_data <- list(Astro_E18_WB_BP, Astro_E18_WB_CC, Astro_E18_WB_MF,
