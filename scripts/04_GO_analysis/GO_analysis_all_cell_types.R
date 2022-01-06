@@ -37,18 +37,25 @@ for (time_point in time_points){
       assign(glue(cell_type, "_", time_point, "_", ont), read.csv(file = glue(go_data_path, metadata, "_", time_point, "/", cell_type, "_", metadata, "_", time_point, "_", ont, "_gentable.csv")))
       # Add the data as characters to a list for use of data frame names
       go_data_names <- append(go_data_names, glue(cell_type, "_", time_point, "_", ont))
-      
-      go_data <- append(go_data, as.name(glue(cell_type, "_", time_point, "_", ont)))
     }
   }
 }
 
-# Make an empty list to store the data frames
-go_data <- list()
+# Duplicate the go_data_names list
+go_data <- go_data_names
 
-for (one_name in go_data_names){
-  go_data <- append(go_data, as.name(one_name))
+# Determine range needed
+num_dfs <- length(go_data)
+my_range <- 1:num_dfs
+
+foreach (data = go_data, x = my_range) %do% {
+  print(x)
+  print(data)
 }
+
+
+
+
 
 
 
@@ -124,15 +131,11 @@ go_data <- list(Astro_E18_WB_BP, Astro_E18_WB_CC, Astro_E18_WB_MF,
             Sst_P120_CORT_BP, Sst_P120_CORT_CC, Sst_P120_CORT_MF, 
             Vip_P120_CORT_BP, Vip_P120_CORT_CC, Vip_P120_CORT_MF)
 
+
+
 # Add a new column to every data frame
 new_go_data <- lapply(go_data, transform, metadata = "placeholder")
 
-
-
-
-foreach (data = go_data) {
-  print(data)
-}
 
 
 
