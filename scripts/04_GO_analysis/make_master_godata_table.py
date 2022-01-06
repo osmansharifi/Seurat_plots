@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import csv
 import pandas as pd
 
 # Folders containing input CSV data
@@ -18,23 +17,24 @@ cell_types = ["L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal
 # Gene ontology methods
 go_onts = ["BP", "CC", "MF"]
 
-for tp in time_point:
+# Make a master data frame containing all GO data
+master_go_df = pd.DataFrame()
+
+# Fill data frame with GO data
+for time_point, meta in zip(time_points, meta_folders):
     for cell_type in cell_types:
         for ont in go_onts:
-        
-        
-        
-for meta in metafolders: 
-    for cell_type in zip(cell_types):
-    
-        df = pd.read_csv(f'../../GO_data/GO_term_tables/{meta}
+            # Read in GO Data
+            data = pd.read_csv(f'../../GO_data/GO_term_tables/{meta}/{cell_type}_M_MUT_and_WT_M_{time_point}_{ont}_gentable.csv')
+            # Turn the GO Data into a pandas data frame
+            df = pd.DataFrame(data)
+            
+            # Add a new column to the data frame with the name of the data set
+            metadata_name = (f'{cell_type}_{time_point}_{ont}')
+            new_column_values = []
+            for i in range(len(df["Term"])):
+                new_column_values.append(metadata_name)
+            df.insert(0, "Metadata", new_column_values, True)
+            master_go_df = master_go_df.append(df)
 
-
-
-
-# Read in all GO Data from individual CSV files
-with open
-
-# Add a column containing the data name to each data frame
-# Combine all data frames into a master data frame
-# Output and save master data frame
+master_go_df.to_csv("../../GO_data/GO_term_tables/master_go_data_males.csv")      
