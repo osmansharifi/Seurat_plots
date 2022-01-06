@@ -49,9 +49,13 @@ num_dfs <- length(go_data)
 my_range <- 1:num_dfs
 
 foreach (data = go_data, x = my_range) %do% {
+  go_data.nlist <- 
   print(x)
   print(data)
 }
+
+
+# goal is to replace indeces in list with certain name with the corresponding dataframe 
 
 
 
