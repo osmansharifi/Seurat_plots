@@ -26,12 +26,16 @@ plot_subtitle <- "All Cell Types, Time Points, and Ontologies for Male Mice"
 
 ################################################################################
 
+# Make an empty list to store the names of the data frames
+go_data_names <- list()
+
 # Read in GO Data
 for (time_point in time_points){
   for (cell_type in cell_types){
     for (ont in go_ontologies){
       # Read in all GO Data
       assign(glue(cell_type, "_", time_point, "_", ont), read.csv(file = glue(go_data_path, metadata, "_", time_point, "/", cell_type, "_", metadata, "_", time_point, "_", ont, "_gentable.csv")))
+      go_data_names <- append(go_data_names, glue(cell_type, "_", time_point, "_", ont))
     }
   }
 }
@@ -93,8 +97,6 @@ go_data <- list(Astro_E18_WB_BP, Astro_E18_WB_CC, Astro_E18_WB_MF,
             Sncg_P120_CORT_BP, Sncg_P120_CORT_CC, Sncg_P120_CORT_MF,
             Sst_P120_CORT_BP, Sst_P120_CORT_CC, Sst_P120_CORT_MF, 
             Vip_P120_CORT_BP, Vip_P120_CORT_CC, Vip_P120_CORT_MF)
-
-go_data_names <- lapply(go_data, function(x) as.character(unlist(x)))
 
 # Add a new column to every data frame
 new_go_data <- lapply(go_data, transform, metadata = "placeholder")
