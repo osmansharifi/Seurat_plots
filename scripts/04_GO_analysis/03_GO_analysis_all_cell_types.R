@@ -57,3 +57,13 @@ ggplot(go_data, aes(x = Metadata, y = Term, size = -log10(go_data[9]))) +
 #                device = NULL,
 #                height = 8.5,
 #                width = 12)
+
+# plot: dot plot
+ggplot(data = go_data, aes(x = Metadata, y = GO.ID, 
+                        color = `Fisher`, size = Significant)) + 
+  geom_point() +
+  scale_color_gradient(low = "red", high = "blue") +
+  theme_bw() + 
+  ylab("") + 
+  xlab("") + 
+  ggtitle("GO enrichment analysis")
