@@ -12,19 +12,19 @@ library(tidyverse)
 ## Variables
 
 ## Paths
-#Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_E18_WB/"
+Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_E18_WB/"
 #Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_P30_CORT/"
-Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_P60_CORT/"
+#Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_P60_CORT/"
 #Limma_DEG_dir <- "~/Documents/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_P120_CORT/"
 
-#figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/M_MUT_and_WT_M_E18_WB/"
+figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/M_MUT_and_WT_M_E18_WB/"
 #figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/M_MUT_and_WT_M_P30_CORT/"
-figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/M_MUT_and_WT_M_P60_CORT/"
+#figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/M_MUT_and_WT_M_P60_CORT/"
 #figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/M_MUT_and_WT_M_P120_CORT/"
 
-#gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_M_E18_WB/"
+gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_M_E18_WB/"
 #gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_M_P30_CORT/"
-gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_M_P60_CORT/"
+#gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_M_P60_CORT/"
 #gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_M_P120_CORT/"
 
 ## Lists
@@ -32,16 +32,19 @@ cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neu
 topgo_ontologies <- list("BP", "CC", "MF")
 
 ## Other variables
-#metadata_info_concise <- "M_MUT_and_WT_M_E18_WB"
+metadata_info_concise <- "M_MUT_and_WT_M_E18_WB"
 #metadata_info_concise <- "M_MUT_and_WT_M_P30_CORT"
-metadata_info_concise <- "M_MUT_and_WT_M_P60_CORT"
+#metadata_info_concise <- "M_MUT_and_WT_M_P60_CORT"
 #metadata_info_concise <- "M_MUT_and_WT_M_P120_CORT"
 
-#metadata_info_expanded <- "Male, E18, Whole Brain"
+metadata_info_expanded <- "Male, E18, Whole Brain"
 #metadata_info_expanded <- "Male, P30, Cortex"
-metadata_info_expanded <- "Male, P60, Cortex"
+#metadata_info_expanded <- "Male, P60, Cortex"
 #metadata_info_expanded <- "Male, P120, Cortex"
 ################################################################################
+
+
+# Top 20 for each cell type (with figures)
 
 for (cell_type in cell_types){
   # Read in total genes per cell type identified by Limma
@@ -125,3 +128,38 @@ for (cell_type in cell_types){
   }
 }
 
+
+
+
+# Top 5 for each cell type (no figures generated)
+
+for (cell_type in cell_types){
+  # Read in total genes per cell type identified by Limma
+  signif_DEGs <- read.csv(file = glue(Limma_DEG_dir, cell_type, "_", metadata_info_concise, "_Limma_DEG.csv"))
+  # If gene is significant, replace adjusted p-value with 1
+  signif_DEGs$adj.P.Val <- replace(signif_DEGs$adj.P.Val, signif_DEGs$adj.P.Val <= 0.05, 1)
+  # If gene is not significant, replace adjusted p-value with 0
+  signif_DEGs$adj.P.Val <- replace(signif_DEGs$adj.P.Val, signif_DEGs$adj.P.Val != 1, 0)
+  # Define geneList
+  geneList <- structure(as.numeric(signif_DEGs$adj.P.Val), names=signif_DEGs$X)
+  
+  for (ont in topgo_ontologies){
+    # Create topGOdata object
+    assign(glue('GOdata{ont}'), new("topGOdata",
+                                    ontology = ont,
+                                    allGenes = geneList,
+                                    geneSelectionFun = function(x)(x == 1),
+                                    annot = annFUN.org, mapping = "org.Mm.eg.db", ID = "symbol"))
+  }
+  
+  godata_types <- list(GOdataBP, GOdataCC, GOdataMF)
+  godata_names <- list("GOdataBP", "GOdataCC", "GOdataMF")
+  
+  foreach(GOdata = godata_types, godata_name = godata_names, ont = topgo_ontologies) %do% {
+    # Test for enrichment using Fisher's Exact Test and visualize GO terms
+    resultFisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
+    GenTable <- GenTable(GOdata, Fisher = resultFisher, topNodes = 5, numChar = 60)
+    # GenTable contains 6 columns; annotated = # of genes that belong to the GO term, Significant = # of Sig DEGs present in the term
+    write.csv(GenTable, file = glue(gentable_path, cell_type, "_", metadata_info_concise, "_", ont, "_top5_gentable.csv"))
+  }
+}

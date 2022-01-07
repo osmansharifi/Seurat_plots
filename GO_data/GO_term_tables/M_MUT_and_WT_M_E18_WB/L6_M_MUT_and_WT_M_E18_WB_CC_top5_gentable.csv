@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0022625","cytosolic large ribosomal subunit",52,13,0.98,"9.9e-12"
+"2","GO:0022627","cytosolic small ribosomal subunit",44,8,0.83,"1.5e-06"
+"3","GO:0043209","myelin sheath",200,15,3.79,"6.3e-06"
+"4","GO:0005883","neurofilament",11,4,0.21,"3.7e-05"
+"5","GO:0034362","low-density lipoprotein particle",8,3,0.15,"0.00035"

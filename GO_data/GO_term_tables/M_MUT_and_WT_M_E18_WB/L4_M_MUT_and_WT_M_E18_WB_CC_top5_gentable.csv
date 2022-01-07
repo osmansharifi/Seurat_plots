@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0022627","cytosolic small ribosomal subunit",44,16,1.19,"1.2e-14"
+"2","GO:0022625","cytosolic large ribosomal subunit",53,13,1.43,"1.1e-09"
+"3","GO:0098982","GABA-ergic synapse",99,14,2.68,"4.1e-07"
+"4","GO:0030285","integral component of synaptic vesicle membrane",44,9,1.19,"2.2e-06"
+"5","GO:0099061","integral component of postsynaptic density membrane",69,10,1.87,"1.5e-05"

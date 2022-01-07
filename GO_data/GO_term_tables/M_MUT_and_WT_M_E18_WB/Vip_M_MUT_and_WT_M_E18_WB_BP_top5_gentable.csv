@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:1905606","regulation of presynapse assembly",32,6,0.46,"5.5e-06"
+"2","GO:0099560","synaptic membrane adhesion",32,6,0.46,"5.5e-06"
+"3","GO:0006412","translation",538,21,7.76,"3.4e-05"
+"4","GO:0035235","ionotropic glutamate receptor signaling pathway",15,4,0.22,"5.1e-05"
+"5","GO:0060730","regulation of intestinal epithelial structure maintenance",2,2,0.03,"0.00021"

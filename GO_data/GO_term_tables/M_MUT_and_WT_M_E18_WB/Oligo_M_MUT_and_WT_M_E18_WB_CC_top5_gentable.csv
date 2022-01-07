@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0005615","extracellular space",646,1,0.05,"0.052"
+"2","GO:0005576","extracellular region",1012,1,0.08,"0.081"
+"3","GO:0032991","protein-containing complex",4122,1,0.33,"0.331"
+"4","GO:0110165","cellular anatomical entity",11590,1,0.93,"0.930"
+"5","GO:0005575","cellular_component",12465,1,1,"1.000"

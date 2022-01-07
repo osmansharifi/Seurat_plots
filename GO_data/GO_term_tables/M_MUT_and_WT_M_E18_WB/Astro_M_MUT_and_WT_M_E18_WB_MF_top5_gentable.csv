@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0005314","high-affinity glutamate transmembrane transporter activity",4,2,0.01,"4.1e-05"
+"2","GO:0005102","signaling receptor binding",1108,9,2.93,"0.0019"
+"3","GO:0008201","heparin binding",102,3,0.27,"0.0024"
+"4","GO:0046911","metal chelating activity",1,1,0,"0.0026"
+"5","GO:0019838","growth factor binding",110,3,0.29,"0.0030"

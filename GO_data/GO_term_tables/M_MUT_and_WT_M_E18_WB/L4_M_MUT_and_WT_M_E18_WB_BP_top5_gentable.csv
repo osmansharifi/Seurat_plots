@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:1905606","regulation of presynapse assembly",32,8,0.87,"1.6e-06"
+"2","GO:0099560","synaptic membrane adhesion",32,7,0.87,"1.9e-05"
+"3","GO:0000028","ribosomal small subunit assembly",20,5,0.54,"0.00016"
+"4","GO:0050804","modulation of chemical synaptic transmission",472,26,12.82,"0.00051"
+"5","GO:1903744","positive regulation of anterograde synaptic vesicle transpor...",2,2,0.05,"0.00074"
