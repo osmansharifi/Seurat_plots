@@ -6,9 +6,10 @@ library(ggplot2)
 ## Variables
 
 # Paths
-csv_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/master_go_data_males.csv"
-figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/"
-
+#csv_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/master_go_data_males.csv"
+#figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/"
+csv_path <- "~/Documents/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/master_go_data_males.csv"
+figure_path <- "~/Documents/GitHub/snRNA-seq-pipeline/figures/go_analysis/"
 # Names
 plot_title <- "GO Analysis"
 plot_subtitle <- "All Cell Types, Time Points, and Ontologies for Male Mice"
