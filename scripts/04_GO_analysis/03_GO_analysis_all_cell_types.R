@@ -8,7 +8,7 @@ library(ggplot2)
 # Paths
 #csv_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/master_go_data_males.csv"
 #figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/"
-csv_path <- "~/Documents/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/master_go_data_males.csv"
+csv_path <- "~/Documents/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/master_go_data_males_top5.csv"
 figure_path <- "~/Documents/GitHub/snRNA-seq-pipeline/figures/go_analysis/"
 # Names
 plot_title <- "GO Analysis"
@@ -62,7 +62,7 @@ ggplot(go_data, aes(x = Metadata, y = Term, size = -log10(go_data[9]))) +
 ggplot(data = go_data, aes(x = Metadata, y = GO.ID, 
                         color = `Fisher`, size = Significant)) + 
   geom_point() +
-  scale_color_gradient(low = "red", high = "blue") +
+  scale_color_gradient(low = "blue", high = "red") +
   theme_bw() + 
   ylab("") + 
   xlab("") + 
