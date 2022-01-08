@@ -17,8 +17,8 @@ cell_types = ["L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal
 # Gene ontology methods
 go_onts = ["BP", "CC", "MF"]
 
-# Make a master data frame containing all GO data
-master_go_df = pd.DataFrame()
+# Make a master data frame containing all GO data for top 20 GO terms
+master_go_df_top20 = pd.DataFrame()
 
 # Fill data frame with GO data (top 20)
 for time_point, meta in zip(time_points, meta_folders):
@@ -35,8 +35,12 @@ for time_point, meta in zip(time_points, meta_folders):
             for i in range(len(df["Term"])):
                 new_column_values.append(metadata_name)
             df.insert(0, "Metadata", new_column_values, True)
-            master_go_df = master_go_df.append(df)
-master_go_df.to_csv("../../GO_data/GO_term_tables/master_go_data_males_top20.csv")     
+            master_go_df_top20 = master_go_df_top20.append(df)
+master_go_df_top20.to_csv("../../GO_data/GO_term_tables/master_go_data_males_top20.csv")     
+
+
+# Make a master data frame containing all GO data for top 5 GO terms
+master_go_df_top5 = pd.DataFrame()
 
 # Fill data frame with GO data (top 20)
 for time_point, meta in zip(time_points, meta_folders):
@@ -53,6 +57,5 @@ for time_point, meta in zip(time_points, meta_folders):
             for i in range(len(df["Term"])):
                 new_column_values.append(metadata_name)
             df.insert(0, "Metadata", new_column_values, True)
-            master_go_df = master_go_df.append(df)
-
-master_go_df.to_csv("../../GO_data/GO_term_tables/master_go_data_males_top5.csv")  
+            master_go_df_top5 = master_go_df_top5.append(df)
+master_go_df_top5.to_csv("../../GO_data/GO_term_tables/master_go_data_males_top5.csv")  
