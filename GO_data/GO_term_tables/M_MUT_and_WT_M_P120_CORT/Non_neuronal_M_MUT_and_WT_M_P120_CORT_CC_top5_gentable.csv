@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0005634","nucleus",5595,57,39.75,"0.0033"
+"2","GO:0045202","synapse",1296,18,9.21,"0.0041"
+"3","GO:0016604","nuclear body",622,11,4.42,"0.0045"
+"4","GO:0033177","proton-transporting two-sector ATPase complex, proton-transp...",15,2,0.11,"0.0049"
+"5","GO:0016471","vacuolar proton-transporting V-type ATPase complex",15,2,0.11,"0.0049"
