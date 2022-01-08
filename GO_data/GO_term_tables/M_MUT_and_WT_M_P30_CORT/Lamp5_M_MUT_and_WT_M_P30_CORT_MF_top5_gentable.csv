@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0044729","hemi-methylated DNA-binding",1,1,0,"0.00052"
+"2","GO:0010385","double-stranded methylated DNA binding",5,1,0,"0.00259"
+"3","GO:0004983","neuropeptide Y receptor activity",5,1,0,"0.00259"
+"4","GO:0008330","protein tyrosine/threonine phosphatase activity",11,1,0.01,"0.00570"
+"5","GO:0017017","MAP kinase tyrosine/serine/threonine phosphatase activity",12,1,0.01,"0.00622"

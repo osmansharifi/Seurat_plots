@@ -20,7 +20,7 @@ go_onts = ["BP", "CC", "MF"]
 # Make a master data frame containing all GO data
 master_go_df = pd.DataFrame()
 
-# Fill data frame with GO data
+# Fill data frame with GO data (top 20)
 for time_point, meta in zip(time_points, meta_folders):
     for cell_type in cell_types:
         for ont in go_onts:
@@ -36,5 +36,23 @@ for time_point, meta in zip(time_points, meta_folders):
                 new_column_values.append(metadata_name)
             df.insert(0, "Metadata", new_column_values, True)
             master_go_df = master_go_df.append(df)
+master_go_df.to_csv("../../GO_data/GO_term_tables/master_go_data_males_top20.csv")     
 
-master_go_df.to_csv("../../GO_data/GO_term_tables/master_go_data_males.csv")      
+# Fill data frame with GO data (top 20)
+for time_point, meta in zip(time_points, meta_folders):
+    for cell_type in cell_types:
+        for ont in go_onts:
+            # Read in GO Data
+            data = pd.read_csv(f'../../GO_data/GO_term_tables/{meta}/{cell_type}_M_MUT_and_WT_M_{time_point}_{ont}_top5_gentable.csv')
+            # Turn the GO Data into a pandas data frame
+            df = pd.DataFrame(data)
+            
+            # Add a new column to the data frame with the name of the data set
+            metadata_name = (f'{cell_type}_{time_point}_{ont}')
+            new_column_values = []
+            for i in range(len(df["Term"])):
+                new_column_values.append(metadata_name)
+            df.insert(0, "Metadata", new_column_values, True)
+            master_go_df = master_go_df.append(df)
+
+master_go_df.to_csv("../../GO_data/GO_term_tables/master_go_data_males_top5.csv")  
