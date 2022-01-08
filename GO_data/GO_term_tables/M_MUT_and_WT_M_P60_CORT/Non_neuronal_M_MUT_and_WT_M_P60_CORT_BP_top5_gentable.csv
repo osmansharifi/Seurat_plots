@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0006012","galactose metabolic process",8,1,0,"0.0024"
+"2","GO:0046835","carbohydrate phosphorylation",14,1,0,"0.0041"
+"3","GO:0035987","endodermal cell differentiation",16,1,0,"0.0047"
+"4","GO:1902430","negative regulation of amyloid-beta formation",19,1,0.01,"0.0056"
+"5","GO:0010954","positive regulation of protein processing",20,1,0.01,"0.0059"

@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0098978","glutamatergic synapse",485,35,11.73,"7.4e-09"
+"2","GO:0043025","neuronal cell body",636,46,15.39,"1.7e-08"
+"3","GO:0030424","axon",643,45,15.55,"3.3e-06"
+"4","GO:0005886","plasma membrane",3481,143,84.21,"1.4e-05"
+"5","GO:0030425","dendrite",660,40,15.97,"6.1e-05"

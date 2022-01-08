@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0071277","cellular response to calcium ion",70,9,1.67,"4e-05"
+"2","GO:0098900","regulation of action potential",47,7,1.12,"0.00011"
+"3","GO:0042493","response to drug",160,13,3.82,"0.00012"
+"4","GO:0007155","cell adhesion",1043,55,24.87,"0.00013"
+"5","GO:0010595","positive regulation of endothelial cell migration",88,9,2.1,"0.00024"
