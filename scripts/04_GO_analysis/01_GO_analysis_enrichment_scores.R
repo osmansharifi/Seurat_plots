@@ -132,7 +132,6 @@ for (cell_type in cell_types){
 
 
 # Top 5 for each cell type (no figures generated)
-
 for (cell_type in cell_types){
   # Read in total genes per cell type identified by Limma
   signif_DEGs <- read.csv(file = glue(Limma_DEG_dir, cell_type, "_", metadata_info_concise, "_Limma_DEG.csv"))
@@ -161,5 +160,38 @@ for (cell_type in cell_types){
     GenTable <- GenTable(GOdata, Fisher = resultFisher, topNodes = 5, numChar = 60)
     # GenTable contains 6 columns; annotated = # of genes that belong to the GO term, Significant = # of Sig DEGs present in the term
     write.csv(GenTable, file = glue(gentable_path, cell_type, "_", metadata_info_concise, "_", ont, "_top5_gentable.csv"))
+  }
+}
+
+
+# Top 3 for each cell type (no figures generated)
+for (cell_type in cell_types){
+  # Read in total genes per cell type identified by Limma
+  signif_DEGs <- read.csv(file = glue(Limma_DEG_dir, cell_type, "_", metadata_info_concise, "_Limma_DEG.csv"))
+  # If gene is significant, replace adjusted p-value with 1
+  signif_DEGs$adj.P.Val <- replace(signif_DEGs$adj.P.Val, signif_DEGs$adj.P.Val <= 0.05, 1)
+  # If gene is not significant, replace adjusted p-value with 0
+  signif_DEGs$adj.P.Val <- replace(signif_DEGs$adj.P.Val, signif_DEGs$adj.P.Val != 1, 0)
+  # Define geneList
+  geneList <- structure(as.numeric(signif_DEGs$adj.P.Val), names=signif_DEGs$X)
+  
+  for (ont in topgo_ontologies){
+    # Create topGOdata object
+    assign(glue('GOdata{ont}'), new("topGOdata",
+                                    ontology = ont,
+                                    allGenes = geneList,
+                                    geneSelectionFun = function(x)(x == 1),
+                                    annot = annFUN.org, mapping = "org.Mm.eg.db", ID = "symbol"))
+  }
+  
+  godata_types <- list(GOdataBP, GOdataCC, GOdataMF)
+  godata_names <- list("GOdataBP", "GOdataCC", "GOdataMF")
+  
+  foreach(GOdata = godata_types, godata_name = godata_names, ont = topgo_ontologies) %do% {
+    # Test for enrichment using Fisher's Exact Test and visualize GO terms
+    resultFisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
+    GenTable <- GenTable(GOdata, Fisher = resultFisher, topNodes = 3, numChar = 60)
+    # GenTable contains 6 columns; annotated = # of genes that belong to the GO term, Significant = # of Sig DEGs present in the term
+    write.csv(GenTable, file = glue(gentable_path, cell_type, "_", metadata_info_concise, "_", ont, "_top3_gentable.csv"))
   }
 }
