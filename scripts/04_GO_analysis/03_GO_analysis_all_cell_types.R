@@ -59,11 +59,19 @@ ggplot(go_data, aes(x = Metadata, y = Term, size = -log10(go_data[9]))) +
 #                width = 12)
 
 # plot: dot plot
-ggplot(data = go_data, aes(x = Metadata, y = GO.ID, 
-                        color = `Fisher`, size = Significant)) + 
+E18_GO <- go_data[which(go_data$Time.Point=='E18'),]
+P30_GO <- go_data[which(go_data$Time.Point=='P30'),]
+
+p1<-ggplot(data = E18_GO, aes(x = Cell.Type, y = Term, 
+                        color = -log10(`Fisher`), size = Significant)) + 
   geom_point() +
   scale_color_gradient(low = "blue", high = "red") +
   theme_bw() + 
   ylab("") + 
   xlab("") + 
-  ggtitle("GO enrichment analysis")
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
+  ggtitle("TopGO E18 GO enrichment analysis")
+ggsave(p1,
+       filename = "/Users/osman/Documents/GitHub/snRNA-seq-pipeline/figures/go_analysis/E18_GO.pdf",
+       height = 20, 
+       width = 10)
