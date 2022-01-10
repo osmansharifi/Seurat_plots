@@ -61,6 +61,8 @@ ggplot(go_data, aes(x = Metadata, y = Term, size = -log10(go_data[9]))) +
 # plot: dot plot
 E18_GO <- go_data[which(go_data$Time.Point=='E18'),]
 P30_GO <- go_data[which(go_data$Time.Point=='P30'),]
+P60_GO <- go_data[which(go_data$Time.Point=='P60'),]
+P120_GO <- go_data[which(go_data$Time.Point=='P120'),]
 
 p1<-ggplot(data = E18_GO, aes(x = Cell.Type, y = Term, 
                         color = -log10(`Fisher`), size = Significant)) + 
@@ -70,8 +72,50 @@ p1<-ggplot(data = E18_GO, aes(x = Cell.Type, y = Term,
   ylab("") + 
   xlab("") + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
-  ggtitle("TopGO E18 GO enrichment analysis")
+  ggtitle("TopGO E18 male GO enrichment analysis")
 ggsave(p1,
-       filename = "/Users/osman/Documents/GitHub/snRNA-seq-pipeline/figures/go_analysis/E18_GO.pdf",
+       filename = "/Users/osman/Documents/GitHub/snRNA-seq-pipeline/figures/go_analysis/E18_male_GO.pdf",
+       height = 20, 
+       width = 10)
+
+p2<-ggplot(data = P30_GO, aes(x = Cell.Type, y = Term, 
+                              color = -log10(`Fisher`), size = Significant)) + 
+  geom_point() +
+  scale_color_gradient(low = "blue", high = "red") +
+  theme_bw() + 
+  ylab("") + 
+  xlab("") + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
+  ggtitle("TopGO P30 male GO enrichment analysis")
+ggsave(p2,
+       filename = "/Users/osman/Documents/GitHub/snRNA-seq-pipeline/figures/go_analysis/P30_male_GO.pdf",
+       height = 20, 
+       width = 10)
+
+p3<-ggplot(data = P60_GO, aes(x = Cell.Type, y = Term, 
+                              color = -log10(`Fisher`), size = Significant)) + 
+  geom_point() +
+  scale_color_gradient(low = "blue", high = "red") +
+  theme_bw() + 
+  ylab("") + 
+  xlab("") + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
+  ggtitle("TopGO P60 male GO enrichment analysis")
+ggsave(p3,
+       filename = "/Users/osman/Documents/GitHub/snRNA-seq-pipeline/figures/go_analysis/P60_male_GO.pdf",
+       height = 20, 
+       width = 10)
+
+p4<-ggplot(data = P120_GO, aes(x = Cell.Type, y = Term, 
+                              color = -log10(`Fisher`), size = Significant)) + 
+  geom_point() +
+  scale_color_gradient(low = "blue", high = "red") +
+  theme_bw() + 
+  ylab("") + 
+  xlab("") + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
+  ggtitle("TopGO P120 male GO enrichment analysis")
+ggsave(p4,
+       filename = "/Users/osman/Documents/GitHub/snRNA-seq-pipeline/figures/go_analysis/P120_male_GO.pdf",
        height = 20, 
        width = 10)
