@@ -1,5 +1,5 @@
 library(ggplot2)
-
+library(dplyr)
 # By Osman Sharifi & Viktoria Haghani
 
 ################################################################################
@@ -8,7 +8,7 @@ library(ggplot2)
 # Paths
 #csv_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/master_go_data_males.csv"
 #figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/"
-csv_path <- "~/Documents/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/master_go_data_males_top5.csv"
+csv_path <- "~/Documents/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/master_go_data_males_top3.csv"
 figure_path <- "~/Documents/GitHub/snRNA-seq-pipeline/figures/go_analysis/"
 # Names
 plot_title <- "GO Analysis"
@@ -22,10 +22,16 @@ go_data <- read.csv(file = csv_path)
 #subset and sort GO terms
 E18_GO <- go_data[which(go_data$Time.Point=='E18'),]
 E18_GO <- E18_GO[order(E18_GO$Fisher),]
-for (celltype in E18_GO$Cell.Type){
-  order(E18_GO$Fisher)
-  return(E18_GO)
-}
+#for (celltype in E18_GO$Cell.Type){
+ # order(E18_GO$Fisher)
+ # return(E18_GO)
+#}
+p.adjust <- round(p.adjust(E18_GO$Fisher,method="BH"),digits = 4)
+E18_GO=cbind(E18_GO,p.adjust)
+E18_GO <- E18_GO[order(E18_GO$p.adjust),]
+E18_GO <- filter(E18_GO, p.adjust < 0.05)
+write.table(all_res_final1,"summary_topGo_analysis_all_DE_miRs_targets.csv",sep=",",quote=F)
+
 P30_GO <- go_data[which(go_data$Time.Point=='P30'),]
 P30_GO <- P30_GO[order(P30_GO$Fisher),]
 P60_GO <- go_data[which(go_data$Time.Point=='P60'),]
@@ -35,17 +41,18 @@ P120_GO <- P120_GO[order(P120_GO$Fisher),]
 
 # Visualize GO Data
 p1<-ggplot(data = E18_GO, aes(x = Cell.Type, y = Term, 
-                        color = -log10(`Fisher`), size = Significant)) + 
+                        color = p.adjust, size = Significant)) + 
   geom_point() +
   scale_color_gradient(low = "blue", high = "red") +
   theme_bw() + 
   ylab("") + 
   xlab("") + 
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))+
+  theme(axis.text.y = element_text(angle = 0, vjust = 0.5, hjust=1))+
   ggtitle("TopGO E18 male GO enrichment analysis")
 ggsave(p1,
        filename = "/Users/osman/Documents/GitHub/snRNA-seq-pipeline/figures/go_analysis/E18_male_GO.pdf",
-       height = 20, 
+       height = 15, 
        width = 10)
 
 p2<-ggplot(data = P30_GO, aes(x = Cell.Type, y = Term, 
