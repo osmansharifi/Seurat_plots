@@ -22,18 +22,19 @@ go_data <- read.csv(file = csv_path)
 #subset and sort GO terms
 E18_GO <- go_data[which(go_data$Time.Point=='E18'),]
 E18_GO <- E18_GO[order(E18_GO$Fisher),]
-#for (celltype in E18_GO$Cell.Type){
- # order(E18_GO$Fisher)
- # return(E18_GO)
-#}
 p.adjust <- round(p.adjust(E18_GO$Fisher,method="BH"),digits = 4)
 E18_GO=cbind(E18_GO,p.adjust)
 E18_GO <- E18_GO[order(E18_GO$p.adjust),]
 E18_GO <- filter(E18_GO, p.adjust < 0.05)
 
-
 P30_GO <- go_data[which(go_data$Time.Point=='P30'),]
 P30_GO <- P30_GO[order(P30_GO$Fisher),]
+p.adjust <- round(p.adjust(P30_GO$Fisher,method="BH"),digits = 4)
+P30_GO=cbind(P30_GO,p.adjust)
+P30_GO <- P30_GO[order(P30_GO$p.adjust),]
+P30_GO <- filter(P30_GO, p.adjust < 0.05)
+
+
 P60_GO <- go_data[which(go_data$Time.Point=='P60'),]
 P60_GO <- P60_GO[order(P60_GO$Fisher),]
 P120_GO <- go_data[which(go_data$Time.Point=='P120'),]
@@ -43,7 +44,7 @@ P120_GO <- P120_GO[order(P120_GO$Fisher),]
 p1<-ggplot(data = E18_GO, aes(x = Cell.Type, y = Term, 
                         color = p.adjust, size = Significant)) + 
   geom_point() +
-  scale_color_gradient(low = "blue", high = "red") +
+  scale_color_gradient(low = "red", high = "blue") +
   theme_bw() + 
   ylab("") + 
   xlab("") + 
