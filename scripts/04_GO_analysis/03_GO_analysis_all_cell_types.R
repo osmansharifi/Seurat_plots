@@ -30,7 +30,7 @@ p.adjust <- round(p.adjust(E18_GO$Fisher,method="BH"),digits = 4)
 E18_GO=cbind(E18_GO,p.adjust)
 E18_GO <- E18_GO[order(E18_GO$p.adjust),]
 E18_GO <- filter(E18_GO, p.adjust < 0.05)
-write.table(all_res_final1,"summary_topGo_analysis_all_DE_miRs_targets.csv",sep=",",quote=F)
+
 
 P30_GO <- go_data[which(go_data$Time.Point=='P30'),]
 P30_GO <- P30_GO[order(P30_GO$Fisher),]
