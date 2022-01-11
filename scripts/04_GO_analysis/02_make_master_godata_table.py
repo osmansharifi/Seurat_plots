@@ -86,3 +86,37 @@ for time_point, meta, tissue in zip(time_points, meta_folders, tissue_types):
             master_go_df_top5 = master_go_df_top5.append(df)
             
 master_go_df_top5.to_csv("../../GO_data/GO_term_tables/master_go_data_males_top5.csv")
+
+# Make a master data frame containing all GO data for top 3 GO terms
+master_go_df_top3 = pd.DataFrame()
+
+# Fill data frame with GO data (top 3)
+for time_point, meta, tissue in zip(time_points, meta_folders, tissue_types):
+    for cell_type in cell_types:
+        for ont in go_onts:
+            # Read in GO Data
+            data = pd.read_csv(f'../../GO_data/GO_term_tables/{meta}/{cell_type}_M_MUT_and_WT_M_{time_point}_{tissue}_{ont}_top3_gentable.csv')
+            # Turn the GO Data into a pandas data frame
+            df = pd.DataFrame(data)
+            
+            # Add a new column to the data frame with the name of the data set
+            metadata_name = (f'{cell_type}_{time_point}_{tissue}_{ont}')
+            new_column_values = []
+            cluster_names = []
+            times = []
+            tiss = []
+            ontology = []
+            for i in range(len(df["Term"])):
+                new_column_values.append(metadata_name)
+                cluster_names.append(f'{cell_type}')
+                times.append(f'{time_point}')
+                tiss.append(f'{tissue}')
+                ontology.append(f'{ont}')
+            df.insert(1, "Metadata", new_column_values, True)
+            df.insert(2, "Cell Type", cluster_names, True)
+            df.insert(3, "Time Point", times, True)
+            df.insert(4, "Tissue", tiss, True)
+            df.insert(5, "Ontology", ontology, True)
+            master_go_df_top3 = master_go_df_top3.append(df)
+            
+master_go_df_top3.to_csv("../../GO_data/GO_term_tables/master_go_data_males_top3.csv")

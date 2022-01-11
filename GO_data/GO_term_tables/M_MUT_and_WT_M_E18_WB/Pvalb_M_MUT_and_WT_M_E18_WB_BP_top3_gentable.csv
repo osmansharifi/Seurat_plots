@@ -1,0 +1,4 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0010976","positive regulation of neuron projection development",202,6,0.91,"0.00029"
+"2","GO:0071896","protein localization to adherens junction",6,2,0.03,"0.00030"
+"3","GO:0098884","postsynaptic neurotransmitter receptor internalization",30,3,0.14,"0.00033"
