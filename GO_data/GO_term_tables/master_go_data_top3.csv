@@ -1,0 +1,505 @@
+,Unnamed: 0,Metadata,Sex,Cell Type,Time Point,Tissue,Ontology,GO.ID,Term,Annotated,Significant,Expected,Fisher
+0,1,L2_3_IT_M_E18_WB_BP,M,L2_3_IT,E18,WB,BP,GO:0021954,central nervous system neuron development,97,15,3.79,5.1e-06
+1,2,L2_3_IT_M_E18_WB_BP,M,L2_3_IT,E18,WB,BP,GO:0007411,axon guidance,216,23,8.45,1.3e-05
+2,3,L2_3_IT_M_E18_WB_BP,M,L2_3_IT,E18,WB,BP,GO:1902476,chloride transmembrane transport,41,9,1.6,2.3e-05
+0,1,L2_3_IT_M_E18_WB_CC,M,L2_3_IT,E18,WB,CC,GO:0098978,glutamatergic synapse,492,60,19.22,2.7e-15
+1,2,L2_3_IT_M_E18_WB_CC,M,L2_3_IT,E18,WB,CC,GO:0022627,cytosolic small ribosomal subunit,44,18,1.72,1.4e-14
+2,3,L2_3_IT_M_E18_WB_CC,M,L2_3_IT,E18,WB,CC,GO:0098982,GABA-ergic synapse,102,21,3.99,3.1e-10
+0,1,L2_3_IT_M_E18_WB_MF,M,L2_3_IT,E18,WB,MF,GO:0003735,structural constituent of ribosome,148,25,5.78,5.5e-10
+1,2,L2_3_IT_M_E18_WB_MF,M,L2_3_IT,E18,WB,MF,GO:1904315,transmitter-gated ion channel activity involved in regulatio...,42,9,1.64,2.8e-05
+2,3,L2_3_IT_M_E18_WB_MF,M,L2_3_IT,E18,WB,MF,GO:0022851,GABA-gated chloride ion channel activity,12,5,0.47,5.6e-05
+0,1,L6_M_E18_WB_BP,M,L6,E18,WB,BP,GO:0043524,negative regulation of neuron apoptotic process,173,14,3.28,5.4e-06
+1,2,L6_M_E18_WB_BP,M,L6,E18,WB,BP,GO:0010001,glial cell differentiation,230,15,4.36,3.3e-05
+2,3,L6_M_E18_WB_BP,M,L6,E18,WB,BP,GO:0032489,regulation of Cdc42 protein signal transduction,6,3,0.11,0.00013
+0,1,L6_M_E18_WB_CC,M,L6,E18,WB,CC,GO:0022625,cytosolic large ribosomal subunit,52,13,0.98,9.9e-12
+1,2,L6_M_E18_WB_CC,M,L6,E18,WB,CC,GO:0022627,cytosolic small ribosomal subunit,44,8,0.83,1.5e-06
+2,3,L6_M_E18_WB_CC,M,L6,E18,WB,CC,GO:0043209,myelin sheath,200,15,3.79,6.3e-06
+0,1,L6_M_E18_WB_MF,M,L6,E18,WB,MF,GO:0003735,structural constituent of ribosome,148,18,2.79,3.6e-10
+1,2,L6_M_E18_WB_MF,M,L6,E18,WB,MF,GO:0031492,nucleosomal DNA binding,7,4,0.13,4.1e-06
+2,3,L6_M_E18_WB_MF,M,L6,E18,WB,MF,GO:0000978,RNA polymerase II cis-regulatory region sequence-specific DN...,909,34,17.14,0.0001
+0,1,Sst_M_E18_WB_BP,M,Sst,E18,WB,BP,GO:0072272,proximal/distal pattern formation involved in metanephric ne...,2,2,0.02,0.00011
+1,2,Sst_M_E18_WB_BP,M,Sst,E18,WB,BP,GO:0019896,axonal transport of mitochondrion,15,3,0.16,0.00045
+2,3,Sst_M_E18_WB_BP,M,Sst,E18,WB,BP,GO:0002840,regulation of T cell mediated immune response to tumor cell,4,2,0.04,0.00063
+0,1,Sst_M_E18_WB_CC,M,Sst,E18,WB,CC,GO:0022627,cytosolic small ribosomal subunit,45,7,0.48,4.2e-07
+1,2,Sst_M_E18_WB_CC,M,Sst,E18,WB,CC,GO:0022625,cytosolic large ribosomal subunit,53,6,0.56,2e-05
+2,3,Sst_M_E18_WB_CC,M,Sst,E18,WB,CC,GO:0045202,synapse,1336,37,14.16,4.2e-05
+0,1,Sst_M_E18_WB_MF,M,Sst,E18,WB,MF,GO:0003735,structural constituent of ribosome,149,13,1.57,5.7e-09
+1,2,Sst_M_E18_WB_MF,M,Sst,E18,WB,MF,GO:0016868,"intramolecular transferase activity, phosphotransferases",9,3,0.09,9.2e-05
+2,3,Sst_M_E18_WB_MF,M,Sst,E18,WB,MF,GO:0010858,calcium-dependent protein kinase regulator activity,4,2,0.04,0.00065
+0,1,L5_M_E18_WB_BP,M,L5,E18,WB,BP,GO:0002181,cytoplasmic translation,86,21,3.49,2.1e-11
+1,2,L5_M_E18_WB_BP,M,L5,E18,WB,BP,GO:0072086,specification of loop of Henle identity,4,4,0.16,2.7e-06
+2,3,L5_M_E18_WB_BP,M,L5,E18,WB,BP,GO:0048485,sympathetic nervous system development,20,7,0.81,8.6e-06
+0,1,L5_M_E18_WB_CC,M,L5,E18,WB,CC,GO:0022625,cytosolic large ribosomal subunit,53,31,2.16,7.8e-30
+1,2,L5_M_E18_WB_CC,M,L5,E18,WB,CC,GO:0022627,cytosolic small ribosomal subunit,44,25,1.79,7.599999999999999e-24
+2,3,L5_M_E18_WB_CC,M,L5,E18,WB,CC,GO:0043209,myelin sheath,198,40,8.07,2.3e-17
+0,1,L5_M_E18_WB_MF,M,L5,E18,WB,MF,GO:0003735,structural constituent of ribosome,149,48,6.03,1.6e-30
+1,2,L5_M_E18_WB_MF,M,L5,E18,WB,MF,GO:0008201,heparin binding,119,17,4.82,5.8e-06
+2,3,L5_M_E18_WB_MF,M,L5,E18,WB,MF,GO:0019843,rRNA binding,68,19,2.75,1.6e-05
+0,1,L4_M_E18_WB_BP,M,L4,E18,WB,BP,GO:1905606,regulation of presynapse assembly,32,8,0.87,1.6e-06
+1,2,L4_M_E18_WB_BP,M,L4,E18,WB,BP,GO:0099560,synaptic membrane adhesion,32,7,0.87,1.9e-05
+2,3,L4_M_E18_WB_BP,M,L4,E18,WB,BP,GO:0000028,ribosomal small subunit assembly,20,5,0.54,0.00016
+0,1,L4_M_E18_WB_CC,M,L4,E18,WB,CC,GO:0022627,cytosolic small ribosomal subunit,44,16,1.19,1.2e-14
+1,2,L4_M_E18_WB_CC,M,L4,E18,WB,CC,GO:0022625,cytosolic large ribosomal subunit,53,13,1.43,1.1e-09
+2,3,L4_M_E18_WB_CC,M,L4,E18,WB,CC,GO:0098982,GABA-ergic synapse,99,14,2.68,4.1e-07
+0,1,L4_M_E18_WB_MF,M,L4,E18,WB,MF,GO:0003735,structural constituent of ribosome,148,25,4.03,2.1e-13
+1,2,L4_M_E18_WB_MF,M,L4,E18,WB,MF,GO:0019843,rRNA binding,68,11,1.85,2e-06
+2,3,L4_M_E18_WB_MF,M,L4,E18,WB,MF,GO:0102391,decanoate-CoA ligase activity,7,3,0.19,0.00064
+0,1,Pvalb_M_E18_WB_BP,M,Pvalb,E18,WB,BP,GO:0010976,positive regulation of neuron projection development,202,6,0.91,0.00029
+1,2,Pvalb_M_E18_WB_BP,M,Pvalb,E18,WB,BP,GO:0071896,protein localization to adherens junction,6,2,0.03,0.0003
+2,3,Pvalb_M_E18_WB_BP,M,Pvalb,E18,WB,BP,GO:0098884,postsynaptic neurotransmitter receptor internalization,30,3,0.14,0.00033
+0,1,Pvalb_M_E18_WB_CC,M,Pvalb,E18,WB,CC,GO:0043209,myelin sheath,196,8,0.9,2.9e-06
+1,2,Pvalb_M_E18_WB_CC,M,Pvalb,E18,WB,CC,GO:0044305,calyx of Held,27,3,0.12,0.00025
+2,3,Pvalb_M_E18_WB_CC,M,Pvalb,E18,WB,CC,GO:0005890,sodium:potassium-exchanging ATPase complex,6,2,0.03,0.00031
+0,1,Pvalb_M_E18_WB_MF,M,Pvalb,E18,WB,MF,GO:0005200,structural constituent of cytoskeleton,51,4,0.23,8.4e-05
+1,2,Pvalb_M_E18_WB_MF,M,Pvalb,E18,WB,MF,GO:0003735,structural constituent of ribosome,148,5,0.68,0.00057
+2,3,Pvalb_M_E18_WB_MF,M,Pvalb,E18,WB,MF,GO:0099186,structural constituent of postsynapse,19,2,0.09,0.00335
+0,1,Sncg_M_E18_WB_BP,M,Sncg,E18,WB,BP,GO:0000002,mitochondrial genome maintenance,24,0,0.0,1.0
+1,2,Sncg_M_E18_WB_BP,M,Sncg,E18,WB,BP,GO:0000003,reproduction,938,0,0.0,1.0
+2,3,Sncg_M_E18_WB_BP,M,Sncg,E18,WB,BP,GO:0000012,single strand break repair,11,0,0.0,1.0
+0,1,Sncg_M_E18_WB_CC,M,Sncg,E18,WB,CC,GO:0000015,phosphopyruvate hydratase complex,4,0,0.0,1.0
+1,2,Sncg_M_E18_WB_CC,M,Sncg,E18,WB,CC,GO:0000109,nucleotide-excision repair complex,13,0,0.0,1.0
+2,3,Sncg_M_E18_WB_CC,M,Sncg,E18,WB,CC,GO:0000110,nucleotide-excision repair factor 1 complex,3,0,0.0,1.0
+0,1,Sncg_M_E18_WB_MF,M,Sncg,E18,WB,MF,GO:0000009,"alpha-1,6-mannosyltransferase activity",1,0,0.0,1.0
+1,2,Sncg_M_E18_WB_MF,M,Sncg,E18,WB,MF,GO:0000010,trans-hexaprenyltranstransferase activity,2,0,0.0,1.0
+2,3,Sncg_M_E18_WB_MF,M,Sncg,E18,WB,MF,GO:0000014,single-stranded DNA endodeoxyribonuclease activity,11,0,0.0,1.0
+0,1,Non_neuronal_M_E18_WB_BP,M,Non_neuronal,E18,WB,BP,GO:0099054,presynapse assembly,46,2,0.04,0.00063
+1,2,Non_neuronal_M_E18_WB_BP,M,Non_neuronal,E18,WB,BP,GO:0051966,"regulation of synaptic transmission, glutamatergic",67,2,0.06,0.00133
+2,3,Non_neuronal_M_E18_WB_BP,M,Non_neuronal,E18,WB,BP,GO:1902340,negative regulation of chromosome condensation,2,1,0.0,0.00165
+0,1,Non_neuronal_M_E18_WB_CC,M,Non_neuronal,E18,WB,CC,GO:0099061,integral component of postsynaptic density membrane,67,2,0.06,0.0016
+1,2,Non_neuronal_M_E18_WB_CC,M,Non_neuronal,E18,WB,CC,GO:0043195,terminal bouton,71,2,0.06,0.0018
+2,3,Non_neuronal_M_E18_WB_CC,M,Non_neuronal,E18,WB,CC,GO:0099182,presynaptic intermediate filament cytoskeleton,2,1,0.0,0.0018
+0,1,Non_neuronal_M_E18_WB_MF,M,Non_neuronal,E18,WB,MF,GO:1904315,transmitter-gated ion channel activity involved in regulatio...,41,2,0.04,0.00061
+1,2,Non_neuronal_M_E18_WB_MF,M,Non_neuronal,E18,WB,MF,GO:0010855,adenylate cyclase inhibitor activity,2,1,0.0,0.00182
+2,3,Non_neuronal_M_E18_WB_MF,M,Non_neuronal,E18,WB,MF,GO:0099184,structural constituent of postsynaptic intermediate filament...,3,1,0.0,0.00272
+0,1,Oligo_M_E18_WB_BP,M,Oligo,E18,WB,BP,GO:0070327,thyroid hormone transport,6,1,0.0,0.00048
+1,2,Oligo_M_E18_WB_BP,M,Oligo,E18,WB,BP,GO:0042572,retinol metabolic process,9,1,0.0,0.00073
+2,3,Oligo_M_E18_WB_BP,M,Oligo,E18,WB,BP,GO:0006144,purine nucleobase metabolic process,13,1,0.0,0.00105
+0,1,Oligo_M_E18_WB_CC,M,Oligo,E18,WB,CC,GO:0005615,extracellular space,646,1,0.05,0.052
+1,2,Oligo_M_E18_WB_CC,M,Oligo,E18,WB,CC,GO:0005576,extracellular region,1012,1,0.08,0.081
+2,3,Oligo_M_E18_WB_CC,M,Oligo,E18,WB,CC,GO:0032991,protein-containing complex,4122,1,0.33,0.331
+0,1,Oligo_M_E18_WB_MF,M,Oligo,E18,WB,MF,GO:0070324,thyroid hormone binding,6,1,0.0,0.00049
+1,2,Oligo_M_E18_WB_MF,M,Oligo,E18,WB,MF,GO:0005179,hormone activity,39,1,0.0,0.00318
+2,3,Oligo_M_E18_WB_MF,M,Oligo,E18,WB,MF,GO:0044877,protein-containing complex binding,1113,1,0.09,0.09068
+0,1,Vip_M_E18_WB_BP,M,Vip,E18,WB,BP,GO:1905606,regulation of presynapse assembly,32,6,0.46,5.5e-06
+1,2,Vip_M_E18_WB_BP,M,Vip,E18,WB,BP,GO:0099560,synaptic membrane adhesion,32,6,0.46,5.5e-06
+2,3,Vip_M_E18_WB_BP,M,Vip,E18,WB,BP,GO:0006412,translation,538,21,7.76,3.4e-05
+0,1,Vip_M_E18_WB_CC,M,Vip,E18,WB,CC,GO:0022627,cytosolic small ribosomal subunit,44,11,0.64,2.3e-11
+1,2,Vip_M_E18_WB_CC,M,Vip,E18,WB,CC,GO:0098978,glutamatergic synapse,493,25,7.16,5.1e-08
+2,3,Vip_M_E18_WB_CC,M,Vip,E18,WB,CC,GO:0022625,cytosolic large ribosomal subunit,54,9,0.78,7.2e-08
+0,1,Vip_M_E18_WB_MF,M,Vip,E18,WB,MF,GO:0003735,structural constituent of ribosome,149,17,2.23,8e-11
+1,2,Vip_M_E18_WB_MF,M,Vip,E18,WB,MF,GO:0019825,oxygen binding,14,4,0.21,4.3e-05
+2,3,Vip_M_E18_WB_MF,M,Vip,E18,WB,MF,GO:0031720,haptoglobin binding,7,3,0.1,0.00011
+0,1,Lamp5_M_E18_WB_BP,M,Lamp5,E18,WB,BP,GO:0010976,positive regulation of neuron projection development,199,20,6.91,2e-05
+1,2,Lamp5_M_E18_WB_BP,M,Lamp5,E18,WB,BP,GO:0016339,calcium-dependent cell-cell adhesion via plasma membrane cel...,28,7,0.97,3.6e-05
+2,3,Lamp5_M_E18_WB_BP,M,Lamp5,E18,WB,BP,GO:0007612,learning,160,17,5.55,4.1e-05
+0,1,Lamp5_M_E18_WB_CC,M,Lamp5,E18,WB,CC,GO:0022627,cytosolic small ribosomal subunit,44,15,1.52,8.8e-12
+1,2,Lamp5_M_E18_WB_CC,M,Lamp5,E18,WB,CC,GO:0022625,cytosolic large ribosomal subunit,52,15,1.8,1.3e-10
+2,3,Lamp5_M_E18_WB_CC,M,Lamp5,E18,WB,CC,GO:0098978,glutamatergic synapse,491,47,16.97,2.2e-10
+0,1,Lamp5_M_E18_WB_MF,M,Lamp5,E18,WB,MF,GO:0003735,structural constituent of ribosome,148,26,5.11,6.5e-12
+1,2,Lamp5_M_E18_WB_MF,M,Lamp5,E18,WB,MF,GO:0005516,calmodulin binding,163,17,5.63,4.9e-05
+2,3,Lamp5_M_E18_WB_MF,M,Lamp5,E18,WB,MF,GO:0045295,gamma-catenin binding,10,4,0.35,0.00025
+0,1,Astro_M_E18_WB_BP,M,Astro,E18,WB,BP,GO:1900006,positive regulation of dendrite development,20,3,0.05,1.8e-05
+1,2,Astro_M_E18_WB_BP,M,Astro,E18,WB,BP,GO:0003357,noradrenergic neuron differentiation,4,2,0.01,4e-05
+2,3,Astro_M_E18_WB_BP,M,Astro,E18,WB,BP,GO:0003211,cardiac ventricle formation,5,2,0.01,6.6e-05
+0,1,Astro_M_E18_WB_CC,M,Astro,E18,WB,CC,GO:0005615,extracellular space,748,12,1.95,7.2e-06
+1,2,Astro_M_E18_WB_CC,M,Astro,E18,WB,CC,GO:0031232,extrinsic component of external side of plasma membrane,5,2,0.01,6.6e-05
+2,3,Astro_M_E18_WB_CC,M,Astro,E18,WB,CC,GO:0034362,low-density lipoprotein particle,7,2,0.02,0.00014
+0,1,Astro_M_E18_WB_MF,M,Astro,E18,WB,MF,GO:0005314,high-affinity glutamate transmembrane transporter activity,4,2,0.01,4.1e-05
+1,2,Astro_M_E18_WB_MF,M,Astro,E18,WB,MF,GO:0005102,signaling receptor binding,1108,9,2.93,0.0019
+2,3,Astro_M_E18_WB_MF,M,Astro,E18,WB,MF,GO:0008201,heparin binding,102,3,0.27,0.0024
+0,1,Peri_M_E18_WB_BP,M,Peri,E18,WB,BP,GO:0000002,mitochondrial genome maintenance,22,0,0.0,1.0
+1,2,Peri_M_E18_WB_BP,M,Peri,E18,WB,BP,GO:0000003,reproduction,816,0,0.0,1.0
+2,3,Peri_M_E18_WB_BP,M,Peri,E18,WB,BP,GO:0000012,single strand break repair,11,0,0.0,1.0
+0,1,Peri_M_E18_WB_CC,M,Peri,E18,WB,CC,GO:0000015,phosphopyruvate hydratase complex,2,0,0.0,1.0
+1,2,Peri_M_E18_WB_CC,M,Peri,E18,WB,CC,GO:0000109,nucleotide-excision repair complex,13,0,0.0,1.0
+2,3,Peri_M_E18_WB_CC,M,Peri,E18,WB,CC,GO:0000110,nucleotide-excision repair factor 1 complex,3,0,0.0,1.0
+0,1,Peri_M_E18_WB_MF,M,Peri,E18,WB,MF,GO:0000010,trans-hexaprenyltranstransferase activity,2,0,0.0,1.0
+1,2,Peri_M_E18_WB_MF,M,Peri,E18,WB,MF,GO:0000014,single-stranded DNA endodeoxyribonuclease activity,11,0,0.0,1.0
+2,3,Peri_M_E18_WB_MF,M,Peri,E18,WB,MF,GO:0000026,"alpha-1,2-mannosyltransferase activity",4,0,0.0,1.0
+0,1,Endo_M_E18_WB_BP,M,Endo,E18,WB,BP,GO:0000002,mitochondrial genome maintenance,19,0,0.0,1.0
+1,2,Endo_M_E18_WB_BP,M,Endo,E18,WB,BP,GO:0000003,reproduction,775,0,0.0,1.0
+2,3,Endo_M_E18_WB_BP,M,Endo,E18,WB,BP,GO:0000012,single strand break repair,11,0,0.0,1.0
+0,1,Endo_M_E18_WB_CC,M,Endo,E18,WB,CC,GO:0000015,phosphopyruvate hydratase complex,2,0,0.0,1.0
+1,2,Endo_M_E18_WB_CC,M,Endo,E18,WB,CC,GO:0000109,nucleotide-excision repair complex,13,0,0.0,1.0
+2,3,Endo_M_E18_WB_CC,M,Endo,E18,WB,CC,GO:0000110,nucleotide-excision repair factor 1 complex,3,0,0.0,1.0
+0,1,Endo_M_E18_WB_MF,M,Endo,E18,WB,MF,GO:0000009,"alpha-1,6-mannosyltransferase activity",1,0,0.0,1.0
+1,2,Endo_M_E18_WB_MF,M,Endo,E18,WB,MF,GO:0000010,trans-hexaprenyltranstransferase activity,2,0,0.0,1.0
+2,3,Endo_M_E18_WB_MF,M,Endo,E18,WB,MF,GO:0000014,single-stranded DNA endodeoxyribonuclease activity,11,0,0.0,1.0
+0,1,L2_3_IT_M_P30_CORT_BP,M,L2_3_IT,P30,CORT,BP,GO:0045944,positive regulation of transcription by RNA polymerase II,945,34,16.68,5.8e-05
+1,2,L2_3_IT_M_P30_CORT_BP,M,L2_3_IT,P30,CORT,BP,GO:0086091,regulation of heart rate by cardiac conduction,25,5,0.44,6.6e-05
+2,3,L2_3_IT_M_P30_CORT_BP,M,L2_3_IT,P30,CORT,BP,GO:0035914,skeletal muscle cell differentiation,58,7,1.02,6.9e-05
+0,1,L2_3_IT_M_P30_CORT_CC,M,L2_3_IT,P30,CORT,CC,GO:0098978,glutamatergic synapse,491,25,8.56,1.6e-06
+1,2,L2_3_IT_M_P30_CORT_CC,M,L2_3_IT,P30,CORT,CC,GO:0034703,cation channel complex,191,13,3.33,3.1e-05
+2,3,L2_3_IT_M_P30_CORT_CC,M,L2_3_IT,P30,CORT,CC,GO:0014069,postsynaptic density,384,22,6.69,4.1e-05
+0,1,L2_3_IT_M_P30_CORT_MF,M,L2_3_IT,P30,CORT,MF,GO:0001228,"DNA-binding transcription activator activity, RNA polymerase...",334,16,5.93,0.00032
+1,2,L2_3_IT_M_P30_CORT_MF,M,L2_3_IT,P30,CORT,MF,GO:0044325,ion channel binding,123,9,2.18,0.00034
+2,3,L2_3_IT_M_P30_CORT_MF,M,L2_3_IT,P30,CORT,MF,GO:0070097,delta-catenin binding,9,3,0.16,0.00043
+0,1,L6_M_P30_CORT_BP,M,L6,P30,CORT,BP,GO:0071376,cellular response to corticotropin-releasing hormone stimulu...,4,3,0.02,8.8e-07
+1,2,L6_M_P30_CORT_BP,M,L6,P30,CORT,BP,GO:0035914,skeletal muscle cell differentiation,58,5,0.35,2.7e-05
+2,3,L6_M_P30_CORT_BP,M,L6,P30,CORT,BP,GO:0071277,cellular response to calcium ion,70,5,0.43,6.7e-05
+0,1,L6_M_P30_CORT_CC,M,L6,P30,CORT,CC,GO:0035976,transcription factor AP-1 complex,4,3,0.02,8.9e-07
+1,2,L6_M_P30_CORT_CC,M,L6,P30,CORT,CC,GO:0031527,filopodium membrane,16,3,0.1,0.00012
+2,3,L6_M_P30_CORT_CC,M,L6,P30,CORT,CC,GO:0005634,nucleus,5943,54,36.53,0.00046
+0,1,L6_M_P30_CORT_MF,M,L6,P30,CORT,MF,GO:0001228,"DNA-binding transcription activator activity, RNA polymerase...",340,14,2.02,1.2e-08
+1,2,L6_M_P30_CORT_MF,M,L6,P30,CORT,MF,GO:0003682,chromatin binding,552,13,3.29,2.1e-05
+2,3,L6_M_P30_CORT_MF,M,L6,P30,CORT,MF,GO:0000978,RNA polymerase II cis-regulatory region sequence-specific DN...,845,17,5.03,7.8e-05
+0,1,Sst_M_P30_CORT_BP,M,Sst,P30,CORT,BP,GO:0007157,heterophilic cell-cell adhesion via plasma membrane cell adh...,40,3,0.05,1.8e-05
+1,2,Sst_M_P30_CORT_BP,M,Sst,P30,CORT,BP,GO:0046686,response to cadmium ion,29,2,0.04,0.00063
+2,3,Sst_M_P30_CORT_BP,M,Sst,P30,CORT,BP,GO:0031175,neuron projection development,989,6,1.28,0.00114
+0,1,Sst_M_P30_CORT_CC,M,Sst,P30,CORT,CC,GO:0035976,transcription factor AP-1 complex,4,1,0.01,0.0052
+1,2,Sst_M_P30_CORT_CC,M,Sst,P30,CORT,CC,GO:0120025,plasma membrane bounded cell projection,1932,7,2.5,0.0077
+2,3,Sst_M_P30_CORT_CC,M,Sst,P30,CORT,CC,GO:0043240,Fanconi anaemia nuclear complex,14,1,0.02,0.0179
+0,1,Sst_M_P30_CORT_MF,M,Sst,P30,CORT,MF,GO:0010428,methyl-CpNpG binding,1,1,0.0,0.0013
+1,2,Sst_M_P30_CORT_MF,M,Sst,P30,CORT,MF,GO:0090556,phosphatidylserine floppase activity,2,1,0.0,0.0026
+2,3,Sst_M_P30_CORT_MF,M,Sst,P30,CORT,MF,GO:0034188,apolipoprotein A-I receptor activity,2,1,0.0,0.0026
+0,1,L5_M_P30_CORT_BP,M,L5,P30,CORT,BP,GO:0045944,positive regulation of transcription by RNA polymerase II,947,33,14.43,6.7e-06
+1,2,L5_M_P30_CORT_BP,M,L5,P30,CORT,BP,GO:0021954,central nervous system neuron development,92,9,1.4,1.1e-05
+2,3,L5_M_P30_CORT_BP,M,L5,P30,CORT,BP,GO:0071376,cellular response to corticotropin-releasing hormone stimulu...,4,3,0.06,1.4e-05
+0,1,L5_M_P30_CORT_CC,M,L5,P30,CORT,CC,GO:0098978,glutamatergic synapse,490,30,7.43,6.9e-11
+1,2,L5_M_P30_CORT_CC,M,L5,P30,CORT,CC,GO:0043025,neuronal cell body,661,29,10.02,2.5e-07
+2,3,L5_M_P30_CORT_CC,M,L5,P30,CORT,CC,GO:0014069,postsynaptic density,387,19,5.87,7e-06
+0,1,L5_M_P30_CORT_MF,M,L5,P30,CORT,MF,GO:0001228,"DNA-binding transcription activator activity, RNA polymerase...",334,21,5.09,4.1e-08
+1,2,L5_M_P30_CORT_MF,M,L5,P30,CORT,MF,GO:0000978,RNA polymerase II cis-regulatory region sequence-specific DN...,835,28,12.73,7.1e-05
+2,3,L5_M_P30_CORT_MF,M,L5,P30,CORT,MF,GO:0043008,ATP-dependent protein binding,11,3,0.17,0.00053
+0,1,L4_M_P30_CORT_BP,M,L4,P30,CORT,BP,GO:0035914,skeletal muscle cell differentiation,57,4,0.24,0.0001
+1,2,L4_M_P30_CORT_BP,M,L4,P30,CORT,BP,GO:0071277,cellular response to calcium ion,68,4,0.29,0.0002
+2,3,L4_M_P30_CORT_BP,M,L4,P30,CORT,BP,GO:0007616,long-term memory,35,3,0.15,0.00044
+0,1,L4_M_P30_CORT_CC,M,L4,P30,CORT,CC,GO:0035976,transcription factor AP-1 complex,4,2,0.02,0.00011
+1,2,L4_M_P30_CORT_CC,M,L4,P30,CORT,CC,GO:0097441,basal dendrite,10,2,0.04,0.00081
+2,3,L4_M_P30_CORT_CC,M,L4,P30,CORT,CC,GO:0043005,neuron projection,1328,14,5.74,0.00748
+0,1,L4_M_P30_CORT_MF,M,L4,P30,CORT,MF,GO:0001228,"DNA-binding transcription activator activity, RNA polymerase...",321,11,1.31,5.8e-08
+1,2,L4_M_P30_CORT_MF,M,L4,P30,CORT,MF,GO:0000978,RNA polymerase II cis-regulatory region sequence-specific DN...,805,13,3.3,1.7e-05
+2,3,L4_M_P30_CORT_MF,M,L4,P30,CORT,MF,GO:0019871,sodium channel inhibitor activity,7,2,0.03,0.00034
+0,1,Pvalb_M_P30_CORT_BP,M,Pvalb,P30,CORT,BP,GO:0098582,innate vocalization behavior,2,1,0.0,0.0012
+1,2,Pvalb_M_P30_CORT_BP,M,Pvalb,P30,CORT,BP,GO:2000620,positive regulation of histone H4-K16 acetylation,2,1,0.0,0.0012
+2,3,Pvalb_M_P30_CORT_BP,M,Pvalb,P30,CORT,BP,GO:0098912,membrane depolarization during atrial cardiac muscle cell ac...,2,1,0.0,0.0012
+0,1,Pvalb_M_P30_CORT_CC,M,Pvalb,P30,CORT,CC,GO:0000125,PCAF complex,4,1,0.0,0.0023
+1,2,Pvalb_M_P30_CORT_CC,M,Pvalb,P30,CORT,CC,GO:0070761,pre-snoRNP complex,7,1,0.0,0.004
+2,3,Pvalb_M_P30_CORT_CC,M,Pvalb,P30,CORT,CC,GO:1990454,L-type voltage-gated calcium channel complex,10,1,0.01,0.0058
+0,1,Pvalb_M_P30_CORT_MF,M,Pvalb,P30,CORT,MF,GO:0098699,structural constituent of presynaptic actin cytoskeleton,1,1,0.0,0.00058
+1,2,Pvalb_M_P30_CORT_MF,M,Pvalb,P30,CORT,MF,GO:0000121,glycerol-1-phosphatase activity,1,1,0.0,0.00058
+2,3,Pvalb_M_P30_CORT_MF,M,Pvalb,P30,CORT,MF,GO:0043136,glycerol-3-phosphatase activity,2,1,0.0,0.00117
+0,1,Sncg_M_P30_CORT_BP,M,Sncg,P30,CORT,BP,GO:0000002,mitochondrial genome maintenance,24,0,0.0,1.0
+1,2,Sncg_M_P30_CORT_BP,M,Sncg,P30,CORT,BP,GO:0000003,reproduction,835,0,0.0,1.0
+2,3,Sncg_M_P30_CORT_BP,M,Sncg,P30,CORT,BP,GO:0000012,single strand break repair,11,0,0.0,1.0
+0,1,Sncg_M_P30_CORT_CC,M,Sncg,P30,CORT,CC,GO:0000015,phosphopyruvate hydratase complex,4,0,0.0,1.0
+1,2,Sncg_M_P30_CORT_CC,M,Sncg,P30,CORT,CC,GO:0000109,nucleotide-excision repair complex,12,0,0.0,1.0
+2,3,Sncg_M_P30_CORT_CC,M,Sncg,P30,CORT,CC,GO:0000110,nucleotide-excision repair factor 1 complex,3,0,0.0,1.0
+0,1,Sncg_M_P30_CORT_MF,M,Sncg,P30,CORT,MF,GO:0000009,"alpha-1,6-mannosyltransferase activity",1,0,0.0,1.0
+1,2,Sncg_M_P30_CORT_MF,M,Sncg,P30,CORT,MF,GO:0000010,trans-hexaprenyltranstransferase activity,2,0,0.0,1.0
+2,3,Sncg_M_P30_CORT_MF,M,Sncg,P30,CORT,MF,GO:0000014,single-stranded DNA endodeoxyribonuclease activity,11,0,0.0,1.0
+0,1,Non_neuronal_M_P30_CORT_BP,M,Non_neuronal,P30,CORT,BP,GO:0099575,"regulation of protein catabolic process at presynapse, modul...",3,1,0.0,0.00068
+1,2,Non_neuronal_M_P30_CORT_BP,M,Non_neuronal,P30,CORT,BP,GO:0035372,protein localization to microtubule,18,1,0.0,0.00405
+2,3,Non_neuronal_M_P30_CORT_BP,M,Non_neuronal,P30,CORT,BP,GO:0007026,negative regulation of microtubule depolymerization,30,1,0.01,0.00675
+0,1,Non_neuronal_M_P30_CORT_CC,M,Non_neuronal,P30,CORT,CC,GO:0098993,anchored component of synaptic vesicle membrane,18,1,0.0,0.004
+1,2,Non_neuronal_M_P30_CORT_CC,M,Non_neuronal,P30,CORT,CC,GO:0099513,polymeric cytoskeletal fiber,517,2,0.12,0.0044
+2,3,Non_neuronal_M_P30_CORT_CC,M,Non_neuronal,P30,CORT,CC,GO:0030667,secretory granule membrane,61,1,0.01,0.0136
+0,1,Non_neuronal_M_P30_CORT_MF,M,Non_neuronal,P30,CORT,MF,GO:0019002,GMP binding,3,1,0.0,0.00068
+1,2,Non_neuronal_M_P30_CORT_MF,M,Non_neuronal,P30,CORT,MF,GO:0008092,cytoskeletal protein binding,816,2,0.19,0.01102
+2,3,Non_neuronal_M_P30_CORT_MF,M,Non_neuronal,P30,CORT,MF,GO:0051219,phosphoprotein binding,95,1,0.02,0.02147
+0,1,Oligo_M_P30_CORT_BP,M,Oligo,P30,CORT,BP,GO:0000002,mitochondrial genome maintenance,25,0,0.0,1.0
+1,2,Oligo_M_P30_CORT_BP,M,Oligo,P30,CORT,BP,GO:0000003,reproduction,925,0,0.0,1.0
+2,3,Oligo_M_P30_CORT_BP,M,Oligo,P30,CORT,BP,GO:0000012,single strand break repair,11,0,0.0,1.0
+0,1,Oligo_M_P30_CORT_CC,M,Oligo,P30,CORT,CC,GO:0000015,phosphopyruvate hydratase complex,5,0,0.0,1.0
+1,2,Oligo_M_P30_CORT_CC,M,Oligo,P30,CORT,CC,GO:0000109,nucleotide-excision repair complex,13,0,0.0,1.0
+2,3,Oligo_M_P30_CORT_CC,M,Oligo,P30,CORT,CC,GO:0000110,nucleotide-excision repair factor 1 complex,3,0,0.0,1.0
+0,1,Oligo_M_P30_CORT_MF,M,Oligo,P30,CORT,MF,GO:0000009,"alpha-1,6-mannosyltransferase activity",1,0,0.0,1.0
+1,2,Oligo_M_P30_CORT_MF,M,Oligo,P30,CORT,MF,GO:0000010,trans-hexaprenyltranstransferase activity,2,0,0.0,1.0
+2,3,Oligo_M_P30_CORT_MF,M,Oligo,P30,CORT,MF,GO:0000014,single-stranded DNA endodeoxyribonuclease activity,11,0,0.0,1.0
+0,1,Vip_M_P30_CORT_BP,M,Vip,P30,CORT,BP,GO:0071277,cellular response to calcium ion,69,3,0.06,2.6e-05
+1,2,Vip_M_P30_CORT_BP,M,Vip,P30,CORT,BP,GO:1904322,cellular response to forskolin,13,2,0.01,5.5e-05
+2,3,Vip_M_P30_CORT_BP,M,Vip,P30,CORT,BP,GO:0032793,positive regulation of CREB transcription factor activity,17,2,0.01,9.6e-05
+0,1,Vip_M_P30_CORT_CC,M,Vip,P30,CORT,CC,GO:0035976,transcription factor AP-1 complex,4,2,0.0,3.5e-06
+1,2,Vip_M_P30_CORT_CC,M,Vip,P30,CORT,CC,GO:0030425,dendrite,661,6,0.53,5e-05
+2,3,Vip_M_P30_CORT_CC,M,Vip,P30,CORT,CC,GO:0002199,zona pellucida receptor complex,8,1,0.01,0.0064
+0,1,Vip_M_P30_CORT_MF,M,Vip,P30,CORT,MF,GO:0000979,RNA polymerase II core promoter sequence-specific DNA bindin...,18,2,0.02,0.00011
+1,2,Vip_M_P30_CORT_MF,M,Vip,P30,CORT,MF,GO:0005515,protein binding,7019,12,6.25,0.00075
+2,3,Vip_M_P30_CORT_MF,M,Vip,P30,CORT,MF,GO:0044729,hemi-methylated DNA-binding,2,1,0.0,0.00178
+0,1,Lamp5_M_P30_CORT_BP,M,Lamp5,P30,CORT,BP,GO:0098759,cellular response to interleukin-8,1,1,0.0,0.00051
+1,2,Lamp5_M_P30_CORT_BP,M,Lamp5,P30,CORT,BP,GO:0072303,positive regulation of glomerular metanephric mesangial cell...,1,1,0.0,0.00051
+2,3,Lamp5_M_P30_CORT_BP,M,Lamp5,P30,CORT,BP,GO:0071506,cellular response to mycophenolic acid,2,1,0.0,0.00103
+0,1,Lamp5_M_P30_CORT_CC,M,Lamp5,P30,CORT,CC,GO:0005881,cytoplasmic microtubule,69,1,0.04,0.035
+1,2,Lamp5_M_P30_CORT_CC,M,Lamp5,P30,CORT,CC,GO:0044291,cell-cell contact zone,75,1,0.04,0.038
+2,3,Lamp5_M_P30_CORT_CC,M,Lamp5,P30,CORT,CC,GO:0097730,non-motile cilium,117,1,0.06,0.058
+0,1,Lamp5_M_P30_CORT_MF,M,Lamp5,P30,CORT,MF,GO:0044729,hemi-methylated DNA-binding,1,1,0.0,0.00052
+1,2,Lamp5_M_P30_CORT_MF,M,Lamp5,P30,CORT,MF,GO:0010385,double-stranded methylated DNA binding,5,1,0.0,0.00259
+2,3,Lamp5_M_P30_CORT_MF,M,Lamp5,P30,CORT,MF,GO:0004983,neuropeptide Y receptor activity,5,1,0.0,0.00259
+0,1,Astro_M_P30_CORT_BP,M,Astro,P30,CORT,BP,GO:0000002,mitochondrial genome maintenance,25,0,0.0,1.0
+1,2,Astro_M_P30_CORT_BP,M,Astro,P30,CORT,BP,GO:0000003,reproduction,910,0,0.0,1.0
+2,3,Astro_M_P30_CORT_BP,M,Astro,P30,CORT,BP,GO:0000012,single strand break repair,11,0,0.0,1.0
+0,1,Astro_M_P30_CORT_CC,M,Astro,P30,CORT,CC,GO:0000015,phosphopyruvate hydratase complex,4,0,0.0,1.0
+1,2,Astro_M_P30_CORT_CC,M,Astro,P30,CORT,CC,GO:0000109,nucleotide-excision repair complex,13,0,0.0,1.0
+2,3,Astro_M_P30_CORT_CC,M,Astro,P30,CORT,CC,GO:0000110,nucleotide-excision repair factor 1 complex,3,0,0.0,1.0
+0,1,Astro_M_P30_CORT_MF,M,Astro,P30,CORT,MF,GO:0000009,"alpha-1,6-mannosyltransferase activity",1,0,0.0,1.0
+1,2,Astro_M_P30_CORT_MF,M,Astro,P30,CORT,MF,GO:0000010,trans-hexaprenyltranstransferase activity,2,0,0.0,1.0
+2,3,Astro_M_P30_CORT_MF,M,Astro,P30,CORT,MF,GO:0000014,single-stranded DNA endodeoxyribonuclease activity,11,0,0.0,1.0
+0,1,Peri_M_P30_CORT_BP,M,Peri,P30,CORT,BP,GO:0000002,mitochondrial genome maintenance,18,0,0.0,1.0
+1,2,Peri_M_P30_CORT_BP,M,Peri,P30,CORT,BP,GO:0000003,reproduction,742,0,0.0,1.0
+2,3,Peri_M_P30_CORT_BP,M,Peri,P30,CORT,BP,GO:0000012,single strand break repair,10,0,0.0,1.0
+0,1,Peri_M_P30_CORT_CC,M,Peri,P30,CORT,CC,GO:0000015,phosphopyruvate hydratase complex,3,0,0.0,1.0
+1,2,Peri_M_P30_CORT_CC,M,Peri,P30,CORT,CC,GO:0000109,nucleotide-excision repair complex,11,0,0.0,1.0
+2,3,Peri_M_P30_CORT_CC,M,Peri,P30,CORT,CC,GO:0000110,nucleotide-excision repair factor 1 complex,3,0,0.0,1.0
+0,1,Peri_M_P30_CORT_MF,M,Peri,P30,CORT,MF,GO:0000009,"alpha-1,6-mannosyltransferase activity",1,0,0.0,1.0
+1,2,Peri_M_P30_CORT_MF,M,Peri,P30,CORT,MF,GO:0000010,trans-hexaprenyltranstransferase activity,2,0,0.0,1.0
+2,3,Peri_M_P30_CORT_MF,M,Peri,P30,CORT,MF,GO:0000014,single-stranded DNA endodeoxyribonuclease activity,11,0,0.0,1.0
+0,1,Endo_M_P30_CORT_BP,M,Endo,P30,CORT,BP,GO:0000002,mitochondrial genome maintenance,17,0,0.0,1.0
+1,2,Endo_M_P30_CORT_BP,M,Endo,P30,CORT,BP,GO:0000003,reproduction,619,0,0.0,1.0
+2,3,Endo_M_P30_CORT_BP,M,Endo,P30,CORT,BP,GO:0000012,single strand break repair,9,0,0.0,1.0
+0,1,Endo_M_P30_CORT_CC,M,Endo,P30,CORT,CC,GO:0000015,phosphopyruvate hydratase complex,2,0,0.0,1.0
+1,2,Endo_M_P30_CORT_CC,M,Endo,P30,CORT,CC,GO:0000109,nucleotide-excision repair complex,11,0,0.0,1.0
+2,3,Endo_M_P30_CORT_CC,M,Endo,P30,CORT,CC,GO:0000110,nucleotide-excision repair factor 1 complex,3,0,0.0,1.0
+0,1,Endo_M_P30_CORT_MF,M,Endo,P30,CORT,MF,GO:0000009,"alpha-1,6-mannosyltransferase activity",1,0,0.0,1.0
+1,2,Endo_M_P30_CORT_MF,M,Endo,P30,CORT,MF,GO:0000010,trans-hexaprenyltranstransferase activity,2,0,0.0,1.0
+2,3,Endo_M_P30_CORT_MF,M,Endo,P30,CORT,MF,GO:0000014,single-stranded DNA endodeoxyribonuclease activity,9,0,0.0,1.0
+0,1,L2_3_IT_M_P60_CORT_BP,M,L2_3_IT,P60,CORT,BP,GO:0048172,regulation of short-term neuronal synaptic plasticity,20,10,1.51,5.4e-07
+1,2,L2_3_IT_M_P60_CORT_BP,M,L2_3_IT,P60,CORT,BP,GO:0010976,positive regulation of neuron projection development,204,35,15.42,3.8e-06
+2,3,L2_3_IT_M_P60_CORT_BP,M,L2_3_IT,P60,CORT,BP,GO:0007613,memory,135,31,10.21,9.6e-06
+0,1,L2_3_IT_M_P60_CORT_CC,M,L2_3_IT,P60,CORT,CC,GO:0098978,glutamatergic synapse,487,98,36.82,6.7e-19
+1,2,L2_3_IT_M_P60_CORT_CC,M,L2_3_IT,P60,CORT,CC,GO:0014069,postsynaptic density,384,83,29.04,2e-16
+2,3,L2_3_IT_M_P60_CORT_CC,M,L2_3_IT,P60,CORT,CC,GO:0043025,neuronal cell body,648,112,49.0,3.3e-13
+0,1,L2_3_IT_M_P60_CORT_MF,M,L2_3_IT,P60,CORT,MF,GO:0044325,ion channel binding,122,26,9.3,1.3e-06
+1,2,L2_3_IT_M_P60_CORT_MF,M,L2_3_IT,P60,CORT,MF,GO:0005509,calcium ion binding,461,64,35.12,1.8e-06
+2,3,L2_3_IT_M_P60_CORT_MF,M,L2_3_IT,P60,CORT,MF,GO:0097110,scaffold protein binding,65,17,4.95,4.9e-06
+0,1,L6_M_P60_CORT_BP,M,L6,P60,CORT,BP,GO:0006695,cholesterol biosynthetic process,41,13,1.04,2e-10
+1,2,L6_M_P60_CORT_BP,M,L6,P60,CORT,BP,GO:0000188,inactivation of MAPK activity,18,5,0.45,6.5e-05
+2,3,L6_M_P60_CORT_BP,M,L6,P60,CORT,BP,GO:0048148,behavioral response to cocaine,19,5,0.48,8.7e-05
+0,1,L6_M_P60_CORT_CC,M,L6,P60,CORT,CC,GO:0030425,dendrite,673,46,17.11,1.6e-06
+1,2,L6_M_P60_CORT_CC,M,L6,P60,CORT,CC,GO:0098978,glutamatergic synapse,490,27,12.46,0.00014
+2,3,L6_M_P60_CORT_CC,M,L6,P60,CORT,CC,GO:0005833,hemoglobin complex,6,3,0.15,0.00031
+0,1,L6_M_P60_CORT_MF,M,L6,P60,CORT,MF,GO:0005509,calcium ion binding,464,28,11.84,2.3e-05
+1,2,L6_M_P60_CORT_MF,M,L6,P60,CORT,MF,GO:0019901,protein kinase binding,676,33,17.25,0.00027
+2,3,L6_M_P60_CORT_MF,M,L6,P60,CORT,MF,GO:0031720,haptoglobin binding,6,3,0.15,0.00031
+0,1,Sst_M_P60_CORT_BP,M,Sst,P60,CORT,BP,GO:0071277,cellular response to calcium ion,70,9,1.67,4e-05
+1,2,Sst_M_P60_CORT_BP,M,Sst,P60,CORT,BP,GO:0098900,regulation of action potential,47,7,1.12,0.00011
+2,3,Sst_M_P60_CORT_BP,M,Sst,P60,CORT,BP,GO:0042493,response to drug,160,13,3.82,0.00012
+0,1,Sst_M_P60_CORT_CC,M,Sst,P60,CORT,CC,GO:0098978,glutamatergic synapse,485,35,11.73,7.4e-09
+1,2,Sst_M_P60_CORT_CC,M,Sst,P60,CORT,CC,GO:0043025,neuronal cell body,636,46,15.39,1.7e-08
+2,3,Sst_M_P60_CORT_CC,M,Sst,P60,CORT,CC,GO:0030424,axon,643,45,15.55,3.3e-06
+0,1,Sst_M_P60_CORT_MF,M,Sst,P60,CORT,MF,GO:0015459,potassium channel regulator activity,36,6,0.85,0.00018
+1,2,Sst_M_P60_CORT_MF,M,Sst,P60,CORT,MF,GO:0019871,sodium channel inhibitor activity,7,3,0.17,0.00043
+2,3,Sst_M_P60_CORT_MF,M,Sst,P60,CORT,MF,GO:0005516,calmodulin binding,162,12,3.84,0.00048
+0,1,L5_M_P60_CORT_BP,M,L5,P60,CORT,BP,GO:0045956,positive regulation of calcium ion-dependent exocytosis,17,9,1.06,2.1e-07
+1,2,L5_M_P60_CORT_BP,M,L5,P60,CORT,BP,GO:0010976,positive regulation of neuron projection development,206,31,12.87,4.5e-06
+2,3,L5_M_P60_CORT_BP,M,L5,P60,CORT,BP,GO:0006695,cholesterol biosynthetic process,41,12,2.56,4.8e-06
+0,1,L5_M_P60_CORT_CC,M,L5,P60,CORT,CC,GO:0098978,glutamatergic synapse,487,85,30.43,2.2e-18
+1,2,L5_M_P60_CORT_CC,M,L5,P60,CORT,CC,GO:0030425,dendrite,669,108,41.81,9.9e-13
+2,3,L5_M_P60_CORT_CC,M,L5,P60,CORT,CC,GO:0043025,neuronal cell body,649,91,40.56,2.7e-12
+0,1,L5_M_P60_CORT_MF,M,L5,P60,CORT,MF,GO:0044325,ion channel binding,124,24,7.77,6.3e-07
+1,2,L5_M_P60_CORT_MF,M,L5,P60,CORT,MF,GO:0019904,protein domain specific binding,713,77,44.68,1.6e-06
+2,3,L5_M_P60_CORT_MF,M,L5,P60,CORT,MF,GO:0005516,calmodulin binding,168,26,10.53,1.7e-05
+0,1,L4_M_P60_CORT_BP,M,L4,P60,CORT,BP,GO:0060080,inhibitory postsynaptic potential,18,5,0.23,2.5e-06
+1,2,L4_M_P60_CORT_BP,M,L4,P60,CORT,BP,GO:1900222,negative regulation of amyloid-beta clearance,7,3,0.09,7.1e-05
+2,3,L4_M_P60_CORT_BP,M,L4,P60,CORT,BP,GO:0097484,dendrite extension,39,5,0.5,0.00013
+0,1,L4_M_P60_CORT_CC,M,L4,P60,CORT,CC,GO:0030425,dendrite,661,26,8.42,2.8e-07
+1,2,L4_M_P60_CORT_CC,M,L4,P60,CORT,CC,GO:0043025,neuronal cell body,645,25,8.22,6.5e-07
+2,3,L4_M_P60_CORT_CC,M,L4,P60,CORT,CC,GO:0005794,Golgi apparatus,1247,32,15.89,9.6e-05
+0,1,L4_M_P60_CORT_MF,M,L4,P60,CORT,MF,GO:0050839,cell adhesion molecule binding,235,11,2.97,0.0002
+1,2,L4_M_P60_CORT_MF,M,L4,P60,CORT,MF,GO:0005102,signaling receptor binding,1119,34,14.14,0.00052
+2,3,L4_M_P60_CORT_MF,M,L4,P60,CORT,MF,GO:0005184,neuropeptide hormone activity,15,3,0.19,0.00081
+0,1,Pvalb_M_P60_CORT_BP,M,Pvalb,P60,CORT,BP,GO:0086091,regulation of heart rate by cardiac conduction,28,2,0.05,0.00091
+1,2,Pvalb_M_P60_CORT_BP,M,Pvalb,P60,CORT,BP,GO:1903512,phytanic acid metabolic process,1,1,0.0,0.00161
+2,3,Pvalb_M_P60_CORT_BP,M,Pvalb,P60,CORT,BP,GO:0001552,ovarian follicle atresia,1,1,0.0,0.00161
+0,1,Pvalb_M_P60_CORT_CC,M,Pvalb,P60,CORT,CC,GO:0098685,Schaffer collateral - CA1 synapse,107,3,0.19,0.00093
+1,2,Pvalb_M_P60_CORT_CC,M,Pvalb,P60,CORT,CC,GO:1990917,ooplasm,1,1,0.0,0.00182
+2,3,Pvalb_M_P60_CORT_CC,M,Pvalb,P60,CORT,CC,GO:0150017,basal proximal dendrite,1,1,0.0,0.00182
+0,1,Pvalb_M_P60_CORT_MF,M,Pvalb,P60,CORT,MF,GO:0042284,sphingolipid delta-4 desaturase activity,1,1,0.0,0.0018
+1,2,Pvalb_M_P60_CORT_MF,M,Pvalb,P60,CORT,MF,GO:0050251,retinol isomerase activity,1,1,0.0,0.0018
+2,3,Pvalb_M_P60_CORT_MF,M,Pvalb,P60,CORT,MF,GO:0017098,sulfonylurea receptor binding,2,1,0.0,0.0037
+0,1,Sncg_M_P60_CORT_BP,M,Sncg,P60,CORT,BP,GO:1902340,negative regulation of chromosome condensation,2,1,0.0,0.00032
+1,2,Sncg_M_P60_CORT_BP,M,Sncg,P60,CORT,BP,GO:0031509,subtelomeric heterochromatin assembly,3,1,0.0,0.00048
+2,3,Sncg_M_P60_CORT_BP,M,Sncg,P60,CORT,BP,GO:0090230,regulation of centromere complex assembly,4,1,0.0,0.00064
+0,1,Sncg_M_P60_CORT_CC,M,Sncg,P60,CORT,CC,GO:0000786,nucleosome,16,1,0.0,0.0025
+1,2,Sncg_M_P60_CORT_CC,M,Sncg,P60,CORT,CC,GO:0000781,"chromosome, telomeric region",94,1,0.01,0.0148
+2,3,Sncg_M_P60_CORT_CC,M,Sncg,P60,CORT,CC,GO:0000228,nuclear chromosome,174,1,0.03,0.0274
+0,1,Sncg_M_P60_CORT_MF,M,Sncg,P60,CORT,MF,GO:0031492,nucleosomal DNA binding,7,1,0.0,0.0011
+1,2,Sncg_M_P60_CORT_MF,M,Sncg,P60,CORT,MF,GO:0000979,RNA polymerase II core promoter sequence-specific DNA bindin...,18,1,0.0,0.0029
+2,3,Sncg_M_P60_CORT_MF,M,Sncg,P60,CORT,MF,GO:0004715,non-membrane spanning protein tyrosine kinase activity,25,1,0.0,0.004
+0,1,Non_neuronal_M_P60_CORT_BP,M,Non_neuronal,P60,CORT,BP,GO:0006012,galactose metabolic process,8,1,0.0,0.0024
+1,2,Non_neuronal_M_P60_CORT_BP,M,Non_neuronal,P60,CORT,BP,GO:0046835,carbohydrate phosphorylation,14,1,0.0,0.0041
+2,3,Non_neuronal_M_P60_CORT_BP,M,Non_neuronal,P60,CORT,BP,GO:0035987,endodermal cell differentiation,16,1,0.0,0.0047
+0,1,Non_neuronal_M_P60_CORT_CC,M,Non_neuronal,P60,CORT,CC,GO:0005595,collagen type XII trimer,1,1,0.0,0.00037
+1,2,Non_neuronal_M_P60_CORT_CC,M,Non_neuronal,P60,CORT,CC,GO:0005833,hemoglobin complex,6,1,0.0,0.00221
+2,3,Non_neuronal_M_P60_CORT_CC,M,Non_neuronal,P60,CORT,CC,GO:0031838,haptoglobin-hemoglobin complex,6,1,0.0,0.00221
+0,1,Non_neuronal_M_P60_CORT_MF,M,Non_neuronal,P60,CORT,MF,GO:0033858,N-acetylgalactosamine kinase activity,1,1,0.0,0.0003
+1,2,Non_neuronal_M_P60_CORT_MF,M,Non_neuronal,P60,CORT,MF,GO:0004335,galactokinase activity,2,1,0.0,0.0006
+2,3,Non_neuronal_M_P60_CORT_MF,M,Non_neuronal,P60,CORT,MF,GO:0031721,hemoglobin alpha binding,2,1,0.0,0.0006
+0,1,Oligo_M_P60_CORT_BP,M,Oligo,P60,CORT,BP,GO:0071911,synchronous neurotransmitter secretion,1,1,0.0,0.00031
+1,2,Oligo_M_P60_CORT_BP,M,Oligo,P60,CORT,BP,GO:0098746,"fast, calcium ion-dependent exocytosis of neurotransmitter",1,1,0.0,0.00031
+2,3,Oligo_M_P60_CORT_BP,M,Oligo,P60,CORT,BP,GO:1903235,positive regulation of calcium ion-dependent exocytosis of n...,1,1,0.0,0.00031
+0,1,Oligo_M_P60_CORT_CC,M,Oligo,P60,CORT,CC,GO:0098686,hippocampal mossy fiber to CA3 synapse,47,2,0.01,7.6e-05
+1,2,Oligo_M_P60_CORT_CC,M,Oligo,P60,CORT,CC,GO:0044306,neuron projection terminus,173,2,0.05,0.001
+2,3,Oligo_M_P60_CORT_CC,M,Oligo,P60,CORT,CC,GO:0042734,presynaptic membrane,174,2,0.05,0.001
+0,1,Oligo_M_P60_CORT_MF,M,Oligo,P60,CORT,MF,GO:0030348,syntaxin-3 binding,3,1,0.0,0.00093
+1,2,Oligo_M_P60_CORT_MF,M,Oligo,P60,CORT,MF,GO:0061891,calcium ion sensor activity,3,1,0.0,0.00093
+2,3,Oligo_M_P60_CORT_MF,M,Oligo,P60,CORT,MF,GO:0099583,neurotransmitter receptor activity involved in regulation of...,4,1,0.0,0.00124
+0,1,Vip_M_P60_CORT_BP,M,Vip,P60,CORT,BP,GO:1902473,regulation of protein localization to synapse,29,2,0.05,0.00091
+1,2,Vip_M_P60_CORT_BP,M,Vip,P60,CORT,BP,GO:0006540,glutamate decarboxylation to succinate,1,1,0.0,0.00156
+2,3,Vip_M_P60_CORT_BP,M,Vip,P60,CORT,BP,GO:2000195,negative regulation of female gonad development,1,1,0.0,0.00156
+0,1,Vip_M_P60_CORT_CC,M,Vip,P60,CORT,CC,GO:0098978,glutamatergic synapse,488,5,0.83,0.0012
+1,2,Vip_M_P60_CORT_CC,M,Vip,P60,CORT,CC,GO:0098984,neuron to neuron synapse,415,6,0.7,0.0018
+2,3,Vip_M_P60_CORT_CC,M,Vip,P60,CORT,CC,GO:0061202,clathrin-sculpted gamma-aminobutyric acid transport vesicle ...,2,1,0.0,0.0034
+0,1,Vip_M_P60_CORT_MF,M,Vip,P60,CORT,MF,GO:0016595,glutamate binding,13,2,0.02,0.00022
+1,2,Vip_M_P60_CORT_MF,M,Vip,P60,CORT,MF,GO:0000979,RNA polymerase II core promoter sequence-specific DNA bindin...,18,2,0.03,0.00043
+2,3,Vip_M_P60_CORT_MF,M,Vip,P60,CORT,MF,GO:0008398,sterol 14-demethylase activity,1,1,0.0,0.00172
+0,1,Lamp5_M_P60_CORT_BP,M,Lamp5,P60,CORT,BP,GO:0048245,eosinophil chemotaxis,4,2,0.0,2.4e-06
+1,2,Lamp5_M_P60_CORT_BP,M,Lamp5,P60,CORT,BP,GO:1904803,regulation of translation involved in cellular response to U...,1,1,0.0,0.00067
+2,3,Lamp5_M_P60_CORT_BP,M,Lamp5,P60,CORT,BP,GO:0110077,vesicle-mediated intercellular transport,1,1,0.0,0.00067
+0,1,Lamp5_M_P60_CORT_CC,M,Lamp5,P60,CORT,CC,GO:0098992,neuronal dense core vesicle,16,2,0.01,4.7e-05
+1,2,Lamp5_M_P60_CORT_CC,M,Lamp5,P60,CORT,CC,GO:0043195,terminal bouton,72,2,0.05,0.00098
+2,3,Lamp5_M_P60_CORT_CC,M,Lamp5,P60,CORT,CC,GO:1990071,TRAPPII protein complex,2,1,0.0,0.00133
+0,1,Lamp5_M_P60_CORT_MF,M,Lamp5,P60,CORT,MF,GO:0042056,chemoattractant activity,19,2,0.01,6.8e-05
+1,2,Lamp5_M_P60_CORT_MF,M,Lamp5,P60,CORT,MF,GO:0045237,CXCR1 chemokine receptor binding,1,1,0.0,0.00067
+2,3,Lamp5_M_P60_CORT_MF,M,Lamp5,P60,CORT,MF,GO:0031841,neuropeptide Y receptor binding,1,1,0.0,0.00067
+0,1,Astro_M_P60_CORT_BP,M,Astro,P60,CORT,BP,GO:1902722,positive regulation of prolactin secretion,2,1,0.0,0.00016
+1,2,Astro_M_P60_CORT_BP,M,Astro,P60,CORT,BP,GO:0010750,positive regulation of nitric oxide mediated signal transduc...,3,1,0.0,0.00024
+2,3,Astro_M_P60_CORT_BP,M,Astro,P60,CORT,BP,GO:1900020,positive regulation of protein kinase C activity,7,1,0.0,0.00055
+0,1,Astro_M_P60_CORT_CC,M,Astro,P60,CORT,CC,GO:0097489,"multivesicular body, internal vesicle lumen",1,1,0.0,7.8e-05
+1,2,Astro_M_P60_CORT_CC,M,Astro,P60,CORT,CC,GO:0031901,early endosome membrane,58,1,0.0,0.0045
+2,3,Astro_M_P60_CORT_CC,M,Astro,P60,CORT,CC,GO:0030139,endocytic vesicle,157,1,0.01,0.0123
+0,1,Astro_M_P60_CORT_MF,M,Astro,P60,CORT,MF,GO:0005006,epidermal growth factor-activated receptor activity,3,1,0.0,0.00024
+1,2,Astro_M_P60_CORT_MF,M,Astro,P60,CORT,MF,GO:0048408,epidermal growth factor binding,3,1,0.0,0.00024
+2,3,Astro_M_P60_CORT_MF,M,Astro,P60,CORT,MF,GO:0030235,nitric-oxide synthase regulator activity,8,1,0.0,0.00064
+0,1,Peri_M_P60_CORT_BP,M,Peri,P60,CORT,BP,GO:0000002,mitochondrial genome maintenance,25,0,0.0,1.0
+1,2,Peri_M_P60_CORT_BP,M,Peri,P60,CORT,BP,GO:0000003,reproduction,784,0,0.0,1.0
+2,3,Peri_M_P60_CORT_BP,M,Peri,P60,CORT,BP,GO:0000012,single strand break repair,11,0,0.0,1.0
+0,1,Peri_M_P60_CORT_CC,M,Peri,P60,CORT,CC,GO:0000015,phosphopyruvate hydratase complex,3,0,0.0,1.0
+1,2,Peri_M_P60_CORT_CC,M,Peri,P60,CORT,CC,GO:0000109,nucleotide-excision repair complex,12,0,0.0,1.0
+2,3,Peri_M_P60_CORT_CC,M,Peri,P60,CORT,CC,GO:0000110,nucleotide-excision repair factor 1 complex,3,0,0.0,1.0
+0,1,Peri_M_P60_CORT_MF,M,Peri,P60,CORT,MF,GO:0000009,"alpha-1,6-mannosyltransferase activity",1,0,0.0,1.0
+1,2,Peri_M_P60_CORT_MF,M,Peri,P60,CORT,MF,GO:0000010,trans-hexaprenyltranstransferase activity,2,0,0.0,1.0
+2,3,Peri_M_P60_CORT_MF,M,Peri,P60,CORT,MF,GO:0000014,single-stranded DNA endodeoxyribonuclease activity,11,0,0.0,1.0
+0,1,Endo_M_P60_CORT_BP,M,Endo,P60,CORT,BP,GO:0007286,spermatid development,90,3,0.11,0.00015
+1,2,Endo_M_P60_CORT_BP,M,Endo,P60,CORT,BP,GO:1900135,positive regulation of renin secretion into blood stream,1,1,0.0,0.00121
+2,3,Endo_M_P60_CORT_BP,M,Endo,P60,CORT,BP,GO:0046878,positive regulation of saliva secretion,1,1,0.0,0.00121
+0,1,Endo_M_P60_CORT_CC,M,Endo,P60,CORT,CC,GO:0016604,nuclear body,572,4,0.69,0.0038
+1,2,Endo_M_P60_CORT_CC,M,Endo,P60,CORT,CC,GO:0005964,phosphorylase kinase complex,4,1,0.0,0.0048
+2,3,Endo_M_P60_CORT_CC,M,Endo,P60,CORT,CC,GO:0071010,prespliceosome,15,1,0.02,0.0179
+0,1,Endo_M_P60_CORT_MF,M,Endo,P60,CORT,MF,GO:0004940,beta1-adrenergic receptor activity,1,1,0.0,0.0012
+1,2,Endo_M_P60_CORT_MF,M,Endo,P60,CORT,MF,GO:1990841,promoter-specific chromatin binding,48,2,0.06,0.0015
+2,3,Endo_M_P60_CORT_MF,M,Endo,P60,CORT,MF,GO:0099579,G protein-coupled neurotransmitter receptor activity involve...,2,1,0.0,0.0024
+0,1,L2_3_IT_M_P120_CORT_BP,M,L2_3_IT,P120,CORT,BP,GO:0001764,neuron migration,167,53,27.12,4.7e-07
+1,2,L2_3_IT_M_P120_CORT_BP,M,L2_3_IT,P120,CORT,BP,GO:0048025,"negative regulation of mRNA splicing, via spliceosome",23,13,3.74,1.2e-05
+2,3,L2_3_IT_M_P120_CORT_BP,M,L2_3_IT,P120,CORT,BP,GO:0097119,postsynaptic density protein 95 clustering,10,8,1.62,1.6e-05
+0,1,L2_3_IT_M_P120_CORT_CC,M,L2_3_IT,P120,CORT,CC,GO:0022625,cytosolic large ribosomal subunit,53,34,8.64,6.4e-15
+1,2,L2_3_IT_M_P120_CORT_CC,M,L2_3_IT,P120,CORT,CC,GO:0014069,postsynaptic density,384,117,62.63,1.4e-09
+2,3,L2_3_IT_M_P120_CORT_CC,M,L2_3_IT,P120,CORT,CC,GO:0098978,glutamatergic synapse,491,130,80.08,4e-09
+0,1,L2_3_IT_M_P120_CORT_MF,M,L2_3_IT,P120,CORT,MF,GO:0003735,structural constituent of ribosome,149,71,23.96,1.4e-19
+1,2,L2_3_IT_M_P120_CORT_MF,M,L2_3_IT,P120,CORT,MF,GO:0003729,mRNA binding,274,73,44.07,4.8e-06
+2,3,L2_3_IT_M_P120_CORT_MF,M,L2_3_IT,P120,CORT,MF,GO:0031490,chromatin DNA binding,69,22,11.1,0.00084
+0,1,L6_M_P120_CORT_BP,M,L6,P120,CORT,BP,GO:0002181,cytoplasmic translation,85,36,14.17,1.9e-08
+1,2,L6_M_P120_CORT_BP,M,L6,P120,CORT,BP,GO:0001764,neuron migration,168,49,28.0,3.5e-05
+2,3,L6_M_P120_CORT_BP,M,L6,P120,CORT,BP,GO:0099560,synaptic membrane adhesion,32,15,5.33,6.7e-05
+0,1,L6_M_P120_CORT_CC,M,L6,P120,CORT,CC,GO:0022625,cytosolic large ribosomal subunit,53,38,8.87,1.1e-18
+1,2,L6_M_P120_CORT_CC,M,L6,P120,CORT,CC,GO:0022627,cytosolic small ribosomal subunit,44,28,7.36,4.1e-12
+2,3,L6_M_P120_CORT_CC,M,L6,P120,CORT,CC,GO:0014069,postsynaptic density,386,114,64.6,3.4e-09
+0,1,L6_M_P120_CORT_MF,M,L6,P120,CORT,MF,GO:0003735,structural constituent of ribosome,149,76,24.55,1.7000000000000002e-22
+1,2,L6_M_P120_CORT_MF,M,L6,P120,CORT,MF,GO:0003729,mRNA binding,274,85,45.14,3e-07
+2,3,L6_M_P120_CORT_MF,M,L6,P120,CORT,MF,GO:0031625,ubiquitin protein ligase binding,282,77,46.46,2.5e-06
+0,1,Sst_M_P120_CORT_BP,M,Sst,P120,CORT,BP,GO:0099560,synaptic membrane adhesion,32,10,2.3,5.3e-05
+1,2,Sst_M_P120_CORT_BP,M,Sst,P120,CORT,BP,GO:0007215,glutamate receptor signaling pathway,44,11,3.17,0.00021
+2,3,Sst_M_P120_CORT_BP,M,Sst,P120,CORT,BP,GO:0045454,cell redox homeostasis,54,12,3.89,0.00037
+0,1,Sst_M_P120_CORT_CC,M,Sst,P120,CORT,CC,GO:0043209,myelin sheath,198,43,14.33,4.9e-11
+1,2,Sst_M_P120_CORT_CC,M,Sst,P120,CORT,CC,GO:0098978,glutamatergic synapse,493,71,35.69,1.5e-08
+2,3,Sst_M_P120_CORT_CC,M,Sst,P120,CORT,CC,GO:0022625,cytosolic large ribosomal subunit,53,16,3.84,5.8e-07
+0,1,Sst_M_P120_CORT_MF,M,Sst,P120,CORT,MF,GO:0003735,structural constituent of ribosome,149,38,10.62,2.5e-12
+1,2,Sst_M_P120_CORT_MF,M,Sst,P120,CORT,MF,GO:0031625,ubiquitin protein ligase binding,280,38,19.96,9.3e-05
+2,3,Sst_M_P120_CORT_MF,M,Sst,P120,CORT,MF,GO:0001671,ATPase activator activity,24,8,1.71,0.00017
+0,1,L5_M_P120_CORT_BP,M,L5,P120,CORT,BP,GO:0006412,translation,539,160,94.36,8.4e-09
+1,2,L5_M_P120_CORT_BP,M,L5,P120,CORT,BP,GO:0002181,cytoplasmic translation,85,33,14.88,2.6e-06
+2,3,L5_M_P120_CORT_BP,M,L5,P120,CORT,BP,GO:0006457,protein folding,142,47,24.86,4.7e-06
+0,1,L5_M_P120_CORT_CC,M,L5,P120,CORT,CC,GO:0022625,cytosolic large ribosomal subunit,53,38,9.31,6.1e-18
+1,2,L5_M_P120_CORT_CC,M,L5,P120,CORT,CC,GO:0022627,cytosolic small ribosomal subunit,44,31,7.73,1.6e-14
+2,3,L5_M_P120_CORT_CC,M,L5,P120,CORT,CC,GO:0043209,myelin sheath,200,76,35.13,4.4e-12
+0,1,L5_M_P120_CORT_MF,M,L5,P120,CORT,MF,GO:0003735,structural constituent of ribosome,149,86,25.83,8.2e-29
+1,2,L5_M_P120_CORT_MF,M,L5,P120,CORT,MF,GO:0003729,mRNA binding,274,81,47.49,8.6e-06
+2,3,L5_M_P120_CORT_MF,M,L5,P120,CORT,MF,GO:0005515,protein binding,7311,1413,1267.22,2.8e-05
+0,1,L4_M_P120_CORT_BP,M,L4,P120,CORT,BP,GO:0051966,"regulation of synaptic transmission, glutamatergic",69,12,2.51,6.2e-06
+1,2,L4_M_P120_CORT_BP,M,L4,P120,CORT,BP,GO:0071277,cellular response to calcium ion,70,11,2.55,4.1e-05
+2,3,L4_M_P120_CORT_BP,M,L4,P120,CORT,BP,GO:0007409,axonogenesis,413,36,15.02,5.6e-05
+0,1,L4_M_P120_CORT_CC,M,L4,P120,CORT,CC,GO:0043209,myelin sheath,195,23,7.15,7.6e-07
+1,2,L4_M_P120_CORT_CC,M,L4,P120,CORT,CC,GO:0098978,glutamatergic synapse,488,39,17.89,4.1e-06
+2,3,L4_M_P120_CORT_CC,M,L4,P120,CORT,CC,GO:0022625,cytosolic large ribosomal subunit,52,10,1.91,1.6e-05
+0,1,L4_M_P120_CORT_MF,M,L4,P120,CORT,MF,GO:0003735,structural constituent of ribosome,148,23,5.34,3.1e-09
+1,2,L4_M_P120_CORT_MF,M,L4,P120,CORT,MF,GO:0030550,acetylcholine receptor inhibitor activity,5,3,0.18,0.00044
+2,3,L4_M_P120_CORT_MF,M,L4,P120,CORT,MF,GO:0044325,ion channel binding,125,13,4.51,0.00057
+0,1,Pvalb_M_P120_CORT_BP,M,Pvalb,P120,CORT,BP,GO:0048488,synaptic vesicle endocytosis,64,12,2.8,1.8e-05
+1,2,Pvalb_M_P120_CORT_BP,M,Pvalb,P120,CORT,BP,GO:0006412,translation,537,44,23.52,4.7e-05
+2,3,Pvalb_M_P120_CORT_BP,M,Pvalb,P120,CORT,BP,GO:0047497,mitochondrion transport along microtubule,21,6,0.92,0.00021
+0,1,Pvalb_M_P120_CORT_CC,M,Pvalb,P120,CORT,CC,GO:0043209,myelin sheath,196,37,8.62,3.8e-14
+1,2,Pvalb_M_P120_CORT_CC,M,Pvalb,P120,CORT,CC,GO:0005762,mitochondrial large ribosomal subunit,58,13,2.55,1e-06
+2,3,Pvalb_M_P120_CORT_CC,M,Pvalb,P120,CORT,CC,GO:0030426,growth cone,201,22,8.84,7.6e-05
+0,1,Pvalb_M_P120_CORT_MF,M,Pvalb,P120,CORT,MF,GO:0003735,structural constituent of ribosome,149,28,6.45,3.9e-11
+1,2,Pvalb_M_P120_CORT_MF,M,Pvalb,P120,CORT,MF,GO:0001671,ATPase activator activity,24,8,1.04,4.7e-06
+2,3,Pvalb_M_P120_CORT_MF,M,Pvalb,P120,CORT,MF,GO:0050998,nitric-oxide synthase binding,20,6,0.87,0.00015
+0,1,Sncg_M_P120_CORT_BP,M,Sncg,P120,CORT,BP,GO:0150111,regulation of transepithelial transport,2,2,0.0,2.3e-06
+1,2,Sncg_M_P120_CORT_BP,M,Sncg,P120,CORT,BP,GO:0048488,synaptic vesicle endocytosis,62,3,0.1,0.00012
+2,3,Sncg_M_P120_CORT_BP,M,Sncg,P120,CORT,BP,GO:0048024,"regulation of mRNA splicing, via spliceosome",93,3,0.15,0.00038
+0,1,Sncg_M_P120_CORT_CC,M,Sncg,P120,CORT,CC,GO:0043209,myelin sheath,191,5,0.31,1.1e-05
+1,2,Sncg_M_P120_CORT_CC,M,Sncg,P120,CORT,CC,GO:0098871,postsynaptic actin cytoskeleton,14,2,0.02,0.00023
+2,3,Sncg_M_P120_CORT_CC,M,Sncg,P120,CORT,CC,GO:0044305,calyx of Held,27,2,0.04,0.00087
+0,1,Sncg_M_P120_CORT_MF,M,Sncg,P120,CORT,MF,GO:0098973,structural constituent of postsynaptic actin cytoskeleton,4,2,0.01,1.6e-05
+1,2,Sncg_M_P120_CORT_MF,M,Sncg,P120,CORT,MF,GO:0050998,nitric-oxide synthase binding,18,2,0.03,0.0004
+2,3,Sncg_M_P120_CORT_MF,M,Sncg,P120,CORT,MF,GO:0019799,tubulin N-acetyltransferase activity,1,1,0.0,0.0017
+0,1,Non_neuronal_M_P120_CORT_BP,M,Non_neuronal,P120,CORT,BP,GO:0034766,negative regulation of ion transmembrane transport,99,5,0.71,0.0007
+1,2,Non_neuronal_M_P120_CORT_BP,M,Non_neuronal,P120,CORT,BP,GO:0048024,"regulation of mRNA splicing, via spliceosome",93,6,0.66,0.0023
+2,3,Non_neuronal_M_P120_CORT_BP,M,Non_neuronal,P120,CORT,BP,GO:0006338,chromatin remodeling,139,5,0.99,0.0031
+0,1,Non_neuronal_M_P120_CORT_CC,M,Non_neuronal,P120,CORT,CC,GO:0005634,nucleus,5595,57,39.75,0.0033
+1,2,Non_neuronal_M_P120_CORT_CC,M,Non_neuronal,P120,CORT,CC,GO:0045202,synapse,1296,18,9.21,0.0041
+2,3,Non_neuronal_M_P120_CORT_CC,M,Non_neuronal,P120,CORT,CC,GO:0016604,nuclear body,622,11,4.42,0.0045
+0,1,Non_neuronal_M_P120_CORT_MF,M,Non_neuronal,P120,CORT,MF,GO:0050998,nitric-oxide synthase binding,19,3,0.13,0.0003
+1,2,Non_neuronal_M_P120_CORT_MF,M,Non_neuronal,P120,CORT,MF,GO:0016922,nuclear receptor binding,99,5,0.7,0.00066
+2,3,Non_neuronal_M_P120_CORT_MF,M,Non_neuronal,P120,CORT,MF,GO:0044325,ion channel binding,123,5,0.87,0.00176
+0,1,Oligo_M_P120_CORT_BP,M,Oligo,P120,CORT,BP,GO:0032272,negative regulation of protein polymerization,62,2,0.03,0.00026
+1,2,Oligo_M_P120_CORT_BP,M,Oligo,P120,CORT,BP,GO:0090024,negative regulation of neutrophil chemotaxis,1,1,0.0,0.00042
+2,3,Oligo_M_P120_CORT_BP,M,Oligo,P120,CORT,BP,GO:0021972,corticospinal neuron axon guidance through spinal cord,1,1,0.0,0.00042
+0,1,Oligo_M_P120_CORT_CC,M,Oligo,P120,CORT,CC,GO:0005741,mitochondrial outer membrane,145,2,0.06,0.0014
+1,2,Oligo_M_P120_CORT_CC,M,Oligo,P120,CORT,CC,GO:0043209,myelin sheath,191,2,0.08,0.0024
+2,3,Oligo_M_P120_CORT_CC,M,Oligo,P120,CORT,CC,GO:0045121,membrane raft,277,2,0.11,0.005
+0,1,Oligo_M_P120_CORT_MF,M,Oligo,P120,CORT,MF,GO:0043237,laminin-1 binding,4,1,0.0,0.0017
+1,2,Oligo_M_P120_CORT_MF,M,Oligo,P120,CORT,MF,GO:0005095,GTPase inhibitor activity,5,1,0.0,0.0021
+2,3,Oligo_M_P120_CORT_MF,M,Oligo,P120,CORT,MF,GO:0015288,porin activity,5,1,0.0,0.0021
+0,1,Vip_M_P120_CORT_BP,M,Vip,P120,CORT,BP,GO:0048488,synaptic vesicle endocytosis,64,13,3.13,1e-05
+1,2,Vip_M_P120_CORT_BP,M,Vip,P120,CORT,BP,GO:0047497,mitochondrion transport along microtubule,21,7,1.03,4.1e-05
+2,3,Vip_M_P120_CORT_BP,M,Vip,P120,CORT,BP,GO:0006412,translation,536,51,26.18,0.0003
+0,1,Vip_M_P120_CORT_CC,M,Vip,P120,CORT,CC,GO:0022625,cytosolic large ribosomal subunit,52,17,2.56,2.1e-10
+1,2,Vip_M_P120_CORT_CC,M,Vip,P120,CORT,CC,GO:0022627,cytosolic small ribosomal subunit,44,13,2.17,1.1e-07
+2,3,Vip_M_P120_CORT_CC,M,Vip,P120,CORT,CC,GO:0043209,myelin sheath,198,29,9.74,1.3e-07
+0,1,Vip_M_P120_CORT_MF,M,Vip,P120,CORT,MF,GO:0003735,structural constituent of ribosome,148,36,7.17,3.8e-16
+1,2,Vip_M_P120_CORT_MF,M,Vip,P120,CORT,MF,GO:0001671,ATPase activator activity,24,8,1.16,1.1e-05
+2,3,Vip_M_P120_CORT_MF,M,Vip,P120,CORT,MF,GO:0046961,"proton-transporting ATPase activity, rotational mechanism",19,6,0.92,0.0002
+0,1,Lamp5_M_P120_CORT_BP,M,Lamp5,P120,CORT,BP,GO:0048488,synaptic vesicle endocytosis,62,13,3.11,9.7e-06
+1,2,Lamp5_M_P120_CORT_BP,M,Lamp5,P120,CORT,BP,GO:1902430,negative regulation of amyloid-beta formation,19,6,0.95,0.00024
+2,3,Lamp5_M_P120_CORT_BP,M,Lamp5,P120,CORT,BP,GO:0047497,mitochondrion transport along microtubule,21,6,1.05,0.00044
+0,1,Lamp5_M_P120_CORT_CC,M,Lamp5,P120,CORT,CC,GO:0043209,myelin sheath,199,44,10.07,4.9e-17
+1,2,Lamp5_M_P120_CORT_CC,M,Lamp5,P120,CORT,CC,GO:0022625,cytosolic large ribosomal subunit,53,13,2.68,1.6e-06
+2,3,Lamp5_M_P120_CORT_CC,M,Lamp5,P120,CORT,CC,GO:0005790,smooth endoplasmic reticulum,36,8,1.82,0.00035
+0,1,Lamp5_M_P120_CORT_MF,M,Lamp5,P120,CORT,MF,GO:0003735,structural constituent of ribosome,148,25,7.34,6.7e-08
+1,2,Lamp5_M_P120_CORT_MF,M,Lamp5,P120,CORT,MF,GO:0050998,nitric-oxide synthase binding,19,9,0.94,1e-07
+2,3,Lamp5_M_P120_CORT_MF,M,Lamp5,P120,CORT,MF,GO:0048306,calcium-dependent protein binding,62,13,3.08,8.6e-06
+0,1,Astro_M_P120_CORT_BP,M,Astro,P120,CORT,BP,GO:0022010,central nervous system myelination,23,2,0.03,0.00048
+1,2,Astro_M_P120_CORT_BP,M,Astro,P120,CORT,BP,GO:0098990,AMPA selective glutamate receptor signaling pathway,1,1,0.0,0.00143
+2,3,Astro_M_P120_CORT_BP,M,Astro,P120,CORT,BP,GO:0060311,negative regulation of elastin catabolic process,1,1,0.0,0.00143
+0,1,Astro_M_P120_CORT_CC,M,Astro,P120,CORT,CC,GO:0043209,myelin sheath,196,6,0.28,4e-06
+1,2,Astro_M_P120_CORT_CC,M,Astro,P120,CORT,CC,GO:0022625,cytosolic large ribosomal subunit,52,2,0.07,0.0024
+2,3,Astro_M_P120_CORT_CC,M,Astro,P120,CORT,CC,GO:0097453,mesaxon,2,1,0.0,0.0029
+0,1,Astro_M_P120_CORT_MF,M,Astro,P120,CORT,MF,GO:0033691,sialic acid binding,2,1,0.0,0.0027
+1,2,Astro_M_P120_CORT_MF,M,Astro,P120,CORT,MF,GO:1905576,ganglioside GT1b binding,3,1,0.0,0.0041
+2,3,Astro_M_P120_CORT_MF,M,Astro,P120,CORT,MF,GO:0008073,ornithine decarboxylase inhibitor activity,3,1,0.0,0.0041
+0,1,Peri_M_P120_CORT_BP,M,Peri,P120,CORT,BP,GO:0000002,mitochondrial genome maintenance,22,0,0.0,1.0
+1,2,Peri_M_P120_CORT_BP,M,Peri,P120,CORT,BP,GO:0000003,reproduction,809,0,0.0,1.0
+2,3,Peri_M_P120_CORT_BP,M,Peri,P120,CORT,BP,GO:0000012,single strand break repair,11,0,0.0,1.0
+0,1,Peri_M_P120_CORT_CC,M,Peri,P120,CORT,CC,GO:0000015,phosphopyruvate hydratase complex,3,0,0.0,1.0
+1,2,Peri_M_P120_CORT_CC,M,Peri,P120,CORT,CC,GO:0000109,nucleotide-excision repair complex,12,0,0.0,1.0
+2,3,Peri_M_P120_CORT_CC,M,Peri,P120,CORT,CC,GO:0000110,nucleotide-excision repair factor 1 complex,2,0,0.0,1.0
+0,1,Peri_M_P120_CORT_MF,M,Peri,P120,CORT,MF,GO:0000009,"alpha-1,6-mannosyltransferase activity",1,0,0.0,1.0
+1,2,Peri_M_P120_CORT_MF,M,Peri,P120,CORT,MF,GO:0000010,trans-hexaprenyltranstransferase activity,2,0,0.0,1.0
+2,3,Peri_M_P120_CORT_MF,M,Peri,P120,CORT,MF,GO:0000014,single-stranded DNA endodeoxyribonuclease activity,10,0,0.0,1.0
+0,1,Endo_M_P120_CORT_BP,M,Endo,P120,CORT,BP,GO:0000002,mitochondrial genome maintenance,18,0,0.0,1.0
+1,2,Endo_M_P120_CORT_BP,M,Endo,P120,CORT,BP,GO:0000003,reproduction,728,0,0.0,1.0
+2,3,Endo_M_P120_CORT_BP,M,Endo,P120,CORT,BP,GO:0000012,single strand break repair,10,0,0.0,1.0
+0,1,Endo_M_P120_CORT_CC,M,Endo,P120,CORT,CC,GO:0000015,phosphopyruvate hydratase complex,3,0,0.0,1.0
+1,2,Endo_M_P120_CORT_CC,M,Endo,P120,CORT,CC,GO:0000109,nucleotide-excision repair complex,12,0,0.0,1.0
+2,3,Endo_M_P120_CORT_CC,M,Endo,P120,CORT,CC,GO:0000110,nucleotide-excision repair factor 1 complex,3,0,0.0,1.0
+0,1,Endo_M_P120_CORT_MF,M,Endo,P120,CORT,MF,GO:0000009,"alpha-1,6-mannosyltransferase activity",1,0,0.0,1.0
+1,2,Endo_M_P120_CORT_MF,M,Endo,P120,CORT,MF,GO:0000010,trans-hexaprenyltranstransferase activity,2,0,0.0,1.0
+2,3,Endo_M_P120_CORT_MF,M,Endo,P120,CORT,MF,GO:0000014,single-stranded DNA endodeoxyribonuclease activity,9,0,0.0,1.0
