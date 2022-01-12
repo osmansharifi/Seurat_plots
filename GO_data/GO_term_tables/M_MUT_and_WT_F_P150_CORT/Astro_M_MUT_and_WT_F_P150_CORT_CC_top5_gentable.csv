@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0034363","intermediate-density lipoprotein particle",2,2,0.05,"0.00061"
+"2","GO:0008076","voltage-gated potassium channel complex",51,6,1.26,"0.00149"
+"3","GO:0098978","glutamatergic synapse",422,21,10.42,"0.00159"
+"4","GO:0043235","receptor complex",166,11,4.1,"0.00261"
+"5","GO:0099061","integral component of postsynaptic density membrane",58,6,1.43,"0.00291"

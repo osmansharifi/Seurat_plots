@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0050708","regulation of protein secretion",139,5,0.96,"0.0026"
+"2","GO:0009749","response to glucose",91,4,0.63,"0.0035"
+"3","GO:1905244","regulation of modification of synaptic structure",14,2,0.1,"0.0041"
+"4","GO:0010800","positive regulation of peptidyl-threonine phosphorylation",15,2,0.1,"0.0047"
+"5","GO:0045666","positive regulation of neuron differentiation",52,3,0.36,"0.0055"
