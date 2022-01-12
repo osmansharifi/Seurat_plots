@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0070123","transforming growth factor beta receptor activity, type III",1,1,0.01,"0.0054"
+"2","GO:0005509","calcium ion binding",233,5,1.25,"0.0077"
+"3","GO:0004485","methylcrotonoyl-CoA carboxylase activity",2,1,0.01,"0.0107"
+"4","GO:0038025","reelin receptor activity",2,1,0.01,"0.0107"
+"5","GO:0005114","type II transforming growth factor beta receptor binding",2,1,0.01,"0.0107"

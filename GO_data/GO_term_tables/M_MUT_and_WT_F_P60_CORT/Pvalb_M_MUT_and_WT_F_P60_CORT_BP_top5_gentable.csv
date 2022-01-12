@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0060083","smooth muscle contraction involved in micturition",2,2,0.06,"0.0010"
+"2","GO:0006423","cysteinyl-tRNA aminoacylation",2,2,0.06,"0.0010"
+"3","GO:0007268","chemical synaptic transmission",482,28,15.31,"0.0013"
+"4","GO:2000809","positive regulation of synaptic vesicle clustering",8,3,0.25,"0.0016"
+"5","GO:0050877","nervous system process",493,28,15.66,"0.0018"

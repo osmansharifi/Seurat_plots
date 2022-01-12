@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0098984","neuron to neuron synapse",356,6,1.56,"0.0039"
+"2","GO:0046658","anchored component of plasma membrane",27,2,0.12,"0.0061"
+"3","GO:0098889","intrinsic component of presynaptic membrane",87,3,0.38,"0.0063"
+"4","GO:0098685","Schaffer collateral - CA1 synapse",98,3,0.43,"0.0087"
+"5","GO:0043256","laminin complex",2,1,0.01,"0.0087"
