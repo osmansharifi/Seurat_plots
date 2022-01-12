@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0022627","cytosolic small ribosomal subunit",39,5,0.52,"0.00015"
+"2","GO:0043527","tRNA methyltransferase complex",2,2,0.03,"0.00017"
+"3","GO:0061202","clathrin-sculpted gamma-aminobutyric acid transport vesicle ...",2,2,0.03,"0.00017"
+"4","GO:0042788","polysomal ribosome",29,4,0.38,"0.00053"
+"5","GO:0045202","synapse",1050,28,13.92,"0.00092"

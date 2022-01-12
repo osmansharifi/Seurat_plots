@@ -12,35 +12,55 @@ library(tidyverse)
 ## Variables
 
 ## Paths
-Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_E18_WB/"
+#Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_E18_WB/"
 #Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_P30_CORT/"
 #Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_P60_CORT/"
 #Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_M_P120_CORT/"
+Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_F_E18_WB/"
+#Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_F_P30_CORT/"
+#Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_F_P60_CORT/"
+#Limma_DEG_dir <- "~/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/M_MUT_and_WT_F_P150_CORT/"
 
-figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/M_MUT_and_WT_M_E18_WB/"
+#figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/M_MUT_and_WT_M_E18_WB/"
 #figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/M_MUT_and_WT_M_P30_CORT/"
 #figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/M_MUT_and_WT_M_P60_CORT/"
 #figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/M_MUT_and_WT_M_P120_CORT/"
+figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/M_MUT_and_WT_F_E18_WB/"
+#figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/M_MUT_and_WT_F_P30_CORT/"
+#figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/M_MUT_and_WT_F_P60_CORT/"
+#figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/enrichment_scores/M_MUT_and_WT_F_P150_CORT/"
 
-gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_M_E18_WB/"
+#gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_M_E18_WB/"
 #gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_M_P30_CORT/"
 #gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_M_P60_CORT/"
 #gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_M_P120_CORT/"
+gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_F_E18_WB/"
+#gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_F_P30_CORT/"
+#gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_F_P60_CORT/"
+#gentable_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/M_MUT_and_WT_F_P150_CORT/"
 
 ## Lists
-cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri", "Endo")
+cell_types <- list("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal", "Oligo", "Vip", "Lamp5", "Astro", "Peri") #, "Endo")
 topgo_ontologies <- list("BP", "CC", "MF")
 
 ## Other variables
-metadata_info_concise <- "M_MUT_and_WT_M_E18_WB"
+#metadata_info_concise <- "M_MUT_and_WT_M_E18_WB"
 #metadata_info_concise <- "M_MUT_and_WT_M_P30_CORT"
 #metadata_info_concise <- "M_MUT_and_WT_M_P60_CORT"
 #metadata_info_concise <- "M_MUT_and_WT_M_P120_CORT"
+metadata_info_concise <- "M_MUT_and_WT_F_E18_WB"
+#metadata_info_concise <- "M_MUT_and_WT_F_P30_CORT"
+#metadata_info_concise <- "M_MUT_and_WT_F_P60_CORT"
+#metadata_info_concise <- "M_MUT_and_WT_F_P150_CORT"
 
-metadata_info_expanded <- "Male, E18, Whole Brain"
+#metadata_info_expanded <- "Male, E18, Whole Brain"
 #metadata_info_expanded <- "Male, P30, Cortex"
 #metadata_info_expanded <- "Male, P60, Cortex"
 #metadata_info_expanded <- "Male, P120, Cortex"
+metadata_info_expanded <- "Female, E18, Whole Brain"
+#metadata_info_expanded <- "Female, P30, Cortex"
+#metadata_info_expanded <- "Female, P60, Cortex"
+#metadata_info_expanded <- "Female, P150, Cortex"
 ################################################################################
 
 

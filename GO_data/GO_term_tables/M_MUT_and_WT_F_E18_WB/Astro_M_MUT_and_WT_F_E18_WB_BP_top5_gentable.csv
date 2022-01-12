@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:2000255","negative regulation of male germ cell proliferation",3,1,0,"0.0013"
+"2","GO:0045187","regulation of circadian sleep/wake cycle, sleep",6,1,0,"0.0026"
+"3","GO:0001516","prostaglandin biosynthetic process",9,1,0,"0.0038"
+"4","GO:0043303","mast cell degranulation",13,1,0.01,"0.0055"
+"5","GO:0002028","regulation of sodium ion transport",56,1,0.02,"0.0237"

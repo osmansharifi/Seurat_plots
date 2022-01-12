@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0004420","hydroxymethylglutaryl-CoA reductase (NADPH) activity",1,1,0,"0.0046"
+"2","GO:0042282","hydroxymethylglutaryl-CoA reductase activity",1,1,0,"0.0046"
+"3","GO:0004962","endothelin receptor activity",1,1,0,"0.0046"
+"4","GO:0120225","coenzyme A binding",2,1,0.01,"0.0092"
+"5","GO:0004667","prostaglandin-D synthase activity",2,1,0.01,"0.0092"

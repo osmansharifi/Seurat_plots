@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0004667","prostaglandin-D synthase activity",2,1,0,"0.0032"
+"2","GO:0004117","calmodulin-dependent cyclic-nucleotide phosphodiesterase act...",3,1,0,"0.0048"
+"3","GO:0048101","calcium- and calmodulin-regulated 3',5'-cyclic-GMP phosphodi...",3,1,0,"0.0048"
+"4","GO:0030274","LIM domain binding",5,1,0.01,"0.0079"
+"5","GO:0005501","retinoid binding",5,1,0.01,"0.0079"

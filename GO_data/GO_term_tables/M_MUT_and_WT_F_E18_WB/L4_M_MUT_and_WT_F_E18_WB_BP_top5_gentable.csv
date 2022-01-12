@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0048483","autonomic nervous system development",16,2,0.08,"0.0026"
+"2","GO:0022010","central nervous system myelination",17,2,0.08,"0.0029"
+"3","GO:1905517","macrophage migration",20,2,0.1,"0.0041"
+"4","GO:0035645","enteric smooth muscle cell differentiation",1,1,0,"0.0048"
+"5","GO:2001213","negative regulation of vasculogenesis",1,1,0,"0.0048"
