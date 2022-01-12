@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0005524","ATP binding",703,520,473.35,"3.5e-05"
+"2","GO:0019894","kinesin binding",36,34,24.24,"0.00011"
+"3","GO:0031267","small GTPase binding",184,146,123.89,"0.00018"
+"4","GO:0042393","histone binding",132,107,88.88,"0.00029"
+"5","GO:0003724","RNA helicase activity",20,20,13.47,"0.00036"

@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0019911","structural constituent of myelin sheath",6,5,0.42,"9.5e-06"
+"2","GO:0031267","small GTPase binding",184,26,12.93,"0.00045"
+"3","GO:0015631","tubulin binding",207,27,14.54,"0.00123"
+"4","GO:0005506","iron ion binding",42,9,2.95,"0.00214"
+"5","GO:0071813","lipoprotein particle binding",9,4,0.63,"0.00228"

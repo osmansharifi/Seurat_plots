@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0031748","D1 dopamine receptor binding",8,4,0.36,"0.00024"
+"2","GO:0030170","pyridoxal phosphate binding",17,5,0.76,"0.00070"
+"3","GO:0005272","sodium channel activity",26,6,1.17,"0.00083"
+"4","GO:0008384","IkappaB kinase activity",2,2,0.09,"0.00200"
+"5","GO:0004351","glutamate decarboxylase activity",2,2,0.09,"0.00200"
