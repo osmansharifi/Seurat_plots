@@ -93,15 +93,15 @@ for (cell_type in cell_types){
   foreach(GOdata = godata_types, godata_name = godata_names, ont = topgo_ontologies) %do% {
     # Test for enrichment using Fisher's Exact Test and visualize GO terms
     resultFisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
-    GenTable <- GenTable(GOdata, Fisher = resultFisher, topNodes = 20, numChar = 60)
+    GenTable <- GenTable(GOdata, Fisher = resultFisher, topNodes = 20, numChar = 1000)
     # GenTable contains 6 columns; annotated = # of genes that belong to the GO term, Significant = # of Sig DEGs present in the term
-    write.csv(GenTable, file = glue(gentable_path, cell_type, "_", metadata_info_concise, "_", ont, "_gentable.csv"))
+    write.csv(GenTable, file = glue(gentable_path, cell_type, "_", metadata_info_concise, "_", ont, "_top20_gentable.csv"))
     goEnrichment <- GenTable(
       GOdata,
       Fisher = resultFisher,
       orderBy = "Fisher",
       topNodes = 20,
-      numChar = 50)
+      numChar = 1000)
     goEnrichment$Fisher <- as.numeric(goEnrichment$Fisher)
     # Filter terms for Fisher p<0.05
     goEnrichment <- goEnrichment[goEnrichment$Fisher < 0.05,]
@@ -179,7 +179,7 @@ for (cell_type in cell_types){
   foreach(GOdata = godata_types, godata_name = godata_names, ont = topgo_ontologies) %do% {
     # Test for enrichment using Fisher's Exact Test and visualize GO terms
     resultFisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
-    GenTable <- GenTable(GOdata, Fisher = resultFisher, topNodes = 5, numChar = 60)
+    GenTable <- GenTable(GOdata, Fisher = resultFisher, topNodes = 5, numChar = 1000)
     # GenTable contains 6 columns; annotated = # of genes that belong to the GO term, Significant = # of Sig DEGs present in the term
     write.csv(GenTable, file = glue(gentable_path, cell_type, "_", metadata_info_concise, "_", ont, "_top5_gentable.csv"))
   }
@@ -212,7 +212,7 @@ for (cell_type in cell_types){
   foreach(GOdata = godata_types, godata_name = godata_names, ont = topgo_ontologies) %do% {
     # Test for enrichment using Fisher's Exact Test and visualize GO terms
     resultFisher <- runTest(GOdata, algorithm = "elim", statistic = "fisher")
-    GenTable <- GenTable(GOdata, Fisher = resultFisher, topNodes = 3, numChar = 60)
+    GenTable <- GenTable(GOdata, Fisher = resultFisher, topNodes = 3, numChar = 1000)
     # GenTable contains 6 columns; annotated = # of genes that belong to the GO term, Significant = # of Sig DEGs present in the term
     write.csv(GenTable, file = glue(gentable_path, cell_type, "_", metadata_info_concise, "_", ont, "_top3_gentable.csv"))
   }
