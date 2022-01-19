@@ -16,15 +16,17 @@ AAAGAGCGTTAGCAATTACCCAAATTCGGTGTTACGACTTCAGACTCAAGGAAACAGCTGGCCACGGAAACATGTCGCGA
 CCGGTGTTTATCCCGTTCCGGTGTTGTAGATGAGACTGCGCACACACAAAAACCCCTCGACCGGGATTACTCGCTACCCCTCAGTTGTG\
 GATGGGTCCCCCAGTGATGCGCCTAGCTTGGAGTCGGGAGCGCGGCCGAGAACGCCTCTTCTTGACTTGTTGAACGGTCACTTAAGACA\
 CAACAGTTCGGTACATACTCTGTTTTGGGTGGCCGGTCAATCCTATGACTGGAACCAAATGGCTCAAG"
+r1_addon = print(mecp2_WT[:150])
+r2_addon = print(mecp2_WT[350:])
 
 with open('/Users/osman/Documents/GitHub/snRNA-seq-pipeline/\
 data_preparation/fake_barcode_counts.csv','r') as csvfile:
 	readit = csv.reader(csvfile)
 	for line in readit:
-		print(line[0], line)
-r1_addon = print(mecp2_WT[0:150])
-r2_addon = print(mecp2_WT[350:])
+		print(line) # shows barcode file contents
 
+
+#read fastq files
 input_file = ('/Users/osman/Documents/GitHub/snRNA-seq-pipeline/data_preparation/fastq_subset/190106Csub_S9_L001_R1_001.fastq.gz')
 
 if input_file.endswith('.gz'):
@@ -38,9 +40,9 @@ while True:
 	extra1 = fp.readline()
 	extra2 = fp.readline()
 	#if description == '':
-	#	break
+		#break
 	#description = description.replace('@', '>', 1)
-	print(sequence)
+	print(description + sequence)
 	
 #fastq_file = open(('/Users/osman/Documents/GitHub/snRNA-seq-pipeline/data_preparation/fastq_subset/190106Csub_S9_L001_R1_001.fastq.gz'), 'r')
 #print(fastq_file)
