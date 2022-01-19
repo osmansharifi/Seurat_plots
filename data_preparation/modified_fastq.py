@@ -2,7 +2,8 @@
 import csv
 import sys
 import gzip
-'''
+from Bio import SeqIO
+
 mecp2_WT = "TCACCTAAGGGCCCCGGGCTTTATTACTCTCCCCTACGCTAATCGGGTCCTAGTGGGCAATGTCTGCGGCGTACTGA\
 TAGAAGTTACAGGTGCGTGGTCCCGAGAGCAATCGCAAAACACGCAGCATTGTAAGGAAGGACAATCGAACAAGCGCGTAGATATAATA\
 ACCACGGGCTTGGGCTGCTGGCGTTCGCTACGTTGCTAGGGCCGTTGTGCCACTAGTACTATGACCTTCCCTCGGGTCTGTAGTGTGGA\
@@ -26,21 +27,17 @@ data_preparation/fake_barcode_counts.csv','r') as csvfile:
 	readit = csv.reader(csvfile)
 	for line in readit:
 		print(line) # shows barcode file contents
-'''
 
-#read fastq files
-input_file = ('/Users/osman/Documents/GitHub/snRNA-seq-pipeline/data_preparation/fastq_subset/190106Csub_S9_L001_R1_001.fastq.gz')
 
-if input_file.endswith('.gz'):
-	fp = gzip.open(input_file, 'rt')
-else:
-	fp = open(input_file, 'r')
-	print(fp)
 
-while True: 
-	description = fp.readline()
-	sequence = fp.readline() 
-	print(description + sequence)
+
+
+
+
+
+
+
+
 '''
 - Input will be 1 file containing barcode counts
 - Glue barcode to the correct addon and append it to the r1 and r2 fastqs x number of times
