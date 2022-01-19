@@ -1,8 +1,5 @@
 #!/usr/bin/env python
 import csv
-import sys
-import gzip
-from Bio import SeqIO
 
 mecp2_WT = "TCACCTAAGGGCCCCGGGCTTTATTACTCTCCCCTACGCTAATCGGGTCCTAGTGGGCAATGTCTGCGGCGTACTGA\
 TAGAAGTTACAGGTGCGTGGTCCCGAGAGCAATCGCAAAACACGCAGCATTGTAAGGAAGGACAATCGAACAAGCGCGTAGATATAATA\
@@ -17,16 +14,20 @@ AAAGAGCGTTAGCAATTACCCAAATTCGGTGTTACGACTTCAGACTCAAGGAAACAGCTGGCCACGGAAACATGTCGCGA
 CCGGTGTTTATCCCGTTCCGGTGTTGTAGATGAGACTGCGCACACACAAAAACCCCTCGACCGGGATTACTCGCTACCCCTCAGTTGTG\
 GATGGGTCCCCCAGTGATGCGCCTAGCTTGGAGTCGGGAGCGCGGCCGAGAACGCCTCTTCTTGACTTGTTGAACGGTCACTTAAGACA\
 CAACAGTTCGGTACATACTCTGTTTTGGGTGGCCGGTCAATCCTATGACTGGAACCAAATGGCTCAAG"
-WT_r1_addon = print(mecp2_WT[:150])
-WT_r2_addon = print(mecp2_WT[350:])
-MUT_r1_addon = print(mecp2_MUT[:150])
-MUT_r2_addon = print(mecp2_MUT[350:])
+WT_r1_addon = (mecp2_WT[:150])
+WT_r2_addon = (mecp2_WT[350:])
+MUT_r1_addon = (mecp2_MUT[:150])
+MUT_r2_addon = (mecp2_MUT[350:])
 
 with open('/Users/osman/Documents/GitHub/snRNA-seq-pipeline/\
 data_preparation/fake_barcode_counts.csv','r') as csvfile:
-	readit = csv.reader(csvfile)
-	for line in readit:
-		print(line) # shows barcode file contents
+	barcodes = csv.reader(csvfile)
+	for line in barcodes:
+		print(line)
+		if line[1] != "0":
+			print(line[1])
+		else:
+			print(line[2])
 
 
 
