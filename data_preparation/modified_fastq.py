@@ -16,8 +16,10 @@ AAAGAGCGTTAGCAATTACCCAAATTCGGTGTTACGACTTCAGACTCAAGGAAACAGCTGGCCACGGAAACATGTCGCGA
 CCGGTGTTTATCCCGTTCCGGTGTTGTAGATGAGACTGCGCACACACAAAAACCCCTCGACCGGGATTACTCGCTACCCCTCAGTTGTG\
 GATGGGTCCCCCAGTGATGCGCCTAGCTTGGAGTCGGGAGCGCGGCCGAGAACGCCTCTTCTTGACTTGTTGAACGGTCACTTAAGACA\
 CAACAGTTCGGTACATACTCTGTTTTGGGTGGCCGGTCAATCCTATGACTGGAACCAAATGGCTCAAG"
-r1_addon = print(mecp2_WT[:150])
-r2_addon = print(mecp2_WT[350:])
+WT_r1_addon = print(mecp2_WT[:150])
+WT_r2_addon = print(mecp2_WT[350:])
+MUT_r1_addon = print(mecp2_MUT[:150])
+MUT_r2_addon = print(mecp2_MUT[350:])
 
 with open('/Users/osman/Documents/GitHub/snRNA-seq-pipeline/\
 data_preparation/fake_barcode_counts.csv','r') as csvfile:
@@ -39,3 +41,7 @@ while True:
 	description = fp.readline()
 	sequence = fp.readline() 
 	print(description + sequence)
+'''
+- Input will be 1 file containing barcode counts
+- Glue barcode to the correct addon and append it to the r1 and r2 fastqs x number of times
+'''
