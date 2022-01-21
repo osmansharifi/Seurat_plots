@@ -18,18 +18,25 @@ WT_r2_addon = (mecp2_WT[340:490])
 MUT_r1_addon = (mecp2_MUT[10:160])
 MUT_r2_addon = (mecp2_MUT[340:490])
 
+#
+
+
+
 #Read barcodes and glue them to its corresponding random sequence
 with open('/Users/osman/Documents/GitHub/snRNA-seq-pipeline/\
-data_preparation/fake_barcode_counts.csv','r') as csvfile:
-	barcodes = csv.reader(csvfile)
+data_preparation/fake_barcode_counts.tsv','r') as file:
+	barcodes = csv.reader(file, delimiter="\t")
 	header = next(barcodes)
 	for bc, wt, mut in barcodes:
 		wt = int(wt)
 		mut = int(mut)
+		print(bc)
 		for i in range(wt):
-			spoofreads(barcode, WT_r1_addon)
-		for i in range(mut):
-			spoofreads(bc, MUT_r1_addon)
+			print(i)
+			#spoofreads(barcode, WT_r1_addon)
+		#for i in range(mut):
+			#print(i)
+			#spoofreads(bc, MUT_r1_addon)
 		
 			
 #create spoof read functions
