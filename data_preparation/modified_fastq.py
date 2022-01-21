@@ -18,7 +18,9 @@ WT_r2_addon = (mecp2_WT[340:490])
 MUT_r1_addon = (mecp2_MUT[10:160])
 MUT_r2_addon = (mecp2_MUT[340:490])
 
-#
+#spoofing function
+def spoofreads():
+
 
 
 
@@ -30,7 +32,6 @@ data_preparation/fake_barcode_counts.tsv','r') as file:
 	for bc, wt, mut in barcodes:
 		wt = int(wt)
 		mut = int(mut)
-		print(bc)
 		for i in range(wt):
 			print(i)
 			#spoofreads(barcode, WT_r1_addon)
