@@ -101,10 +101,9 @@ ggsave(p4,
 
 
 #########################################################################################################
-E18_GO = E18_GO[order(-E18_GO$p.adjust),] 
 E18_GO$GeneRatio <- E18_GO$Significant/E18_GO$Annotated # fixes order
 gg1 <- ggplot(E18_GO,
-              aes(x = Term, y = Cell.Type, size = (GeneRatio), fill = p.adjust))  +
+              aes(x = Term, y = Cell.Type, size = GeneRatio, fill = p.adjust))  +
   
   # expand_limits(y = 1) +
   geom_point(shape = 21) +
@@ -114,8 +113,8 @@ gg1 <- ggplot(E18_GO,
   
   xlab('') + ylab('Cell Type') +
   labs(
-    title = 'TopGO Terms',
-    subtitle = 'Curated 20 terms ordered by FDR corrected p-value'
+    title = 'FDR corrected TopGO Terms',
+    subtitle = 'Significant E18 Male terms'
   )  +   
   
   theme_bw(base_size = 24) +
@@ -126,7 +125,7 @@ gg1 <- ggplot(E18_GO,
     plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
     plot.caption = element_text(angle = 0, size = 12, face = 'bold', vjust = 1),
     
-    axis.text.x = element_text(angle = 90, size = 12, face = 'bold', hjust = 1.10),
+    axis.text.x = element_text(angle = 90, size = 12, face = 'bold', hjust = 1.0, vjust = 0.5),
     axis.text.y = element_text(angle = 0, size = 12, face = 'bold', vjust = 0.5),
     axis.title = element_text(size = 12, face = 'bold'),
     axis.title.x = element_text(size = 12, face = 'bold'),
@@ -138,8 +137,6 @@ gg1 <- ggplot(E18_GO,
     legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
     legend.text = element_text(size = 14, face = "bold"), # Text size
     title = element_text(size = 14, face = "bold")) +
-  
-  
   coord_flip()
 ggsave("E18_Male_GOTerms_dotplot.pdf",gg1, width = 15,
        height = 10)
