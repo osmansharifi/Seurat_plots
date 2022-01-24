@@ -8,7 +8,7 @@ library(dplyr)
 # Paths
 #csv_path <- "~/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/master_go_data_males.csv"
 #figure_path <- "~/GitHub/snRNA-seq-pipeline/figures/go_analysis/"
-csv_path <- "~/Documents/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/master_go_data_males_top3.csv"
+csv_path <- "~/Documents/GitHub/snRNA-seq-pipeline/GO_data/GO_term_tables/master_go_data_top3.csv"
 figure_path <- "~/Documents/GitHub/snRNA-seq-pipeline/figures/go_analysis/"
 # Names
 plot_title <- "GO Analysis"
