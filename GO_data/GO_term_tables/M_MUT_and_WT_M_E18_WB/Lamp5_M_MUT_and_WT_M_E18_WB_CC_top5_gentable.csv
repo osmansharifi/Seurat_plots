@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0022627","cytosolic small ribosomal subunit",45,15,1.52,"9.2e-12"
+"2","GO:0022625","cytosolic large ribosomal subunit",52,15,1.75,"9.6e-11"
+"3","GO:0098978","glutamatergic synapse",309,33,10.43,"4.8e-09"
+"4","GO:0043209","myelin sheath",198,23,6.68,"2.4e-07"
+"5","GO:0045202","synapse",1191,108,40.19,"3.3e-07"

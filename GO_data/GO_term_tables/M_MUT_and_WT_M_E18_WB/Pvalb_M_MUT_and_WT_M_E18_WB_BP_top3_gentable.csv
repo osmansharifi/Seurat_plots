@@ -1,0 +1,4 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0010976","positive regulation of neuron projection development",206,6,0.89,"0.00026"
+"2","GO:0071896","protein localization to adherens junction",6,2,0.03,"0.00027"
+"3","GO:0007406","negative regulation of neuroblast proliferation",8,2,0.03,"0.00051"

@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0022627","cytosolic small ribosomal subunit",45,16,1.19,"1.3e-14"
+"2","GO:0022625","cytosolic large ribosomal subunit",53,12,1.4,"9.9e-09"
+"3","GO:0014069","postsynaptic density",316,29,8.36,"1.1e-06"
+"4","GO:0098982","GABA-ergic synapse",67,11,1.77,"1.3e-06"
+"5","GO:0043197","dendritic spine",190,17,5.02,"1.2e-05"

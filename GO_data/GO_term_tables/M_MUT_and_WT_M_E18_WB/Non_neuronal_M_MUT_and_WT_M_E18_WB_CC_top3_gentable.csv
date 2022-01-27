@@ -1,0 +1,4 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0045211","postsynaptic membrane",245,3,0.23,"0.0014"
+"2","GO:0099182","presynaptic intermediate filament cytoskeleton",2,1,0,"0.0019"
+"3","GO:0043195","terminal bouton",70,2,0.07,"0.0019"

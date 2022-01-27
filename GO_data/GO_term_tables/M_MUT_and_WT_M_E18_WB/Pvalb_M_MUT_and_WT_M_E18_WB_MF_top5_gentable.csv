@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0005200","structural constituent of cytoskeleton",51,4,0.22,"6.7e-05"
+"2","GO:0003735","structural constituent of ribosome",156,5,0.67,"0.00055"
+"3","GO:0099186","structural constituent of postsynapse",19,2,0.08,"0.00298"
+"4","GO:0008682","2-octoprenyl-3-methyl-6-methoxy-1,4-benzoquinone hydroxylase activity",1,1,0,"0.00431"
+"5","GO:0031722","hemoglobin beta binding",1,1,0,"0.00431"

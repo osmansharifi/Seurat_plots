@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0022627","cytosolic small ribosomal subunit",46,7,0.48,"4.5e-07"
+"2","GO:0022625","cytosolic large ribosomal subunit",53,6,0.55,"1.8e-05"
+"3","GO:0043005","neuron projection",1350,33,14.09,"2.5e-05"
+"4","GO:0043209","myelin sheath",200,10,2.09,"4.7e-05"
+"5","GO:0045202","synapse",1201,36,12.53,"7.0e-05"

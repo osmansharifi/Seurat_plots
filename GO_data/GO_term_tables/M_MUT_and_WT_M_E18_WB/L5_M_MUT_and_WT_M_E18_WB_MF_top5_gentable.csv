@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0003735","structural constituent of ribosome",157,52,6.13,"< 1e-30"
+"2","GO:0019843","rRNA binding",71,19,2.77,"6.2e-07"
+"3","GO:0008201","heparin binding",118,17,4.61,"3.2e-06"
+"4","GO:1990948","ubiquitin ligase inhibitor activity",9,5,0.35,"9.9e-06"
+"5","GO:0005515","protein binding",7720,388,301.56,"2.1e-05"
