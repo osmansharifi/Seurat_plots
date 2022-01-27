@@ -1,4 +1,4 @@
 "","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0099560","synaptic membrane adhesion",32,10,2.3,"5.3e-05"
-"2","GO:0007215","glutamate receptor signaling pathway",44,11,3.17,"0.00021"
-"3","GO:0045454","cell redox homeostasis",54,12,3.89,"0.00037"
+"1","GO:0009987","cellular process",11894,914,823.16,"1.8e-05"
+"2","GO:0099560","synaptic membrane adhesion",34,10,2.35,"6.8e-05"
+"3","GO:0032981","mitochondrial respiratory chain complex I assembly",49,12,3.39,"9.5e-05"

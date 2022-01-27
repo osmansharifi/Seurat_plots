@@ -1,4 +1,4 @@
 "","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0005634","nucleus",5595,57,39.75,"0.0033"
-"2","GO:0045202","synapse",1296,18,9.21,"0.0041"
-"3","GO:0016604","nuclear body",622,11,4.42,"0.0045"
+"1","GO:0031981","nuclear lumen",3294,40,22.94,"0.0018"
+"2","GO:0035770","ribonucleoprotein granule",214,6,1.49,"0.0038"
+"3","GO:0043025","neuronal cell body",627,11,4.37,"0.0041"

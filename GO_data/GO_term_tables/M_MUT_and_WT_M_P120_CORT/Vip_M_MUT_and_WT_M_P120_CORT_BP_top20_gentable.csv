@@ -11,7 +11,7 @@
 "10","GO:0030150","protein import into mitochondrial matrix",17,5,0.8,"0.00089"
 "11","GO:0046079","dUMP catabolic process",5,3,0.24,"0.00098"
 "12","GO:1902474","positive regulation of protein localization to synapse",5,3,0.24,"0.00098"
-"13","GO:0002865","negative regulation of acute inflammatory response to antige...",5,3,0.24,"0.00098"
+"13","GO:0002865","negative regulation of acute inflammatory response to antigenic stimulus",5,3,0.24,"0.00098"
 "14","GO:1902430","negative regulation of amyloid-beta formation",18,5,0.85,"0.00118"
 "15","GO:0006915","apoptotic process",1485,95,70.1,"0.00121"
 "16","GO:0048675","axon extension",130,15,6.14,"0.00121"

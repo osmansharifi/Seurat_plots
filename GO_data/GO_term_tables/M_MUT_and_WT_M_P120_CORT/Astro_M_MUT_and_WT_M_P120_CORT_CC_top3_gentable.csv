@@ -1,4 +1,4 @@
 "","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0043209","myelin sheath",196,6,0.28,"4e-06"
-"2","GO:0022625","cytosolic large ribosomal subunit",52,2,0.07,"0.0024"
-"3","GO:0097453","mesaxon",2,1,0,"0.0029"
+"1","GO:0043209","myelin sheath",197,6,0.27,"3.8e-06"
+"2","GO:0022625","cytosolic large ribosomal subunit",52,2,0.07,"0.0023"
+"3","GO:0097453","mesaxon",2,1,0,"0.0028"

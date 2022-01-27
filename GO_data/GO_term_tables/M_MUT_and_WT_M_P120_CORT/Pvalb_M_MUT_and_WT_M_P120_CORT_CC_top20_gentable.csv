@@ -9,7 +9,7 @@
 "8","GO:0005737","cytoplasm",9020,456,384.16,"0.00042"
 "9","GO:0022627","cytosolic small ribosomal subunit",45,8,1.92,"0.00055"
 "10","GO:0001405","PAM complex, Tim23 associated import motor",5,3,0.21,"0.00072"
-"11","GO:0000275","mitochondrial proton-transporting ATP synthase complex, cata...",5,3,0.21,"0.00072"
+"11","GO:0000275","mitochondrial proton-transporting ATP synthase complex, catalytic sector F(1)",5,3,0.21,"0.00072"
 "12","GO:0043679","axon terminus",161,16,6.86,"0.00142"
 "13","GO:0045202","synapse",1194,92,50.85,"0.00173"
 "14","GO:0005794","Golgi apparatus",1270,75,54.09,"0.00220"

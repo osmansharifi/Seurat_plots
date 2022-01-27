@@ -1,4 +1,4 @@
 "","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0003735","structural constituent of ribosome",149,38,10.62,"2.5e-12"
-"2","GO:0031625","ubiquitin protein ligase binding",280,38,19.96,"9.3e-05"
-"3","GO:0001671","ATPase activator activity",24,8,1.71,"0.00017"
+"1","GO:0003735","structural constituent of ribosome",157,39,10.8,"1.0e-12"
+"2","GO:0031625","ubiquitin protein ligase binding",284,38,19.53,"5.9e-05"
+"3","GO:0005515","protein binding",7233,591,497.44,"8.3e-05"

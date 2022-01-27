@@ -3,7 +3,7 @@
 "2","GO:0035770","ribonucleoprotein granule",214,6,1.49,"0.0038"
 "3","GO:0043025","neuronal cell body",627,11,4.37,"0.0041"
 "4","GO:0005737","cytoplasm",8715,76,60.68,"0.0042"
-"5","GO:0033177","proton-transporting two-sector ATPase complex, proton-transp...",15,2,0.1,"0.0047"
+"5","GO:0033177","proton-transporting two-sector ATPase complex, proton-transporting domain",15,2,0.1,"0.0047"
 "6","GO:0016604","nuclear body",642,11,4.47,"0.0049"
 "7","GO:0022625","cytosolic large ribosomal subunit",52,3,0.36,"0.0056"
 "8","GO:0098800","inner mitochondrial membrane protein complex",106,4,0.74,"0.0064"
