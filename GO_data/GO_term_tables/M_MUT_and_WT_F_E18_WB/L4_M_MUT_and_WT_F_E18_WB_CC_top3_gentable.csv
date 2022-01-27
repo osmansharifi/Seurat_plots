@@ -1,4 +1,4 @@
 "","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0016021","integral component of membrane",1741,16,8.1,"0.0048"
-"2","GO:0030426","growth cone",167,4,0.78,"0.0071"
-"3","GO:0099066","integral component of neuronal dense core vesicle membrane",2,1,0.01,"0.0093"
+"1","GO:0016021","integral component of membrane",1763,16,8.17,"0.0053"
+"2","GO:0030426","growth cone",162,4,0.75,"0.0063"
+"3","GO:0099066","integral component of neuronal dense core vesicle membrane",2,1,0.01,"0.0092"

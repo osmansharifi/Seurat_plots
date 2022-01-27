@@ -1,6 +1,0 @@
-"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0005964","phosphorylase kinase complex",4,1,0.01,"0.0051"
-"2","GO:0016604","nuclear body",588,4,0.75,"0.0053"
-"3","GO:0071010","prespliceosome",15,1,0.02,"0.0190"
-"4","GO:0071004","U2-type prespliceosome",15,1,0.02,"0.0190"
-"5","GO:0005686","U2 snRNP",20,1,0.03,"0.0253"

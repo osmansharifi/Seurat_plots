@@ -1,6 +1,0 @@
-"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0000786","nucleosome",14,1,0,"0.0022"
-"2","GO:0000781","chromosome, telomeric region",98,1,0.02,"0.0151"
-"3","GO:0000228","nuclear chromosome",166,1,0.03,"0.0255"
-"4","GO:0098687","chromosomal region",243,1,0.04,"0.0372"
-"5","GO:0031981","nuclear lumen",3220,1,0.5,"0.4357"

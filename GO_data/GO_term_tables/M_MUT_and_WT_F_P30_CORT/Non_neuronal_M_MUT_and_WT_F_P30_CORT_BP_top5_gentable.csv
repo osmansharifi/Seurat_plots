@@ -1,6 +1,0 @@
-"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0006958","complement activation, classical pathway",6,2,0.03,"0.00032"
-"2","GO:0098883","synapse pruning",6,2,0.03,"0.00032"
-"3","GO:0097105","presynaptic membrane assembly",7,2,0.03,"0.00044"
-"4","GO:0044794","positive regulation by host of viral process",11,3,0.05,"0.00071"
-"5","GO:0022604","regulation of cell morphogenesis",193,5,0.9,"0.00186"

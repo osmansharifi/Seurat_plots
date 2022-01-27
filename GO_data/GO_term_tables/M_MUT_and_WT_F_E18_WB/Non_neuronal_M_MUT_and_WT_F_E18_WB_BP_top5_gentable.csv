@@ -1,6 +1,6 @@
 "","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0007420","brain development",349,4,0.4,"0.00036"
+"1","GO:0007420","brain development",352,4,0.4,"0.00037"
 "2","GO:0007628","adult walking behavior",29,2,0.03,"0.00045"
-"3","GO:0070105","positive regulation of interleukin-6-mediated signaling path...",1,1,0,"0.00114"
+"3","GO:0070105","positive regulation of interleukin-6-mediated signaling pathway",1,1,0,"0.00114"
 "4","GO:0003226","right ventricular compact myocardium morphogenesis",1,1,0,"0.00114"
 "5","GO:0003326","pancreatic A cell fate commitment",1,1,0,"0.00114"

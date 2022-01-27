@@ -1,6 +1,0 @@
-"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0005886","plasma membrane",1882,20,9.92,"0.00039"
-"2","GO:0014802","terminal cisterna",1,1,0.01,"0.00527"
-"3","GO:0005882","intermediate filament",26,2,0.14,"0.00811"
-"4","GO:0043235","receptor complex",163,4,0.86,"0.01018"
-"5","GO:1905202","methylcrotonoyl-CoA carboxylase complex",2,1,0.01,"0.01051"

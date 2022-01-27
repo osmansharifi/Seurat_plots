@@ -1,6 +1,0 @@
-"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0031462","Cul2-RING ubiquitin ligase complex",6,1,0.01,"0.0094"
-"2","GO:0005869","dynactin complex",7,1,0.01,"0.0110"
-"3","GO:0031526","brush border membrane",13,1,0.02,"0.0203"
-"4","GO:0030131","clathrin adaptor complex",20,1,0.03,"0.0310"
-"5","GO:0030119","AP-type membrane coat adaptor complex",30,1,0.05,"0.0462"

@@ -1,6 +1,0 @@
-"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0061202","clathrin-sculpted gamma-aminobutyric acid transport vesicle ...",2,2,0.07,"0.0012"
-"2","GO:0033179","proton-transporting V-type ATPase, V0 domain",7,3,0.24,"0.0012"
-"3","GO:0016607","nuclear speck",195,15,6.63,"0.0025"
-"4","GO:0005886","plasma membrane",1909,88,64.87,"0.0026"
-"5","GO:0055028","cortical microtubule",3,2,0.1,"0.0034"

@@ -1,6 +1,0 @@
-"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0070324","thyroid hormone binding",6,1,0,"0.00048"
-"2","GO:0005179","hormone activity",39,1,0,"0.00313"
-"3","GO:0044877","protein-containing complex binding",1125,1,0.09,"0.09015"
-"4","GO:0042802","identical protein binding",1707,1,0.14,"0.13679"
-"5","GO:0003674","molecular_function",12479,1,1,"1.00000"

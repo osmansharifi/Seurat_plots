@@ -2,5 +2,5 @@
 "1","GO:0005043","netrin receptor activity involved in chemorepulsion",1,1,0,"0.0012"
 "2","GO:0102140","heparan sulfate N-deacetylase activity",1,1,0,"0.0012"
 "3","GO:0015016","[heparan sulfate]-glucosamine N-sulfotransferase activity",2,1,0,"0.0023"
-"4","GO:0000978","RNA polymerase II cis-regulatory region sequence-specific DN...",361,3,0.42,"0.0065"
-"5","GO:0001228","DNA-binding transcription activator activity, RNA polymerase...",151,2,0.17,"0.0122"
+"4","GO:0000978","RNA polymerase II cis-regulatory region sequence-specific DNA binding",358,3,0.41,"0.0063"
+"5","GO:0001228","DNA-binding transcription activator activity, RNA polymerase II-specific",150,2,0.17,"0.0120"

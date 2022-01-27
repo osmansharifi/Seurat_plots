@@ -1,6 +1,0 @@
-"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0003735","structural constituent of ribosome",157,92,26.32,"< 1e-30"
-"2","GO:0005515","protein binding",7368,1426,1235.43,"1.4e-09"
-"3","GO:0003729","mRNA binding",286,84,47.96,"2.7e-06"
-"4","GO:0003924","GTPase activity",237,65,39.74,"2.3e-05"
-"5","GO:0005525","GTP binding",295,76,49.46,"5.1e-05"
