@@ -1,0 +1,4 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0099061","integral component of postsynaptic density membrane",38,2,0.06,"0.0016"
+"2","GO:0030424","axon",645,5,1.01,"0.0028"
+"3","GO:0061202","clathrin-sculpted gamma-aminobutyric acid transport vesicle membrane",2,1,0,"0.0031"
