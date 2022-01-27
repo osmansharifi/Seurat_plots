@@ -1,4 +1,4 @@
 "","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0098993","anchored component of synaptic vesicle membrane",18,1,0,"0.0040"
-"2","GO:0099513","polymeric cytoskeletal fiber",517,2,0.12,"0.0044"
-"3","GO:0030667","secretory granule membrane",61,1,0.01,"0.0136"
+"1","GO:0098993","anchored component of synaptic vesicle membrane",5,1,0,"0.0011"
+"2","GO:0099513","polymeric cytoskeletal fiber",519,2,0.11,"0.0042"
+"3","GO:0030667","secretory granule membrane",60,1,0.01,"0.0130"

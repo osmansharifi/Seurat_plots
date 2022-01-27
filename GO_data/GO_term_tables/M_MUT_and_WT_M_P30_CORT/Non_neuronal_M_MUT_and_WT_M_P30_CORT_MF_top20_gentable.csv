@@ -13,7 +13,7 @@
 "12","GO:0003779","actin binding",350,1,0.08,"0.07551"
 "13","GO:0017111","nucleoside-triphosphatase activity",426,1,0.09,"0.09138"
 "14","GO:0016462","pyrophosphatase activity",475,1,0.11,"0.10152"
-"15","GO:0016818","hydrolase activity, acting on acid anhydrides, in phosphorus...",483,1,0.11,"0.10317"
+"15","GO:0016818","hydrolase activity, acting on acid anhydrides, in phosphorus-containing anhydrides",483,1,0.11,"0.10317"
 "16","GO:0016817","hydrolase activity, acting on acid anhydrides",484,1,0.11,"0.10338"
 "17","GO:0008270","zinc ion binding",538,1,0.12,"0.11445"
 "18","GO:0042803","protein homodimerization activity",572,1,0.13,"0.12137"

@@ -2,7 +2,7 @@
 "1","GO:0035976","transcription factor AP-1 complex",4,2,0.02,"0.00010"
 "2","GO:0097441","basal dendrite",10,2,0.04,"0.00075"
 "3","GO:0043005","neuron projection",1314,14,5.46,"0.00505"
-"4","GO:0017071","intracellular cyclic nucleotide activated cation channel com...",2,1,0.01,"0.00830"
+"4","GO:0017071","intracellular cyclic nucleotide activated cation channel complex",2,1,0.01,"0.00830"
 "5","GO:0044297","cell body",709,8,2.95,"0.00872"
 "6","GO:0098559","cytoplasmic side of early endosome membrane",3,1,0.01,"0.01242"
 "7","GO:0043025","neuronal cell body",636,7,2.64,"0.01594"

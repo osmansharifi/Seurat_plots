@@ -1,4 +1,4 @@
 "","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0098978","glutamatergic synapse",490,30,7.43,"6.9e-11"
-"2","GO:0043025","neuronal cell body",661,29,10.02,"2.5e-07"
-"3","GO:0014069","postsynaptic density",387,19,5.87,"7.0e-06"
+"1","GO:0043025","neuronal cell body",655,30,9.63,"3.1e-08"
+"2","GO:0043197","dendritic spine",191,15,2.81,"1.2e-05"
+"3","GO:0098978","glutamatergic synapse",310,16,4.56,"1.4e-05"

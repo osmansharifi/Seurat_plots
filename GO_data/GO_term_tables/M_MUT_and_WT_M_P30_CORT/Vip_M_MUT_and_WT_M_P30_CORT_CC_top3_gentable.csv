@@ -1,4 +1,4 @@
 "","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0035976","transcription factor AP-1 complex",4,2,0,"3.5e-06"
-"2","GO:0030425","dendrite",661,6,0.53,"5.0e-05"
-"3","GO:0002199","zona pellucida receptor complex",8,1,0.01,"0.0064"
+"1","GO:0035976","transcription factor AP-1 complex",4,2,0,"3.3e-06"
+"2","GO:0030425","dendrite",656,6,0.51,"4.1e-05"
+"3","GO:0002199","zona pellucida receptor complex",8,1,0.01,"0.0062"

@@ -1,4 +1,4 @@
 "","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0001228","DNA-binding transcription activator activity, RNA polymerase...",334,16,5.93,"0.00032"
-"2","GO:0044325","ion channel binding",123,9,2.18,"0.00034"
-"3","GO:0070097","delta-catenin binding",9,3,0.16,"0.00043"
+"1","GO:0001228","DNA-binding transcription activator activity, RNA polymerase II-specific",338,16,5.75,"0.00022"
+"2","GO:0044325","transmembrane transporter binding",127,9,2.16,"0.00032"
+"3","GO:0070097","delta-catenin binding",9,3,0.15,"0.00038"

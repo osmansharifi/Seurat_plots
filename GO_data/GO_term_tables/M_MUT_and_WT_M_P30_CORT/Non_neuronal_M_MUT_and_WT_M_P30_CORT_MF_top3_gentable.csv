@@ -1,4 +1,4 @@
 "","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0019002","GMP binding",3,1,0,"0.00068"
-"2","GO:0008092","cytoskeletal protein binding",816,2,0.19,"0.01102"
-"3","GO:0051219","phosphoprotein binding",95,1,0.02,"0.02147"
+"1","GO:0019002","GMP binding",3,1,0,"0.00066"
+"2","GO:0008092","cytoskeletal protein binding",826,2,0.18,"0.01068"
+"3","GO:0051219","phosphoprotein binding",98,1,0.02,"0.02154"
