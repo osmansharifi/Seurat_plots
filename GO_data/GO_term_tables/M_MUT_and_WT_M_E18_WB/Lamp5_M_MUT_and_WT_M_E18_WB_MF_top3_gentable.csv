@@ -1,4 +1,4 @@
 "","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0003735","structural constituent of ribosome",148,26,5.11,"6.5e-12"
-"2","GO:0005516","calmodulin binding",163,17,5.63,"4.9e-05"
-"3","GO:0045295","gamma-catenin binding",10,4,0.35,"0.00025"
+"1","GO:0003735","structural constituent of ribosome",156,29,5.27,"4.8e-14"
+"2","GO:0005516","calmodulin binding",163,17,5.5,"3.7e-05"
+"3","GO:1990948","ubiquitin ligase inhibitor activity",8,4,0.27,"8.1e-05"

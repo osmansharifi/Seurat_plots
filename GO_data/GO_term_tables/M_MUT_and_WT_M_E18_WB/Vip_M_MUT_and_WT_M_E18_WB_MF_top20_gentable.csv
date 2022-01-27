@@ -13,7 +13,7 @@
 "12","GO:0031720","haptoglobin binding",5,2,0.07,"0.00203"
 "13","GO:0050998","nitric-oxide synthase binding",18,3,0.26,"0.00208"
 "14","GO:0030552","cAMP binding",19,3,0.28,"0.00244"
-"15","GO:1904315","transmitter-gated ion channel activity involved in regulatio...",40,4,0.58,"0.00259"
+"15","GO:1904315","transmitter-gated ion channel activity involved in regulation of postsynaptic membrane potential",40,4,0.58,"0.00259"
 "16","GO:0004972","NMDA glutamate receptor activity",6,2,0.09,"0.00301"
 "17","GO:0048306","calcium-dependent protein binding",70,5,1.01,"0.00342"
 "18","GO:0019843","rRNA binding",71,5,1.03,"0.00364"

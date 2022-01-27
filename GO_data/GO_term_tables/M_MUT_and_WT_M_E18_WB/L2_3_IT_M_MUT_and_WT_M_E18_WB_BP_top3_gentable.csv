@@ -1,4 +1,4 @@
 "","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0021954","central nervous system neuron development",97,15,3.79,"5.1e-06"
-"2","GO:0007411","axon guidance",216,23,8.45,"1.3e-05"
-"3","GO:1902476","chloride transmembrane transport",41,9,1.6,"2.3e-05"
+"1","GO:0021954","central nervous system neuron development",89,15,3.41,"1.3e-06"
+"2","GO:0043524","negative regulation of neuron apoptotic process",168,19,6.43,"2.4e-05"
+"3","GO:1902476","chloride transmembrane transport",43,9,1.65,"2.9e-05"

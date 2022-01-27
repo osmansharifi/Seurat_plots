@@ -1,4 +1,4 @@
 "","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0043524","negative regulation of neuron apoptotic process",173,14,3.28,"5.4e-06"
-"2","GO:0010001","glial cell differentiation",230,15,4.36,"3.3e-05"
-"3","GO:0032489","regulation of Cdc42 protein signal transduction",6,3,0.11,"0.00013"
+"1","GO:0043524","negative regulation of neuron apoptotic process",172,13,3.18,"1.9e-05"
+"2","GO:0010001","glial cell differentiation",230,15,4.25,"2.5e-05"
+"3","GO:0045664","regulation of neuron differentiation",209,15,3.86,"0.00011"
