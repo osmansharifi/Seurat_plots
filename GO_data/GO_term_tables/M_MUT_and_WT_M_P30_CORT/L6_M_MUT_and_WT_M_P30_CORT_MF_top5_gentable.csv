@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0001228","DNA-binding transcription activator activity, RNA polymerase II-specific",340,14,2.02,"1.2e-08"
+"2","GO:0003682","chromatin binding",552,13,3.29,"2.1e-05"
+"3","GO:0000978","RNA polymerase II cis-regulatory region sequence-specific DNA binding",845,17,5.03,"7.8e-05"
+"4","GO:0000979","RNA polymerase II core promoter sequence-specific DNA binding",18,3,0.11,"0.00016"
+"5","GO:0035259","glucocorticoid receptor binding",20,3,0.12,"0.00022"

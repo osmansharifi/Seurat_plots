@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0005881","cytoplasmic microtubule",69,1,0.04,"0.035"
+"2","GO:0044291","cell-cell contact zone",75,1,0.04,"0.038"
+"3","GO:0097730","non-motile cilium",117,1,0.06,"0.058"
+"4","GO:0005694","chromosome",912,2,0.47,"0.075"
+"5","GO:0030426","growth cone",199,1,0.1,"0.098"

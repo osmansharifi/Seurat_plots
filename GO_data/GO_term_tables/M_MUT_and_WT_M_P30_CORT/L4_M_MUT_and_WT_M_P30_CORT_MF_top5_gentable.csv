@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0001228","DNA-binding transcription activator activity, RNA polymerase II-specific",321,11,1.31,"5.8e-08"
+"2","GO:0000978","RNA polymerase II cis-regulatory region sequence-specific DNA binding",805,13,3.3,"1.7e-05"
+"3","GO:0019871","sodium channel inhibitor activity",7,2,0.03,"0.00034"
+"4","GO:0004725","protein tyrosine phosphatase activity",87,4,0.36,"0.00044"
+"5","GO:0008330","protein tyrosine/threonine phosphatase activity",11,2,0.05,"0.00088"
