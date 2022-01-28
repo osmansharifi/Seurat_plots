@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0043237","laminin-1 binding",4,1,0,"0.0017"
+"2","GO:0005095","GTPase inhibitor activity",5,1,0,"0.0021"
+"3","GO:0015288","porin activity",5,1,0,"0.0021"
+"4","GO:0048495","Roundabout binding",9,1,0,"0.0038"
+"5","GO:0043395","heparan sulfate proteoglycan binding",12,1,0.01,"0.0050"
