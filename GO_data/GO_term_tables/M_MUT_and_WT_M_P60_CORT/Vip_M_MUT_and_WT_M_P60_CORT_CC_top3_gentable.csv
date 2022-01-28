@@ -1,0 +1,4 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0098978","glutamatergic synapse",488,5,0.83,"0.0012"
+"2","GO:0098984","neuron to neuron synapse",415,6,0.7,"0.0018"
+"3","GO:0061202","clathrin-sculpted gamma-aminobutyric acid transport vesicle membrane",2,1,0,"0.0034"
