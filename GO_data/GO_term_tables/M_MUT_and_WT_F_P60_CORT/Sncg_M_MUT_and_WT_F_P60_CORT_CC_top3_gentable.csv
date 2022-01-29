@@ -1,0 +1,4 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0017119","Golgi transport complex",10,1,0,"0.0014"
+"2","GO:0005795","Golgi stack",51,1,0.01,"0.0073"
+"3","GO:0005829","cytosol",1860,1,0.27,"0.2652"

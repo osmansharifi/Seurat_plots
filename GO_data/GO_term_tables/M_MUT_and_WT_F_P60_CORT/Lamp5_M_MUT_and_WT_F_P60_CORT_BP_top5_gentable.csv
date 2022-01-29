@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0060074","synapse maturation",26,6,0.88,"0.00018"
+"2","GO:0043951","negative regulation of cAMP-mediated signaling",10,3,0.34,"0.00386"
+"3","GO:0007416","synapse assembly",130,11,4.4,"0.00445"
+"4","GO:0090036","regulation of protein kinase C signaling",11,3,0.37,"0.00517"
+"5","GO:0150012","positive regulation of neuron projection arborization",4,2,0.14,"0.00655"
