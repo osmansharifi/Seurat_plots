@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0005509","calcium ion binding",234,17,6.4,"0.00021"
+"2","GO:0016628","oxidoreductase activity, acting on the CH-CH group of donors, NAD or NADP as acceptor",7,3,0.19,"0.00065"
+"3","GO:0001228","DNA-binding transcription activator activity, RNA polymerase II-specific",152,12,4.16,"0.00089"
+"4","GO:0005219","ryanodine-sensitive calcium-release channel activity",3,2,0.08,"0.00219"
+"5","GO:0005021","vascular endothelial growth factor-activated receptor activity",3,2,0.08,"0.00219"

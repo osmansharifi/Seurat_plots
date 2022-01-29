@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0070888","E-box binding",20,2,0.07,"0.0023"
+"2","GO:0008108","UDP-glucose:hexose-1-phosphate uridylyltransferase activity",1,1,0,"0.0036"
+"3","GO:0004686","elongation factor-2 kinase activity",1,1,0,"0.0036"
+"4","GO:0032266","phosphatidylinositol-3-phosphate binding",26,2,0.09,"0.0039"
+"5","GO:0005201","extracellular matrix structural constituent",31,2,0.11,"0.0055"
