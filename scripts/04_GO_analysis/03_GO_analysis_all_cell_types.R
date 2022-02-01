@@ -90,7 +90,7 @@ gg1 <- ggplot(E18_GO,
     title = element_text(size = 14, face = "bold")) +
   coord_flip()
 ggsave("E18_Male_GOTerms_dotplot.pdf",gg1, width = 15,
-       height = 10)
+       height = 12)
 #P30
 gg2 <- ggplot(P30_GO,
               aes(x = Term, y = Cell.Type, size = GeneRatio, fill = p.adjust))  +
@@ -125,7 +125,7 @@ gg2 <- ggplot(P30_GO,
     title = element_text(size = 14, face = "bold")) +
   coord_flip()
 ggsave("P30_Male_GOTerms_dotplot.pdf",gg2, width = 15,
-       height = 10)
+       height = 12)
 
 #P60
 gg3 <- ggplot(P60_GO,
@@ -161,7 +161,7 @@ gg3 <- ggplot(P60_GO,
     title = element_text(size = 14, face = "bold")) +
   coord_flip()
 ggsave("P60_Male_GOTerms_dotplot.pdf",gg3, width = 15,
-       height = 10)
+       height = 12)
 
 #P120
 gg4 <- ggplot(P120_GO,
@@ -197,4 +197,4 @@ gg4 <- ggplot(P120_GO,
     title = element_text(size = 14, face = "bold")) +
   coord_flip()
 ggsave("P120_Male_GOTerms_dotplot.pdf",gg4, width = 15,
-       height = 10)
+       height = 12)
