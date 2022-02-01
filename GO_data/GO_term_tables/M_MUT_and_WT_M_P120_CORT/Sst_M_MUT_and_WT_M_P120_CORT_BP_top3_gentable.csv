@@ -1,0 +1,4 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0099560","synaptic membrane adhesion",32,10,2.3,"5.3e-05"
+"2","GO:0007215","glutamate receptor signaling pathway",44,11,3.17,"0.00021"
+"3","GO:0045454","cell redox homeostasis",54,12,3.89,"0.00037"

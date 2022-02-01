@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0005509","calcium ion binding",234,61,32.5,"3.8e-07"
+"2","GO:0005516","calmodulin binding",107,32,14.86,"1.2e-05"
+"3","GO:1904315","transmitter-gated ion channel activity involved in regulation of postsynaptic membrane potential",29,12,4.03,"0.00026"
+"4","GO:0030020","extracellular matrix structural constituent conferring tensile strength",9,6,1.25,"0.00041"
+"5","GO:0035254","glutamate receptor binding",52,17,7.22,"0.00042"

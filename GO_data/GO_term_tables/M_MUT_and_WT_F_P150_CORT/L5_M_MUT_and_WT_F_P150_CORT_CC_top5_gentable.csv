@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0098978","glutamatergic synapse",422,119,58.53,"1.3e-15"
+"2","GO:0098982","GABA-ergic synapse",90,37,12.48,"1.5e-10"
+"3","GO:0009986","cell surface",261,67,36.2,"1.8e-07"
+"4","GO:0043025","neuronal cell body",467,107,64.77,"5.4e-07"
+"5","GO:0005886","plasma membrane",1911,390,265.04,"1.8e-06"

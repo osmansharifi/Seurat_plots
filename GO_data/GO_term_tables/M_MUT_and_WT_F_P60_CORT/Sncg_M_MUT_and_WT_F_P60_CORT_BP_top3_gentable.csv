@@ -1,0 +1,4 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0006891","intra-Golgi vesicle-mediated transport",23,1,0,"0.0033"
+"2","GO:0007030","Golgi organization",89,1,0.01,"0.0128"
+"3","GO:0010256","endomembrane system organization",247,1,0.04,"0.0354"

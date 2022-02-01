@@ -1,0 +1,4 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0008017","microtubule binding",150,5,0.93,"0.0022"
+"2","GO:0005251","delayed rectifier potassium channel activity",15,2,0.09,"0.0037"
+"3","GO:0034237","protein kinase A regulatory subunit binding",16,2,0.1,"0.0043"

@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0017119","Golgi transport complex",10,1,0,"0.0014"
+"2","GO:0005795","Golgi stack",51,1,0.01,"0.0073"
+"3","GO:0005829","cytosol",1860,1,0.27,"0.2652"
+"4","GO:0016020","membrane",3372,1,0.48,"0.4808"
+"5","GO:0005622","intracellular anatomical structure",6051,1,0.86,"1.0000"

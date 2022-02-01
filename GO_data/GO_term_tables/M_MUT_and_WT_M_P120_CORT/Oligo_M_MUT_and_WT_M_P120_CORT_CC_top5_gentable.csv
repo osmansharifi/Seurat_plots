@@ -1,0 +1,6 @@
+"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
+"1","GO:0005741","mitochondrial outer membrane",145,2,0.06,"0.0014"
+"2","GO:0043209","myelin sheath",191,2,0.08,"0.0024"
+"3","GO:0045121","membrane raft",277,2,0.11,"0.0050"
+"4","GO:0046930","pore complex",16,1,0.01,"0.0066"
+"5","GO:0005743","mitochondrial inner membrane",357,2,0.15,"0.0082"
