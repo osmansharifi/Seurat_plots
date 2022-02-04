@@ -1,3 +1,7 @@
+---
+#title: "alleler visualization"
+#author: "Osman Sharifi"
+---
 library(ggplot2)
 library(reshape2)
 
