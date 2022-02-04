@@ -35,7 +35,7 @@ time_points = ["E18", "P30", "P60", "P120"]
 for time_point, meta, tissue in zip(time_points, meta_folders, tissue_types):
     for cell_type in cell_types:
         for ont in go_onts:
-            my_path = f'../../GO_data/GO_term_tables/{meta}/{cell_type}_M_MUT_and_WT_M_{time_point}_{tissue}_{ont}_gentable.csv'
+            my_path = f'../../GO_data/GO_term_tables/{meta}/{cell_type}_M_MUT_and_WT_M_{time_point}_{tissue}_{ont}_top20_gentable.csv'
             isExist = os.path.isfile(my_path)
             if isExist:
                 print(f'Adding data from {my_path} to data frame')
@@ -164,7 +164,7 @@ time_points = ["E18", "P30", "P60", "P150"]
 for time_point, meta, tissue in zip(time_points, meta_folders, tissue_types):
     for cell_type in cell_types:
         for ont in go_onts:
-            my_path = f'../../GO_data/GO_term_tables/{meta}/{cell_type}_M_MUT_and_WT_F_{time_point}_{tissue}_{ont}_gentable.csv'
+            my_path = f'../../GO_data/GO_term_tables/{meta}/{cell_type}_M_MUT_and_WT_F_{time_point}_{tissue}_{ont}_top20_gentable.csv'
             isExist = os.path.isfile(my_path)
             if isExist:
                 print(f'Adding data from {my_path} to data frame')
@@ -205,7 +205,7 @@ for time_point, meta, tissue in zip(time_points, meta_folders, tissue_types):
         for ont in go_onts:
             my_path = f'../../GO_data/GO_term_tables/{meta}/{cell_type}_M_MUT_and_WT_F_{time_point}_{tissue}_{ont}_top5_gentable.csv'
             isExist = os.path.isfile(my_path)
-            if isExist == "True":
+            if isExist:
                 # Read in GO Data
                 data = pd.read_csv(my_path)
                 # Turn the GO Data into a pandas data frame
@@ -242,7 +242,7 @@ for time_point, meta, tissue in zip(time_points, meta_folders, tissue_types):
         for ont in go_onts:
             my_path = f'../../GO_data/GO_term_tables/{meta}/{cell_type}_M_MUT_and_WT_F_{time_point}_{tissue}_{ont}_top3_gentable.csv'
             isExist = os.path.isfile(my_path)
-            if isExist == "True":
+            if isExist:
                 # Read in GO Data
                 data = pd.read_csv(my_path)
                 # Turn the GO Data into a pandas data frame
