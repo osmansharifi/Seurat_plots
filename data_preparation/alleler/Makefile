@@ -7,8 +7,8 @@ FQ = reads1.fq.gz reads2.fq.gz
 
 # Alignment Settings
 
-BLASTOPS = M=1 N=-3 S=40 nogap kap wordmask=dust novalidctxok warnings notes
-BWAOPS = 
+BLASTOPS = M=1 N=-3 S=40 cpus=4 nogap kap wordmask=dust novalidctxok warnings notes
+BWAOPS = -t 4
 
 # Main rules
 
@@ -31,7 +31,7 @@ $(SEQ).xnt: $(SEQ)
 # BWA Alignment
 
 $(SEQ).sam: $(SEQ).bwt $(FQ)
-	bwa mem $(SEQ) $(FQ) $(BWAOPS) | perl samtrim.pl > $(SEQ).sam
+	bwa mem $(BWAOPS) $(SEQ) $(FQ) | perl samtrim.pl > $(SEQ).sam
 
 # Convert aligned sam to fasta
 
