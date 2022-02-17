@@ -31,7 +31,7 @@ for mut in mut_stat:
                 my_file = f'/share/lasallelab/Osman/cell_parsing_test/{mut}_{sex}_{time_point}_{tissue}{rep}/sequence.alleler'
                 # Store True if file exists
                 isExist = os.path.isfile(my_file)
-                if isExist = 
+                if isExist:
                     with open(f'{my_file}') as fp:
                         # Read in the file contents
                         data = fp.read()
