@@ -1,5 +1,5 @@
 import os
-import pandas
+import pandas as pd
 import csv
 
 # Path to file output
