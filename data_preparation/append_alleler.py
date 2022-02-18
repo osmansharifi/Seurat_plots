@@ -1,9 +1,5 @@
 import os
-import pandas as pd
 import csv
-
-# Path to file output
-output_file_path = "."
 
 # Mutation status
 mut_stat = ["MUT", "WT"]
@@ -20,8 +16,8 @@ tissue_types = ["WB", "CORT", "CORT", "CORT", "CORT"]
 # Replicates
 replicates = ["1", "2", "3", "4"]
 
-# Make a master data frame to combine all the data from each individual sequence.alleler file
-master_sequence_alleler = pd.DataFrame()
+# Make a list containing path names for files that exist
+my_files = []
 
 for mut in mut_stat:
     for sex in sexes:
@@ -32,22 +28,16 @@ for mut in mut_stat:
                 # Store True if file exists
                 isExist = os.path.isfile(my_file)
                 if isExist:
-                    with open(f'{my_file}') as fp:
-                        # Read in the file contents
-                        data = fp.read()
-                        # Turn the file contents into a pandas data frame
-                        df = pd.DataFrame(data)
-                        # Append data to master data frame
-                        master_sequence_alleler = master_sequence_alleler.append(df)
+                    my_files.append(my_file)
                 else:
                     print(f'Skipping the following file because it cannot be found: {my_file}')
 
-master_sequence_alleler.to_csv(f'{output_file_path}/master_sequence_alleler.csv')
+with open('master_sequence_alleler.txt', 'w') as outfile:
+    # Iterate through list
+    for file in my_files:
+        # Open each file in read mode
+        with open(file) as infile:
+            outfile.write(infile.read())
 
-# Convert CSV to TSV
-with open(f'{output_file_path}/master_sequence_alleler.csv', 'r') as csvin, open(f'{output_file_path}/master_sequence_alleler.tsv') as tsvout:
-    csvin = csv.reader(csvin)
-    tsvout = csv.writer(tsvout, delimiter = '\t')
-    
-    for row in csvin:
-        tsvout.writerow(row)
+# Close file to avoid ValueError: I/O operation
+outfile.close()
