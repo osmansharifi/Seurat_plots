@@ -1,6 +1,10 @@
 import os
 import csv
 
+####################
+## Read in Files ##
+####################
+
 # Mutation status
 mut_stat = ["MUT", "WT"]
 
@@ -32,6 +36,9 @@ for mut in mut_stat:
                 else:
                     print(f'Skipping the following file because it cannot be found: {my_file}')
 
+#######################
+## Write master file ##
+#######################
 with open('master_sequence_alleler.txt', 'w') as outfile:
     # Iterate through list
     for file in my_files:
