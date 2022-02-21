@@ -74,7 +74,7 @@ nrow(s.obj@assays$RNA@counts)
 rownames(s.obj@assays$RNA@counts) = c(rownames(s.obj@assays$RNA@counts)[-c(7531:7532)], "Mecp2-WT", "Mecp2-MUT")
 
 # checking to make sure they are added
-s.obj@assays$RNA@counts[7530:7532, 1:5]
+s.obj@assays$RNA@counts[7532:7534, 1:5]
 
 E18 <- subset(x = s.obj, subset = orig.ident == c("MUT_F_E18_WB1"))
 # saving new Seurat object
