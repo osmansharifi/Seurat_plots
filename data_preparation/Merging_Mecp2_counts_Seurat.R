@@ -9,13 +9,13 @@ stopifnot(suppressMessages(sapply(packages, require, character.only=TRUE)))
 
 s.obj.name = "all_female_P150" #change this to the name of the Seurat object you're working with
 
-load(glue::glue("/Users/karineier/Documents/Mecp2/scRNA-seq/{s.obj.name}.RData"))
+load(glue::glue("/Users/osman/Desktop/All_female_samples/all_female_cortex_labeled.RData"))
 
 s.obj = all_female_P150 #change this to the name of the Seurat object you're working with
-
+s.obj = all_female.query
 # reading in count data for Mecp2 transcript expression wt vs.  mut
-Mecp2_wt_mut_counts = read.table(glue::glue("/Users/karineier/Documents/GitHub/snRNA-seq-pipeline/Parsing_Mecp2_trnx_expression/{s.obj.name}/counts_table.txt"), header=T)
-
+#Mecp2_wt_mut_counts = read.table(glue::glue("/Users/osman/Downloads/E18_mut.alleler"), header=T)
+Mecp2_wt_mut_counts = counts_table
 # Adding body counts into WT or MUT counts
 new.counts.wt = sapply(1:nrow(Mecp2_wt_mut_counts), function(x) {
   ifelse(Mecp2_wt_mut_counts$Body[x]>0 & Mecp2_wt_mut_counts$WT[x]>0, 
@@ -76,6 +76,7 @@ rownames(s.obj@assays$RNA@counts) = c(rownames(s.obj@assays$RNA@counts)[-c(7531:
 # checking to make sure they are added
 s.obj@assays$RNA@counts[7530:7532, 1:5]
 
+E18 <- subset(x = s.obj, subset = orig.ident == c("MUT_F_E18_WB1"))
 # saving new Seurat object
 save(s.obj, file=glue::glue("/Users/karineier/Documents/GitHub/snRNA-seq-pipeline/Parsing_Mecp2_trnx_expression/{s.obj.name}/{s.obj.name}_with_Mecp2_WT_MUT.RData"))
 
