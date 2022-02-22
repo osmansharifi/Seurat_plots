@@ -80,3 +80,7 @@ E18 <- subset(x = s.obj, subset = orig.ident == c("MUT_F_E18_WB1"))
 # saving new Seurat object
 save(s.obj, file=glue::glue("/Users/karineier/Documents/GitHub/snRNA-seq-pipeline/Parsing_Mecp2_trnx_expression/{s.obj.name}/{s.obj.name}_with_Mecp2_WT_MUT.RData"))
 
+WT_df <- as.data.frame(WT_table)
+p <- ggplot(WT_df, aes(Var2, Freq, fill = Var2))
+p + geom_violin() #+ geom_boxplot(width = .2)
+p + geom_dotplot(binaxis='y', stackdir='center', dotsize=1) + theme(legend.position="top")
