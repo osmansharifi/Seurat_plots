@@ -1,10 +1,9 @@
 ## Adding in Mecp2 transcript expression information into Seurat Object in counts data and in meta data ##
 
 # install dwtools package
-library(devtools)
 install_github("jangorecki/dwtools")
 
-packages <- c("tidyr", "openxlsx", "glue", "magrittr", "Seurat", "dwtools")
+packages <- c("tidyr", "openxlsx", "glue", "magrittr", "Seurat", "dwtools", "devtools")
 stopifnot(suppressMessages(sapply(packages, require, character.only=TRUE)))
 
 s.obj.name = "all_female_P150" #change this to the name of the Seurat object you're working with
@@ -63,9 +62,9 @@ nrow(merged) # should equal length of all metadata
 
 ### Adding counts to Seurat metadata 
 
-s.obj$WT_Mecp2_counts = merged$WT
+s.obj$WT_Mecp2 = merged$WT
 
-s.obj$MUT_Mecp2_counts = merged$MUT
+s.obj$MUT_Mecp2 = merged$MUT
 
 ### Adding counts to Seurat counts as two new genes
 
