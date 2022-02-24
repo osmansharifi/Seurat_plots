@@ -1,7 +1,7 @@
 ## Adding in Mecp2 transcript expression information into Seurat Object in counts data and in meta data ##
 
 # install dwtools package
-install_github("jangorecki/dwtools")
+#install_github("jangorecki/dwtools")
 
 packages <- c("tidyr", "openxlsx", "glue", "magrittr", "Seurat", "dwtools", "devtools")
 stopifnot(suppressMessages(sapply(packages, require, character.only=TRUE)))
@@ -13,7 +13,7 @@ load(glue::glue("/Users/osman/Desktop/All_female_samples/all_female_cortex_label
 s.obj = all_female_P150 #change this to the name of the Seurat object you're working with
 s.obj = all_female.query
 # reading in count data for Mecp2 transcript expression wt vs.  mut
-counts_table <- read.table("/Users/osman/Downloads/E18_mut.alleler", sep="\t", header=FALSE)
+counts_table <- read.table("/Users/osman/Desktop/LaSalle_lab/Scripts/E18_script/E18_Male_cortex/master_E18_Mecp2_counts.txt", sep="\t", header=FALSE)
 names(counts_table) <- c("Barcode", "UMI", "WT", "MUT", "Body")
 #Mecp2_wt_mut_counts = read.table(glue::glue("/Users/osman/Downloads/E18_mut.alleler"), header=T)
 Mecp2_wt_mut_counts = counts_table
@@ -78,7 +78,11 @@ rownames(s.obj@assays$RNA@counts) = c(rownames(s.obj@assays$RNA@counts)[-c(7531:
 s.obj@assays$RNA@counts[7530:7532, 1:5]
 
 E18 <- subset(x = s.obj, subset = orig.ident == c("MUT_F_E18_WB1"))
-# saving new Seurat object
+E18 <- RunPCA(object = E18, verbose = FALSE)
+E18 <- RunUMAP(object = E18, dims = 1:20, verbose = FALSE)
+E18 <- FindNeighbors(object = E18, dims = 1:20, verbose = FALSE)
+E18 <- FindClusters(object = E18, verbose = FALSE)
+DimPlot(object = E18, label = TRUE) + NoLegend() + ggtitle("sctransform")# saving new Seurat object
 save(s.obj, file=glue::glue("/Users/karineier/Documents/GitHub/snRNA-seq-pipeline/Parsing_Mecp2_trnx_expression/{s.obj.name}/{s.obj.name}_with_Mecp2_WT_MUT.RData"))
 
 WT_df <- as.data.frame(WT_table)
