@@ -77,15 +77,61 @@ rownames(s.obj@assays$RNA@counts) = c(rownames(s.obj@assays$RNA@counts)[-c(7531:
 # checking to make sure they are added
 s.obj@assays$RNA@counts[7530:7532, 1:5]
 
-E18 <- subset(x = s.obj, subset = orig.ident == c("MUT_F_E18_WB1"))
+E18 <- subset(x = s.obj, subset = orig.ident == c("MUT_F_E18_WB1", "MUT_F_E18_WB2", "WT_F_E18_WB1", "WT_F_E18_WB2"))
 E18 <- RunPCA(object = E18, verbose = FALSE)
 E18 <- RunUMAP(object = E18, dims = 1:20, verbose = FALSE)
 E18 <- FindNeighbors(object = E18, dims = 1:20, verbose = FALSE)
 E18 <- FindClusters(object = E18, verbose = FALSE)
-DimPlot(object = E18, label = TRUE) + NoLegend() + ggtitle("sctransform")# saving new Seurat object
+DimPlot(object = E18, label = TRUE, group.by = 'predicted.id') + NoLegend() + ggtitle("sctransform")# saving new Seurat object
+FeaturePlot_scCustom(seurat_object = E18, features = 'WT_Mecp2')
+FeaturePlot_scCustom(seurat_object = E18, features = 'MUT_Mecp2')
+FeaturePlot_scCustom(seurat_object = E18, features = 'Mecp2')
+
+#Function counts the percent of total cells that express specific genes
+PrctCellExpringGene <- function(object, genes, group.by = "all"){
+  if(group.by == "all"){
+    prct = unlist(lapply(genes,calc_helper, object=object))
+    result = data.frame(Markers = genes, Cell_proportion = prct)
+    return(result)
+  }
+  
+  else{        
+    list = SplitObject(object, group.by)
+    factors = names(list)
+    
+    results = lapply(list, PrctCellExpringGene, genes=genes)
+    for(i in 1:length(factors)){
+      results[[i]]$Feature = factors[i]
+    }
+    combined = do.call("rbind", results)
+    return(combined)
+  }
+}
+
+calc_helper <- function(object,genes){
+  counts = object[['RNA']]@counts
+  ncells = ncol(counts)
+  if(genes %in% row.names(counts)){
+    sum(counts[genes,]>0)/ncells
+  }else{return(NA)}
+}
+
+PrctCellExpringGene(E18, genes =c("Mecp2","AC149090.1"), group.by = "all")
+
+GOI1 <- 'WT_Mecp2' #you will have to name your first gene here, im choosing PDX1 as an example
+GOI2 <- 'MUT_Mecp2' #you will have to name your second gene here, im choosing INS as an example
+GOI1.cutoff <- 1 #Assumption: gene count cutoff is 1, assuming atleast 1 count is REAL
+GOI2.cutoff <- 1 #Assumption: gene count cutoff is 1, assuming atleast 1 count is REAL
+
+# Time to party
+GOI1.cells <- length(which(FetchData(E18, vars = GOI1) > GOI1.cutoff))
+GOI2.cells <- length(which(FetchData(E18, vars = GOI2) > GOI2.cutoff))
+GOI1_GOI2.cells <- length(which(FetchData(E18, vars = GOI2) > GOI2.cutoff & FetchData(E18, vars = GOI1) > GOI1.cutoff))
+all.cells.incluster <- table(E18$orig.ident)
+GOI1.cells/all.cells.incluster*100 # Percentage of cells in Beta that express GOI1
+GOI2.cells/all.cells.incluster*100 #Percentage of cells in Beta that express GOI2
+GOI1_GOI2.cells/all.cells.incluster*100 #Percentage of cells in Beta that co-express GOI1 + GOI2
+
 save(s.obj, file=glue::glue("/Users/karineier/Documents/GitHub/snRNA-seq-pipeline/Parsing_Mecp2_trnx_expression/{s.obj.name}/{s.obj.name}_with_Mecp2_WT_MUT.RData"))
 
-WT_df <- as.data.frame(WT_table)
-p <- ggplot(WT_df, aes(Var2, Freq, fill = Var2))
-p + geom_violin() #+ geom_boxplot(width = .2)
-p + geom_dotplot(binaxis='y', stackdir='center', dotsize=1) + theme(legend.position="top")
+

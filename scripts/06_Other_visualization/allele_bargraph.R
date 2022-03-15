@@ -5,7 +5,7 @@
 library(ggplot2)
 library(reshape2)
 
-counts_table <- read.table("/Users/osman/Desktop/miscellaneous/sequence.alleler", sep="\t", header=FALSE)
+counts_table <- read.table("/Users/osman/Downloads/master_sequence_alleler.txt", sep="\t", header=FALSE)
 names(counts_table) <- c("Barcode", "UMI", "WT", "MUT", "Body")
 counts_table$count <- seq.int(nrow(counts_table))
 counts_table.m<- melt(counts_table,id.vars='count', measure.vars=c('WT','MUT','Body'))
@@ -28,6 +28,7 @@ p1 <- ggplot(final_table, aes(x=variable, y=value, fill = variable))+
         plot.title = element_text(face = "bold", size = 18, hjust = 0.5))+
   theme_linedraw() 
 p1
-
+sum(final_table[which(final_table$variable=='WT'), 3])
+sum(final_table[which(final_table$variable=='MUT'), 3])
 
 writeLines(gsub("\t", ",", readLines("/Users/osman/Desktop/miscellaneous/sequence.alleler")), "/Users/osman/Desktop/miscellaneous/sequence.csv")
