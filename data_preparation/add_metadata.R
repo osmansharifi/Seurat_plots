@@ -89,10 +89,10 @@ all_rett_mouse_cortex$MUT_Mecp2 = merged$MUT
 
 all_rett_mouse_cortex@assays$RNA@counts = rbind(all_rett_mouse_cortex@assays$RNA@counts, merged$WT, merged$MUT)
 nrow(all_rett_mouse_cortex@assays$RNA@counts)
-rownames(all_rett_mouse_cortex@assays$RNA@counts) = c(rownames(all_rett_mouse_cortex@assays$RNA@counts)[-c(19667:19668)], "Mecp2-WT", "Mecp2-MUT")
+rownames(all_rett_mouse_cortex@assays$RNA@counts) = c(rownames(all_rett_mouse_cortex@assays$RNA@counts)[-c(19669:19670)], "Mecp2-WT", "Mecp2-MUT")
 
 # checking to make sure they are added
-all_rett_mouse_cortex@assays$RNA@counts[19667:19668, 1:5]
+all_rett_mouse_cortex@assays$RNA@counts[19669:19670, 1:5]
 
 #E18 <- subset(x = all_rett_mouse_cortex, subset = orig.ident == c("MUT_F_E18_WB1", "MUT_F_E18_WB2", "WT_F_E18_WB1", "WT_F_E18_WB2"))
 all_rett_mouse_cortex <- NormalizeData(all_rett_mouse_cortex)
