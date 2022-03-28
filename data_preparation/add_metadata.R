@@ -54,7 +54,7 @@ Mecp2_wt_mut_counts$MUT = new.counts.mut
 is.unique(Mecp2_wt_mut_counts$Barcode)
 
 # making a data frame with just one vector representing all barcodes present in Seurat object by removing everything after the - symbol in the barcode names in the Seurat object
-dataFrame = data.frame(Barcode = sub("-.*", "", names(Idents(all_rett_mouse_cortex))))
+dataFrame = data.frame(Barcode = sub("-.*", "", names(Idents(all.rett.combined))))
 
 # adding in an id column to make sure we can sort the data back to the original order found in the Seurat Object
 dataFrame$id = 1:nrow(dataFrame)
@@ -72,7 +72,7 @@ merged = merged[order(merged$id),]
 merged[is.na(merged)] <- 0
 
 # Number of barcodes that are not in Seurat object
-number = nrow(merged) - all_rett_mouse_cortex@assays$RNA@counts@Dim[2] # x number of Barcodes in the Mecp2 WT vs. MUT counts file did not have corresponding Barcodes in the Seurat Object
+number = nrow(merged) - all.rett.combined@assays$RNA@counts@Dim[2] # x number of Barcodes in the Mecp2 WT vs. MUT counts file did not have corresponding Barcodes in the Seurat Object
 
 # Removing rows with barcodes that are not in Seurat object
 merged = merged[c(1:(nrow(merged)-number)),]
@@ -81,31 +81,31 @@ nrow(merged) # should equal length of all metadata
 
 ### Adding counts to Seurat metadata 
 
-all_rett_mouse_cortex$WT_Mecp2 = merged$WT
+all.rett.combined$WT_Mecp2 = merged$WT
 
-all_rett_mouse_cortex$MUT_Mecp2 = merged$MUT
+all.rett.combined$MUT_Mecp2 = merged$MUT
 
 ### Adding counts to Seurat counts as two new genes
 
-all_rett_mouse_cortex@assays$RNA@counts = rbind(all_rett_mouse_cortex@assays$RNA@counts, merged$WT, merged$MUT)
-nrow(all_rett_mouse_cortex@assays$RNA@counts)
-rownames(all_rett_mouse_cortex@assays$RNA@counts) = c(rownames(all_rett_mouse_cortex@assays$RNA@counts)[-c(19669:19670)], "Mecp2-WT", "Mecp2-MUT")
+all.rett.combined@assays$RNA@counts = rbind(all.rett.combined@assays$RNA@counts, merged$WT, merged$MUT)
+nrow(all.rett.combined@assays$RNA@counts)
+rownames(all.rett.combined@assays$RNA@counts) = c(rownames(all.rett.combined@assays$RNA@counts)[-c(19665:19666)], "Mecp2-WT", "Mecp2-MUT")
 
 # checking to make sure they are added
-all_rett_mouse_cortex@assays$RNA@counts[19669:19670, 1:5]
+all.rett.combined@assays$RNA@counts[19665:19666, 1:5]
 
-#E18 <- subset(x = all_rett_mouse_cortex, subset = orig.ident == c("MUT_F_E18_WB1", "MUT_F_E18_WB2", "WT_F_E18_WB1", "WT_F_E18_WB2"))
-all_rett_mouse_cortex <- NormalizeData(all_rett_mouse_cortex)
-all_rett_mouse_cortex <- ScaleData(all_rett_mouse_cortex)
-all_rett_mouse_cortex <- FindVariableFeatures(all_rett_mouse_cortex, selection.method = "vst", nfeatures = 3000)
-all_rett_mouse_cortex <- RunPCA(object = all_rett_mouse_cortex, verbose = FALSE)
-all_rett_mouse_cortex <- RunUMAP(object = all_rett_mouse_cortex, dims = 1:20, verbose = FALSE)
-all_rett_mouse_cortex <- FindNeighbors(object = all_rett_mouse_cortex, dims = 1:20, verbose = FALSE)
-all_rett_mouse_cortex <- FindClusters(object = all_rett_mouse_cortex, verbose = FALSE)
-DimPlot(object = all_rett_mouse_cortex, label = TRUE, group.by = 'celltype.call') + NoLegend() + ggtitle("sctransform")# saving new Seurat object
-FeaturePlot_scCustom(seurat_object = all_rett_mouse_cortex, features = 'WT_Mecp2')
-FeaturePlot_scCustom(seurat_object = all_rett_mouse_cortex, features = 'MUT_Mecp2')
-FeaturePlot_scCustom(seurat_object = all_rett_mouse_cortex, features = 'Mecp2')
+#E18 <- subset(x = all.rett.combined, subset = orig.ident == c("MUT_F_E18_WB1", "MUT_F_E18_WB2", "WT_F_E18_WB1", "WT_F_E18_WB2"))
+all.rett.combined <- NormalizeData(all.rett.combined)
+all.rett.combined <- ScaleData(all.rett.combined)
+all.rett.combined <- FindVariableFeatures(all.rett.combined, selection.method = "vst", nfeatures = 3000)
+all.rett.combined <- RunPCA(object = all.rett.combined, verbose = FALSE)
+all.rett.combined <- RunUMAP(object = all.rett.combined, dims = 1:20, verbose = FALSE)
+all.rett.combined <- FindNeighbors(object = all.rett.combined, dims = 1:20, verbose = FALSE)
+all.rett.combined <- FindClusters(object = all.rett.combined, verbose = FALSE)
+DimPlot(object = all.rett.combined, label = TRUE, group.by = 'celltype.call') + NoLegend() + ggtitle("sctransform")# saving new Seurat object
+FeaturePlot_scCustom(seurat_object = all.rett.combined, features = 'WT_Mecp2', split.by = "Sex")
+FeaturePlot_scCustom(seurat_object = all.rett.combined, features = 'MUT_Mecp2', split.by = "Sex")
+FeaturePlot_scCustom(seurat_object = all.rett.combined, features = 'Mecp2', split.by = "Sex")
 
 #Function counts the percent of total cells that express specific genes
 PrctCellExpringGene <- function(object, genes, group.by = "all"){
@@ -136,7 +136,7 @@ calc_helper <- function(object,genes){
   }else{return(NA)}
 }
 
-PrctCellExpringGene(E18, genes =c("Mecp2","AC149090.1"), group.by = "all")
+PrctCellExpringGene(all.rett.combined, genes =c("WT-Mecp2","MUT-Mecp2"), group.by = "all")
 
 GOI1 <- 'WT_Mecp2' #you will have to name your first gene here, im choosing PDX1 as an example
 GOI2 <- 'MUT_Mecp2' #you will have to name your second gene here, im choosing INS as an example
@@ -152,9 +152,12 @@ GOI1.cells/all.cells.incluster*100 # Percentage of cells in Beta that express GO
 GOI2.cells/all.cells.incluster*100 #Percentage of cells in Beta that express GOI2
 GOI1_GOI2.cells/all.cells.incluster*100 #Percentage of cells in Beta that co-express GOI1 + GOI2
 
+#Marker Genes
+cell_markers_manual <- c("Plch2","Sst","Vip", "Pvalb", "Slc17a8", "Macc1", "Rorb", "Fezf2", "Rprm", "Aqp4", "Rassf10", "Kcnj8", "Slc17a7", "Gad2", "Aspa")
+
 save(all_rett_mouse_cortex, file=glue::glue("/Users/karineier/Documents/GitHub/snRNA-seq-pipeline/Parsing_Mecp2_trnx_expression/{all_rett_mouse_cortex.name}/{all_rett_mouse_cortex.name}_with_Mecp2_WT_MUT.RData"))
 
 
 
 
-save(all_rett_mouse_cortex, file="/Users/osman/Desktop/LaSalle_lab/Seurat_objects/all_rett_mouse_cortex.RData")
+save(all.rett.combined, file="/Users/osman/Desktop/LaSalle_lab/Seurat_objects/all.rett.combined.RData")
