@@ -1,4 +1,7 @@
 library(Seurat)
+library(dplyr)
+library(scCustomize)
+library(patchwork)
 
 #Load data
 load("/Users/osman/Desktop/LaSalle_lab/Seurat_objects/all_rett_mouse_cortex.RData")
@@ -155,9 +158,13 @@ GOI1_GOI2.cells/all.cells.incluster*100 #Percentage of cells in Beta that co-exp
 #Marker Genes
 cell_markers_manual <- c("Plch2","Sst","Vip", "Pvalb", "Slc17a8", "Macc1", "Rorb", "Fezf2", "Rprm", "Aqp4", "Rassf10", "Kcnj8", "Slc17a7", "Gad2", "Aspa")
 
-save(all_rett_mouse_cortex, file=glue::glue("/Users/karineier/Documents/GitHub/snRNA-seq-pipeline/Parsing_Mecp2_trnx_expression/{all_rett_mouse_cortex.name}/{all_rett_mouse_cortex.name}_with_Mecp2_WT_MUT.RData"))
-
-
-
+markers_all_single <- markers_df[markers_df$gene %in% names(table(markers_df$gene))[table(markers_df$gene) == 1],]
+top5 <- markers_all_single %>% group_by(cluster) %>% top_n(5, avg_log2FC)
+dim(top5)
+DoHeatmap(
+  object = all.rett.combined, 
+  features = top5$gene,
+  labels = FALSE) 
 
 save(all.rett.combined, file="/Users/osman/Desktop/LaSalle_lab/Seurat_objects/all.rett.combined.RData")
+save(all_rett_mouse_cortex, file=glue::glue("/Users/karineier/Documents/GitHub/snRNA-seq-pipeline/Parsing_Mecp2_trnx_expression/{all_rett_mouse_cortex.name}/{all_rett_mouse_cortex.name}_with_Mecp2_WT_MUT.RData"))
