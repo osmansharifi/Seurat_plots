@@ -4,26 +4,28 @@ library(scCustomize)
 library(patchwork)
 
 #Load data
-load("/Users/osman/Desktop/LaSalle_lab/Seurat_objects/all_rett_mouse_cortex.RData")
+load("/Users/osman/Desktop/LaSalle_lab/Seurat_objects/all.rett.combined.RData")
 counts_table <- read.table("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/data_preparation/master_sequence_alleler.txt", sep="\t", header=FALSE)
+#headers for the txt file
+names(counts_table) <- c("Barcode", "UMI", "WT", "MUT", "Body")
 
 sample_names <- c("WT_M_E18_WB1", "WT_M_E18_WB2", "MUT_M_E18_WB1", "MUT_M_E18_WB2", "WT_M_P30_CORT1", "WT_M_P30_CORT2","MUT_M_P30_CORT1", "MUT_M_P30_CORT2", "WT_M_P60_CORT1", "WT_M_P60_CORT2", "MUT_M_P60_CORT1", "MUT_M_P60_CORT2", "WT_M_P120_CORT1", "WT_M_P120_CORT2", "MUT_M_P120_CORT1","MUT_M_P120_CORT2", "MUT_F_P30_CORT1", "MUT_F_P30_CORT2", "MUT_F_P60_CORT1", "MUT_F_P60_CORT2", "MUT_F_P150_CORT1", "MUT_F_P150_CORT2", "MUT_F_P150_CORT3", "MUT_F_P150_CORT4", "WT_F_P30_CORT1", "WT_F_P30_CORT2", "WT_F_P60_CORT1", "WT_F_P60_CORT2", "WT_F_P150_CORT1", "WT_F_P150_CORT2", "WT_F_P150_CORT3", "WT_F_P150_CORT4", "MUT_F_E18_WB1", "MUT_F_E18_WB2", "WT_F_E18_WB1", "WT_F_E18_WB2")
 #parse by sex
-all_rett_mouse_cortex$Sex <- plyr::mapvalues(
-  x = all_rett_mouse_cortex$orig.ident, 
+all.rett.combined$Sex <- plyr::mapvalues(
+  x = all.rett.combined$orig.ident, 
   from = c(sample_names), 
   to = c("Male", "Male", "Male","Male","Male","Male","Male","Male","Male","Male","Male","Male","Male","Male","Male","Male","Female","Female","Female","Female","Female","Female","Female","Female","Female","Female","Female","Female","Female","Female","Female","Female","Female","Female","Female","Female")
 )
 #parse by condition
-all_rett_mouse_cortex$Condition <- plyr::mapvalues(
-  x = all_rett_mouse_cortex$orig.ident, 
+all.rett.combined$Condition <- plyr::mapvalues(
+  x = all.rett.combined$orig.ident, 
   from = c(sample_names), 
   to = c("WT", "WT", "MUTANT", "MUTANT", "WT", "WT", "MUTANT", "MUTANT","WT", "WT", "MUTANT", "MUTANT","WT", "WT", "MUTANT", "MUTANT","MUTANT","MUTANT","MUTANT","MUTANT","MUTANT","MUTANT","MUTANT","MUTANT","WT","WT","WT","WT","WT","WT","WT","WT","MUTANT", "MUTANT", "WT","WT")
 )
 
 #parse by Age
-all_rett_mouse_cortex$Age <- plyr::mapvalues(
-  x = all_rett_mouse_cortex$orig.ident, 
+all.rett.combined$Age <- plyr::mapvalues(
+  x = all.rett.combined$orig.ident, 
   from = c(sample_names), 
   to = c("E18", "E18","E18","E18","P30","P30","P30","P30","P60","P60","P60","P60","P120","P120","P120","P120","P30", "P30", "P60", "P60", "P150", "P150","P150", "P150","P30", "P30", "P60", "P60", "P150", "P150","P150", "P150","E18", "E18","E18","E18")
 )
@@ -158,6 +160,12 @@ GOI1_GOI2.cells/all.cells.incluster*100 #Percentage of cells in Beta that co-exp
 #Marker Genes
 cell_markers_manual <- c("Plch2","Sst","Vip", "Pvalb", "Slc17a8", "Macc1", "Rorb", "Fezf2", "Rprm", "Aqp4", "Rassf10", "Kcnj8", "Slc17a7", "Gad2", "Aspa")
 
+markers_df <- FindAllMarkers(
+  object = all.rett.combined, 
+  only.pos = TRUE, 
+  min.pct = 0.25, 
+  thresh.use = 0.25
+)
 markers_all_single <- markers_df[markers_df$gene %in% names(table(markers_df$gene))[table(markers_df$gene) == 1],]
 top5 <- markers_all_single %>% group_by(cluster) %>% top_n(5, avg_log2FC)
 dim(top5)
@@ -166,5 +174,7 @@ DoHeatmap(
   features = top5$gene,
   labels = FALSE) 
 
+
+
 save(all.rett.combined, file="/Users/osman/Desktop/LaSalle_lab/Seurat_objects/all.rett.combined.RData")
-save(all_rett_mouse_cortex, file=glue::glue("/Users/karineier/Documents/GitHub/snRNA-seq-pipeline/Parsing_Mecp2_trnx_expression/{all_rett_mouse_cortex.name}/{all_rett_mouse_cortex.name}_with_Mecp2_WT_MUT.RData"))
+save(all.rett.combined, file=glue::glue("/Users/karineier/Documents/GitHub/snRNA-seq-pipeline/Parsing_Mecp2_trnx_expression/{all.rett.combined.name}/{all.rett.combined.name}_with_Mecp2_WT_MUT.RData"))
