@@ -21,6 +21,11 @@ ggplot2::ggsave("/Users/osman/Desktop/LaSalle_lab/Seurat_figures/age_condition_s
                 device = NULL,
                 height = 8.5,
                 width = 12)
+all_samples+all_samples_age
+ggplot2::ggsave("/Users/osman/Desktop/LaSalle_lab/Seurat_figures/allsamples_celltype_age.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
 all_samples
 ggplot2::ggsave("/Users/osman/Desktop/LaSalle_lab/Seurat_figures/allsamples_celltype.pdf",
                 device = NULL,
@@ -82,5 +87,5 @@ ggplot2::ggsave("/Users/osman/Desktop/LaSalle_lab/Seurat_figures/replicate_heatm
                 width = 12)
 
 E18_subset <- subset(all.cortex.combined, subset = orig.ident %in% c("WT_M_E18_WB1", "WT_M_E18_WB2", "MUT_M_E18_WB1", "MUT_M_E18_WB2"))
-
+postnat_subset <- subset(all.cortex.combined, subset = orig.ident %in% c("WT_M_P30_CORT1", "WT_M_P30_CORT2", "MUT_M_P30_CORT1", "MUT_M_P30_CORT2", "WT_F_P30_CORT1", "WT_F_P30_CORT2", "MUT_F_P30_CORT1", "MUT_F_P30_CORT2","WT_M_P60_CORT1", "WT_M_P60_CORT2", "MUT_M_P60_CORT1", "MUT_M_P60_CORT2", "WT_F_P60_CORT1", "WT_F_P60_CORT2","MUT_F_P60_CORT1", "MUT_F_P60_CORT2", "WT_M_P120_CORT1", "WT_M_P120_CORT2", "MUT_M_P120_CORT1", "MUT_M_P120_CORT2", "WT_F_P150_CORT1", "WT_F_P150_CORT2", "WT_F_P150_CORT3", "WT_F_P150_CORT4",  "MUT_F_P150_CORT1", "MUT_F_P150_CORT2", "MUT_F_P150_CORT3", "MUT_F_P150_CORT4"))
 table(use.in$celltype)
