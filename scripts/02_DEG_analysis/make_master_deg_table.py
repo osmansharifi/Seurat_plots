@@ -12,11 +12,8 @@ cell_types = ["L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal
 # DEG methods
 deg_tool = ["DEsingle", "LimmaVoomCC"]
 
-# Make a master data frame containing all GO data for top 20, top 5, and top 3 GO SYMBOLs
+# Make a master data frame containing all deg data for top 20 SYMBOLs
 master_deg_df_top20 = pd.DataFrame()
-master_deg_df_top5 = pd.DataFrame()
-master_deg_df_top3 = pd.DataFrame()
-
 
 ###############
 ## For Males ##
@@ -31,7 +28,7 @@ meta_folders = ["M_MUT_and_WT_M_E18_WB",
 # Time points
 time_points = ["E18", "P30", "P60", "P120"]
 
-# Fill data frame with GO data (top 20)
+# Fill data frame with deg data (top 20)
 for time_point, meta, tissue, deg in zip(time_points, meta_folders, tissue_types, deg_tool):
     for cell_type in cell_types:
         for deg in deg_tool:
@@ -39,13 +36,13 @@ for time_point, meta, tissue, deg in zip(time_points, meta_folders, tissue_types
             isExist = os.path.isfile(my_path)
             if isExist:
                 print(f'Adding data from {my_path} to data frame')
-                # Read in GO Data
-                data = pd.read_csv(my_path)
-                # Turn the GO Data into a pandas data frame
+                # Read in DEG Data
+                data = pd.read_excel(my_path)
+                # Turn the DEG Data into a pandas data frame
                 df = pd.DataFrame(data)
                 
                 # Add a new column to the data frame with the name of the data set
-                metadata_name = (f'{cell_type}_M_{time_point}_{tissue}_{ont}')
+                metadata_name = (f'{cell_type}_M_{time_point}_{tissue}_{deg}')
                 sex = []
                 new_column_values = []
                 cluster_names = []
@@ -58,7 +55,7 @@ for time_point, meta, tissue, deg in zip(time_points, meta_folders, tissue_types
                     cluster_names.append(f'{cell_type}')
                     times.append(f'{time_point}')
                     tiss.append(f'{tissue}')
-                    deg_method.append(f'{ont}')
+                    deg_method.append(f'{deg}')
                 df.insert(1, "Metadata", new_column_values, True)
                 df.insert(2, "Sex", sex, True)
                 df.insert(3, "Cell Type", cluster_names, True)
@@ -88,18 +85,18 @@ time_points = ["E18", "P30", "P60", "P150"]
 # Fill data frame with GO data (top 20)
 for time_point, meta, tissue in zip(time_points, meta_folders, tissue_types):
     for cell_type in cell_types:
-        for ont in deg_tool:
+        for deg in deg_tool:
             my_path = f'/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/{meta}/{deg_tool}/{cell_types}/DEGs.xlsx'
             isExist = os.path.isfile(my_path)
             if isExist:
                 print(f'Adding data from {my_path} to data frame')
-                # Read in GO Data
-                data = pd.read_csv(my_path)
-                # Turn the GO Data into a pandas data frame
+                # Read in DEG Data
+                data = pd.read_excel(my_path)
+                # Turn the DEG Data into a pandas data frame
                 df = pd.DataFrame(data)
                 
                 # Add a new column to the data frame with the name of the data set
-                metadata_name = (f'{cell_type}_F_{time_point}_{tissue}_{ont}')
+                metadata_name = (f'{cell_type}_F_{time_point}_{tissue}_{deg}')
                 sex = []
                 new_column_values = []
                 cluster_names = []
@@ -112,7 +109,7 @@ for time_point, meta, tissue in zip(time_points, meta_folders, tissue_types):
                     cluster_names.append(f'{cell_type}')
                     times.append(f'{time_point}')
                     tiss.append(f'{tissue}')
-                    deg_method.append(f'{ont}')
+                    deg_method.append(f'{deg}')
                 df.insert(1, "Metadata", new_column_values, True)
                 df.insert(2, "Sex", sex, True)
                 df.insert(3, "Cell Type", cluster_names, True)
