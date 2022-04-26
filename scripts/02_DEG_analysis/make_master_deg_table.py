@@ -14,7 +14,7 @@ cell_types = ["L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neuronal
 deg_tools = ["DEsingle", "LimmaVoomCC"]
 
 # Make a master data frame containing all deg data for top 20 SYMBOLs
-master_deg_df_top20 = pd.DataFrame()
+master_deg_df = pd.DataFrame()
 
 ###############
 ## For Males ##
@@ -63,7 +63,7 @@ for meta, deg, cell_type, time_point, tissue_type in zip(meta_folders, deg_tools
 					df.insert(4, "Time Point", times, True)
 					df.insert(5, "Tissue", tiss, True)
 					df.insert(6, "deg_method", deg_method, True)
-					master_deg_df_top20 = master_deg_df_top20.append(df)
+					master_deg_df = master_deg_df.append(df)
 
 #################
 ## For Females ##
@@ -116,10 +116,10 @@ for meta, deg, cell_type, time_point, tissue_type in zip(meta_folders, deg_tools
 				df.insert(4, "Time Point", times, True)
 				df.insert(5, "Tissue", tiss, True)
 				df.insert(6, "deg_method", deg_method, True)
-				master_deg_df_top20 = master_deg_df_top20.append(df)
+				master_deg_df = master_deg_df.append(df)
              
 ###############################
 ## Create Master Data Frames ##
 ###############################
 
-master_deg_df_top20.to_csv("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/master_deg_data_top20.csv")
+master_deg_df.to_csv("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/master_deg_data_top20.csv")
