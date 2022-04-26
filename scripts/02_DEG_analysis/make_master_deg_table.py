@@ -105,7 +105,7 @@ for meta, deg, cell_type, time_point, tissue_type in zip(meta_folders, deg_tools
 				deg_method = []
 				for i in range(len(df["SYMBOL"])):
 					new_column_values.append(metadata_name)
-					sex.append("M")
+					sex.append("F")
 					cluster_names.append(f'{cell_type}')
 					times.append(f'{time_point}')
 					tiss.append(f'{tissue_type}')
