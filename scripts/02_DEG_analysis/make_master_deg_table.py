@@ -34,7 +34,7 @@ for meta, deg, cell_type, time_point, tissue_type in zip(meta_folders, deg_tools
 				for time_point in time_points:
 					my_path = f'/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/{meta}/{deg}/{cell_type}/DEGs.xlsx'
 					if not os.path.isfile(my_path):
-						print("file was not found", my_path)	 
+						print("ERROR: file was not found", my_path)	 
 						continue
 					print(f'Adding data from {my_path} to data frame')
 					# Read in DEG Data
@@ -122,4 +122,4 @@ for meta, deg, cell_type, time_point, tissue_type in zip(meta_folders, deg_tools
 ## Create Master Data Frames ##
 ###############################
 
-master_deg_df.to_csv("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/master_deg_data_top20.csv")
+master_deg_df.to_csv("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/master_deg_data.csv")
