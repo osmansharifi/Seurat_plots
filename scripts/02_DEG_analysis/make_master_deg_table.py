@@ -123,3 +123,4 @@ for meta, deg, cell_type, time_point, tissue_type in zip(meta_folders, deg_tools
 ###############################
 
 master_deg_df_females.to_csv("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/master_deg_data_females.csv")
+master_deg_df_males.to_csv("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/master_deg_data_males.csv")
