@@ -19,7 +19,7 @@ master_deg_df_females = pd.DataFrame()
 ###############
 ## For Males ##
 ###############
-'''
+
 # Folders containing input CSV data
 meta_folders = ["M_MUT_and_WT_M_E18_WB", "M_MUT_and_WT_M_P30_CORT", "M_MUT_and_WT_M_P60_CORT", "M_MUT_and_WT_M_P120_CORT"]
 
@@ -64,7 +64,7 @@ for meta, deg, cell_type, time_point, tissue_type in zip(meta_folders, deg_tools
 					df.insert(5, "Tissue", tiss, True)
 					df.insert(6, "deg_method", deg_method, True)
 					master_deg_df_males = master_deg_df_males.append(df)
-'''
+
 #################
 ## For Females ##
 #################
