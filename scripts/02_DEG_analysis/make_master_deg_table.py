@@ -32,7 +32,7 @@ for meta, deg, cell_type, time_point, tissue_type in zip(meta_folders, deg_tools
 		for deg in deg_tools:
 			for cell_type in cell_types:
 				for time_point in time_points:
-					my_path = f'/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/{meta}/{deg}/{cell_type}/DEGs.xlsx'
+					my_path = f'/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/males/{meta}/{deg}/{cell_type}/DEGs.xlsx'
 					if not os.path.isfile(my_path):
 						print("ERROR: file was not found", my_path)	 
 						continue
