@@ -80,7 +80,7 @@ meta_folders = ["M_MUT_and_WT_F_E18_WB",
 # Time points
 time_points = ["E18", "P30", "P60", "P150"]
 
-# Fill data frame with GO data (top 20)
+# Fill data frame with DEG data 
 for meta, deg, cell_type, time_point, tissue_type in zip(meta_folders, deg_tools, cell_types, time_points, tissue_types):
 	for meta in meta_folders:
 		for deg in deg_tools:
