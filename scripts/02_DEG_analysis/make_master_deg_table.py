@@ -64,7 +64,7 @@ for meta, deg, cell_type, time_point, tissue_type in zip(meta_folders, deg_tools
 					df.insert(5, "Tissue", tiss, True)
 					df.insert(6, "deg_method", deg_method, True)
 					master_deg_df_males = master_deg_df_males.append(df)
-
+'''
 #################
 ## For Females ##
 #################
@@ -121,5 +121,5 @@ for meta, deg, cell_type, time_point, tissue_type in zip(meta_folders, deg_tools
 ###############################
 ## Create Master Data Frames ##
 ###############################
-
-master_deg_df.to_csv("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/master_deg_data.csv")
+'''
+master_deg_df_males.to_csv("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/master_deg_data.csv")
