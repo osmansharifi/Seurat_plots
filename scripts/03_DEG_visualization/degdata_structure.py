@@ -40,14 +40,54 @@ def read_datacsv(csvpath, meta, dblist):
 			dblist.append(dic)
 	return dblist
 
+def read_dataexcel(excelpath, meta, dblist):
+	print(excelpath)
+	df = pd.read_excel(excelpath,header=0)
+	df = df.drop(columns=['FC','Type','State','norm_foldChange'])
+	print(df)
+	print(df.shape)
+	df[~df.SYMBOL.str.contains('|'.join(["^mt-"]))]
+	print(df.shape)
+	sys.exit()
+
 arg = parser.parse_args()
 assert(os.path.isdir(arg.dir))
 
 data = []
 dic = {}
-for file in os.listdir(arg.dir):
-	dic = {}
+for root, dirs, files in os.walk(arg.dir):
+	if len(files) == 0: continue
+	for file in files:
+		if not file.endswith('.xlsx'): continue
+		print(file)
+		print(root)
+		meta = root.split('/')
+		tp_reg = meta[7]
+		method = meta[8]
+		ct = meta[9]
+		
+		sex = tp_reg.split('_')[4]
+		tp  = tp_reg.split('_')[5]
+		reg = tp_reg.split('_')[6]
+		
+		metadic = {
+			'celltype': ct,
+			'sex': sex,
+			'timepoint': tp,
+			'region': reg,
+			'method': method
+		}
+		
+		print(json.dumps(metadic,indent=2))
+		
+		frame = read_dataexcel(os.path.join(root,file), metadic, data)
+		
+		sys.exit()
+	continue
+	sys.exit()
+	if not files.endswith('.xlsx'): continue
 	print(file)
+	continue
 	assert(file.endswith('Limma_DEG.csv'))
 	
 	celltype = parse_celltype(file)
@@ -70,7 +110,7 @@ for file in os.listdir(arg.dir):
 	
 	data = read_datacsv(os.path.join(arg.dir,file), dic, data)
 	#print(json.dumps(data, indent=2))
-
+sys.exit()
 df = pd.DataFrame(data)
 print(df.head(5))
 print(df.columns)
