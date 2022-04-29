@@ -40,26 +40,28 @@ def read_datacsv(csvpath, meta, dblist):
 			dblist.append(dic)
 	return dblist
 
-def read_dataexcel(excelpath, meta, dblist):
-	print(excelpath)
+def read_dataexcel(excelpath):
 	df = pd.read_excel(excelpath,header=0)
-	df = df.drop(columns=['FC','Type','State','norm_foldChange'])
-	print(df)
-	print(df.shape)
-	df[~df.SYMBOL.str.contains('|'.join(["^mt-"]))]
-	print(df.shape)
-	sys.exit()
+	new = df[['SYMBOL', 'logFC', 'P.Value', 'adj.P.Val']].copy()
+	del df
+	for ind, row in new.iterrows():
+		if re.match(r'^mt-.', row['SYMBOL']):
+			new = new.drop(ind)
+	
+	return new
 
 arg = parser.parse_args()
 assert(os.path.isdir(arg.dir))
 
 data = []
 dic = {}
+column_names = ['SYMBOL', 'logFC', 'P.Value', 'adj.P.Val', 'celltype', 'sex', 'timepoint', 'region', 'method']
+total_df = pd.DataFrame(columns=column_names)
+
 for root, dirs, files in os.walk(arg.dir):
 	if len(files) == 0: continue
 	for file in files:
 		if not file.endswith('.xlsx'): continue
-		print(file)
 		print(root)
 		meta = root.split('/')
 		tp_reg = meta[7]
@@ -78,46 +80,18 @@ for root, dirs, files in os.walk(arg.dir):
 			'method': method
 		}
 		
-		print(json.dumps(metadic,indent=2))
+		frame = read_dataexcel(os.path.join(root,file))
+		frame_rows = frame.shape[0]
+		for k,v in metadic.items():
+			new_list = [v] * frame_rows
+			frame[k] = new_list
 		
-		frame = read_dataexcel(os.path.join(root,file), metadic, data)
-		
-		sys.exit()
-	continue
-	sys.exit()
-	if not files.endswith('.xlsx'): continue
-	print(file)
-	continue
-	assert(file.endswith('Limma_DEG.csv'))
-	
-	celltype = parse_celltype(file)
-	
-	splitted = file.split('_M_MUT_and_WT_')
-	assert(len(splitted) == 2)
-	
-	#sex = splitted[0].split('_')[-1]
-	rem_meta = splitted[1].split('_')
-	sex = rem_meta[0]
-	timepoint = rem_meta[1]
-	region = rem_meta[2]
-	
-	dic = {
-		'celltype':celltype,
-		'sex':sex,
-		'timepoint':timepoint,
-		'region':region
-	}
-	
-	data = read_datacsv(os.path.join(arg.dir,file), dic, data)
-	#print(json.dumps(data, indent=2))
-sys.exit()
-df = pd.DataFrame(data)
-print(df.head(5))
-print(df.columns)
-print(df.shape)
+		total_df = pd.concat([total_df, frame])
 
-df.to_csv(arg.output)
-
+total_df.to_csv(arg.output)
+print(total_df)
+print(total_df.shape)
+print(total_df.columns)
 """
 all_data/
 	all csvs

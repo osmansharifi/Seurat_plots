@@ -19,6 +19,9 @@ parser.add_argument(
 	'--frame', '-f', required=True, type=str, metavar='<path>', 
 	help='path to dataframe for all the degs to plot')
 parser.add_argument(
+	'--degmethod', '-m', required=False, type=str, nargs='+',
+	default=False, help='which deg method to filter by')
+parser.add_argument(
 	'--celltypes', '-c', required=False, nargs='+', type=str,
 	default=False, help='celltypes to plot')
 parser.add_argument(
@@ -39,12 +42,12 @@ parser.add_argument(
 parser.add_argument(
 	'--fill', '-i', action='store_true',
 	help=''.join((
-		('fill in plot with actual logFC value on places where gene is not in'),
+		('fill in plot with actual logFC value on places where SYMBOL is not in'),
 		('celltype, otherwise fill with 0'))))
 parser.add_argument(
 	'--save', '-v', required=True, type=str, metavar='<path>',
 	help=''.join((
-		('save location for csv files containing significant genes plotted.'),
+		('save location for csv files containing significant SYMBOLs plotted.'),
 		('csv is the serialized pandas dataframe after significance filter'))))
 parser.add_argument(
 	'--pdf', '-d', required=True, type=str, metavar='<str>',
@@ -63,6 +66,8 @@ def celltype_name(row, arg):
 	ct += '_'+row['sex']
 	ct += '_'+row['timepoint']
 	ct += '_'+row['region']
+	if row['method'] == 'limmaVoomCC': ct += '_'+'1'
+	else:                              ct += '_'+'2'
 	return ct
 
 arg = parser.parse_args()
@@ -77,7 +82,7 @@ if arg.save.endswith('.csv'):
 	sys.exit()
 
 df = pd.read_csv(arg.frame)
-df = df.drop(labels = 'Unnamed: 0', axis=1)
+df = df.drop(labels = 'Unnamed: 0', axis=1).dropna()
 print("input dataframe")
 print(df.head(5))
 print(df.columns)
@@ -100,6 +105,10 @@ if arg.region:
 	if newdf.empty: newdf = df.loc[df['region'].isin(arg.region)]
 	else:			newdf = newdf.loc[newdf['region'].isin(arg.region)]
 
+if arg.degmethod:
+	if newdf.empty: newdf = df.loc[df['method'].isin(arg.degmethod)]
+	else:           newdf = newdf.loc[newdf['method'].isin(arg.degmethod)]
+
 if not newdf.empty:
 	print('not empty')
 	df = newdf
@@ -111,8 +120,8 @@ print(df.shape)
 print()
 
 df['ct_name'] = df.apply(lambda x: celltype_name(x, arg), axis=1)
-sig_df = df.loc[df['pv'] <= arg.cutoff].copy()
-sig_df['abslogfc'] = sig_df['logfc'].abs()
+sig_df = df.loc[df['adj.P.Val'] <= arg.cutoff].copy()
+sig_df['abslogFC'] = sig_df['logFC'].abs()
 
 sig_df.sort_values(
 	inplace=True,
@@ -121,15 +130,16 @@ sig_df.sort_values(
 		'timepoint',
 		'sex',
 		'region',
-		'abslogfc'],
-	ascending=[True, True, True, True, False])
+		'method',
+		'abslogFC'],
+	ascending=[True, True, True, True, True, False])
 
 print("after pv significance filtering")
 print(sig_df.head(5))
 print(sig_df.shape)
 print()
 
-sig_genes = dict()
+sig_SYMBOLs = dict()
 celltype = None
 counter = 0
 for indx, row in sig_df.iterrows():
@@ -139,46 +149,53 @@ for indx, row in sig_df.iterrows():
 	if counter >= arg.num: 
 		continue
 	
-	if row['gene'] not in sig_genes: sig_genes[row['gene']] = dict()
-	sig_genes[row['gene']][row['ct_name']] = row['logfc']
+	if row['SYMBOL'] not in sig_SYMBOLs: sig_SYMBOLs[row['SYMBOL']] = dict()
+	sig_SYMBOLs[row['SYMBOL']][row['ct_name']] = row['logFC']
 	counter += 1
 
 celltypes = dict()
-for sg in sig_genes:
-	for ct in sig_genes[sg]:
+for sg in sig_SYMBOLs:
+	for ct in sig_SYMBOLs[sg]:
 		if ct not in celltypes: celltypes[ct] = True
 
-df = df.set_index(['gene','ct_name'])
-filtered_logfc = []
+df = df.set_index(['SYMBOL','ct_name'])
+print(df)
+#sys.exit()
+filtered_logFC = []
 filtered_pv    = []
-for siggene in sig_genes:
+for sigSYMBOL in sig_SYMBOLs:
 	diclog = dict()
 	dicpv  = dict()
-	diclog['gene'] = siggene
-	dicpv['gene']  = siggene
+	diclog['SYMBOL'] = sigSYMBOL
+	dicpv['SYMBOL']  = sigSYMBOL
 	for celltype in natsorted(celltypes.keys()):
 		assert(celltype not in diclog)
 		assert(celltype not in dicpv)
 		diclog[celltype] = None
 		dicpv[celltype]  = None
-		
+		#print('here', sigSYMBOL, celltype)
+		#down = df.loc[(sigSYMBOL, celltype)]
+		#print(down)
+		#dicpv[celltype] = down.
 		try:
-			down = df.loc[(siggene, celltype)]
-			dicpv[celltype] = down.pv
-			diclog[celltype] = down.logfc
+			down = df.loc[(sigSYMBOL, celltype)]
+			dicpv[celltype]  = down['adj.P.Val']
+			diclog[celltype] = down.logFC
+			#print(down.logFC)
 		except:
 			down = pd.DataFrame()
-			dicpv[celltype] = 0.0
-			diclog[celltype]   = 1.0
+			dicpv[celltype]  = 1.0
+			diclog[celltype] = 0.0
 		
-	filtered_logfc.append(diclog)
+	filtered_logFC.append(diclog)
 	filtered_pv.append(dicpv)
-
-fdf_logfc = pd.DataFrame(filtered_logfc)
-print(fdf_logfc.head(5))
-print(fdf_logfc.columns)
-print(fdf_logfc.shape)
-fdf_logfc.to_csv('tmp_sn_logfc.csv')
+#sys.exit()
+fdf_logFC = pd.DataFrame(filtered_logFC)
+print(fdf_logFC.head(25))
+print(fdf_logFC.columns)
+print(fdf_logFC.shape)
+#sys.exit()
+fdf_logFC.to_csv('tmp_sn_logFC.csv')
 
 fdf_pv = pd.DataFrame(filtered_pv)
 print(fdf_pv.head(5))
@@ -187,7 +204,7 @@ print(fdf_pv.shape)
 fdf_pv.to_csv('tmp_sn_pv.csv')
 
 cmd = ''.join((
-	f"r_heatmaps.R -l tmp_sn_logfc.csv -p tmp_sn_pv.csv -s {arg.pdf}",
+	f"r_heatmaps.R -l tmp_sn_logFC.csv -p tmp_sn_pv.csv -s {arg.pdf}",
 	f" -t {' '.join(arg.title)}"))
 
 if arg.rotate:
@@ -195,8 +212,8 @@ if arg.rotate:
 
 print(cmd)
 os.system(cmd)
-os.remove("tmp_sn_logfc.csv")
+os.remove("tmp_sn_logFC.csv")
 os.remove("tmp_sn_pv.csv")
 
-fdf_logfc.to_csv(f"{arg.save}_logfc.csv")
+fdf_logFC.to_csv(f"{arg.save}_logFC.csv")
 fdf_pv.to_csv(f"{arg.save}_pv.csv")

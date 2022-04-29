@@ -25,9 +25,9 @@ logfc_df <- read.csv(file=args$logfc)
 pv_df <- read.csv(file=args$pv)
 
 m <- as.matrix(logfc_df[,4:dim(logfc_df)[2]])
-rownames(m) <- logfc_df$gene
+rownames(m) <- logfc_df$SYMBOL
 pvm <- as.matrix(pv_df[,4:dim(pv_df)[2]])
-rownames(pvm) <- pv_df$gene
+rownames(pvm) <- pv_df$SYMBOL
 
 col_fun = colorRamp2(c(min(m), 0.0, max(m)), c("blue", "white", "red"))
 
