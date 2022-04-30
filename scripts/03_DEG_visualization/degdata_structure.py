@@ -62,11 +62,10 @@ for root, dirs, files in os.walk(arg.dir):
 	if len(files) == 0: continue
 	for file in files:
 		if not file.endswith('.xlsx'): continue
-		print(root)
 		meta = root.split('/')
 		tp_reg = meta[7]
 		method = meta[8]
-		ct = meta[9]		
+		ct = meta[9]
 		sex = tp_reg.split('_')[4]
 		tp  = tp_reg.split('_')[5]
 		reg = tp_reg.split('_')[6]
