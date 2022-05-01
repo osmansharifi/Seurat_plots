@@ -47,7 +47,6 @@ def read_dataexcel(excelpath):
 	for ind, row in new.iterrows():
 		if re.match(r'^mt-.', row['SYMBOL']):
 			new = new.drop(ind)
-	
 	return new
 
 arg = parser.parse_args()
