@@ -23,13 +23,16 @@ print(args$title)
 print(paste(args$title, sep=""))
 logfc_df <- read.csv(file=args$logfc)
 pv_df <- read.csv(file=args$pv)
+#tp_df <- read.csv(file=args$timepoint)
 
 m <- as.matrix(logfc_df[,4:dim(logfc_df)[2]])
 rownames(m) <- logfc_df$SYMBOL
 pvm <- as.matrix(pv_df[,4:dim(pv_df)[2]])
 rownames(pvm) <- pv_df$SYMBOL
+#tp <- as.matrix(tp_df[,4:dim(tp_df)[2]])
+#rownames(tp) <- tp_df$SYMBOL
 
-col_fun = colorRamp2(c(min(m), 0.0, max(m)), c("blue", "white", "red"))
+col_fun = colorRamp2(c(min(m), 0.0, max(m)), c("blue", "#EEEEEE", "red"))
 
 pdf(file=args$save)
 map = grid.grabExpr(
@@ -39,7 +42,9 @@ map = grid.grabExpr(
  			col = col_fun,
  			row_names_gp=gpar(fontsize=4),
  			column_names_gp=gpar(fontsize=6),
+			row_names_max_width = max_text_width(rownames(m)),
  			heatmap_legend_param = list(title="logFC"),
+			#column_split = m$tp,
  			cell_fun = function(j, i, x, y, width, height, fill) {
  				if( pvm[i, j] <= 0.05 ) {
  					grid.text(print("*"), x, y-height/2, gp = gpar(fontsize=8)) #grid.text(print("*"), x, y, gp = gpar(fontsize=9)) 

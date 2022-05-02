@@ -41,10 +41,11 @@ def read_datacsv(csvpath, meta, dblist):
 	return dblist
 
 def read_dataexcel(excelpath):
-	df = pd.read_excel(excelpath,header=0)
+	df = pd.read_excel(excelpath,header=0).dropna()
 	new = df[['SYMBOL', 'logFC', 'P.Value', 'adj.P.Val']].copy()
 	del df
 	for ind, row in new.iterrows():
+		#print(row['SYMBOL'])
 		if re.match(r'^mt-.', row['SYMBOL']):
 			new = new.drop(ind)
 	return new
@@ -62,9 +63,11 @@ for root, dirs, files in os.walk(arg.dir):
 	for file in files:
 		if not file.endswith('.xlsx'): continue
 		meta = root.split('/')
-		tp_reg = meta[7]
-		method = meta[8]
-		ct = meta[9]
+		print(root)
+		
+		tp_reg = meta[8]
+		method = meta[9]
+		ct = meta[10]
 		sex = tp_reg.split('_')[4]
 		tp  = tp_reg.split('_')[5]
 		reg = tp_reg.split('_')[6]
