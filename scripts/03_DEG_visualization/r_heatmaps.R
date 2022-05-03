@@ -40,7 +40,7 @@ map = grid.grabExpr(
 		Heatmap(
 			m,
  			col = col_fun,
- 			row_names_gp=gpar(fontsize=4),
+ 			row_names_gp=gpar(fontsize=5),
  			column_names_gp=gpar(fontsize=6),
 			row_names_max_width = max_text_width(rownames(m)),
  			heatmap_legend_param = list(title="logFC"),
