@@ -41,20 +41,21 @@ rownames(pvm) <- pv_df$SYMBOL
 col_fun = colorRamp2(c(min(m), 0.0, max(m)), c("#2166AC", "#EEEEEE", "#B2182B")) 
 
 
-pdf(file=args$save)
+pdf(file=args$save, height = 15)
 map = grid.grabExpr(
 	draw(
 		Heatmap(
 			m,
  			col = col_fun,
- 			row_names_gp=gpar(fontsize=5),
+ 			row_names_gp=gpar(fontsize=6),
  			column_names_gp=gpar(fontsize=6),
+			height = nrow(m)*unit(2,"mm"),
 			row_names_max_width = max_text_width(rownames(m)),
  			heatmap_legend_param = list(title="logFC"),
 			#column_split = m$tp,
  			cell_fun = function(j, i, x, y, width, height, fill) {
  				if( pvm[i, j] <= 0.05 ) {
- 					grid.text(print("*"), x, y-height/2, gp = gpar(fontsize=8)) #grid.text(print("*"), x, y, gp = gpar(fontsize=9)) 
+ 					grid.text(print("*"), x, y-height/2, gp = gpar(fontsize=10)) #grid.text(print("*"), x, y, gp = gpar(fontsize=9)) 
  				}
 			},
 			column_title = paste(args$title, sep="", collapse=" ")
