@@ -13,6 +13,10 @@ parser$add_argument("-p", "--pv", type="character", metavar="<string>",
 	required=TRUE, help="csv of p-values")	
 parser$add_argument("-s", "--save", type="character", metavar="<string>",
 	required=TRUE, help="save location to save pdf of plot")
+####
+#parser$add_argument("-x", "--sex", type="character", metavar="<string>",
+                    #required=TRUE, help="sex metadata on graph")
+####
 parser$add_argument("-t", "--title", type="character", metavar="<string>",
 	required=TRUE, nargs='+', help="title for plot")
 parser$add_argument("-r", "--rotate", action="store_true", default=FALSE,
@@ -23,16 +27,19 @@ print(args$title)
 print(paste(args$title, sep=""))
 logfc_df <- read.csv(file=args$logfc)
 pv_df <- read.csv(file=args$pv)
-#tp_df <- read.csv(file=args$timepoint)
-
+####
+#x_df <- read.csv(file=args$sex)
+####
 m <- as.matrix(logfc_df[,4:dim(logfc_df)[2]])
 rownames(m) <- logfc_df$SYMBOL
 pvm <- as.matrix(pv_df[,4:dim(pv_df)[2]])
 rownames(pvm) <- pv_df$SYMBOL
-#tp <- as.matrix(tp_df[,4:dim(tp_df)[2]])
-#rownames(tp) <- tp_df$SYMBOL
+####
+#x <- as.matrix(x_df[,4:dim(x_df)[2]])
+#rownames(x) <- x_df$SYMBOL
+####
+col_fun = colorRamp2(c(min(m), 0.0, max(m)), c("#2166AC", "#EEEEEE", "#B2182B")) 
 
-col_fun = colorRamp2(c(min(m), 0.0, max(m)), c("blue", "#EEEEEE", "red"))
 
 pdf(file=args$save)
 map = grid.grabExpr(
