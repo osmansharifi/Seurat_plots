@@ -15,24 +15,28 @@ library(dplyr)
 master_df <- read.csv("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/master_enricher_GOterms.csv") 
 
 pdf_path = "/Users/osman/Desktop/LaSalle_lab/Seurat_figures/"
+x = c("L2_3_IT", "L4", "L5", "L6","Pvalb", "Vip", "Sst","Sncg","Lamp5","Peri", "Endo", "Oligo","Astro","Non-neuronal")
 
 ######################
 ## Subset master_df ##
 ######################
 
-#subset and sort GO terms
-E18_GO <- male_go[which(male_go$Metadata=='M_MUT_and_WT_M_E18_WB' & male_go$Time.Point =="E18"),]
-E18_GO <- E18_GO[order(E18_GO$`-log10(p.value)`),]
-E18_GO <- filter(E18_GO, `-log10(p.value)` >= 1.3)
-E18_GO <- E18_GO %>% arrange(desc(`-log10(p.value)`)) %>%
-  group_by(Gene.Ontology) %>% top_n(40)
+#subset E18 males
+e18_male <- master_df[which(master_df$Metadata=='M_MUT_and_WT_M_E18_WB' & master_df$Time.Point =="E18"),]
+e18_male <- filter(e18_male, Adjusted.P.value <= 0.05)
+e18_male <- e18_male %>% arrange(Adjusted.P.value) %>%
+  group_by(Cell.Type) %>% top_n(10)
+e18_male <- e18_male[order(e18_male$Adjusted.P.value),]
 
-#subset and sort GO terms female E18
-E18_GO_Female <- female_go[which(female_go$Metadata=='M_MUT_and_WT_F_E18_WB' & female_go$Time.Point =="E18"),]
-E18_GO_Female <- E18_GO_Female[order(E18_GO_Female$`-log10(p.value)`),]
-E18_GO_Female <- filter(E18_GO_Female, `-log10(p.value)` >= 1.3)
-E18_GO_Female <- E18_GO_Female %>% arrange(desc(`-log10(p.value)`)) %>%
-  group_by(Gene.Ontology) %>% top_n(40)
+#subset E18 females
+e18_female <- master_df[which(master_df$Metadata=='M_MUT_and_WT_F_E18_WB' & master_df$Time.Point =="E18"),]
+e18_female <- filter(e18_female, Adjusted.P.value <= 0.05)
+e18_female <- e18_female %>% arrange(Adjusted.P.value) %>%
+  group_by(Cell.Type) %>% top_n(10)
+e18_female <- e18_female[order(e18_female$Adjusted.P.value),]
+plotData <- plotData %>%
+  mutate(cell_type =  factor(cell_type, levels = x)) %>%
+  arrange(cell_type) 
 
 P30_GO_Female <- female_go[which(female_go$Metadata=='M_MUT_and_WT_F_P30_CORT' & female_go$Time.Point =="P30"),]
 P30_GO_Female <- P30_GO_Female[order(P30_GO_Female$`-log10(p.value)`),]
@@ -86,14 +90,14 @@ P150_GO_Female$GeneRatio <- P150_GO_Female$Significant/P150_GO_Female$Annotated
 
 # Visualize GO Data
 #########################################################################################################
-E18_male_GO <- ggplot(E18_GO,
-       aes(x = Term, y = Cell.Type, size = `-log10(p.value)`, fill = `-log10(p.value)`))  +
+E18_male_GO <- ggplot(e18_male,
+       aes(x = Term, y = Cell.Type, size = Odds.Ratio, fill = Adjusted.P.value)) +
   geom_point(shape = 21) +
   scale_size(range = c(2.5,12.5)) +
   scale_fill_viridis() + 
   xlab('') + ylab('Cell Type') +
   labs(
-    title = 'Top GO Terms',
+    title = 'Top 10 KEGG Terms',
     subtitle = 'Significant E18 Male '
   )  +   
   
@@ -118,19 +122,19 @@ E18_male_GO <- ggplot(E18_GO,
     legend.text = element_text(size = 14, face = "bold"), # Text size
     title = element_text(size = 14, face = "bold")) +
   coord_flip()
-ggsave(glue::glue("{pdf_path}E18_Male_GOTerms_dotplot.pdf"), width = 15,
+ggsave(glue::glue("{pdf_path}E18_Male_KeggTerms_dotplot.pdf"), width = 15,
        height = 12)
 
 #E18 Females
 
-E18_female_GO <- ggplot(E18_GO_Female,
-                      aes(x = Term, y = Cell.Type, size = `-log10(p.value)`, fill = `-log10(p.value)`))  +
+E18_female_GO <- ggplot(e18_female,
+                      aes(x = Term, y = Cell.Type, size = Odds.Ratio, fill = Adjusted.P.value)) +
   geom_point(shape = 21) +
   scale_size(range = c(2.5,12.5)) +
   scale_fill_viridis() + 
   xlab('') + ylab('Cell Type') +
   labs(
-    title = 'Top GO Terms',
+    title = 'Top 10 KEGG Terms',
     subtitle = 'Significant E18 Female '
   )  +   
   
@@ -155,7 +159,7 @@ E18_female_GO <- ggplot(E18_GO_Female,
     legend.text = element_text(size = 14, face = "bold"), # Text size
     title = element_text(size = 14, face = "bold")) +
   coord_flip()
-ggsave(glue::glue("{pdf_path}E18_Female_GOTerms_dotplot.pdf"), width = 15,
+ggsave(glue::glue("{pdf_path}E18_Female_KeggTerms_dotplot.pdf"), width = 15,
        height = 12)
 
 #P30 females
