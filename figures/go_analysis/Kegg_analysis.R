@@ -578,6 +578,7 @@ male_common <- ggplot(male_total_kegg,
 ggsave(glue::glue("{pdf_path}common_male_KEGGTerms_dotplot.pdf"), width = 15,
        height = 12)
 
+#plot of males across time via limmaVoomCC only
 male_common_limma <- ggplot(male_kegg_limma,
                       aes(x = Term, y = Cell.Type, size = Time.Point, fill = Adjusted.P.value)) +
   geom_point(shape = 21) +
