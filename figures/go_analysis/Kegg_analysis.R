@@ -613,4 +613,3 @@ male_common_limma <- ggplot(male_kegg_limma,
   coord_flip()
 ggsave(glue::glue("{pdf_path}common_male_KEGG_limma.pdf"), width = 15,
        height = 12)
-
