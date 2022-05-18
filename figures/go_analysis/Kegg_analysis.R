@@ -52,6 +52,12 @@ p30_female <- p30_female %>% arrange(Adjusted.P.value) %>%
   group_by(Cell.Type) %>% top_n(10)
 p30_female <- p30_female[order(p30_female$Odds.Ratio),]
 
+p30_female_limma <- master_df[which(master_df$Metadata=='M_MUT_and_WT_F_P30_CORT' & master_df$Time.Point =="P30" & master_df$deg_method == "LimmaVoomCC"),]
+p30_female_limma <- filter(p30_female_limma, Adjusted.P.value <= 0.05)
+p30_female_limma <- p30_female_limma %>% arrange(Adjusted.P.value) %>%
+  group_by(Cell.Type) %>% top_n(30)
+p30_female_limma <- p30_female_limma[order(p30_female_limma$Odds.Ratio),]
+
 #subset P30 males
 p30_male <- master_df[which(master_df$Metadata=='M_MUT_and_WT_M_P30_CORT' & master_df$Time.Point =="P30"),]
 p30_male <- filter(p30_male, Adjusted.P.value <= 0.05)
@@ -196,6 +202,41 @@ P30_female_GO <- ggplot(p30_female,
     title = element_text(size = 14, face = "bold")) +
   coord_flip()
 ggsave(glue::glue("{pdf_path}P30_Female_KEGGTerms_dotplot.pdf"), width = 15,
+       height = 12)
+
+P30_female_lim <- ggplot(p30_female_limma,
+                        aes(x = Term, y = Cell.Type, size = Odds.Ratio, fill = Adjusted.P.value)) +
+  geom_point(shape = 21) +
+  scale_size(range = c(2.5,12.5)) +
+  scale_fill_viridis() + 
+  xlab('') + ylab('Cell Type') +
+  labs(
+    title = 'Top 10 KEGG Terms',
+    subtitle = 'Significant P30 Female limma'
+  )  +   
+  
+  theme_bw(base_size = 24) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    
+    axis.text.x = element_text(angle = 90, size = 14, face = 'bold', hjust = 1.0, vjust = 0.5),
+    axis.text.y = element_text(angle = 0, size = 14, face = 'bold', vjust = 0.5),
+    axis.title = element_text(size = 14, face = 'bold'),
+    axis.title.x = element_text(size = 14, face = 'bold'),
+    axis.title.y = element_text(size = 14, face = 'bold'),
+    axis.line = element_line(colour = 'black'),
+    
+    #Legend
+    legend.key = element_blank(), # removes the border
+    legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
+    legend.text = element_text(size = 14, face = "bold"), # Text size
+    title = element_text(size = 14, face = "bold")) +
+  coord_flip()
+ggsave(glue::glue("{pdf_path}P30_Female_KEGGTerms_limma.pdf"), width = 15,
        height = 12)
 
 #P30 males
@@ -401,6 +442,7 @@ female_total_kegg$Time.Point <- as.numeric(female_total_kegg$Time.Point)
 female_total_kegg<- female_total_kegg %>%
   mutate(Cell.Type =  factor(Cell.Type, levels = x)) %>%
   arrange(Cell.Type) 
+female_kegg_limma <- female_total_kegg[which(female_total_kegg$deg_method == "LimmaVoomCC"),]
 
 #common female terms plot
 female_common <- ggplot(female_total_kegg,
@@ -439,6 +481,41 @@ female_common <- ggplot(female_total_kegg,
 ggsave(glue::glue("{pdf_path}common_female_KEGGTerms_dotplot.pdf"), width = 15,
        height = 12)
 
+female_common_limma <- ggplot(female_kegg_limma,
+                        aes(x = Term, y = Cell.Type, size = Time.Point, fill = Adjusted.P.value)) +
+  geom_point(shape = 21) +
+  scale_size(range = c(2.5,12.5)) +
+  scale_size_continuous(breaks = c(30, 60, 150)) +
+  scale_fill_viridis() + 
+  xlab('') + ylab('Cell Type') +
+  labs(
+    title = 'Common KEGG Terms',
+    subtitle = 'Across time in Females with limmaVoomCC input'
+  )  +   
+  
+  theme_bw(base_size = 24) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    
+    axis.text.x = element_text(angle = 90, size = 14, face = 'bold', hjust = 1.0, vjust = 0.5),
+    axis.text.y = element_text(angle = 0, size = 14, face = 'bold', vjust = 0.5),
+    axis.title = element_text(size = 14, face = 'bold'),
+    axis.title.x = element_text(size = 14, face = 'bold'),
+    axis.title.y = element_text(size = 14, face = 'bold'),
+    axis.line = element_line(colour = 'black'),
+    
+    #Legend
+    legend.key = element_blank(), # removes the border
+    legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
+    legend.text = element_text(size = 14, face = "bold"), # Text size
+    title = element_text(size = 14, face = "bold")) +
+  coord_flip()
+ggsave(glue::glue("{pdf_path}common_female_KEGG_limma.pdf"), width = 15,
+       height = 12)
 ##########################################################
 ## Find what the males have in common across timepoints ##
 ##########################################################
@@ -455,25 +532,26 @@ write.csv(common_terms, glue::glue("{pdf_path}common_terms_male.csv"), row.names
 write.csv(p30_male, glue::glue("{pdf_path}p30_male_terms.csv"), row.names = FALSE)
 write.csv(p60_male, glue::glue("{pdf_path}p60_male_terms.csv"), row.names = FALSE)
 write.csv(p120_male, glue::glue("{pdf_path}p120_male_terms.csv"), row.names = FALSE)
-female_total_kegg <- read.csv(glue::glue("{pdf_path}common_female_terms.csv"))
+male_total_kegg <- read.csv(glue::glue("{pdf_path}common_male_terms.csv"))
 library(plyr)
-female_total_kegg$Time.Point <- revalue(female_total_kegg$Time.Point, c("E18" = 18, "P30" = 30, "P60"= 60, "P120" = 120, "P150" = 150))
-female_total_kegg$Time.Point <- as.numeric(female_total_kegg$Time.Point)
-female_total_kegg<- female_total_kegg %>%
+male_total_kegg$Time.Point <- revalue(male_total_kegg$Time.Point, c("E18" = 18, "P30" = 30, "P60"= 60, "P120" = 120, "P150" = 150))
+male_total_kegg$Time.Point <- as.numeric(male_total_kegg$Time.Point)
+male_total_kegg<- male_total_kegg %>%
   mutate(Cell.Type =  factor(Cell.Type, levels = x)) %>%
   arrange(Cell.Type) 
+male_kegg_limma <- male_total_kegg[which(male_total_kegg$deg_method == "LimmaVoomCC"),]
 
 #common female terms plot
-female_common <- ggplot(female_total_kegg,
+male_common <- ggplot(male_total_kegg,
                         aes(x = Term, y = Cell.Type, size = Time.Point, fill = Adjusted.P.value)) +
   geom_point(shape = 21) +
   scale_size(range = c(2.5,12.5)) +
-  scale_size_continuous(breaks = c(30, 60, 150)) +
+  scale_size_continuous(breaks = c(30, 60, 120)) +
   scale_fill_viridis() + 
   xlab('') + ylab('Cell Type') +
   labs(
     title = 'Common KEGG Terms',
-    subtitle = 'Across time in Females '
+    subtitle = 'Across time in males '
   )  +   
   
   theme_bw(base_size = 24) +
@@ -497,7 +575,42 @@ female_common <- ggplot(female_total_kegg,
     legend.text = element_text(size = 14, face = "bold"), # Text size
     title = element_text(size = 14, face = "bold")) +
   coord_flip()
-ggsave(glue::glue("{pdf_path}common_female_KEGGTerms_dotplot.pdf"), width = 15,
+ggsave(glue::glue("{pdf_path}common_male_KEGGTerms_dotplot.pdf"), width = 15,
        height = 12)
 
+male_common_limma <- ggplot(male_kegg_limma,
+                      aes(x = Term, y = Cell.Type, size = Time.Point, fill = Adjusted.P.value)) +
+  geom_point(shape = 21) +
+  scale_size(range = c(2.5,12.5)) +
+  scale_size_continuous(breaks = c(30, 60, 120)) +
+  scale_fill_viridis() + 
+  xlab('') + ylab('Cell Type') +
+  labs(
+    title = 'Common KEGG Terms',
+    subtitle = 'Across time in males with limmaVoomCC input '
+  )  +   
+  
+  theme_bw(base_size = 24) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    
+    axis.text.x = element_text(angle = 90, size = 14, face = 'bold', hjust = 1.0, vjust = 0.5),
+    axis.text.y = element_text(angle = 0, size = 14, face = 'bold', vjust = 0.5),
+    axis.title = element_text(size = 14, face = 'bold'),
+    axis.title.x = element_text(size = 14, face = 'bold'),
+    axis.title.y = element_text(size = 14, face = 'bold'),
+    axis.line = element_line(colour = 'black'),
+    
+    #Legend
+    legend.key = element_blank(), # removes the border
+    legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
+    legend.text = element_text(size = 14, face = "bold"), # Text size
+    title = element_text(size = 14, face = "bold")) +
+  coord_flip()
+ggsave(glue::glue("{pdf_path}common_male_KEGG_limma.pdf"), width = 15,
+       height = 12)
 
