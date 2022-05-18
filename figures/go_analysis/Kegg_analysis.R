@@ -8,14 +8,23 @@ library(tidyr)
 library(ggplot2)
 library(viridis)
 library(dplyr)
+library(patchwork)
 
 ###############
 ## load data ##
 ###############
+
 master_df <- read.csv("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/master_enricher_GOterms.csv") 
+
+######################################
+## set path and order of cell types ##
+######################################
 
 pdf_path = "/Users/osman/Desktop/LaSalle_lab/Seurat_figures/"
 x = c("L2_3_IT", "L4", "L5", "L6","Pvalb", "Vip", "Sst","Sncg","Lamp5","Peri", "Endo", "Oligo","Astro","Non-neuronal")
+master_df<- master_df %>%
+  mutate(Cell.Type =  factor(Cell.Type, levels = x)) %>%
+  arrange(Cell.Type) 
 
 ######################
 ## Subset master_df ##
@@ -34,15 +43,12 @@ e18_female <- filter(e18_female, Adjusted.P.value <= 0.05)
 e18_female <- e18_female %>% arrange(Adjusted.P.value) %>%
   group_by(Cell.Type) %>% top_n(10)
 e18_female <- e18_female[order(e18_female$Adjusted.P.value),]
-plotData <- plotData %>%
-  mutate(cell_type =  factor(cell_type, levels = x)) %>%
-  arrange(cell_type) 
 
-P30_GO_Female <- female_go[which(female_go$Metadata=='M_MUT_and_WT_F_P30_CORT' & female_go$Time.Point =="P30"),]
-P30_GO_Female <- P30_GO_Female[order(P30_GO_Female$`-log10(p.value)`),]
-P30_GO_Female <- filter(P30_GO_Female, `-log10(p.value)` >= 1.3)
-P30_GO_Female <- P30_GO_Female %>% arrange(desc(`-log10(p.value)`)) %>%
-  group_by(Gene.Ontology) %>% top_n(50)
+#subset P30 females
+p30_female <- master_df[which(master_df$Metadata=='M_MUT_and_WT_F_P30_CORT' & master_df$Time.Point =="P30"),]
+p30_female <- filter(p30_female, Adjusted.P.value <= 0.05)
+p30_female <- p30_female %>% arrange(Adjusted.P.value) %>%
+  group_by(Cell.Type) %>% top_n(10)
 
 P30_GO_male <- male_go[which(male_go$Metadata=='M_MUT_and_WT_M_P30_CORT' & male_go$Time.Point =="P30"),]
 P30_GO_male <- P30_GO_male[order(P30_GO_male$`-log10(p.value)`),]
@@ -109,11 +115,11 @@ E18_male_GO <- ggplot(e18_male,
     plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
     plot.caption = element_text(angle = 0, size = 12, face = 'bold', vjust = 1),
     
-    axis.text.x = element_text(angle = 90, size = 12, face = 'bold', hjust = 1.0, vjust = 0.5),
-    axis.text.y = element_text(angle = 0, size = 12, face = 'bold', vjust = 0.5),
-    axis.title = element_text(size = 12, face = 'bold'),
-    axis.title.x = element_text(size = 12, face = 'bold'),
-    axis.title.y = element_text(size = 12, face = 'bold'),
+    axis.text.x = element_text(angle = 90, size = 14, face = 'bold', hjust = 1.0, vjust = 0.5),
+    axis.text.y = element_text(angle = 0, size = 14, face = 'bold', vjust = 0.5),
+    axis.title = element_text(size = 14, face = 'bold'),
+    axis.title.x = element_text(size = 14, face = 'bold'),
+    axis.title.y = element_text(size = 14, face = 'bold'),
     axis.line = element_line(colour = 'black'),
     
     #Legend
@@ -144,13 +150,13 @@ E18_female_GO <- ggplot(e18_female,
     legend.background = element_rect(),
     plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
     plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
-    plot.caption = element_text(angle = 0, size = 12, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
     
-    axis.text.x = element_text(angle = 90, size = 12, face = 'bold', hjust = 1.0, vjust = 0.5),
-    axis.text.y = element_text(angle = 0, size = 12, face = 'bold', vjust = 0.5),
-    axis.title = element_text(size = 12, face = 'bold'),
-    axis.title.x = element_text(size = 12, face = 'bold'),
-    axis.title.y = element_text(size = 12, face = 'bold'),
+    axis.text.x = element_text(angle = 90, size = 14, face = 'bold', hjust = 1.0, vjust = 0.5),
+    axis.text.y = element_text(angle = 0, size = 14, face = 'bold', vjust = 0.5),
+    axis.title = element_text(size = 14, face = 'bold'),
+    axis.title.x = element_text(size = 14, face = 'bold'),
+    axis.title.y = element_text(size = 14, face = 'bold'),
     axis.line = element_line(colour = 'black'),
     
     #Legend
