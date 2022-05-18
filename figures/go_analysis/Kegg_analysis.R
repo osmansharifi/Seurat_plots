@@ -9,6 +9,7 @@ library(ggplot2)
 library(viridis)
 library(dplyr)
 library(patchwork)
+library(tidyverse)
 
 ###############
 ## load data ##
@@ -195,6 +196,247 @@ P30_female_GO <- ggplot(p30_female,
     title = element_text(size = 14, face = "bold")) +
   coord_flip()
 ggsave(glue::glue("{pdf_path}P30_Female_KEGGTerms_dotplot.pdf"), width = 15,
+       height = 12)
+
+#P30 males
+P30_male_GO <- ggplot(p30_male,
+                        aes(x = Term, y = Cell.Type, size = Odds.Ratio, fill = Adjusted.P.value)) +
+  geom_point(shape = 21) +
+  scale_size(range = c(2.5,12.5)) +
+  scale_fill_viridis() + 
+  xlab('') + ylab('Cell Type') +
+  labs(
+    title = 'Top 10 KEGG Terms',
+    subtitle = 'Significant P30 male '
+  )  +   
+  
+  theme_bw(base_size = 24) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    
+    axis.text.x = element_text(angle = 90, size = 14, face = 'bold', hjust = 1.0, vjust = 0.5),
+    axis.text.y = element_text(angle = 0, size = 14, face = 'bold', vjust = 0.5),
+    axis.title = element_text(size = 14, face = 'bold'),
+    axis.title.x = element_text(size = 14, face = 'bold'),
+    axis.title.y = element_text(size = 14, face = 'bold'),
+    axis.line = element_line(colour = 'black'),
+    
+    #Legend
+    legend.key = element_blank(), # removes the border
+    legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
+    legend.text = element_text(size = 14, face = "bold"), # Text size
+    title = element_text(size = 14, face = "bold")) +
+  coord_flip()
+ggsave(glue::glue("{pdf_path}P30_male_KEGGTerms_dotplot.pdf"), width = 15,
+       height = 12)
+
+#P60 Females
+P60_female_GO <- ggplot(p60_female,
+                        aes(x = Term, y = Cell.Type, size = Odds.Ratio, fill = Adjusted.P.value)) +
+  geom_point(shape = 21) +
+  scale_size(range = c(2.5,12.5)) +
+  scale_fill_viridis() + 
+  xlab('') + ylab('Cell Type') +
+  labs(
+    title = 'Top 10 KEGG Terms',
+    subtitle = 'Significant P60 Female '
+  )  +   
+  
+  theme_bw(base_size = 24) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    
+    axis.text.x = element_text(angle = 90, size = 14, face = 'bold', hjust = 1.0, vjust = 0.5),
+    axis.text.y = element_text(angle = 0, size = 14, face = 'bold', vjust = 0.5),
+    axis.title = element_text(size = 14, face = 'bold'),
+    axis.title.x = element_text(size = 14, face = 'bold'),
+    axis.title.y = element_text(size = 14, face = 'bold'),
+    axis.line = element_line(colour = 'black'),
+    
+    #Legend
+    legend.key = element_blank(), # removes the border
+    legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
+    legend.text = element_text(size = 14, face = "bold"), # Text size
+    title = element_text(size = 14, face = "bold")) +
+  coord_flip()
+ggsave(glue::glue("{pdf_path}P60_Female_KEGGTerms_dotplot.pdf"), width = 15,
+       height = 12)
+
+#P60 males
+P60_male_GO <- ggplot(p60_male,
+                      aes(x = Term, y = Cell.Type, size = Odds.Ratio, fill = Adjusted.P.value)) +
+  geom_point(shape = 21) +
+  scale_size(range = c(2.5,12.5)) +
+  scale_fill_viridis() + 
+  xlab('') + ylab('Cell Type') +
+  labs(
+    title = 'Top 10 KEGG Terms',
+    subtitle = 'Significant P60 male '
+  )  +   
+  
+  theme_bw(base_size = 24) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    
+    axis.text.x = element_text(angle = 90, size = 14, face = 'bold', hjust = 1.0, vjust = 0.5),
+    axis.text.y = element_text(angle = 0, size = 14, face = 'bold', vjust = 0.5),
+    axis.title = element_text(size = 14, face = 'bold'),
+    axis.title.x = element_text(size = 14, face = 'bold'),
+    axis.title.y = element_text(size = 14, face = 'bold'),
+    axis.line = element_line(colour = 'black'),
+    
+    #Legend
+    legend.key = element_blank(), # removes the border
+    legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
+    legend.text = element_text(size = 14, face = "bold"), # Text size
+    title = element_text(size = 14, face = "bold")) +
+  coord_flip()
+ggsave(glue::glue("{pdf_path}P60_male_KEGGTerms_dotplot.pdf"), width = 15,
+       height = 12)
+
+#P150 Females
+P150_female_GO <- ggplot(p150_female,
+                        aes(x = Term, y = Cell.Type, size = Odds.Ratio, fill = Adjusted.P.value)) +
+  geom_point(shape = 21) +
+  scale_size(range = c(2.5,12.5)) +
+  scale_fill_viridis() + 
+  xlab('') + ylab('Cell Type') +
+  labs(
+    title = 'Top 10 KEGG Terms',
+    subtitle = 'Significant P150 Female '
+  )  +   
+  
+  theme_bw(base_size = 24) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    
+    axis.text.x = element_text(angle = 90, size = 14, face = 'bold', hjust = 1.0, vjust = 0.5),
+    axis.text.y = element_text(angle = 0, size = 14, face = 'bold', vjust = 0.5),
+    axis.title = element_text(size = 14, face = 'bold'),
+    axis.title.x = element_text(size = 14, face = 'bold'),
+    axis.title.y = element_text(size = 14, face = 'bold'),
+    axis.line = element_line(colour = 'black'),
+    
+    #Legend
+    legend.key = element_blank(), # removes the border
+    legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
+    legend.text = element_text(size = 14, face = "bold"), # Text size
+    title = element_text(size = 14, face = "bold")) +
+  coord_flip()
+ggsave(glue::glue("{pdf_path}P150_Female_KEGGTerms_dotplot.pdf"), width = 15,
+       height = 12)
+
+#P120 males
+P120_male_GO <- ggplot(p120_male,
+                      aes(x = Term, y = Cell.Type, size = Odds.Ratio, fill = Adjusted.P.value)) +
+  geom_point(shape = 21) +
+  scale_size(range = c(2.5,12.5)) +
+  scale_fill_viridis() + 
+  xlab('') + ylab('Cell Type') +
+  labs(
+    title = 'Top 10 KEGG Terms',
+    subtitle = 'Significant P120 male '
+  )  +   
+  
+  theme_bw(base_size = 24) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    
+    axis.text.x = element_text(angle = 90, size = 14, face = 'bold', hjust = 1.0, vjust = 0.5),
+    axis.text.y = element_text(angle = 0, size = 14, face = 'bold', vjust = 0.5),
+    axis.title = element_text(size = 14, face = 'bold'),
+    axis.title.x = element_text(size = 14, face = 'bold'),
+    axis.title.y = element_text(size = 14, face = 'bold'),
+    axis.line = element_line(colour = 'black'),
+    
+    #Legend
+    legend.key = element_blank(), # removes the border
+    legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
+    legend.text = element_text(size = 14, face = "bold"), # Text size
+    title = element_text(size = 14, face = "bold")) +
+  coord_flip()
+ggsave(glue::glue("{pdf_path}P120_male_KEGGTerms_dotplot.pdf"), width = 15,
+       height = 12)
+
+#########################################
+## Find whats common across timepoints ##
+#########################################
+p30_col1 <- p30_female$Term
+p60_col1 <- p60_female$Term
+p150_col1 <- p150_female$Term
+length_min <- min(length(p30_col1),length(p60_col1),length(p150_col1))
+length_max <- max(length(p30_col1),length(p60_col1),length(p150_col1))
+kegg_terms <- data.frame(cbind(p30_col1[1:length_min], p60_col1[1:length_min], p150_col1[1:length_min]))
+colnames(kegg_terms)<-c("p30_KEGG","p60_KEGG","p150_KEGG")
+common_terms <- data.frame(Reduce(dplyr::intersect, list(kegg_terms$p30_KEGG,kegg_terms$p60_KEGG,kegg_terms$p150_KEGG)))
+
+write.csv(common_terms, glue::glue("{pdf_path}common_terms_only.csv"), row.names = FALSE)
+write.csv(p30_female, glue::glue("{pdf_path}p30_female_terms.csv"), row.names = FALSE)
+write.csv(p60_female, glue::glue("{pdf_path}p60_female_terms.csv"), row.names = FALSE)
+write.csv(p150_female, glue::glue("{pdf_path}p1500_female_terms.csv"), row.names = FALSE)
+female_total_kegg <- read.csv(glue::glue("{pdf_path}common_female_terms.csv"))
+library(plyr)
+female_total_kegg$Time.Point <- revalue(female_total_kegg$Time.Point, c("E18" = 18, "P30" = 30, "P60"= 60, "P120" = 120, "P150" = 150))
+female_total_kegg$Time.Point <- as.numeric(female_total_kegg$Time.Point)
+female_total_kegg<- female_total_kegg %>%
+  mutate(Cell.Type =  factor(Cell.Type, levels = x)) %>%
+  arrange(Cell.Type) 
+
+#common female terms plot
+female_common <- ggplot(female_total_kegg,
+                        aes(x = Term, y = Cell.Type, size = Time.Point, fill = Adjusted.P.value)) +
+  geom_point(shape = 21) +
+  scale_size(range = c(2.5,12.5)) +
+  scale_size_continuous(breaks = c(30, 60, 150)) +
+  scale_fill_viridis() + 
+  xlab('') + ylab('Cell Type') +
+  labs(
+    title = 'Common KEGG Terms',
+    subtitle = 'Across time in Females '
+  )  +   
+  
+  theme_bw(base_size = 24) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    
+    axis.text.x = element_text(angle = 90, size = 14, face = 'bold', hjust = 1.0, vjust = 0.5),
+    axis.text.y = element_text(angle = 0, size = 14, face = 'bold', vjust = 0.5),
+    axis.title = element_text(size = 14, face = 'bold'),
+    axis.title.x = element_text(size = 14, face = 'bold'),
+    axis.title.y = element_text(size = 14, face = 'bold'),
+    axis.line = element_line(colour = 'black'),
+    
+    #Legend
+    legend.key = element_blank(), # removes the border
+    legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
+    legend.text = element_text(size = 14, face = "bold"), # Text size
+    title = element_text(size = 14, face = "bold")) +
+  coord_flip()
+ggsave(glue::glue("{pdf_path}common_female_KEGGTerms_dotplot.pdf"), width = 15,
        height = 12)
 
 
