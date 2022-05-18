@@ -49,53 +49,47 @@ p30_female <- master_df[which(master_df$Metadata=='M_MUT_and_WT_F_P30_CORT' & ma
 p30_female <- filter(p30_female, Adjusted.P.value <= 0.05)
 p30_female <- p30_female %>% arrange(Adjusted.P.value) %>%
   group_by(Cell.Type) %>% top_n(10)
+p30_female <- p30_female[order(p30_female$Odds.Ratio),]
 
-P30_GO_male <- male_go[which(male_go$Metadata=='M_MUT_and_WT_M_P30_CORT' & male_go$Time.Point =="P30"),]
-P30_GO_male <- P30_GO_male[order(P30_GO_male$`-log10(p.value)`),]
-P30_GO_male <- filter(P30_GO_male, `-log10(p.value)` >= 1.3)
-P30_GO_male <- P30_GO_male %>% arrange(desc(`-log10(p.value)`)) %>%
-  group_by(Gene.Ontology) %>% top_n(40)
+#subset P30 males
+p30_male <- master_df[which(master_df$Metadata=='M_MUT_and_WT_M_P30_CORT' & master_df$Time.Point =="P30"),]
+p30_male <- filter(p30_male, Adjusted.P.value <= 0.05)
+p30_male <- p30_male %>% arrange(Adjusted.P.value) %>%
+  group_by(Cell.Type) %>% top_n(10)
+p30_male <- p30_male[order(p30_male$Odds.Ratio),]
 
-P60_GO <- go_data[which(go_data$Time.Point=='P60'),]
-P60_GO <- P60_GO[order(P60_GO$Fisher),]
-p.adjust <- round(p.adjust(P60_GO$Fisher,method="BH"),digits = 4)
-P60_GO=cbind(P60_GO,p.adjust)
-P60_GO <- P60_GO[order(P60_GO$p.adjust),]
-P60_GO <- filter(P60_GO, p.adjust < 0.05)
-P60_GO$GeneRatio <- P60_GO$Significant/P60_GO$Annotated
-P60_GO <- P60_GO[order(P60_GO$GeneRatio),]
+#subset P60 females
+p60_female <- master_df[which(master_df$Metadata=='M_MUT_and_WT_F_P60_CORT' & master_df$Time.Point =="P60"),]
+p60_female <- filter(p60_female, Adjusted.P.value <= 0.05)
+p60_female <- p60_female %>% arrange(Adjusted.P.value) %>%
+  group_by(Cell.Type) %>% top_n(10)
+p60_female <- p60_female[order(p60_female$Odds.Ratio),]
 
-#subset and sort GO terms
-P60_GO_Female <- go_data[which(go_data$Time.Point=='P60'),]
-P60_GO_Female <- P60_GO_Female[which(P60_GO_Female$Sex=='F'),]
-P60_GO_Female <- P60_GO_Female[order(P60_GO_Female$Fisher),]
-p.adjust <- round(p.adjust(P60_GO_Female$Fisher,method="BH"),digits = 4)
-P60_GO_Female=cbind(P60_GO_Female,p.adjust)
-P60_GO_Female <- P60_GO_Female[order(P60_GO_Female$p.adjust),]
-P60_GO_Female <- filter(P60_GO_Female, p.adjust < 0.05)
-P60_GO_Female$GeneRatio <- P60_GO_Female$Significant/P60_GO_Female$Annotated
+#subset P60 males
+p60_male <- master_df[which(master_df$Metadata=='M_MUT_and_WT_M_P60_CORT' & master_df$Time.Point =="P60"),]
+p60_male <- filter(p60_male, Adjusted.P.value <= 0.05)
+p60_male <- p60_male %>% arrange(Adjusted.P.value) %>%
+  group_by(Cell.Type) %>% top_n(10)
+p60_male <- p60_male[order(p60_male$Odds.Ratio),]
 
-P120_GO <- go_data[which(go_data$Time.Point=='P120'),]
-P120_GO <- P120_GO[order(P120_GO$Fisher),]
-p.adjust <- round(p.adjust(P120_GO$Fisher,method="BH"),digits = 4)
-P120_GO=cbind(P120_GO,p.adjust)
-P120_GO <- P120_GO[order(P120_GO$p.adjust),]
-P120_GO <- filter(P120_GO, p.adjust < 0.05)
-P120_GO$GeneRatio <- P120_GO$Significant/P120_GO$Annotated
+#subset P150 females
+p150_female <- master_df[which(master_df$Metadata=='M_MUT_and_WT_F_P150_CORT' & master_df$Time.Point =="P150"),]
+p150_female <- filter(p150_female, Adjusted.P.value <= 0.05)
+p150_female <- p150_female %>% arrange(Adjusted.P.value) %>%
+  group_by(Cell.Type) %>% top_n(10)
+p150_female <- p150_female[order(p150_female$Odds.Ratio),]
 
-#subset and sort GO terms
-P150_GO_Female <- go_data[which(go_data$Time.Point=='P150'),]
-P150_GO_Female <- P150_GO_Female[which(P150_GO_Female$Sex=='F'),]
-P150_GO_Female <- P150_GO_Female[order(P150_GO_Female$Fisher),]
-p.adjust <- round(p.adjust(P150_GO_Female$Fisher,method="BH"),digits = 4)
-P150_GO_Female=cbind(P150_GO_Female,p.adjust)
-P150_GO_Female <- P150_GO_Female[order(P150_GO_Female$p.adjust),]
-P150_GO_Female <- filter(P150_GO_Female, p.adjust < 0.05)
-P150_GO_Female$GeneRatio <- P150_GO_Female$Significant/P150_GO_Female$Annotated
+#subset P120 males
+p120_male <- master_df[which(master_df$Metadata=='M_MUT_and_WT_M_P120_CORT' & master_df$Time.Point =="P120"),]
+p120_male <- filter(p120_male, Adjusted.P.value <= 0.05)
+p120_male <- p120_male %>% arrange(Adjusted.P.value) %>%
+  group_by(Cell.Type) %>% top_n(10)
+p120_male <- p120_male[order(p120_male$Odds.Ratio),]
 
-
-# Visualize GO Data
-#########################################################################################################
+#########################
+## Visualize KEGG Data ##
+#########################
+#E18 males
 E18_male_GO <- ggplot(e18_male,
        aes(x = Term, y = Cell.Type, size = Odds.Ratio, fill = Adjusted.P.value)) +
   geom_point(shape = 21) +
@@ -132,7 +126,6 @@ ggsave(glue::glue("{pdf_path}E18_Male_KeggTerms_dotplot.pdf"), width = 15,
        height = 12)
 
 #E18 Females
-
 E18_female_GO <- ggplot(e18_female,
                       aes(x = Term, y = Cell.Type, size = Odds.Ratio, fill = Adjusted.P.value)) +
   geom_point(shape = 21) +
@@ -168,16 +161,15 @@ E18_female_GO <- ggplot(e18_female,
 ggsave(glue::glue("{pdf_path}E18_Female_KeggTerms_dotplot.pdf"), width = 15,
        height = 12)
 
-#P30 females
-
-P30_female_GO <- ggplot(P30_GO_Female,
-                        aes(x = Term, y = Cell.Type, size = `-log10(p.value)`, fill = `-log10(p.value)`))  +
+#P30 Females
+P30_female_GO <- ggplot(p30_female,
+                        aes(x = Term, y = Cell.Type, size = Odds.Ratio, fill = Adjusted.P.value)) +
   geom_point(shape = 21) +
   scale_size(range = c(2.5,12.5)) +
   scale_fill_viridis() + 
   xlab('') + ylab('Cell Type') +
   labs(
-    title = 'Top GO Terms',
+    title = 'Top 10 KEGG Terms',
     subtitle = 'Significant P30 Female '
   )  +   
   
@@ -187,13 +179,13 @@ P30_female_GO <- ggplot(P30_GO_Female,
     legend.background = element_rect(),
     plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
     plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
-    plot.caption = element_text(angle = 0, size = 12, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
     
-    axis.text.x = element_text(angle = 90, size = 12, face = 'bold', hjust = 1.0, vjust = 0.5),
-    axis.text.y = element_text(angle = 0, size = 12, face = 'bold', vjust = 0.5),
-    axis.title = element_text(size = 12, face = 'bold'),
-    axis.title.x = element_text(size = 12, face = 'bold'),
-    axis.title.y = element_text(size = 12, face = 'bold'),
+    axis.text.x = element_text(angle = 90, size = 14, face = 'bold', hjust = 1.0, vjust = 0.5),
+    axis.text.y = element_text(angle = 0, size = 14, face = 'bold', vjust = 0.5),
+    axis.title = element_text(size = 14, face = 'bold'),
+    axis.title.x = element_text(size = 14, face = 'bold'),
+    axis.title.y = element_text(size = 14, face = 'bold'),
     axis.line = element_line(colour = 'black'),
     
     #Legend
@@ -202,7 +194,7 @@ P30_female_GO <- ggplot(P30_GO_Female,
     legend.text = element_text(size = 14, face = "bold"), # Text size
     title = element_text(size = 14, face = "bold")) +
   coord_flip()
-ggsave(glue::glue("{pdf_path}P30_Female_GOTerms_dotplot.pdf"), width = 15,
+ggsave(glue::glue("{pdf_path}P30_Female_KEGGTerms_dotplot.pdf"), width = 15,
        height = 12)
 
-master_ericher <- read.csv("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/master_enricher_GOterms.csv")  
+
