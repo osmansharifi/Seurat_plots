@@ -10,7 +10,9 @@ polychrome_palette  <- c("#5A5156FF","#E4E1E3FF","#F6222EFF","#FE00FAFF","#16FF3
 # Order that celltypes should appear in 
 x = c("L2_3_IT", "L4", "L5", "L6","Pvalb", "Vip", "Sst","Sncg","Lamp5","Peri", "Endo", "Oligo","Astro","Non-neuronal")
 
-#Load data
+###############
+## load male ##
+###############
 s.obj.names = c("M_MUT_and_WT_M_P30_CORT", "M_MUT_and_WT_M_P60_CORT", "M_MUT_and_WT_M_P120_CORT")
 DEGlists = vector(mode="list", length=3)
 plotDataList = vector(mode="list", length=3)
@@ -57,13 +59,13 @@ plotData_male_desingle <- plotData %>%
   mutate(cell_type =  factor(cell_type, levels = x)) %>%
   arrange(cell_type) 
 
-ggplot(data=plotData_male_desingle, aes(x=Age, y=numDEGs, color=cell_type)) +
+male_desingle <- ggplot(data=plotData_male_desingle, aes(x=Age, y=numDEGs, color=cell_type)) +
   geom_line(size = 1.5) +
   scale_color_manual(values = polychrome_palette)+
   geom_point(size = 3) +
   theme_classic() +
   xlab("Age (days)") +
-  ggtitle("DEsingle Postnatal female numDEGs")+
+  ggtitle("DEsingle Postnatal male numDEGs")+
   scale_x_continuous(breaks=c(30, 60, 120))+
   theme_bw(base_size = 24) +
   theme(
@@ -90,15 +92,74 @@ ggplot2::ggsave("/Users/osman/Desktop/LaSalle_lab/Seurat_figures/numDEGs_male_po
                 height = 8.5,
                 width = 12)
 
-ggplot(data=plotData, aes(x=Age, y=numDEGs, color=cell_type)) +
-  geom_line() +
+for(i in s.obj.names) {
+  
+  setwd(glue::glue("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/figures/DEG_visualization"))
+  
+  cell_types = list.dirs(glue::glue("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/DEG_data/DEG_two_methods/{i}/limmaVoomCC"))
+  cell_types = cell_types[-c(1, which(grepl("QC", cell_types)=="TRUE"), which(grepl("plotData", cell_types)=="TRUE"), which(grepl("interactivePlots", cell_types)=="TRUE"))]
+  
+  DEGlists[[i]] <- lapply(cell_types, function(cellType) {
+    openxlsx::read.xlsx(glue::glue("{cellType}/DEGs.xlsx"), rowNames = TRUE)
+  })
+  
+  cell_types = gsub(glue::glue("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/DEG_data/DEG_two_methods/{i}/limmaVoomCC/"), "", cell_types)
+  
+  names(DEGlists[[i]]) = cell_types
+  
+  numDEGs = sapply(cell_types, function(cellType) {
+    length(which(DEGlists[[i]][[cellType]][,4] < 0.1))
+  })
+  
+  plotDataList[[i]] = data.frame(cell_type = cell_types, numDEGs = as.numeric(numDEGs))
+  
+}
+
+### Number of DEGs across time
+#female
+#plotDataList$M_MUT_and_WT_F_E18_CORT$Age = c(rep(-2, times=length(plotDataList$M_MUT_and_WT_F_E18_CORT$cell_type)))
+#male
+#plotDataList$M_MUT_and_WT_M_E18_CORT$Age = c(rep(-2, times=length(plotDataList$M_MUT_and_WT_M_E18_CORT$cell_type)))
+plotDataList$M_MUT_and_WT_M_P30_CORT$Age = c(rep(30, times=length(plotDataList$M_MUT_and_WT_M_P30_CORT$cell_type)))
+plotDataList$M_MUT_and_WT_M_P60_CORT$Age = c(rep(60, times=length(plotDataList$M_MUT_and_WT_M_P60_CORT$cell_type)))
+plotDataList$M_MUT_and_WT_M_P120_CORT$Age = c(rep(120, times=length(plotDataList$M_MUT_and_WT_M_P120_CORT$cell_type)))
+plotDataTogether = do.call(rbind, plotDataList)
+
+plotData = plotDataTogether[-c(1, which(grepl("-activated", plotDataTogether$cell_type) == "TRUE"), which(grepl("-not", plotDataTogether$cell_type) == "TRUE")),]
+
+plotData_male_desingle <- plotData %>%
+  mutate(cell_type =  factor(cell_type, levels = x)) %>%
+  arrange(cell_type) 
+
+male_limma <- ggplot(data=plotData_male_desingle, aes(x=Age, y=numDEGs, color=cell_type)) +
+  geom_line(size = 1.5) +
   scale_color_manual(values = polychrome_palette)+
-  geom_point() +
+  geom_point(size = 3) +
   theme_classic() +
   xlab("Age (days)") +
-  ggtitle("DEsingle Postnatal female numDEGs")+
-  scale_x_continuous(breaks=c(30, 60, 150))
-ggplot2::ggsave("/Users/osman/Desktop/LaSalle_lab/Seurat_figures/numDEGs_female_postnatal_DEsingle.pdf",
+  ggtitle("limmaVoomCC Postnatal male numDEGs")+
+  scale_x_continuous(breaks=c(30, 60, 120))+
+  theme_bw(base_size = 24) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 12, face = 'bold', vjust = 1),
+    
+    axis.text.x = element_text(angle = 90, size = 14, face = 'bold', hjust = 1.0, vjust = 0.5),
+    axis.text.y = element_text(angle = 0, size = 14, face = 'bold', vjust = 0.5),
+    axis.title = element_text(size = 14, face = 'bold'),
+    axis.title.x = element_text(size = 14, face = 'bold'),
+    axis.title.y = element_text(size = 14, face = 'bold'),
+    axis.line = element_line(colour = 'black'),
+    
+    #Legend
+    legend.key = element_blank(), # removes the border
+    legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
+    legend.text = element_text(size = 14, face = "bold"), # Text size
+    title = element_text(size = 14, face = "bold"))
+ggplot2::ggsave("/Users/osman/Desktop/LaSalle_lab/Seurat_figures/numDEGs_male_postnatal_limmaCC.pdf",
                 device = NULL,
                 height = 8.5,
                 width = 12)
@@ -182,6 +243,76 @@ ggplot2::ggsave("/Users/osman/Desktop/LaSalle_lab/Seurat_figures/numDEGs_female_
                 height = 8.5,
                 width = 12)
 
+for(i in s.obj.names) {
+  
+  setwd(glue::glue("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/figures/DEG_visualization"))
+  
+  cell_types = list.dirs(glue::glue("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/DEG_data/DEG_two_methods/{i}/limmaVoomCC"))
+  cell_types = cell_types[-c(1, which(grepl("QC", cell_types)=="TRUE"), which(grepl("plotData", cell_types)=="TRUE"), which(grepl("interactivePlots", cell_types)=="TRUE"))]
+  
+  DEGlists[[i]] <- lapply(cell_types, function(cellType) {
+    openxlsx::read.xlsx(glue::glue("{cellType}/DEGs.xlsx"), rowNames = TRUE)
+  })
+  
+  cell_types = gsub(glue::glue("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/DEG_data/DEG_two_methods/{i}/limmaVoomCC/"), "", cell_types)
+  
+  names(DEGlists[[i]]) = cell_types
+  
+  numDEGs = sapply(cell_types, function(cellType) {
+    length(which(DEGlists[[i]][[cellType]][,4] < 0.1))
+  })
+  
+  plotDataList[[i]] = data.frame(cell_type = cell_types, numDEGs = as.numeric(numDEGs))
+  
+}
+
+### Number of DEGs across time
+#female
+#plotDataList$M_MUT_and_WT_F_E18_CORT$Age = c(rep(-2, times=length(plotDataList$M_MUT_and_WT_F_E18_CORT$cell_type)))
+plotDataList$M_MUT_and_WT_F_P30_CORT$Age = c(rep(30, times=length(plotDataList$M_MUT_and_WT_F_P30_CORT$cell_type)))
+plotDataList$M_MUT_and_WT_F_P60_CORT$Age = c(rep(60, times=length(plotDataList$M_MUT_and_WT_F_P60_CORT$cell_type)))
+plotDataList$M_MUT_and_WT_F_P150_CORT$Age = c(rep(150, times=length(plotDataList$M_MUT_and_WT_F_P150_CORT$cell_type)))
+plotDataTogether = do.call(rbind, plotDataList)
+
+plotData = plotDataTogether[-c(1, which(grepl("-activated", plotDataTogether$cell_type) == "TRUE"), which(grepl("-not", plotDataTogether$cell_type) == "TRUE")),]
+
+plotData_female_limma <- plotData %>%
+  mutate(cell_type =  factor(cell_type, levels = x)) %>%
+  arrange(cell_type) 
+
+female_limma <- ggplot(data=plotData_female_limma, aes(x=Age, y=numDEGs, color=cell_type)) +
+  geom_line(size = 1.5) +
+  scale_color_manual(values = polychrome_palette)+
+  geom_point(size = 3) +
+  theme_classic() +
+  xlab("Age (days)") +
+  ggtitle("DEsingle Postnatal female numDEGs")+
+  scale_x_continuous(breaks=c(30, 60, 150))+
+  theme_bw(base_size = 24) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 12, face = 'bold', vjust = 1),
+    
+    axis.text.x = element_text(angle = 90, size = 14, face = 'bold', hjust = 1.0, vjust = 0.5),
+    axis.text.y = element_text(angle = 0, size = 14, face = 'bold', vjust = 0.5),
+    axis.title = element_text(size = 14, face = 'bold'),
+    axis.title.x = element_text(size = 14, face = 'bold'),
+    axis.title.y = element_text(size = 14, face = 'bold'),
+    axis.line = element_line(colour = 'black'),
+    
+    #Legend
+    legend.key = element_blank(), # removes the border
+    legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
+    legend.text = element_text(size = 14, face = "bold"), # Text size
+    title = element_text(size = 14, face = "bold"))
+ggplot2::ggsave("/Users/osman/Desktop/LaSalle_lab/Seurat_figures/numDEGs_female_postnatal_limma.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
+wrap_plots(female_limma, female_desingle, male_limma, male_desingle)
 ### Get DEGs that are common to all time points ###
 #get rid of activated/not
 names(DEGlists[[1]])[c(-3,-4, -6, -7, -9, -10, -12, -13, -15, -16, -19, -20, -22, -23, -25, -26, -28, -29)] 
