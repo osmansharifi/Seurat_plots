@@ -457,25 +457,25 @@ p60_col1_male <- p60_male_limma$Term
 p120_col1_male <- p120_male_limma$Term
 length_min <- min(length(p30_col1_male),length(p60_col1_male),length(p120_col1_male))
 length_max <- max(length(p30_col1_male),length(p60_col1_male),length(p120_col1_male))
-kegg_terms <- data.frame(cbind(p30_col1_male[1:length_min], p60_col1_male[1:length_min], p120_col1_male[1:length_min]))
-colnames(kegg_terms)<-c("p30_KEGG","p60_KEGG","p120_KEGG")
-common_terms <- data.frame(Reduce(dplyr::intersect, list(kegg_terms$p30_KEGG,kegg_terms$p60_KEGG,kegg_terms$p120_KEGG)))
+go_terms <- data.frame(cbind(p30_col1_male[1:length_min], p60_col1_male[1:length_min], p120_col1_male[1:length_min]))
+colnames(go_terms)<-c("p30_GO","p60_GO","p120_GO")
+common_terms <- data.frame(Reduce(dplyr::intersect, list(go_terms$p30_GO,go_terms$p60_GO,go_terms$p120_GO)))
 
-write.csv(common_terms, glue::glue("{pdf_path}common_terms_male.csv"), row.names = FALSE)
-write.csv(p30_male, glue::glue("{pdf_path}p30_male_terms.csv"), row.names = FALSE)
-write.csv(p60_male, glue::glue("{pdf_path}p60_male_terms.csv"), row.names = FALSE)
-write.csv(p120_male, glue::glue("{pdf_path}p120_male_terms.csv"), row.names = FALSE)
-male_total_kegg <- read.csv(glue::glue("{pdf_path}common_male_terms.csv"))
+write.csv(common_terms, glue::glue("{pdf_path}common_GOterms_male_only.csv"), row.names = FALSE)
+write.csv(p30_male_limma, glue::glue("{pdf_path}p30_male_GOterms.csv"), row.names = FALSE)
+write.csv(p60_male_limma, glue::glue("{pdf_path}p60_male_GOterms.csv"), row.names = FALSE)
+write.csv(p120_male_limma, glue::glue("{pdf_path}p120_male_GOterms.csv"), row.names = FALSE)
+male_total_go <- read.csv(glue::glue("{pdf_path}common_GOterms_male.csv"))
 library(plyr)
-male_total_kegg$Time.Point <- revalue(male_total_kegg$Time.Point, c("E18" = 18, "P30" = 30, "P60"= 60, "P120" = 120, "P150" = 150))
-male_total_kegg$Time.Point <- as.numeric(male_total_kegg$Time.Point)
-male_total_kegg<- male_total_kegg %>%
+male_total_go$Time.Point <- revalue(male_total_go$Time.Point, c("E18" = 18, "P30" = 30, "P60"= 60, "P120" = 120, "P150" = 150))
+male_total_go$Time.Point <- as.numeric(male_total_go$Time.Point)
+male_total_go<- male_total_go %>%
   mutate(Cell.Type =  factor(Cell.Type, levels = x)) %>%
   arrange(Cell.Type) 
-male_kegg_limma <- male_total_kegg[which(male_total_kegg$deg_method == "LimmaVoomCC"),]
+male_go_limma <- male_total_go[which(male_total_go$deg_method == "LimmaVoomCC"),]
 
 #common female terms plot
-male_common <- ggplot(male_total_kegg,
+male_common <- ggplot(male_total_go,
                         aes(x = Term, y = Cell.Type, size = Time.Point, fill = X.log10.p.value)) +
   geom_point(shape = 21) +
   scale_size(range = c(2.5,12.5)) +
@@ -483,7 +483,7 @@ male_common <- ggplot(male_total_kegg,
   scale_fill_viridis() + 
   xlab('') + ylab('Cell Type') +
   labs(
-    title = 'Common KEGG Terms',
+    title = 'Common GO Terms',
     subtitle = 'Across time in males '
   )  +   
   
@@ -508,42 +508,5 @@ male_common <- ggplot(male_total_kegg,
     legend.text = element_text(size = 14, face = "bold"), # Text size
     title = element_text(size = 14, face = "bold")) +
   coord_flip()
-ggsave(glue::glue("{pdf_path}common_male_KEGGTerms_dotplot.pdf"), width = 15,
-       height = 12)
-
-#plot of males across time via limmaVoomCC only
-male_common_limma <- ggplot(male_kegg_limma,
-                      aes(x = Term, y = Cell.Type, size = Time.Point, fill = X.log10.p.value)) +
-  geom_point(shape = 21) +
-  scale_size(range = c(2.5,12.5)) +
-  scale_size_continuous(breaks = c(30, 60, 120)) +
-  scale_fill_viridis() + 
-  xlab('') + ylab('Cell Type') +
-  labs(
-    title = 'Common KEGG Terms',
-    subtitle = 'Across time in males with limmaVoomCC input '
-  )  +   
-  
-  theme_bw(base_size = 24) +
-  theme(
-    legend.position = 'right',
-    legend.background = element_rect(),
-    plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
-    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
-    plot.caption = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
-    
-    axis.text.x = element_text(angle = 90, size = 14, face = 'bold', hjust = 1.0, vjust = 0.5),
-    axis.text.y = element_text(angle = 0, size = 14, face = 'bold', vjust = 0.5),
-    axis.title = element_text(size = 14, face = 'bold'),
-    axis.title.x = element_text(size = 14, face = 'bold'),
-    axis.title.y = element_text(size = 14, face = 'bold'),
-    axis.line = element_line(colour = 'black'),
-    
-    #Legend
-    legend.key = element_blank(), # removes the border
-    legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
-    legend.text = element_text(size = 14, face = "bold"), # Text size
-    title = element_text(size = 14, face = "bold")) +
-  coord_flip()
-ggsave(glue::glue("{pdf_path}common_male_KEGG_limma.pdf"), width = 15,
+ggsave(glue::glue("{pdf_path}common_male_GOTerms.pdf"), width = 15,
        height = 12)
