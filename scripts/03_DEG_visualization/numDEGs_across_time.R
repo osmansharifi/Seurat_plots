@@ -69,7 +69,7 @@ male_desingle <- ggplot(data=plotData_male_desingle, aes(x=Age, y=numDEGs, color
   scale_x_continuous(breaks=c(30, 60, 120))+
   theme_bw(base_size = 24) +
   theme(
-    legend.position = 'right',
+    legend.position = 'none',
     legend.background = element_rect(),
     plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
     plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
@@ -127,11 +127,11 @@ plotDataTogether = do.call(rbind, plotDataList)
 
 plotData = plotDataTogether[-c(1, which(grepl("-activated", plotDataTogether$cell_type) == "TRUE"), which(grepl("-not", plotDataTogether$cell_type) == "TRUE")),]
 
-plotData_male_desingle <- plotData %>%
+plotData_male_limma <- plotData %>%
   mutate(cell_type =  factor(cell_type, levels = x)) %>%
   arrange(cell_type) 
 
-male_limma <- ggplot(data=plotData_male_desingle, aes(x=Age, y=numDEGs, color=cell_type)) +
+male_limma <- ggplot(data=plotData_male_limma, aes(x=Age, y=numDEGs, color=cell_type)) +
   geom_line(size = 1.5) +
   scale_color_manual(values = polychrome_palette)+
   geom_point(size = 3) +
@@ -141,7 +141,7 @@ male_limma <- ggplot(data=plotData_male_desingle, aes(x=Age, y=numDEGs, color=ce
   scale_x_continuous(breaks=c(30, 60, 120))+
   theme_bw(base_size = 24) +
   theme(
-    legend.position = 'right',
+    legend.position = 'none',
     legend.background = element_rect(),
     plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
     plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
@@ -220,7 +220,7 @@ female_desingle <- ggplot(data=plotData_female_desingle, aes(x=Age, y=numDEGs, c
   scale_x_continuous(breaks=c(30, 60, 150))+
   theme_bw(base_size = 24) +
   theme(
-    legend.position = 'right',
+    legend.position = 'none',
     legend.background = element_rect(),
     plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
     plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
@@ -286,11 +286,11 @@ female_limma <- ggplot(data=plotData_female_limma, aes(x=Age, y=numDEGs, color=c
   geom_point(size = 3) +
   theme_classic() +
   xlab("Age (days)") +
-  ggtitle("DEsingle Postnatal female numDEGs")+
+  ggtitle("limmaVoomCC Postnatal female numDEGs")+
   scale_x_continuous(breaks=c(30, 60, 150))+
   theme_bw(base_size = 24) +
   theme(
-    legend.position = 'right',
+    legend.position = 'none',
     legend.background = element_rect(),
     plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
     plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
@@ -312,7 +312,11 @@ ggplot2::ggsave("/Users/osman/Desktop/LaSalle_lab/Seurat_figures/numDEGs_female_
                 device = NULL,
                 height = 8.5,
                 width = 12)
-wrap_plots(female_limma, female_desingle, male_limma, male_desingle)
+wrap_plots(female_limma, female_desingle, male_limma, male_desingle) +plot_annotation(tag_levels = 'A')
+ggplot2::ggsave("/Users/osman/Desktop/LaSalle_lab/Seurat_figures/numDEGs_4_panels.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
 ### Get DEGs that are common to all time points ###
 #get rid of activated/not
 names(DEGlists[[1]])[c(-3,-4, -6, -7, -9, -10, -12, -13, -15, -16, -19, -20, -22, -23, -25, -26, -28, -29)] 

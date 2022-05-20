@@ -3,6 +3,7 @@ library(Seurat)
 library(dplyr)
 library(ggplot2)
 library(plyr)
+library(patchwork)
 
 # Custom color palette
 polychrome_palette  <- c("#5A5156FF","#E4E1E3FF","#F6222EFF","#FE00FAFF","#16FF32FF","#3283FEFF","#FEAF16FF","#B00068FF","#1CFFCEFF","#90AD1CFF","#2ED9FFFF","#DEA0FDFF","#AA0DFEFF","#F8A19FFF","#325A9BFF","#C4451CFF","#1C8356FF","#85660DFF","#B10DA1FF","#FBE426FF","#1CBE4FFF","#FA0087FF","#FC1CBFFF","#F7E1A0FF","#C075A6FF","#782AB6FF","#AAF400FF","#BDCDFFFF","#822E1CFF","#B5EFB5FF","#7ED7D1FF","#1C7F93FF","#D85FF7FF","#683B79FF","#66B0FFFF", "#3B00FBFF")
@@ -194,7 +195,7 @@ wt_f_plot_prop <- ggplot(prop_postnatal_wt_female, aes(Age, count, color = cell_
   ylab("propCells") +
   ggtitle("propCells_WT_females")+
   scale_color_manual(values = polychrome_palette)+
-  scale_x_continuous(breaks=c(30, 60, 120))+
+  scale_x_continuous(breaks=c(30, 60, 150))+
   theme_bw(base_size = 24) +
   theme(
     legend.position = 'none',
@@ -224,7 +225,7 @@ mut_f_plot_prop <- ggplot(prop_postnatal_mut_female, aes(Age, count, color = cel
   ylab("propCells") +
   ggtitle("propCells_MUT_females")+
   scale_color_manual(values = polychrome_palette)+
-  scale_x_continuous(breaks=c(30, 60, 120))+
+  scale_x_continuous(breaks=c(30, 60, 150))+
   theme_bw(base_size = 24) +
   theme(
     legend.position = 'none',

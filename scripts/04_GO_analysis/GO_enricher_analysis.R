@@ -510,3 +510,5 @@ male_common <- ggplot(male_total_go,
   coord_flip()
 ggsave(glue::glue("{pdf_path}common_male_GOTerms.pdf"), width = 15,
        height = 12)
+
+wrap_plots(A. = male_common, B.=female_common)+plot_annotation(tag_levels = 'A')

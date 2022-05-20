@@ -108,8 +108,8 @@ all.cortex.combined <- RunUMAP(object = all.cortex.combined, dims = 1:20, verbos
 all.cortex.combined <- FindNeighbors(object = all.cortex.combined, dims = 1:20, verbose = FALSE)
 all.cortex.combined <- FindClusters(object = all.cortex.combined, verbose = FALSE)
 DimPlot(object = all.cortex.combined, label = TRUE, group.by = 'celltype.call') + NoLegend() + ggtitle("sctransform")# saving new Seurat object
-FeaturePlot_scCustom(seurat_object = all.cortex.combined, features = 'WT_Mecp2', split.by = "Sex")
-FeaturePlot_scCustom(seurat_object = all.cortex.combined, features = 'MUT_Mecp2', split.by = "Sex")
+FeaturePlot_scCustom(seurat_object = all.cortex.combined, features = 'WT_Mecp2')
+FeaturePlot_scCustom(seurat_object = all.cortex.combined, features = 'MUT_Mecp2')
 FeaturePlot_scCustom(seurat_object = all.cortex.combined, features = 'Mecp2', split.by = "Sex")
 
 #Function counts the percent of total cells that express specific genes
@@ -178,3 +178,4 @@ DoHeatmap(
 
 save(all.cortex.combined, file="/Users/osman/Desktop/LaSalle_lab/Seurat_objects/all.cortex.combined.RData")
 save(all.cortex.combined, file=glue::glue("/Users/karineier/Documents/GitHub/snRNA-seq-pipeline/Parsing_Mecp2_trnx_expression/{all.cortex.combined.name}/{all.cortex.combined.name}_with_Mecp2_WT_MUT.RData"))
+
