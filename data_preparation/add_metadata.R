@@ -174,8 +174,6 @@ DoHeatmap(
   features = top5$gene,
   labels = FALSE) 
 
-
-
 save(all.cortex.combined, file="/Users/osman/Desktop/LaSalle_lab/Seurat_objects/all.cortex.combined.RData")
 save(all.cortex.combined, file=glue::glue("/Users/karineier/Documents/GitHub/snRNA-seq-pipeline/Parsing_Mecp2_trnx_expression/{all.cortex.combined.name}/{all.cortex.combined.name}_with_Mecp2_WT_MUT.RData"))
 
