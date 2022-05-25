@@ -104,7 +104,7 @@ E18_male_GO <- ggplot(e18_male,
        aes(x = Term, y = Cell.Type, size = X.log10.p.value, fill = X.log10.p.value)) +
   geom_point(shape = 21) +
   scale_size(range = c(2.5,12.5)) +
-  scale_fill_viridis() + 
+  scale_fill_viridis(option = "plasma", direction = -1) + 
   xlab('') + ylab('Cell Type') +
   labs(
     title = 'Top 10 GO Terms',
