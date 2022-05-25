@@ -30,6 +30,11 @@ all.cortex.combined$Age <- plyr::mapvalues(
   to = c("E18", "E18","E18","E18","P30","P30","P30","P30","P60","P60","P60","P60","P120","P120","P120","P120","P30", "P30", "P60", "P60", "P150", "P150","P150", "P150","P30", "P30", "P60", "P60", "P150", "P150","P150", "P150","E18", "E18","E18","E18")
 )
 
+Idents(all.cortex.combined) <- "celltype.call"
+levels(all.cortex.combined) <- c("L2_3_IT", "L4", "L5", "L6","Pvalb", "Vip", "Sst","Sncg","Lamp5","Peri", "Endo", "Oligo","Astro","Non-neuronal")
+#Set color palette
+polychrome_palette <- c("#5A5156FF","#E4E1E3FF","#F6222EFF","#FE00FAFF","#16FF32FF","#3283FEFF","#FEAF16FF","#B00068FF","#1CFFCEFF","#90AD1CFF","#2ED9FFFF","#DEA0FDFF","#AA0DFEFF","#F8A19FFF","#325A9BFF","#C4451CFF","#1C8356FF","#85660DFF","#B10DA1FF","#FBE426FF","#1CBE4FFF","#FA0087FF","#FC1CBFFF","#F7E1A0FF","#C075A6FF","#782AB6FF","#AAF400FF","#BDCDFFFF","#822E1CFF","#B5EFB5FF","#7ED7D1FF","#1C7F93FF","#D85FF7FF","#683B79FF","#66B0FFFF", "#3B00FBFF")
+
 ## Adding in Mecp2 transcript expression information into Seurat Object in counts data and in meta data ##
 
 packages <- c("tidyr", "openxlsx", "glue", "magrittr", "Seurat", "dwtools", "devtools")
@@ -160,6 +165,9 @@ GOI1_GOI2.cells/all.cells.incluster*100 #Percentage of cells in Beta that co-exp
 #Marker Genes
 cell_markers_manual <- c("Plch2","Sst","Vip", "Pvalb", "Slc17a8", "Macc1", "Rorb", "Fezf2", "Rprm", "Aqp4", "Rassf10", "Kcnj8", "Slc17a7", "Gad2", "Aspa")
 
+FeaturePlot_scCustom(seurat_object = all.cortex.combined, features = cell_markers_manual)
+DotPlot_scCustom(seurat_object = all.cortex.combined, features = cell_markers_manual, group.by = "celltype.call", x_lab_rotate = TRUE, flip_axes = TRUE)
+ggsave("/Users/osman/Desktop/LaSalle_lab/Seurat_figures/celltype_markers.pdf")
 markers_df <- FindAllMarkers(
   object = all.cortex.combined, 
   only.pos = TRUE, 
