@@ -19,7 +19,10 @@ parser.add_argument('--logfc', required=False, type=float, default=0.7,
 # finalization
 arg = parser.parse_args()
 
-#load complete data frame
+##############################
+## load complete data frame ##
+##############################
+
 complete_df = pd.read_csv(arg.csv)
 print(complete_df)
 #'/Users/osman/Documents/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/all_cort_all_dataframe.csv
