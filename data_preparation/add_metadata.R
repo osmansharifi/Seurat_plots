@@ -168,6 +168,10 @@ cell_markers_manual <- c("Plch2","Sst","Vip", "Pvalb", "Slc17a8", "Macc1", "Rorb
 FeaturePlot_scCustom(seurat_object = all.cortex.combined, features = cell_markers_manual)
 DotPlot_scCustom(seurat_object = all.cortex.combined, features = cell_markers_manual, group.by = "celltype.call", x_lab_rotate = TRUE, flip_axes = TRUE)
 ggsave("/Users/osman/Desktop/LaSalle_lab/Seurat_figures/celltype_markers.pdf")
+Clustered_DotPlot(seurat_object = all.cortex.combined, features = cell_markers_manual, colors_use_idents = TRUE, row_label_size = 14)
+ggsave("/Users/osman/Desktop/LaSalle_lab/Seurat_figures/celltype_markers_clustered.pdf")
+
+
 markers_df <- FindAllMarkers(
   object = all.cortex.combined, 
   only.pos = TRUE, 
