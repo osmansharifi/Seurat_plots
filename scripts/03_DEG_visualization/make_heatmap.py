@@ -204,7 +204,7 @@ print(fdf_pv.shape)
 fdf_pv.to_csv('tmp_sn_pv.csv')
 
 cmd = ''.join((
-	f"r_heatmaps.R -l tmp_sn_logFC.csv -p tmp_sn_pv.csv -s {arg.pdf}",
+	f"/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/03_DEG_visualization/r_heatmaps.R -l tmp_sn_logFC.csv -p tmp_sn_pv.csv -s {arg.pdf}",
 	f" -t {' '.join(arg.title)}"))
 
 if arg.rotate:

@@ -47,15 +47,15 @@ map = grid.grabExpr(
 		Heatmap(
 			m,
  			col = col_fun,
- 			row_names_gp=gpar(fontsize=6),
- 			column_names_gp=gpar(fontsize=6),
-			height = nrow(m)*unit(2,"mm"),
+ 			row_names_gp=gpar(fontsize=10),
+ 			column_names_gp=gpar(fontsize=10),
+			height = nrow(m)*unit(3,"mm"),
 			row_names_max_width = max_text_width(rownames(m)),
  			heatmap_legend_param = list(title="logFC"),
 			#column_split = m$tp,
  			cell_fun = function(j, i, x, y, width, height, fill) {
  				if( pvm[i, j] <= 0.05 ) {
- 					grid.text(print("*"), x, y-height/2, gp = gpar(fontsize=10)) #grid.text(print("*"), x, y, gp = gpar(fontsize=9)) 
+ 					grid.text(print("*"), x, y-height/3, gp = gpar(fontsize=12)) #grid.text(print("*"), x, y, gp = gpar(fontsize=9)) 
  				}
 			},
 			column_title = paste(args$title, sep="", collapse=" ")
