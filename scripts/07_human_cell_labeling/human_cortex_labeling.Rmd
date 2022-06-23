@@ -33,10 +33,6 @@ Idents(hrett_cortex) <- "predicted.cluster"
 We can now visualize the outputs of Azimuth. Note that all cells are labeled with high-resolution annotations, and are projected into a harmonized space despite being analyzed from a wide variety of technologies.
 
 ```{r cortex_dimplot, fig.width=12, fig.height=5}
-p1 <- DimPlot(hrett_cortex, group.by = "predicted.class", label = TRUE, label.size = 3) + NoLegend()
-p2 <- DimPlot(hrett_cortex, group.by = "predicted.cluster")
-p1 + p2
-
 test_name <- RenameIdents(
   object = hrett_cortex,
   'Exc L2 LINC00507 GLRA3' = 'L2_3_IT', 
@@ -107,7 +103,11 @@ test_name <- RenameIdents(
   'OPC L1-6 PDGFRA COL20A1' = 'OLIGO'
 )
 DimPlot_scCustom(seurat_object = test_name, label = FALSE)
-
+p1 <- DimPlot(hrett_cortex, group.by = "predicted.class", label = TRUE, label.size = 3) + NoLegend()
+p2 <- DimPlot(hrett_cortex, group.by = "predicted.cluster")
+p1 + p2
+```
+```{r marker genes}
 top5 <- markers_all_single %>% group_by(cluster) %>% top_n(5, avg_log2FC)
 dim(top5)
 DoHeatmap(
