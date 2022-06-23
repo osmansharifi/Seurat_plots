@@ -1,0 +1,116 @@
+---
+title: "azimuth_labeling"
+author: "Osman Sharifi"
+date: '2022-06-23'
+output: html_document
+---
+
+
+```{r loadlibraries}
+library(Seurat)
+library(Azimuth)
+library(SeuratData)
+library(patchwork)
+library(scCustomize)
+library(dplyr)
+```
+
+## Map human cortex scRNA-seq datasets from 7 different technologies
+
+```{r pbmc_load, results='hide'}
+# Install the PBMC systematic comparative analyis (pmbcsca) dataset
+InstallData("humancortexref")
+# returns a Seurat object named hrett_cortex
+LoadData("humancortexref")
+#The RunAzimuth function can take a Seurat object as input
+load("/Users/osman/Desktop/LaSalle_lab/Human_rett_data/NovaSeq_data/05_Human_rett_corrected2.RData")
+hrett_cortex <- RunAzimuth(experiment.aggregate, reference = "humancortexref")
+#Normalize data
+hrett_cortex <- NormalizeData(hrett_cortex)
+Idents(hrett_cortex) <- "predicted.cluster"
+```
+
+We can now visualize the outputs of Azimuth. Note that all cells are labeled with high-resolution annotations, and are projected into a harmonized space despite being analyzed from a wide variety of technologies.
+
+```{r cortex_dimplot, fig.width=12, fig.height=5}
+p1 <- DimPlot(hrett_cortex, group.by = "predicted.class", label = TRUE, label.size = 3) + NoLegend()
+p2 <- DimPlot(hrett_cortex, group.by = "predicted.cluster")
+p1 + p2
+
+test_name <- RenameIdents(
+  object = hrett_cortex,
+  'Exc L2 LINC00507 GLRA3' = 'L2_3_IT', 
+  'Exc L2-3 RORB CCDC68' = 'L2_3_IT', 
+  'Exc L2-3 RORB PTPN3' = 'L2_3_IT', 
+  'Exc L3 LAMP5 CARM1P1' = 'L2_3_IT', 
+  'Exc L3 RORB OTOGL' = 'L2_3_IT', 
+  'Exc L3 THEMIS ENPEP' = 'L2_3_IT', 
+  'Exc L3-5 RORB LINC01202' = 'L4', 
+  'Exc L3-5 RORB LNX2' = 'L4', 
+  'Exc L3-5 RORB RPRM' = 'L4', 
+  'Exc L5 FEZF2 CSN1S1' = 'L5',
+  'Exc L5 THEMIS SLC22A18' = 'L5',
+  'Exc L5-6 FEZF2 C9orf135-AS1' = 'L5',
+  'Exc L5-6 FEZF2 IFNG-AS1' = 'L5',
+  'Astro L1 FGFR3 SERPINI2' = 'Astro', 
+  'Astro L1-6 FGFR3 AQP1' = 'Astro', 
+  'Astro L1-6 FGFR3 PLCG1' = 'Astro',  
+  'Oligo L2-6 OPALIN FTH1P3' = 'Oligo', 
+  'Oligo L3-6 OPALIN ENPP6'= 'Oligo', 
+  'Oligo L3-6 OPALIN LRP4-AS1' = 'Oligo', 
+  'OPC L1-6 PDGFRA COL20A1' = 'Oligo'
+  
+)
+DimPlot_scCustom(seurat_object = test_name, label = FALSE)
+
+top5 <- markers_all_single %>% group_by(cluster) %>% top_n(5, avg_log2FC)
+dim(top5)
+DoHeatmap(
+    object = test_name, 
+    features = top5$gene
+) + NoLegend()
+ggplot2::ggsave("Human_cellmarker_heatmap.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12,
+                dpi = 500)
+```
+
+
+
+```{r human rett, fig.width=12, fig.height=10}
+
+p1 <- FeaturePlot(hrett_cortex, features = "SST")
+p2 <- FeaturePlot(hrett_cortex, features = "VIP")
+p3 <- VlnPlot(hrett_cortex, features = c("FGFR3") , group.by = "predicted.cluster") + NoLegend()
+p4 <- FeaturePlot(hrett_cortex, features = "predicted.cluster.score")
+p1 + p2 + p3 + p4 + plot_layout(ncol=2)
+```
+
+
+
+
+
+As expected, query cells map to CD34+ celltypes which represent a subset of celltypes present in the reference. Rare cells that map to differentiated cell populations (i.e. CD4 memory), map with low prediction scores. Reference-mapping also harmonizes two separate runs.
+
+```{r bm_plots, fig.width=10, fig.height=10}
+p1 <- DimPlot_scCustom(seurat_object = hrett_cortex, group.by = "predicted.cluster", label = TRUE) + NoLegend()
+p2 <- DimPlot(hrett_cortex, group.by = "orig.ident") 
+sort(table(hrett_cortex$predicted.cluster), decreasing = TRUE)
+p3 <- VlnPlot(hrett_cortex, features = "predicted.cluster.score") + NoLegend()
+(p1 + p2) / p3
+
+```
+
+Lastly, we can visualize markers associated with lineage differentiation to verify our annotations including AVP (HSC), KLF1 (erythroid), MPO (myeloid), and VWF (platelet).
+
+```{r bm_feature_plots, fig.width=12, fig.height=10}
+# normalize before visualization
+FeaturePlot_scCustom(hrett_cortex, features = c("VIP", "SST", "PVALB", "LAMP5"))
+```
+
+<details>
+  <summary>**Session Info**</summary>
+```{r}
+sessionInfo()
+```
