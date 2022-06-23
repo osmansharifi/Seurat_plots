@@ -108,6 +108,27 @@ p2 <- DimPlot(hrett_cortex, group.by = "predicted.cluster")
 p1 + p2
 ```
 ```{r marker genes}
+# Run basic FindAllMarkers DE test
+all_markers <- FindAllMarkers(object = hrett_cortex, verbose = F)
+
+all_markers <- all_markers %>%
+    group_by(cluster) %>%
+    arrange(desc(avg_log2FC)) %>%
+    arrange(cluster)
+# run piped with Seurat command
+all_markers_pct <- FindAllMarkers(object = pbmc, verbose = F) %>%
+    Add_Pct_Diff()
+
+all_markers_pct <- all_markers_pct %>%
+    group_by(cluster) %>%
+    arrange(desc(avg_log2FC)) %>%
+    arrange(cluster)
+all_markers_pct <- Add_Pct_Diff(marker_dataframe = all_markers)
+# By default it returns a named vector of genes (each gene named for cluster it was associated
+# with)
+top_5 <- Extract_Top_Markers(marker_dataframe = all_markers, num_genes = 5, rank_by = "avg_log2FC")
+head(top_5, 10)
+
 top5 <- markers_all_single %>% group_by(cluster) %>% top_n(5, avg_log2FC)
 dim(top5)
 DoHeatmap(
