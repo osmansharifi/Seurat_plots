@@ -97,14 +97,14 @@ test_name <- RenameIdents(
   'Inh L3-5 VIP TAC3' = 'VIP',
   'Inh L3-6 VIP ZIM2-AS1' = 'VIP',
   'Inh L5-6 VIP COL4A3' = 'VIP',
-  'Astro L1 FGFR3 SERPINI2' = 'Astro', 
-  'Astro L1-6 FGFR3 AQP1' = 'Astro', 
-  'Astro L1-6 FGFR3 PLCG1' = 'Astro',  
-  'Oligo L2-6 OPALIN FTH1P3' = 'Oligo', 
-  'Oligo L3-6 OPALIN ENPP6'= 'Oligo', 
-  'Oligo L3-6 OPALIN LRP4-AS1' = 'Oligo', 
-  'OPC L1-6 PDGFRA COL20A1' = 'Oligo',
-  'OPC L1-6 PDGFRA COL20A1' = 'Oligo'
+  'Astro L1 FGFR3 SERPINI2' = 'ASTRO', 
+  'Astro L1-6 FGFR3 AQP1' = 'ASTRO', 
+  'Astro L1-6 FGFR3 PLCG1' = 'ASTRO',  
+  'Oligo L2-6 OPALIN FTH1P3' = 'OLIGO', 
+  'Oligo L3-6 OPALIN ENPP6'= 'OLIGO', 
+  'Oligo L3-6 OPALIN LRP4-AS1' = 'OLIGO', 
+  'OPC L1-6 PDGFRA COL20A1' = 'OLIGO',
+  'OPC L1-6 PDGFRA COL20A1' = 'OLIGO'
 )
 DimPlot_scCustom(seurat_object = test_name, label = FALSE)
 
