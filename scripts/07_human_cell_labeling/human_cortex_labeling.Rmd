@@ -204,9 +204,11 @@ Lastly, we can visualize markers associated with lineage differentiation to veri
 # normalize before visualization
 FeaturePlot_scCustom(hrett_cortex, features = c("VIP", "SST", "PVALB", "LAMP5"))
 ```
+## Finally, lets save the filtered and normalized data
+```{r}
+save(human_rettcort, file="human_rettcort_labeled.RData")
+```
 
-<details>
-  <summary>**Session Info**</summary>
 ```{r}
 sessionInfo()
 ```
