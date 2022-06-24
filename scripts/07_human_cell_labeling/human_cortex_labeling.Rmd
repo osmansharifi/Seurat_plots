@@ -111,8 +111,9 @@ DimPlot_scCustom(seurat_object = human_rettcort, label = FALSE)
 ```{r make umap groupings}
 p1 <- DimPlot_scCustom(seurat_object = human_rettcort, group.by = "predicted.cross_species_cluster")
 p2 <- DimPlot_scCustom(seurat_object = human_rettcort, label = FALSE)
-p1 + p2
-FeaturePlot_scCustom(seurat_object = human_rettcort, features = "MECP2")
+p1 + p2 + plot_layout(ncol = 2)
+p1 <- FeaturePlot_scCustom(seurat_object = human_rettcort, features = 'MECP2')
+p2 <- DimPlot_scCustom(seurat_object = human_rettcort, group.by = 'orig.ident')
 ```
 ```{r marker genes}
 # Run basic FindAllMarkers DE test
