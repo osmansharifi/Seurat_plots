@@ -27,7 +27,10 @@ load("/Users/osman/Desktop/LaSalle_lab/Human_rett_data/NovaSeq_data/05_Human_ret
 human_rettcort <- RunAzimuth(experiment.aggregate, reference = "humancortexref")
 #Normalize data
 human_rettcort <- NormalizeData(human_rettcort)
-Idents(human_rettcort) <- "predicted.cluster"
+Idents(human_rettcort) <- "predicted.subcluster"
+# Rename classes.
+human_rettcort <- RenameIdents(object = human_rettcort, `L2/3 IT` = "your cell type", `1` = "your other cell type", `2` = "your last cell type")
+levels(all.cortex.combined) <- c("L2_3_IT", "L4", "L5", "L6","Pvalb", "Vip", "Sst","Sncg","Lamp5","Peri", "Endo", "Oligo","Astro","Non-neuronal")
 ```
 
 We can now visualize the outputs of Azimuth. Note that all cells are labeled with high-resolution annotations, and are projected into a harmonized space despite being analyzed from a wide variety of technologies.
