@@ -27,10 +27,22 @@ load("/Users/osman/Desktop/LaSalle_lab/Human_rett_data/NovaSeq_data/05_Human_ret
 human_rettcort <- RunAzimuth(experiment.aggregate, reference = "humancortexref")
 #Normalize data
 human_rettcort <- NormalizeData(human_rettcort)
-Idents(human_rettcort) <- "predicted.subcluster"
+human_rettcort <- ScaleData(human_rettcort)
+Idents(human_rettcort) <- "predicted.subclass"
 # Rename classes.
-human_rettcort <- RenameIdents(object = human_rettcort, `L2/3 IT` = "your cell type", `1` = "your other cell type", `2` = "your last cell type")
-levels(all.cortex.combined) <- c("L2_3_IT", "L4", "L5", "L6","Pvalb", "Vip", "Sst","Sncg","Lamp5","Peri", "Endo", "Oligo","Astro","Non-neuronal")
+human_rettcort <- RenameIdents(object = human_rettcort, `L2/3 IT` = "L2_3_IT", `L6 CT` = "L6", `L6 IT` = "L6", `L6b` = "L6", `L6 IT Car3` = "L6", `Sst Chodl` = "Sst", `L5 IT` = "L5", `L5 ET` = "L5", `Micro-PVM` = "Micro", `VLMC` = "Peri")
+levels(human_rettcort) <- c("L2_3_IT", "L5",  "L5/6 NP", "L6","Pvalb", "Vip", "Sst","Sncg","Lamp5","Peri", "Endo", "Oligo", "OPC", "Astro","Micro")
+```
+We will add metadata so we can parse by sex, age and disease later.
+```{add metadata}
+sample_names <- c("1136_CTRL","1420_RTT","1711_CTRL","1815_RTT","1846_CTRL","3381_RTT","4321_RTT","4591_CTRL","4687_RTT",  "4852_RTT","5020_RTT","5125_CTRL","5161_CTRL","662_CTRL","812_CTRL")
+
+#parse by condition
+human_rettcort$Condition <- plyr::mapvalues(
+  x = human_rettcort$orig.ident, 
+  from = c(sample_names), 
+  to = c("WT", "RTT", "WT", "RTT", "WT", "RTT", "RTT", "WT", "RTT", "RTT", "RTT","WT", "WT","WT", "WT" )
+)
 ```
 
 We can now visualize the outputs of Azimuth. Note that all cells are labeled with high-resolution annotations, and are projected into a harmonized space despite being analyzed from a wide variety of technologies.
