@@ -29,6 +29,9 @@ human_rettcort <- RunAzimuth(experiment.aggregate, reference = "humancortexref")
 human_rettcort <- NormalizeData(human_rettcort)
 human_rettcort <- ScaleData(human_rettcort)
 Idents(human_rettcort) <- "predicted.subclass"
+```
+```{r load seurat object directly}
+load("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rettcort_labeled.RData")
 # Rename classes.
 human_rettcort <- RenameIdents(object = human_rettcort, `L2/3 IT` = "L2_3_IT", `L6 CT` = "L6", `L6 IT` = "L6", `L6b` = "L6", `L6 IT Car3` = "L6", `Sst Chodl` = "Sst", `L5 IT` = "L5", `L5 ET` = "L5", `Micro-PVM` = "Micro", `VLMC` = "Peri")
 levels(human_rettcort) <- c("L2_3_IT", "L5",  "L5/6 NP", "L6","Pvalb", "Vip", "Sst","Sncg","Lamp5","Peri", "Endo", "Oligo", "OPC", "Astro","Micro")
