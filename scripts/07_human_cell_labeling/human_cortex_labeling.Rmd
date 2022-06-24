@@ -140,6 +140,10 @@ UMAP plots of data
 ```{r UMAP plots of data}
 DimPlot_scCustom(seurat_object = human_rettcort)
 ggsave("celltypes_UMAP.pdf")
+DimPlot_scCustom(seurat_object = human_rettcort, group.by = "predicted.class") +ggtitle("High level labels")
+ggsave("celltypes_highlevel_UMAP.pdf")
+DimPlot_scCustom(seurat_object = human_rettcort, group.by = "predicted.cluster") +ggtitle("Low level labels")+ theme(legend.position="bottom")
+ggsave("celltypes_lowlevel_UMAP.pdf")
 DimPlot_scCustom(seurat_object = human_rettcort, group.by = "Condition")
 ggsave("Conditon_UMAP.pdf")
 DimPlot_scCustom(seurat_object = human_rettcort, group.by = "Samples")
