@@ -133,12 +133,19 @@ p1 <- FeaturePlot_scCustom(seurat_object = human_rettcort, features = 'MECP2', s
 p2 <- DimPlot_scCustom(seurat_object = human_rettcort)
 wrap_plots(p1/p2)
 ggsave("MECP2_UMAP.pdf")
+VlnPlot(human_rettcort, features = "MECP2", split.by = "Condition")
+ggsave("MECP2_vlnplot.pdf")
 ```
 UMAP plots of data 
 ```{r UMAP plots of data}
 DimPlot_scCustom(seurat_object = human_rettcort)
 ggsave("celltypes_UMAP.pdf")
-DimPlot_scCustom()
+DimPlot_scCustom(seurat_object = human_rettcort, group.by = "Condition")
+ggsave("Conditon_UMAP.pdf")
+DimPlot_scCustom(seurat_object = human_rettcort, group.by = "Samples")
+ggsave("samples_UMAP.pdf")
+FeaturePlot_scCustom(seurat_object = human_rettcort, features = "percent.mito")
+ggsave("mito_UMAP.pdf")
 ```
 Find the marker genes for celltypes
 ```{r marker genes}
