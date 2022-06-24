@@ -13,9 +13,10 @@ library(SeuratData)
 library(patchwork)
 library(scCustomize)
 library(dplyr)
+library(ggplot2)
 ```
 
-## Map human cortex scRNA-seq datasets from 7 different technologies
+## Map human cortex scRNA-seq datasets from the allen atlas to the RETT corticies
 
 ```{r cortex_load, results='hide'}
 # Install the PBMC systematic comparative analyis (pmbcsca) dataset
@@ -37,7 +38,7 @@ human_rettcort <- RenameIdents(object = human_rettcort, `L2/3 IT` = "L2_3_IT", `
 levels(human_rettcort) <- c("L2_3_IT", "L5",  "L5/6 NP", "L6","Pvalb", "Vip", "Sst","Sncg","Lamp5","Peri", "Endo", "Oligo", "OPC", "Astro","Micro")
 ```
 We will add metadata so we can parse by sex, age and disease later.
-```{add metadata}
+```{r add metadata}
 sample_names <- c("1136_CTRL","1420_RTT","1711_CTRL","1815_RTT","1846_CTRL","3381_RTT","4321_RTT","4591_CTRL","4687_RTT",  "4852_RTT","5020_RTT","5125_CTRL","5161_CTRL","662_CTRL","812_CTRL")
 
 #parse by condition
@@ -126,16 +127,23 @@ human_rettcort <- RenameIdents(
 )
 DimPlot_scCustom(seurat_object = human_rettcort, label = FALSE)
 ```
+Let's look at MECP2 expression
 ```{r make umap groupings}
-p1 <- DimPlot_scCustom(seurat_object = human_rettcort, group.by = "predicted.cross_species_cluster")
-p2 <- DimPlot_scCustom(seurat_object = human_rettcort, label = FALSE)
-p1 + p2 + plot_layout(ncol = 2)
-p1 <- FeaturePlot_scCustom(seurat_object = human_rettcort, features = 'MECP2')
-p2 <- DimPlot_scCustom(seurat_object = human_rettcort, group.by = 'orig.ident')
+p1 <- FeaturePlot_scCustom(seurat_object = human_rettcort, features = 'MECP2', split.by = "Condition")
+p2 <- DimPlot_scCustom(seurat_object = human_rettcort)
+wrap_plots(p1/p2)
+ggsave("MECP2_UMAP.pdf")
 ```
+UMAP plots of data 
+```{r UMAP plots of data}
+DimPlot_scCustom(seurat_object = human_rettcort)
+ggsave("celltypes_UMAP.pdf")
+DimPlot_scCustom()
+```
+Find the marker genes for celltypes
 ```{r marker genes}
 # Run basic FindAllMarkers DE test
-all_markers <- FindAllMarkers(object = test_name, verbose = F)
+all_markers <- FindAllMarkers(object = human_rettcort, verbose = F)
 
 all_markers <- all_markers %>%
     group_by(cluster) %>%
@@ -154,18 +162,18 @@ all_markers_pct <- Add_Pct_Diff(marker_dataframe = all_markers)
 top_5 <- Extract_Top_Markers(marker_dataframe = all_markers, num_genes = 5, rank_by = "avg_log2FC")
 head(top_5, 10)
 
-Stacked_VlnPlot(seurat_object = test_name, features = top_5, x_lab_rotate = TRUE,
+Stacked_VlnPlot(seurat_object = human_rettcort, features = top_5, x_lab_rotate = TRUE,
     colors_use = human_colors_list)
 
 DoHeatmap(
-    object = test_name, 
+    object = human_rettcort, 
     features = top_5
 ) + NoLegend()
 
 top5 <- markers_all_single %>% group_by(cluster) %>% top_n(5, avg_log2FC)
 dim(top5)
 DoHeatmap(
-    object = test_name, 
+    object = human_rettcort, 
     features = top5$gene
 ) + NoLegend()
 ggplot2::ggsave("Human_cellmarker_heatmap.pdf",
