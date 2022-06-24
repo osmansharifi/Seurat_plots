@@ -17,24 +17,24 @@ library(dplyr)
 
 ## Map human cortex scRNA-seq datasets from 7 different technologies
 
-```{r pbmc_load, results='hide'}
+```{r cortex_load, results='hide'}
 # Install the PBMC systematic comparative analyis (pmbcsca) dataset
 InstallData("humancortexref")
 # returns a Seurat object named hrett_cortex
 LoadData("humancortexref")
 #The RunAzimuth function can take a Seurat object as input
 load("/Users/osman/Desktop/LaSalle_lab/Human_rett_data/NovaSeq_data/05_Human_rett_corrected2.RData")
-hrett_cortex <- RunAzimuth(experiment.aggregate, reference = "humancortexref")
+human_rettcort <- RunAzimuth(experiment.aggregate, reference = "humancortexref")
 #Normalize data
-hrett_cortex <- NormalizeData(hrett_cortex)
-Idents(hrett_cortex) <- "predicted.cluster"
+human_rettcort <- NormalizeData(human_rettcort)
+Idents(human_rettcort) <- "predicted.cluster"
 ```
 
 We can now visualize the outputs of Azimuth. Note that all cells are labeled with high-resolution annotations, and are projected into a harmonized space despite being analyzed from a wide variety of technologies.
 
 ```{r cortex_dimplot, fig.width=12, fig.height=5}
-test_name <- RenameIdents(
-  object = hrett_cortex,
+human_rettcort <- RenameIdents(
+  object = human_rettcort,
   'Exc L2 LINC00507 GLRA3' = 'L2_3_IT', 
   'Exc L2-3 RORB CCDC68' = 'L2_3_IT', 
   'Exc L2-3 RORB PTPN3' = 'L2_3_IT', 
@@ -59,6 +59,7 @@ test_name <- RenameIdents(
   'Inh L1-6 LAMP5 CA1' = 'LAMP5',
   'Inh L1-6 LAMP5 NES' = 'LAMP5',
   'Inh L5-6 LAMP5 CRABP1' = 'LAMP5',
+  'Inh L1 PAX6 CHRFAM7A' = 'LAMP5',
   'Inh L1 PVALB SST ASIC4' = 'PVALB',
   'Inh L1-6 PVALB COL15A1' = 'PVALB',
   'Inh L2-5 PVALB RPH3AL' = 'PVALB',
@@ -100,25 +101,30 @@ test_name <- RenameIdents(
   'Oligo L3-6 OPALIN ENPP6'= 'OLIGO', 
   'Oligo L3-6 OPALIN LRP4-AS1' = 'OLIGO', 
   'OPC L1-6 PDGFRA COL20A1' = 'OLIGO',
-  'OPC L1-6 PDGFRA COL20A1' = 'OLIGO'
+  'OPC L1-6 PDGFRA COL20A1' = 'OLIGO',
+  'Endo L2-5 NOSTRIN SRGN' = 'ENDO',
+  'Micro L1-6 TYROBP CD74' = 'MICRO',
+  'VLMC L1-5 PDGFRA COLEC12' = 'PERI'
 )
-DimPlot_scCustom(seurat_object = test_name, label = FALSE)
-p1 <- DimPlot(hrett_cortex, group.by = "predicted.class", label = TRUE, label.size = 3) + NoLegend()
-p2 <- DimPlot(hrett_cortex, group.by = "predicted.cluster")
+DimPlot_scCustom(seurat_object = human_rettcort, label = FALSE)
+```
+```{r make umap groupings}
+p1 <- DimPlot_scCustom(seurat_object = human_rettcort, group.by = "predicted.cross_species_cluster")
+p2 <- DimPlot_scCustom(seurat_object = human_rettcort, label = FALSE)
 p1 + p2
+FeaturePlot_scCustom(seurat_object = human_rettcort, features = "MECP2")
 ```
 ```{r marker genes}
 # Run basic FindAllMarkers DE test
-all_markers <- FindAllMarkers(object = hrett_cortex, verbose = F)
+all_markers <- FindAllMarkers(object = test_name, verbose = F)
 
 all_markers <- all_markers %>%
     group_by(cluster) %>%
     arrange(desc(avg_log2FC)) %>%
     arrange(cluster)
 # run piped with Seurat command
-all_markers_pct <- FindAllMarkers(object = pbmc, verbose = F) %>%
+all_markers_pct <- all_markers %>%
     Add_Pct_Diff()
-
 all_markers_pct <- all_markers_pct %>%
     group_by(cluster) %>%
     arrange(desc(avg_log2FC)) %>%
@@ -128,6 +134,14 @@ all_markers_pct <- Add_Pct_Diff(marker_dataframe = all_markers)
 # with)
 top_5 <- Extract_Top_Markers(marker_dataframe = all_markers, num_genes = 5, rank_by = "avg_log2FC")
 head(top_5, 10)
+
+Stacked_VlnPlot(seurat_object = test_name, features = top_5, x_lab_rotate = TRUE,
+    colors_use = human_colors_list)
+
+DoHeatmap(
+    object = test_name, 
+    features = top_5
+) + NoLegend()
 
 top5 <- markers_all_single %>% group_by(cluster) %>% top_n(5, avg_log2FC)
 dim(top5)
