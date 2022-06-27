@@ -171,10 +171,12 @@ all_markers_pct <- Add_Pct_Diff(marker_dataframe = all_markers)
 # By default it returns a named vector of genes (each gene named for cluster it was associated
 # with)
 top_5 <- Extract_Top_Markers(marker_dataframe = all_markers, num_genes = 5, rank_by = "avg_log2FC")
+top5_markers <- Extract_Top_Markers(marker_dataframe = all_markers, num_genes = 5, named_vector = FALSE,
+    make_unique = TRUE)
 head(top_5, 10)
 
-Stacked_VlnPlot(seurat_object = human_rettcort, features = top_5, x_lab_rotate = TRUE,
-    colors_use = human_colors_list)
+Stacked_VlnPlot(seurat_object = human_rettcort, features = top_5, x_lab_rotate = TRUE)
+Clustered_DotPlot(seurat_object = pbmc, features = top5_markers)
 
 DoHeatmap(
     object = human_rettcort, 
@@ -192,6 +194,11 @@ ggplot2::ggsave("Human_cellmarker_heatmap.pdf",
                 height = 8.5,
                 width = 12,
                 dpi = 500)
+
+allen_markers <- c("GAD1", "LHX6", "ADARB2", "LAMP5", "VIP", "PVALB", "SST", "SLC17A7", " CUX2", "RORB", "THEMIS", "FEZF2", "CTGF", "AQP4", "PDGFRA", "OPALIN", "FYB")
+DotPlot_scCustom(seurat_object = human_rettcort, features = allen_markers, flip_axes = T,
+    remove_axis_titles = FALSE)
+ggsave("allen_markers_dotplot.pdf")
 ```
 
 
