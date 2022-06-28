@@ -47,12 +47,13 @@ human_rettcort$Condition <- plyr::mapvalues(
   from = c(sample_names), 
   to = c("WT", "RTT", "WT", "RTT", "WT", "RTT", "RTT", "WT", "RTT", "RTT", "RTT","WT", "WT","WT", "WT" )
 )
+#parse by age
 human_rettcort$Age <- plyr::mapvalues(
   x = human_rettcort$orig.ident, 
   from = c(sample_names), 
   to = c(34, 21.1, 27, 18, 20.6, 22, 23, 16, 8, 19.8, 24,24.4, 10.7,12, 18.4)
 )
-to = c("34", "21.1", "27", "18", "20.6", "22", "23", "16", "8", "19.8", "24","24.4", "10.7","12", "18.4" )
+
 ```
 
 We can now visualize the outputs of Azimuth. Note that all cells are labeled with high-resolution annotations, and are projected into a harmonized space despite being analyzed from a wide variety of technologies.
@@ -200,7 +201,7 @@ DoHeatmap(
     raster = FALSE,
     slot = 'data',
 ) + scale_fill_gradientn(colors = c("blue", "red"))
-ggplot2::ggsave("Human_cellmarker_heatmap.pdf",
+ggplot2::ggsave("allen_markers_heatmap.pdf",
                 device = NULL,
                 height = 8.5,
                 width = 12,
@@ -213,7 +214,7 @@ DoHeatmap(
     raster = FALSE,
     slot = 'data',
 ) + scale_fill_gradientn(colors = c("blue", "red"))
-ggplot2::ggsave("Human_cellmarker_unspervised_heatmap.pdf",
+ggplot2::ggsave("unbiased_markers_heatmap.pdf",
                 device = NULL,
                 height = 8.5,
                 width = 12,
