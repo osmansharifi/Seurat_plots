@@ -34,8 +34,8 @@ Idents(human_rettcort) <- "predicted.subclass"
 ```{r load seurat object directly}
 load("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rettcort_labeled.RData")
 # Rename classes.
-human_rettcort <- RenameIdents(object = human_rettcort, `L2/3 IT` = "L2_3_IT", `L6 CT` = "L6", `L6 IT` = "L6", `L6b` = "L6", `L6 IT Car3` = "L6", `Sst Chodl` = "Sst", `L5 IT` = "L5", `L5 ET` = "L5", `Micro-PVM` = "Micro", `VLMC` = "Peri", `L5/6 NP` = "L5_6 NP")
-levels(human_rettcort) <- c("L2_3_IT", "L5",  "L5_6 NP", "L6","Pvalb", "Vip", "Sst","Sncg","Lamp5","Peri", "Endo", "Oligo", "OPC", "Astro","Micro")
+human_rettcort <- RenameIdents(object = human_rettcort, `L2/3 IT` = "L2_3_IT", `L6 CT` = "L6", `L6 IT` = "L6", `L6b` = "L6", `L6 IT Car3` = "L6", `Sst Chodl` = "Sst", `L5 IT` = "L5", `L5 ET` = "L5", `Micro-PVM` = "Micro", `VLMC` = "Peri", `L5/6 NP` = "L5_6_NP")
+levels(human_rettcort) <- c("L2_3_IT", "L5",  "L5_6_NP", "L6","Pvalb", "Vip", "Sst","Sncg","Lamp5","Peri", "Endo", "Oligo", "OPC", "Astro","Micro")
 ```
 We will add metadata so we can parse by sex, age and disease later.
 ```{r add metadata}
@@ -219,7 +219,11 @@ ggplot2::ggsave("unbiased_markers_heatmap.pdf",
                 height = 8.5,
                 width = 12,
                 dpi = 500)
+
+DoHeatmap(object = human_rettcort,features = top5_markers, size = 3)+ scale_fill_gradient2( low = rev(c('#d1e5f0','#67a9cf','#2166ac')), mid = "white", high = rev(c('#b2182b','#ef8a62','#fddbc7')), midpoint = 0, guide = "colourbar", aesthetics = "fill")
+
 allen_markers <- c("GAD1", "LHX6", "ADARB2", "LAMP5", "VIP", "PVALB", "SST", "SLC17A7", " CUX2", "RORB", "THEMIS", "FEZF2", "CTGF", "AQP4", "PDGFRA", "OPALIN", "FYB")
+Stacked_VlnPlot(seurat_object = human_rettcort, features = allen_markers)
 DotPlot_scCustom(seurat_object = human_rettcort, features = allen_markers, x_lab_rotate = T, flip_axes = T, remove_axis_titles = FALSE)
 ggsave("allen_markers_dotplot.pdf",
        device = NULL,
@@ -269,6 +273,7 @@ FeaturePlot_scCustom(hrett_cortex, features = c("VIP", "SST", "PVALB", "LAMP5"))
 ## Finally, lets save the filtered and normalized data
 ```{r}
 save(human_rettcort, file="human_rettcort_labeled.RData")
+save(list = ls(), file = "human_rettcort_labeled.RData")
 ```
 
 ```{r}
