@@ -7,31 +7,31 @@
 packages <- c("tidyr", "openxlsx", "glue", "magrittr", "Seurat")
 stopifnot(suppressMessages(sapply(packages, require, character.only=TRUE)))
 
-s.obj.name = "rett_P60_with_labels_proportions" #change this to the name of the Seurat object you're working with
+s.obj.name = "all_female_P30" #change this to the name of the Seurat object you're working with
 
-load(glue::glue("/Users/karineier/Documents/Mecp2/scRNA-seq/{s.obj.name}.rda"))
+load(glue::glue("/Users/karineier/Documents/Mecp2/scRNA-seq/{s.obj.name}.RData"))
 
-s.obj = experiment.aggregate #change this to the name of the Seurat object you're working with
+s.obj = all_female_P30 #change this to the name of the Seurat object you're working with
 
-dir.create(glue::glue("{s.obj.name}"))
+dir.create(glue::glue("/Users/karineier/Documents/GitHub/snRNA-seq-pipeline/Differential_expression/{s.obj.name}"))
 
-setwd(glue::glue("{s.obj.name}"))
+setwd(glue::glue("/Users/karineier/Documents/GitHub/snRNA-seq-pipeline/Differential_expression/{s.obj.name}"))
 
 ### Split Seurat object into activated and unactivated neurons ###
 
-activated.neurons.df = ifelse((s.obj$celltype.call == "L2_3_IT" | 
-                                 s.obj$celltype.call == "L4" | 
-                                 s.obj$celltype.call == "L5" | 
-                                 s.obj$celltype.call == "L6" |
-                                 s.obj$celltype.call ==  "Pvalb" | 
-                                 s.obj$celltype.call == "Lamp5" | 
-                                 s.obj$celltype.call == "Vip" | 
-                                 s.obj$celltype.call == "Sst" | 
-                                 s.obj$celltype.call == "Sncg") &
+activated.neurons.df = ifelse((s.obj$predicted.id == "L2_3_IT" | 
+                                 s.obj$predicted.id == "L4" | 
+                                 s.obj$predicted.id == "L5" | 
+                                 s.obj$predicted.id == "L6" |
+                                 s.obj$predicted.id ==  "Pvalb" | 
+                                 s.obj$predicted.id == "Lamp5" | 
+                                 s.obj$predicted.id == "Vip" | 
+                                 s.obj$predicted.id == "Sst" | 
+                                 s.obj$predicted.id == "Sncg") &
                                 s.obj@assays$RNA@counts["Fos",]>0, "-activated", "")
 
-activated.names = sapply(1:length(s.obj$celltype.call), function(x){
-  new.id = gsub("$", glue::glue("{activated.neurons.df[[x]]}"), s.obj$celltype.call[[x]])
+activated.names = sapply(1:length(s.obj$predicted.id), function(x){
+  new.id = gsub("$", glue::glue("{activated.neurons.df[[x]]}"), s.obj$predicted.id[[x]])
   return(new.id)
 })
 

@@ -36,11 +36,6 @@ expr_matrix_list = lapply(levels(cell_types), function(x) {
 
 names(expr_matrix_list) = as.character(cell_types)
 
-## Removing Endo and Peri cells because not enough cells 
-
-expr_matrix_list = expr_matrix_list[-c(which(cell_types=="Endo"))]
-cell_types = names(expr_matrix_list)
-
 ## Splitting neurons into activated and unactivated 
 
 neurons = c("L2_3_IT", "L4", "L5", "L6", "Lamp5", "Pvalb", "Sncg", "Sst", "Vip")
