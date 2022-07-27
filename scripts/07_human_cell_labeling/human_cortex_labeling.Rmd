@@ -25,31 +25,31 @@ InstallData("humancortexref")
 LoadData("humancortexref")
 #The RunAzimuth function can take a Seurat object as input
 load("/Users/osman/Desktop/LaSalle_lab/Human_rett_data/NovaSeq_data/05_Human_rett_corrected2.RData")
-human_rettcort <- RunAzimuth(experiment.aggregate, reference = "humancortexref")
+human_rett_cort_filt <- RunAzimuth(experiment.aggregate, reference = "humancortexref")
 #Normalize data
-human_rettcort <- NormalizeData(human_rettcort)
-human_rettcort <- ScaleData(human_rettcort)
-Idents(human_rettcort) <- "predicted.subclass"
+human_rett_cort_filt <- NormalizeData(human_rett_cort_filt)
+human_rett_cort_filt <- ScaleData(human_rett_cort_filt)
+Idents(human_rett_cort_filt) <- "predicted.subclass"
 ```
 ```{r load seurat object directly}
-load("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rettcort_labeled.RData")
+load("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rett_cort_filt_labeled.RData")
 # Rename classes.
-human_rettcort <- RenameIdents(object = human_rettcort, `L2/3 IT` = "L2_3_IT", `L6 CT` = "L6", `L6 IT` = "L6", `L6b` = "L6", `L6 IT Car3` = "L6", `Sst Chodl` = "Sst", `L5 IT` = "L5", `L5 ET` = "L5", `Micro-PVM` = "Micro", `VLMC` = "Peri", `L5/6 NP` = "L5_6_NP")
-levels(human_rettcort) <- c("L2_3_IT", "L5",  "L5_6_NP", "L6","Pvalb", "Vip", "Sst","Sncg","Lamp5","Peri", "Endo", "Oligo", "OPC", "Astro","Micro")
+human_rett_cort_filt <- RenameIdents(object = human_rett_cort_filt, `L2/3 IT` = "L2_3_IT", `L6 CT` = "L6", `L6 IT` = "L6", `L6b` = "L6", `L6 IT Car3` = "L6", `Sst Chodl` = "Sst", `L5 IT` = "L5", `L5 ET` = "L5", `Micro-PVM` = "Micro", `VLMC` = "Peri", `L5/6 NP` = "L5_6_NP")
+levels(human_rett_cort_filt) <- c("L2_3_IT", "L5",  "L5_6_NP", "L6","Pvalb", "Vip", "Sst","Sncg","Lamp5","Peri", "Endo", "Oligo", "OPC", "Astro","Micro")
 ```
 We will add metadata so we can parse by sex, age and disease later.
 ```{r add metadata}
 sample_names <- c("1136_CTRL","1420_RTT","1711_CTRL","1815_RTT","1846_CTRL","3381_RTT","4321_RTT","4591_CTRL","4687_RTT",  "4852_RTT","5020_RTT","5125_CTRL","5161_CTRL","662_CTRL","812_CTRL")
 
 #parse by condition
-human_rettcort$Condition <- plyr::mapvalues(
-  x = human_rettcort$orig.ident, 
+human_rett_cort_filt$Condition <- plyr::mapvalues(
+  x = human_rett_cort_filt$orig.ident, 
   from = c(sample_names), 
   to = c("WT", "RTT", "WT", "RTT", "WT", "RTT", "RTT", "WT", "RTT", "RTT", "RTT","WT", "WT","WT", "WT" )
 )
 #parse by age
-human_rettcort$Age <- plyr::mapvalues(
-  x = human_rettcort$orig.ident, 
+human_rett_cort_filt$Age <- plyr::mapvalues(
+  x = human_rett_cort_filt$orig.ident, 
   from = c(sample_names), 
   to = c(34, 21.1, 27, 18, 20.6, 22, 23, 16, 8, 19.8, 24,24.4, 10.7,12, 18.4)
 )
@@ -59,8 +59,8 @@ human_rettcort$Age <- plyr::mapvalues(
 We can now visualize the outputs of Azimuth. Note that all cells are labeled with high-resolution annotations, and are projected into a harmonized space despite being analyzed from a wide variety of technologies.
 
 ```{r cortex_dimplot, fig.width=12, fig.height=5}
-human_rettcort <- RenameIdents(
-  object = human_rettcort,
+human_rett_cort_filt <- RenameIdents(
+  object = human_rett_cort_filt,
   'Exc L2 LINC00507 GLRA3' = 'L2_3_IT', 
   'Exc L2-3 RORB CCDC68' = 'L2_3_IT', 
   'Exc L2-3 RORB PTPN3' = 'L2_3_IT', 
@@ -132,36 +132,66 @@ human_rettcort <- RenameIdents(
   'Micro L1-6 TYROBP CD74' = 'MICRO',
   'VLMC L1-5 PDGFRA COLEC12' = 'PERI'
 )
-DimPlot_scCustom(seurat_object = human_rettcort, label = FALSE)
+DimPlot_scCustom(seurat_object = human_rett_cort_filt, label = FALSE)
 ```
 Let's look at MECP2 expression
 ```{r make umap groupings}
-p1 <- FeaturePlot_scCustom(seurat_object = human_rettcort, features = 'MECP2', split.by = "Condition")
-p2 <- DimPlot_scCustom(seurat_object = human_rettcort)
+use.pcs <- 1:18
+human_rett_cort_filt <- RunUMAP(
+  object = human_rett_cort_filt,
+  dims = use.pcs)
+
+p1 <- FeaturePlot_scCustom(seurat_object = human_rett_cort_filt, features = 'MECP2', split.by = "Condition")
+p2 <- DimPlot_scCustom(seurat_object = human_rett_cort_filt, label = FALSE)
 wrap_plots(p1/p2)
-ggsave("MECP2_UMAP.pdf")
-VlnPlot(human_rettcort, features = "MECP2", split.by = "Condition")
-ggsave("MECP2_vlnplot.pdf")
+ggsave("MECP2_UMAP.pdf",
+       device = NULL,
+       height = 8.5,
+       width = 12)
+
+VlnPlot(human_rett_cort_filt, features = "MECP2", split.by = "Condition")
+ggsave("MECP2_vlnplot.pdf",
+       device = NULL,
+       height = 8.5,
+       width = 12)
 ```
 UMAP plots of data 
 ```{r UMAP plots of data}
-DimPlot_scCustom(seurat_object = human_rettcort)
-ggsave("celltypes_UMAP.pdf")
-DimPlot_scCustom(seurat_object = human_rettcort, group.by = "predicted.class") +ggtitle("High level labels")
-ggsave("celltypes_highlevel_UMAP.pdf")
-DimPlot_scCustom(seurat_object = human_rettcort, group.by = "predicted.cluster") +ggtitle("Low level labels")+ theme(legend.position="bottom")
-ggsave("celltypes_lowlevel_UMAP.pdf")
-DimPlot_scCustom(seurat_object = human_rettcort, group.by = "Condition")
-ggsave("Conditon_UMAP.pdf")
-DimPlot_scCustom(seurat_object = human_rettcort, group.by = "Samples")
-ggsave("samples_UMAP.pdf")
-FeaturePlot_scCustom(seurat_object = human_rettcort, features = "percent.mito")
-ggsave("mito_UMAP.pdf")
+DimPlot_scCustom(seurat_object = human_rett_cort_filt)
+ggsave("celltypes_UMAP.pdf",
+       device = NULL,
+       height = 8.5,
+       width = 12)
+DimPlot_scCustom(seurat_object = human_rett_cort_filt, group.by = "predicted.class") +ggtitle("High level labels")
+ggsave("celltypes_highlevel_UMAP.pdf",
+       device = NULL,
+       height = 8.5,
+       width = 12)
+DimPlot_scCustom(seurat_object = human_rett_cort_filt, group.by = "predicted.cluster") +ggtitle("Low level labels")+ theme(legend.position="bottom")
+ggsave("celltypes_lowlevel_UMAP.pdf",
+       device = NULL,
+       height = 8.5,
+       width = 12)
+DimPlot_scCustom(seurat_object = human_rett_cort_filt, group.by = "Condition")
+ggsave("Conditon_UMAP.pdf",
+       device = NULL,
+       height = 8.5,
+       width = 12)
+DimPlot_scCustom(seurat_object = human_rett_cort_filt, group.by = "Samples")
+ggsave("samples_UMAP.pdf",
+       device = NULL,
+       height = 8.5,
+       width = 12)
+FeaturePlot_scCustom(seurat_object = human_rett_cort_filt, features = "percent_mito")
+ggsave("mito_UMAP.pdf",
+       device = NULL,
+       height = 8.5,
+       width = 12)
 ```
 Find the marker genes for celltypes
 ```{r marker genes}
 # Run basic FindAllMarkers DE test
-all_markers <- FindAllMarkers(object = human_rettcort, verbose = F)
+all_markers <- FindAllMarkers(object = human_rett_cort_filt, verbose = F)
 
 all_markers <- all_markers %>%
     group_by(cluster) %>%
@@ -182,11 +212,11 @@ top5_markers <- Extract_Top_Markers(marker_dataframe = all_markers, num_genes = 
     make_unique = TRUE)
 head(top_5, 10)
 
-Stacked_VlnPlot(seurat_object = human_rettcort, features = top_5, x_lab_rotate = TRUE)
-Clustered_DotPlot(seurat_object = human_rettcort, features = top5_markers)
+Stacked_VlnPlot(seurat_object = human_rett_cort_filt, features = top_5, x_lab_rotate = TRUE)
+Clustered_DotPlot(seurat_object = human_rett_cort_filt, features = top5_markers)
 
 DoHeatmap(
-    object = human_rettcort, 
+    object = human_rett_cort_filt, 
     features = top_5
 ) + NoLegend()
 
@@ -194,7 +224,7 @@ top5 <- markers_all_single %>% group_by(cluster) %>% top_n(5, avg_log2FC)
 dim(top5)
 polychrome_pal <- DiscretePalette_scCustomize(num_colors = 36, palette = "polychrome")
 DoHeatmap(
-    object = human_rettcort, 
+    object = human_rett_cort_filt, 
     features = allen_markers,
     group.colors = polychrome_pal,
     group.bar = TRUE,
@@ -207,7 +237,7 @@ ggplot2::ggsave("allen_markers_heatmap.pdf",
                 width = 12,
                 dpi = 500)
 DoHeatmap(
-    object = human_rettcort, 
+    object = human_rett_cort_filt, 
     features = top5_markers,
     group.colors = polychrome_pal,
     group.bar = TRUE,
@@ -220,17 +250,17 @@ ggplot2::ggsave("unbiased_markers_heatmap.pdf",
                 width = 12,
                 dpi = 500)
 
-DoHeatmap(object = human_rettcort,features = top5_markers, size = 3)+ scale_fill_gradient2( low = rev(c('#d1e5f0','#67a9cf','#2166ac')), mid = "white", high = rev(c('#b2182b','#ef8a62','#fddbc7')), midpoint = 0, guide = "colourbar", aesthetics = "fill")
+DoHeatmap(object = human_rett_cort_filt,features = top5_markers, size = 3)+ scale_fill_gradient2( low = rev(c('#d1e5f0','#67a9cf','#2166ac')), mid = "white", high = rev(c('#b2182b','#ef8a62','#fddbc7')), midpoint = 0, guide = "colourbar", aesthetics = "fill")
 
 allen_markers <- c("GAD1", "LHX6", "ADARB2", "LAMP5", "VIP", "PVALB", "SST", "SLC17A7", " CUX2", "RORB", "THEMIS", "FEZF2", "CTGF", "AQP4", "PDGFRA", "OPALIN", "FYB")
-Stacked_VlnPlot(seurat_object = human_rettcort, features = allen_markers)
-DotPlot_scCustom(seurat_object = human_rettcort, features = allen_markers, x_lab_rotate = T, flip_axes = T, remove_axis_titles = FALSE)
+Stacked_VlnPlot(seurat_object = human_rett_cort_filt, features = allen_markers)
+DotPlot_scCustom(seurat_object = human_rett_cort_filt, features = allen_markers, x_lab_rotate = T, flip_axes = T, remove_axis_titles = FALSE)
 ggsave("allen_markers_dotplot.pdf",
        device = NULL,
        height = 8.5,
        width = 12,
        dpi = 500)
-DotPlot_scCustom(seurat_object = human_rettcort, features = top5_markers, x_lab_rotate = T, flip_axes = T, remove_axis_titles = FALSE)
+DotPlot_scCustom(seurat_object = human_rett_cort_filt, features = top5_markers, x_lab_rotate = T, flip_axes = T, remove_axis_titles = FALSE)
 ggsave("unbiased_markers_dotplot.pdf",
        device = NULL,
        height = 8.5,
@@ -272,8 +302,8 @@ FeaturePlot_scCustom(hrett_cortex, features = c("VIP", "SST", "PVALB", "LAMP5"))
 ```
 ## Finally, lets save the filtered and normalized data
 ```{r}
-save(human_rettcort, file="human_rettcort_labeled.RData")
-save(list = ls(), file = "human_rettcort_labeled.RData")
+save(human_rett_cort_filt, file="human_rett_cort_filt_labeled.RData")
+save(list = ls(), file = "human_rett_cort_filt_labeled.RData")
 ```
 
 ```{r}
