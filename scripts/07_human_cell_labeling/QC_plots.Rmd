@@ -107,13 +107,18 @@ p3 <- QC_Plots_Mito(seurat_object = human_rettcort, high_cutoff = 20)
 
 ```{r echo=FALSE}
 # All functions contain 
-p1 <- QC_Plots_Genes(seurat_object = human_rettcort, low_cutoff = 800, high_cutoff = 5500, pt.size = 0.1)
-p2 <- QC_Plots_UMIs(seurat_object = human_rettcort, low_cutoff = 1200, high_cutoff = 45000, pt.size = 0.1)
-p3 <- QC_Plots_Mito(seurat_object = human_rettcort, high_cutoff = 20, pt.size = 0.1)
+p1 <- QC_Plots_Genes(seurat_object = human_rettcort, low_cutoff = 800, high_cutoff = 5500, pt.size = 0.4)
+p2 <- QC_Plots_UMIs(seurat_object = human_rettcort, low_cutoff = 1200, high_cutoff = 15000, pt.size = 0.4)
+p3 <- QC_Plots_Mito(seurat_object = human_rettcort, high_cutoff = 5, pt.size = 0.4)
 ```
 
 ```{r, fig.height=7, fig.width=13}
 wrap_plots(p1, p2, p3, ncol = 3)
+ggplot2::ggsave("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/QC/vln_gene_umi_mito.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 20)
+
 ```
 
 ### Additional parameters  
@@ -152,16 +157,25 @@ scCustomize contains 3 functions which wrap `Seurat::FeatureScatter()` with adde
 
 ```{r eval=FALSE}
 # All functions contain 
-QC_Plot_UMIvsGene(seurat_object = human_rettcort, low_cutoff_gene = 800, high_cutoff_gene = 5500, low_cutoff_UMI = 500, high_cutoff_UMI = 50000)
-QC_Plot_GenevsFeature(seurat_object = human_rettcort, feature1 = "percent_mito", low_cutoff_gene = 800, high_cutoff_gene = 5500, high_cutoff_feature = 20)
+QC_Plot_UMIvsGene(seurat_object = human_rettcort, low_cutoff_gene = 800, high_cutoff_gene = 5500, low_cutoff_UMI = 500, high_cutoff_UMI = 15000)
+ggplot2::ggsave("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/QC/.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
+QC_Plot_GenevsFeature(seurat_object = human_rettcort, feature1 = "percent_mito", low_cutoff_gene = 800, high_cutoff_gene = 5500, high_cutoff_feature = 5)
 ```
 
 ```{r echo=FALSE, fig.height=7, fig.width=13, fig.align='center'}
 # All functions contain 
-p1 <- QC_Plot_UMIvsGene(seurat_object = human_rettcort, low_cutoff_gene = 400, high_cutoff_gene = 5500, low_cutoff_UMI = 1200, high_cutoff_UMI = 45000, x_axis_label = "UMIs per Cell")
-p2 <- QC_Plot_GenevsFeature(seurat_object = human_rettcort, feature1 = "percent_mito", low_cutoff_gene = 800, high_cutoff_gene = 5500, high_cutoff_feature = 20)
+p1 <- QC_Plot_UMIvsGene(seurat_object = human_rettcort, low_cutoff_gene = 400, high_cutoff_gene = 5500, low_cutoff_UMI = 1200, high_cutoff_UMI = 15000, x_axis_label = "UMIs per Cell/Nucleus")
+p2 <- QC_Plot_GenevsFeature(seurat_object = human_rettcort, feature1 = "percent_mito", low_cutoff_gene = 800, high_cutoff_gene = 5500, high_cutoff_feature = 5, low_cutoff_feature = 0)
+p3 <- QC_Plot_GenevsFeature(seurat_object = human_rettcort, feature1 = "percent_ribo", low_cutoff_gene = 800, high_cutoff_gene = 5500, high_cutoff_feature = 8, low_cutoff_feature = 0)
 
-wrap_plots(p1, p2, ncol = 2)
+wrap_plots(p1, p2, p3, ncol = 3)
+ggplot2::ggsave("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/QC/QC_correlation.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 20)
 ```
 
 
@@ -170,12 +184,12 @@ wrap_plots(p1, p2, ncol = 2)
 This can be used to plot % of mito reads in addition to UMI vs. Gene comparisons
 ```{r eval=FALSE}
 QC_Plot_UMIvsGene(seurat_object = human_rettcort, meta_gradient_name = "percent_mito", low_cutoff_gene = 800, high_cutoff_gene = 5500, high_cutoff_UMI = 45000)
-QC_Plot_UMIvsGene(seurat_object = human_rettcort, meta_gradient_name = "percent_mito", low_cutoff_gene = 800, high_cutoff_gene = 5500, high_cutoff_UMI = 45000, meta_gradient_low_cutoff = 20)
+QC_Plot_UMIvsGene(seurat_object = human_rettcort, meta_gradient_name = "percent_mito", low_cutoff_gene = 800, high_cutoff_gene = 5500, high_cutoff_UMI = 15000, meta_gradient_low_cutoff = 5)
 ```
 
 ```{r echo=FALSE, fig.height=7, fig.width=13, fig.cap="*`QC_Plot_UMIvsGene()` when using `meta_gradient_name` outputs plot colored by meta data variable (left) to view only points above potential cutoff `meta_gradient_low_cutoff` can be specified to alter the plotting (right).*", fig.align='center'}
-p1 <- QC_Plot_UMIvsGene(seurat_object = human_rettcort, meta_gradient_name = "percent_mito", low_cutoff_gene = 800, high_cutoff_gene = 5500, high_cutoff_UMI = 45000)
-p2 <- QC_Plot_UMIvsGene(seurat_object = human_rettcort, meta_gradient_name = "percent_mito", low_cutoff_gene = 800, high_cutoff_gene = 5500, high_cutoff_UMI = 45000, meta_gradient_low_cutoff = 20)
+p1 <- QC_Plot_UMIvsGene(seurat_object = human_rettcort, meta_gradient_name = "percent_mito", low_cutoff_gene = 800, high_cutoff_gene = 5500, high_cutoff_UMI = 45000, meta_gradient_low_cutoff = 5)
+p2 <- QC_Plot_UMIvsGene(seurat_object = human_rettcort, meta_gradient_name = "percent_mito", low_cutoff_gene = 800, high_cutoff_gene = 5500, high_cutoff_UMI = 45000, meta_gradient_low_cutoff = 5)
 
 wrap_plots(p1, p2, ncol = 2)
 ```
@@ -183,7 +197,7 @@ wrap_plots(p1, p2, ncol = 2)
 ### Combination Plots
 If you are interested in viewing `QC_Plot_UMIvsGene` both by discrete grouping variable and by continuous variable without writing function twice you can use `combination = TRUE` and plot output will contain both plots.
 ```{r, fig.height=7, fig.width=13, fig.cap="*`QC_Plot_UMIvsGene()` when using `combination = TRUE` will output both the Gene x UMI by active identity and with meta data gradient coloring.*", fig.align='center'}
-QC_Plot_UMIvsGene(seurat_object = human_rettcort, meta_gradient_name = "percent_mito", low_cutoff_gene = 800, high_cutoff_gene = 5500, high_cutoff_UMI = 45000, meta_gradient_low_cutoff = 20, combination = TRUE)
+QC_Plot_UMIvsGene(seurat_object = human_rettcort, meta_gradient_name = "percent_ribo", low_cutoff_gene = 800, high_cutoff_gene = 5500, high_cutoff_UMI = 15000, meta_gradient_low_cutoff = 10, combination = TRUE)
 ```
 
 ## Analyze Median QC Values per Sample/Library
@@ -192,7 +206,7 @@ scCustomize also contains a few helpful functions for returning and plotting the
 ### Calculate Median Values & Return data.frame
 scCustomize contains function `Median_Stats` to quickly calculate the medians for basic QC stats (Genes/, UMIs/, %Mito/Cell, etc) and return a data.frame.
 ```{r}
-median_stats <- Median_Stats(seurat_object = human_rettcort, group_by_var = "orig.ident")
+median_stats <- Median_Stats(seurat_object = human_rettcort, group_by_var = "Samples")
 ```
 
 
@@ -218,10 +232,10 @@ scCustomize also contains a few functions to plot some of these median value cal
 * `Plot_Median_Other()`  
   - *Used to plot any other numeric variable present in object meta.data slot.*
 ```{r eval=FALSE}
-Plot_Median_Genes(seurat_object = human_rettcort, group_by = "group")
+Plot_Median_Genes(seurat_object = human_rettcort, group_by = "predicted.class")
 Plot_Median_UMIs(seurat_object = human_rettcort, group_by = "group")
 Plot_Median_Mito(seurat_object = human_rettcort, group_by = "group")
-Plot_Median_Other(seurat_object = human_rettcort, median_var = "percent_ribo", group_by = "group")
+Plot_Median_Other(seurat_object = human_rettcort, median_var = "percent_ribo")
 ```
 
 
@@ -244,6 +258,43 @@ marsh_mouse_micro <- qread(file = "assets/marsh_2020_micro.qs")
 ```
 
 
-```{r echo=FALSE, fig.align='center', fig.height=6, fig.width=6}
-Plot_Cells_per_Sample(seurat_object = marsh_mouse_micro, group_by = "Transcription_Method")
+```{r echo=FALSE, fig.align='center', fig.height=8.5, fig.width=12}
+scCustomize::Plot_Cells_per_Sample(seurat_object = human_rettcort, group_by = "Samples")
+ggplot2::ggsave("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/QC/cellpersample.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
+levels(human_rettcort$Samples) <- c("1136_CTRL", "1711_CTRL", "1846_CTRL", "5125_CTRL", "5161_CTRL", "662_CTRL", "4591_CTRL", "812_CTRL","1420_RTT", "1815_RTT", "3381_RTT", "4321_RTT", "4687_RTT", "4852_RTT", "5020_RTT")
+```
+```{r echo=FALSE, fig.align='center', fig.height=8.5, fig.width=12}
+#select cells with percent.mito < 25
+selected <- WhichCells(human_rettcort, expression = percent_mito < 5)
+human_rett_cort_filt <- subset(human_rettcort, cells = selected)
+selected <- WhichCells(human_rettcort, expression = nFeature_RNA > 800)
+human_rett_cort_filt <- subset(human_rett_cort_filt, cells = selected)
+selected <- WhichCells(human_rett_cort_filt, expression = nFeature_RNA < 5500)
+human_rett_cort_filt <- subset(human_rett_cort_filt, cells = selected)
+selected <- WhichCells(human_rett_cort_filt, expression = nCount_RNA > 1200)
+human_rett_cort_filt <- subset(human_rett_cort_filt, cells = selected)
+selected <- WhichCells(human_rett_cort_filt, expression = nCount_RNA < 15000)
+human_rett_cort_filt <- subset(human_rett_cort_filt, cells = selected)
+selected <- WhichCells(human_rett_cort_filt, expression = percent_ribo < 8)
+human_rett_cort_filt <- subset(human_rett_cort_filt, cells = selected)
+length(selected)
+
+
+p1 <- QC_Plot_UMIvsGene(seurat_object = human_rett_cort_filt, low_cutoff_gene = 400, high_cutoff_gene = 5500, low_cutoff_UMI = 1200, high_cutoff_UMI = 15000, x_axis_label = "UMIs per Cell/Nucleus")
+p2 <- QC_Plot_GenevsFeature(seurat_object = human_rett_cort_filt, feature1 = "percent_mito", low_cutoff_gene = 800, high_cutoff_gene = 5500, high_cutoff_feature = 5, low_cutoff_feature = 0)
+p3 <- QC_Plot_GenevsFeature(seurat_object = human_rett_cort_filt, feature1 = "percent_ribo", low_cutoff_gene = 800, high_cutoff_gene = 5500, high_cutoff_feature = 8, low_cutoff_feature = 0)
+wrap_plots(p1, p2, p3, ncol = 3)
+ggplot2::ggsave("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/QC/QC_correlation_filt.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 20)
+
+post <- scCustomize::Plot_Cells_per_Sample(seurat_object = human_rett_cort_filt, group_by = "Samples")
+ggplot2::ggsave("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/QC/cellpersample_filt.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
 ```
