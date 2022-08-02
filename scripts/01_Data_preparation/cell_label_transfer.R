@@ -4,7 +4,7 @@ library(scAlign)
 # run alignment function
 if (FALSE) {
 #load Seurat Objects
-load("/share/lasallelab/Osman/test_alignment/all_male_samples.RData")
+load("/share/lasallelab/Osman/scAlign_collab/human_Hodge_et_al.rda")
 all_male.reference <- all_male
 load("/share/lasallelab/Osman/2021_PEBBLES_Cortex/PCB_FEMALE_CLUSTERS.RData")
 PCB_female.query <- experiment.aggregate
