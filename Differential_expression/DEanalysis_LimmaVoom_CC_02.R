@@ -1,4 +1,4 @@
-packages <- c("tidyr", "openxlsx", "glue", "magrittr", "Glimma", "Seurat", "limma", "edgeR", "ggplot2", "ggpubr", "viridis", "RColorBrewer", "BiocParallel", "DEsingle", "enrichR", "DMRichR", "org.Mm.eg.db", "AnnotationDbi")
+packages <- c("tidyr", "openxlsx", "glue", "magrittr", "Glimma", "Seurat", "limma", "edgeR", "ggplot2", "ggpubr", "viridis", "RColorBrewer", "BiocParallel", "DEsingle", "enrichR", "DMRichR", "org.Hs.eg.db", "AnnotationDbi")
 stopifnot(suppressMessages(sapply(packages, require, character.only=TRUE)))
 
 enrichR:::.onAttach()
@@ -6,28 +6,34 @@ enrichR:::.onAttach()
 param <- SnowParam(2, "SOCK", progressbar = TRUE)
 register(param)
 
-s.obj.name = "rett_E18_with_labels_proportions" #change this to the name of the Seurat object you started with
+s.obj.name = "human_rett_cort_filt" #change this to the name of the Seurat object you started with
 
-setwd(glue::glue("/Users/karineier/Documents/GitHub/snRNA-seq-pipeline/Differential_expression/{s.obj.name}"))
+setwd(glue::glue("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/{s.obj.name}"))
 
 load("DEanalysis_01.RData")
-
+load("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rettcort_labeled/DEanalysis_01.RData")
 dir.create("limmaVoomCC")
-setwd("limmaVoomCC")
+setwd("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rett_cort_filt/limmaVoomCC")
 
+polychrome_palette <- c("#5A5156FF","#E4E1E3FF","#F6222EFF","#FE00FAFF","#16FF32FF","#3283FEFF","#FEAF16FF","#B00068FF","#1CFFCEFF","#90AD1CFF","#2ED9FFFF","#DEA0FDFF","#AA0DFEFF","#F8A19FFF","#325A9BFF","#C4451CFF","#1C8356FF","#85660DFF","#B10DA1FF","#FBE426FF","#1CBE4FFF","#FA0087FF","#FC1CBFFF","#F7E1A0FF","#C075A6FF","#782AB6FF","#AAF400FF","#BDCDFFFF","#822E1CFF","#B5EFB5FF","#7ED7D1FF","#1C7F93FF","#D85FF7FF","#683B79FF","#66B0FFFF", "#3B00FBFF")
 #DGEList_high = DGEList_high[-c(which(names(DGEList_high)=="Non-neuronal"))] #removing non-neuronal cells due to lack of sufficient cell numbers across genotypes
+
+levels(design$cell_type) <- c("Astro", "Endo", "L2_3_IT", "L5", "L5", "L5_6", "L6", "L6", "L6", "L6", "Lamp5","Micro","Oligo", "OPC", "Pvalb", "Sncg", "Sst", "Sst", "Vip", "Micro")
+DGEList_high$L2_3_IT <- DGEList_high$`L2/3 IT`
 
 cell_types_all = names(DGEList_high)
 
 #cell_types_all = cell_types_all[-(c(which(grepl("Sncg-activated", cell_types_all)=="TRUE")))] #removing Sncg-activated from analysis bc not enough cells
 
-cell_types_all = cell_types_all[c(19:32)] # not enough cells for these cell types
+cell_types_all = cell_types_all[c(3:3)] # not enough cells for these cell types
 
 for (i in cell_types_all) {
-  DGEList_high[[i]]$samples$group = ifelse(grepl("WT", colnames(DGEList_high[[i]]$counts))=="TRUE", "WT", "MUTANT")
+  DGEList_high[[i]]$samples$group = ifelse(grepl("CTRL", colnames(DGEList_high[[i]]$counts))=="TRUE", "CTRL", "RTT")
 }
 
-cell_types_all = cell_types_all[c(5:10)]
+cell_types_all = c("Astro", "Endo", "L2_3_IT", "L5", "L5", "L5_6", "L6", "L6", "L6", "L6", "Lamp5","Micro","Oligo", "OPC", "Pvalb", "Sncg", "Sst", "Sst", "Vip", "Micro")
+
+cell_types_all = cell_types_all[c(2:18)]
 
 for (i in cell_types_all) {
   
@@ -55,7 +61,7 @@ for (i in cell_types_all) {
     }
   }
   
-  design.new$genotype = factor(design.new$genotype, levels=c("WT", "MUTANT"))
+  design.new$genotype = factor(design.new$genotype, levels=c("CTRL", "RTT"))
   
   # Raw density of log-CPM values
   
@@ -64,7 +70,8 @@ for (i in cell_types_all) {
   
   logCPM <- cpm(DGEList_high[[i]], log=TRUE)
   nsamples <- ncol(DGEList_high[[i]])
-  col <- brewer.pal(nsamples, "Paired")
+  #col <- brewer.pal(nsamples, "Paired")
+  col <- polychrome_palette
   
   pdf(glue::glue("{i}/density_plot.pdf"), height=8.5, width=5.5)
   
@@ -78,12 +85,12 @@ for (i in cell_types_all) {
   
   dev.off()
   
-  Glimma::glMDSPlot(DGEList_high[[i]],
-                    groups = design.new$genotype,
-                    path = getwd(),
-                    folder = "interactivePlots",
-                    html = glue::glue("{i}_MDS-Plot"),
-                    launch = FALSE)
+  #Glimma::glMDSPlot(DGEList_high[[i]],
+                    #groups = design.new$genotype,
+                   # path = getwd(),
+                    #folder = "interactivePlots",
+                    #html = glue::glue("{i}_MDS-Plot"),
+                   # launch = FALSE)
   
   
   mm <- model.matrix(~genotype + cell_cycle + percent.mito,
@@ -95,6 +102,7 @@ for (i in cell_types_all) {
   voomLogCPM <- voom(DGEList_high[[i]],
                      mm,
                      plot=TRUE)
+  
   dev.off()
   
   correlations <- duplicateCorrelation(voomLogCPM,
@@ -137,7 +145,7 @@ for (i in cell_types_all) {
   print(glue::glue("Creating DEG list of {i} cells for genotype"))
   
   efit <- fit %>%
-    contrasts.fit(coef="genotypeMUTANT") %>%
+    contrasts.fit(coef="genotypeRTT") %>%
     eBayes()
   
   pdf(glue::glue("{i}/QC/final_model_mean-variance_trend.pdf"), height=8.5, width=11)
@@ -146,11 +154,11 @@ for (i in cell_types_all) {
   
   dev.off()
   
-  Glimma::glimmaMA(efit,
-                   dge = DGEList_high[[i]],
-                   path = getwd(),
-                   html = glue::glue("interactivePlots/{i}_MDA-Plot.html"),
-                   launch = FALSE)
+  #Glimma::glimmaMA(efit,
+                  # dge = DGEList_high[[i]],
+                  # path = getwd(),
+                   #html = glue::glue("interactivePlots/{i}_MDA-Plot.html"),
+                   #launch = FALSE)
   
   # Top DEGs
   
@@ -184,7 +192,7 @@ for (i in cell_types_all) {
       purrr::set_names(names(.) %>% stringr::str_trunc(31, ellipsis="")) %T>%
       openxlsx::write.xlsx(file=glue::glue("{i}/enrichr.xlsx")) %>%
       DMRichR::slimGO(tool = "enrichR",
-                      annoDb = "org.Mm.eg.db",
+                      annoDb = "org.Hs.eg.db",
                       plots = FALSE) %T>%
       openxlsx::write.xlsx(file = glue::glue("{i}/rrvgo_enrichr.xlsx")) %>%
       DMRichR::GOplot() %>%
@@ -199,7 +207,3 @@ for (i in cell_types_all) {
   print(glue::glue("The pipeline has finished for {i} cells"))
   
 }
-
-
-
-
