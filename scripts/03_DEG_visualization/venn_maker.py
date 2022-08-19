@@ -3,18 +3,21 @@ from matplotlib import pyplot as plt
 from matplotlib_venn import venn2
 import pandas as pd
 import argparse
+import sys
 
 # setup
 parser = argparse.ArgumentParser(
 	description='This program will make a venn diagram of DEGs from single cell data')
 # required arguments
-parser.add_argument('--csv', required=True, type=str,
-	metavar='<str>', help='path to CSV containing DEGs ending with .csv')
+parser.add_argument('--csv1', required=True, type=str,
+	metavar='<str>', help='path to CSV containing mouse DEGs ending with .csv')
+parser.add_argument('--csv2', required=True, type=str,
+	metavar='<str>', help='path to CSV containing human DEGs ending with .csv')
 parser.add_argument('--pdf', required=True, type=str,
 	metavar='<str>', help='path to pdf output file ending with .pdf')
-parser.add_argument('--pv', required=False, type=float, default=0.05,
+parser.add_argument('--adj.P.Val', required=False, type=float, default=0.05,
 	metavar='<float>', help='p-value cuttoff, default value is set to [%(default).2f]')
-parser.add_argument('--logfc', required=False, type=float, default=0.7,
+parser.add_argument('--logFC', required=False, type=float, default=0.7,
 	metavar='<float>', help='logFC cutoff, default value is set to [%(default).1f]')
 # finalization
 arg = parser.parse_args()
@@ -23,40 +26,50 @@ arg = parser.parse_args()
 ## load complete data frame ##
 ##############################
 
-complete_df = pd.read_csv(arg.csv)
-print(complete_df)
+complete_df1 = pd.read_csv(arg.csv1)
+print(complete_df1)
 #'/Users/osman/Documents/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/all_cort_all_dataframe.csv
+complete_df2 = pd.read_csv(arg.csv2)
+print(complete_df2)
+#'/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rett_cort_filt/human_masterDEG.csv
 
 #select significant genes and parse out males from females
-complete_df = complete_df.sort_values(by='pv', ascending=True)
-sig_df = complete_df[complete_df['pv'] < arg.pv]
-sig_df = sig_df[sig_df['logfc'].abs() > arg.logfc]
+complete_df1 = complete_df1.sort_values(by='adj.P.Val', ascending=True)
+sys.exit()
+sig_df1 = complete_df1[complete_df1['adj.P.Val'] < arg.adj.P.Val]
+sig_df1 = sig_df1[sig_df1['logFC'].abs() > arg.logFC]
+#CSV2
+
+#select significant genes and parse out males from females
+complete_df2 = complete_df2.sort_values(by='adj.P.Val', ascending=True)
+sig_df2 = complete_df2[complete_df2['adj.P.Val'] < arg.adj.P.Val]
+sig_df2 = sig_df[sig_df2['logFC'].abs() > arg.logFC]
 #print(len(sig_df))
-male_genes = sig_df[sig_df['sex'] == 'M']
-female_genes = sig_df[sig_df['sex'] == 'F']
-print('There are', len(male_genes),'number of male DEGs.')
-print('There are', len(female_genes),'number of female DEGs.')
+mouse_genes = sig_df1[sig_df1['sex'] == 'F']
+human_genes = sig_df2
+print('There are', len(mouse_genes),'number of mouse DEGs.')
+print('There are', len(human_genes),'number of female DEGs.')
 #print(male_genes, female_genes)
 
-print(len(male_genes), len(female_genes))
-deduped_male = male_genes.drop_duplicates(subset=['gene'])
-deduped_female = female_genes.drop_duplicates(subset=['gene'])
+print(len(mouse_genes), len(human_genes))
+deduped_mouse = mouse_genes.drop_duplicates(subset=['SYMBOL'])
+deduped_human = human_genes.drop_duplicates(subset=['SYMBOL'])
 #print(len(deduped_male), len(deduped_female))
 #print(deduped_male)
-print('There are', len(deduped_male),'number of male DEGs after deduplication.')
-print('There are', len(deduped_female),'number of female DEGs after deduplication.')
+print('There are', len(deduped_mouse),'number of mouse DEGs after deduplication.')
+print('There are', len(deduped_human),'number of human DEGs after deduplication.')
 
 #plot a venn diagram of the differences between female and male genes
 #plot a venn diagram of the differences between female and male genes
 plt.figure(figsize=(12,12))
-set1 = set(deduped_male['gene'])
-set2 = set(deduped_female['gene'])
-venn2([set1, set2], ('male_DEGs', 'female_DEGs'), set_colors=('purple', 'skyblue'), alpha = 0.7)
-plt.title("Venn diagram of all DEGs from males and females")
+set1 = set(deduped_mouse['SYMBOL'])
+set2 = set(deduped_human['SYMBOL'])
+venn2([set1, set2], ('mouse_DEGs', 'human_DEGs'), set_colors=('purple', 'skyblue'), alpha = 0.7)
+plt.title("Venn diagram of all DEGs from female mice cortices and human cortices")
 plt.savefig(arg.pdf)  
 #'/Users/osman/Documents/GitHub/snRNA-seq-pipeline/figures/venn_diagrams/all_female_male_venn.pdf'
 #plt.show()
-
+sys.exit()
 #Extract genes that are the intersection
 print(len(set1.intersection(set2)))
 print(set1.intersection(set2))

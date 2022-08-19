@@ -65,10 +65,9 @@ for root, dirs, files in os.walk(arg.dir):
 		meta = root.split('/')
 		print(root)
 		
-		tp_reg = meta[8]
-		method = meta[9]
+		tp_reg = meta[9]
+		method = meta[10]
 		ct = meta[10]
-		print(meta[3])
 		sex = tp_reg.split('_')[4]
 		tp  = tp_reg.split('_')[5]
 		reg = tp_reg.split('_')[6]
