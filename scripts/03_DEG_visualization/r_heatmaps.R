@@ -41,21 +41,25 @@ rownames(pvm) <- pv_df$SYMBOL
 col_fun = colorRamp2(c(min(m), 0.0, max(m)), c("#2166AC", "#EEEEEE", "#B2182B")) 
 
 
-pdf(file=args$save, height = 15)
+pdf(file=args$save, height = 15, width = 12)
 map = grid.grabExpr(
 	draw(
 		Heatmap(
 			m,
  			col = col_fun,
- 			row_names_gp=gpar(fontsize=10),
- 			column_names_gp=gpar(fontsize=10),
-			height = nrow(m)*unit(3,"mm"),
+ 			row_names_gp=gpar(fontsize=14),
+ 			column_names_gp=gpar(fontsize=14),
+			height = nrow(m)*unit(4,"mm"),
+			width = ncol(m)*unit(12,"mm"),
 			row_names_max_width = max_text_width(rownames(m)),
- 			heatmap_legend_param = list(title="logFC"),
+ 			heatmap_legend_param = list(title="logFC", 
+ 			                            title_gp = gpar(fontsize = 16, 
+ 			                                            fontface = 'bold'), 
+ 			                            labels_gp = gpar(fontsize = 12)),
 			#column_split = m$tp,
  			cell_fun = function(j, i, x, y, width, height, fill) {
  				if( pvm[i, j] <= 0.05 ) {
- 					grid.text(print("*"), x, y-height/3, gp = gpar(fontsize=12)) #grid.text(print("*"), x, y, gp = gpar(fontsize=9)) 
+ 					grid.text(print("*"), x, y-height/3, gp = gpar(fontsize=14)) #grid.text(print("*"), x, y, gp = gpar(fontsize=9)) 
  				}
 			},
 			column_title = paste(args$title, sep="", collapse=" ")
