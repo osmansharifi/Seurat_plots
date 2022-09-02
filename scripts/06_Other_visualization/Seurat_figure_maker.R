@@ -88,4 +88,34 @@ ggplot2::ggsave("/Users/osman/Desktop/LaSalle_lab/Seurat_figures/replicate_heatm
 
 E18_subset <- subset(all.cortex.combined, subset = orig.ident %in% c("WT_M_E18_WB1", "WT_M_E18_WB2", "MUT_M_E18_WB1", "MUT_M_E18_WB2"))
 postnat_subset <- subset(all.cortex.combined, subset = orig.ident %in% c("WT_M_P30_CORT1", "WT_M_P30_CORT2", "MUT_M_P30_CORT1", "MUT_M_P30_CORT2", "WT_F_P30_CORT1", "WT_F_P30_CORT2", "MUT_F_P30_CORT1", "MUT_F_P30_CORT2","WT_M_P60_CORT1", "WT_M_P60_CORT2", "MUT_M_P60_CORT1", "MUT_M_P60_CORT2", "WT_F_P60_CORT1", "WT_F_P60_CORT2","MUT_F_P60_CORT1", "MUT_F_P60_CORT2", "WT_M_P120_CORT1", "WT_M_P120_CORT2", "MUT_M_P120_CORT1", "MUT_M_P120_CORT2", "WT_F_P150_CORT1", "WT_F_P150_CORT2", "WT_F_P150_CORT3", "WT_F_P150_CORT4",  "MUT_F_P150_CORT1", "MUT_F_P150_CORT2", "MUT_F_P150_CORT3", "MUT_F_P150_CORT4"))
-table(use.in$celltype)
+table(postnat_subset$celltype.call)
+test <- RunUMAP(postnat_subset, dims = 1:20)
+DimPlot_scCustom(postnat_subset, label = FALSE)
+DimPlot_scCustom(test, label = FALSE)
+ggplot2::ggsave("/Users/osman/Desktop/LaSalle_lab/Seurat_figures/celltype_umap.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
+levels(test) <- c("L2_3_IT", "L4", "L5", "L6","Pvalb", "Vip", "Sst","Sncg","Lamp5","Peri", "Endo", "Oligo","Astro","Non-neuronal")
+cell_markers_manual <- c("Plch2","Sst","Vip", "Pvalb", "Slc17a8", "Macc1", "Rorb", "Fezf2", "Rprm", "Aqp4", "Rassf10", "Kcnj8", "Slc17a7", "Gad2", "Aspa")
+Stacked_VlnPlot(test, features = cell_markers_manual, raster = FALSE, x_lab_rotate = TRUE)
+DotPlot_scCustom(test, features = cell_markers_manual, x_lab_rotate = TRUE, flip_axes = TRUE)
+ggplot2::ggsave("/Users/osman/Desktop/LaSalle_lab/Seurat_figures/dotplot_manual_markers.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
+###Mecp2 expression
+p1 <- FeaturePlot(object = test, features = "Mecp2", order = T)
+p2 <- FeaturePlot_scCustom(seurat_object = test, features = "Mecp2", order = T)
+p3 <- FeaturePlot_scCustom(seurat_object = test, colors_use = viridis_magma_dark_high, features = "Mecp2", order = T)
+p4 <- FeaturePlot_scCustom(seurat_object = test, colors_use = viridis_light_high, features = "Mecp2", order = T)
+p7 <- FeaturePlot_scCustom(seurat_object = test, features = 'WT_Mecp2', pt.size = 1)
+p8 <- FeaturePlot_scCustom(seurat_object = test, features = 'MUT_Mecp2', pt.size = 1)
+p5 <- FeaturePlot_scCustom(seurat_object = test, features = 'Mecp2', split.by = "Sex")
+p6 <- FeaturePlot_scCustom(seurat_object = test, features = 'MUT_Mecp2', split.by = "Condition")
+wrap_plots(p1, p2, p3, p4, ncol = 4) + plot_annotation(tag_levels = 'A')
+wrap_plots(p7, p8, ncol = 2, nrow = 1) + plot_annotation(tag_levels = 'A')
+ggplot2::ggsave("/Users/osman/Desktop/LaSalle_lab/Seurat_figures/postnat_Mecp2.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
