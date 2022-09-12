@@ -27,19 +27,24 @@ arg = parser.parse_args()
 ##############################
 
 complete_df1 = pd.read_csv(arg.csv1)
-print(complete_df1)
+#print(complete_df1)
 #'/Users/osman/Documents/GitHub/snRNA-seq-pipeline/DEG_data/total_genes/Limma/all_cort_all_dataframe.csv
 complete_df2 = pd.read_csv(arg.csv2)
-print(complete_df2)
+#print(complete_df2)
 #'/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rett_cort_filt/human_masterDEG.csv
 
 #select significant genes and parse out males from females
 complete_df1 = complete_df1.sort_values(by='pv', ascending=True)
 sig_df1 = complete_df1[complete_df1['pv'] < arg.pval]
 sig_df1 = sig_df1[sig_df1['logfc'].abs() > arg.logFC]
-sig_df1 = sig_df1[sig_df1['timepoint'] != 'E18']
-print(sig_df1[sig_df1['timepoint'] == 'P30'])
-
+#sig_df1 = sig_df1[sig_df1['timepoint'] != 'E18']
+print(len(sig_df1[sig_df1['timepoint'] == 'E18']))
+print(len(sig_df1[sig_df1['timepoint'] == 'P30']))
+print(len(sig_df1[sig_df1['timepoint'] == 'P60']))
+print(len(sig_df1[sig_df1['timepoint'] == 'P150']))
+print(len(sig_df1[sig_df1['timepoint'] == 'P120']))
+print(len(sig_df1[sig_df1['sex'] == 'F']))
+print(len(sig_df1[sig_df1['sex'] == 'M']))
 #CSV2
 
 #select significant genes and parse out males from females
