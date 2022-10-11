@@ -9,6 +9,7 @@ import numpy as np
 from scipy.stats import pearsonr
 import seaborn as sns
 import scipy.stats as stats
+import csv
 # setup
 parser = argparse.ArgumentParser(
 	description='This program will make a venn diagram of DEGs from single cell data')
@@ -40,7 +41,7 @@ complete_df1 = complete_df1.sort_values(by='pv', ascending=True)
 sig_df1 = complete_df1[complete_df1['pv'] < arg.pval]
 sig_df1 = sig_df1[sig_df1['sex'] == 'F']
 sig_df1 = sig_df1[sig_df1['timepoint'] != 'E18']
-print(sig_df1)
+#print(sig_df1)
 
 mouse_logfc = {}
 for ind,row in sig_df1.iterrows():
@@ -56,6 +57,7 @@ for gene,fc in mouse_logfc.items():
 complete_df2 = complete_df2.sort_values(by='adj.P.Val', ascending=True)
 sig_df2 = complete_df2[complete_df2['adj.P.Val'] < arg.pval]
 #sig_df2 = sig_df2[sig_df2['logFC'].abs() > arg.logFC]
+
 human_logfc = {}
 for ind,row in sig_df2.iterrows():
 	if row['SYMBOL'] not in human_logfc:
@@ -66,13 +68,15 @@ for gene,fc in human_logfc.items():
 	mean = np.mean(np.array(fc))
 	human_logfc[gene] = mean
 	
-a = []
-b = []
+#print("Human_Gene,Human_logFC,Mouse_logFC,Mouse_Gene")
 for gene in human_logfc:
 	if gene in mouse_logfc:
-		a.append(human_logfc[gene])
-		b.append(mouse_logfc[gene])
-		
+		#print(gene, human_logfc[gene], mouse_logfc[gene], gene[0]+ gene[1:].lower(), sep=",")
+		if human_logfc[gene] > 0 and mouse_logfc[gene] > 0:
+			if human_logfc[gene] > 0.4 or mouse_logfc[gene] > 0.4:
+				print(human_logfc[gene],mouse_logfc[gene], gene)
+
+'''		
 g = sns.jointplot(x=a, y=b, kind='reg', color='royalblue')
 r, p = stats.spearmanr(a, b)
 print(p)
@@ -84,5 +88,5 @@ g.ax_joint.scatter(a, b)
 g.set_axis_labels(xlabel='human DEGs', ylabel='mouse DEGs', size=15)
 plt.tight_layout()
 plt.savefig(arg.pdf) 
-
+'''
 	
