@@ -6,17 +6,18 @@
 packages <- c("tidyr", "openxlsx", "glue", "magrittr", "Seurat", "dwtools", "devtools")
 stopifnot(suppressMessages(sapply(packages, require, character.only=TRUE)))
 
-s.obj.name = "all_female_P150" #change this to the name of the Seurat object you're working with
+s.obj.name = "all_embryonic" #change this to the name of the Seurat object you're working with
 
 load(glue::glue("/Users/osman/Desktop/All_female_samples/all_female_cortex_labeled.RData"))
 
-s.obj = all_female_P150 #change this to the name of the Seurat object you're working with
+s.obj = mousecortexsca #change this to the name of the Seurat object you're working with
 s.obj = all_female.query
 # reading in count data for Mecp2 transcript expression wt vs.  mut
 counts_table <- read.table("/Users/osman/Desktop/LaSalle_lab/Scripts/E18_script/E18_Male_cortex/master_E18_Mecp2_counts.txt", sep="\t", header=FALSE)
 names(counts_table) <- c("Barcode", "UMI", "WT", "MUT", "Body")
 #Mecp2_wt_mut_counts = read.table(glue::glue("/Users/osman/Downloads/E18_mut.alleler"), header=T)
 Mecp2_wt_mut_counts = counts_table
+Mecp2_wt_mut_counts = Mecp2
 # Adding body counts into WT or MUT counts
 new.counts.wt = sapply(1:nrow(Mecp2_wt_mut_counts), function(x) {
   ifelse(Mecp2_wt_mut_counts$Body[x]>0 & Mecp2_wt_mut_counts$WT[x]>0, 
@@ -72,7 +73,7 @@ s.obj$MUT_Mecp2 = merged$MUT
 
 s.obj@assays$RNA@counts = rbind(s.obj@assays$RNA@counts, merged$WT, merged$MUT)
 nrow(s.obj@assays$RNA@counts)
-rownames(s.obj@assays$RNA@counts) = c(rownames(s.obj@assays$RNA@counts)[-c(7531:7532)], "Mecp2-WT", "Mecp2-MUT")
+rownames(s.obj@assays$RNA@counts) = c(rownames(s.obj@assays$RNA@counts)[-c(19667:19668)], "Mecp2-WT", "Mecp2-MUT")
 
 # checking to make sure they are added
 s.obj@assays$RNA@counts[7530:7532, 1:5]
