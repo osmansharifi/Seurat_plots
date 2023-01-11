@@ -52,4 +52,41 @@ labs(
     title = element_text(size = 14, face = "bold")) +
   coord_flip()
 
+# Best way to get cell type proportions
+# Order of samples
+experiment.merged$orig.ident <- factor(experiment.merged$orig.ident, levels=c("WT_F_E18_WB1", "WT_F_E18_WB2","MUT_F_E18_WB1", "MUT_F_E18_WB2", "WT_M_E18_WB1", "WT_M_E18_WB2", "MUT_M_E18_WB1", "MUT_M_E18_WB2"))
+
+# Order of cell types
+experiment.merged$celltype <- factor(experiment.merged$celltype, levels=c("L2_3_IT", "L5", "L5_6_NP", "L6", "Pvalb", "Vip", "Sst", "Sncg", "Lamp5", "Peri", "Endo", "Oligo", "Astro", "Non-neuronal", "Meis2", "OPC", "VLMC"))
+#plot the cell proportions
+experiment.merged@meta.data %>%
+  group_by(orig.ident,celltype) %>%
+  count() %>%
+  group_by(orig.ident) %>%
+  mutate(percent=100*n/sum(n)) %>%
+  ungroup() %>%
+  ggplot(aes(x=orig.ident,y=percent, fill=celltype)) +
+  geom_col() +
+  ggtitle("Percentage of cell types in the embryonic brain") +
+  scale_fill_manual(values = polychrome_palette)+
+  theme_bw(base_size = 24) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 16, face = 'plain', vjust = 1, family="Times", colour = 'black'),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'plain', vjust = 1, family="Times", colour = 'black'),
+    plot.caption = element_text(angle = 0, size = 14, face = 'plain', vjust = 1, family="Times", colour = 'black'),
+    
+    axis.text.x = element_text(angle = 60, size = 14, face = 'plain', hjust = 1.0, vjust = 1, family="Times", colour = 'black'),
+    axis.text.y = element_text(angle = 0, size = 12, face = 'plain', vjust = 0.5, family="Times", colour = 'black'),
+    axis.title = element_text(size = 14, face = 'plain', family="Times", colour = 'black'),
+    axis.title.x = element_text(size = 14, face = 'plain', family="Times", colour = 'black', vjust = 1),
+    axis.title.y = element_text(size = 14, face = 'plain', family="Times", colour = 'black'),
+    axis.line = element_line(colour = 'black'),
+    
+    #Legend
+    legend.key = element_blank(), # removes the border
+    legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
+    legend.text = element_text(size = 14, face = "bold", family="Times"), # Text size
+    title = element_text(size = 14, face = "plain", family="Times"))
 
