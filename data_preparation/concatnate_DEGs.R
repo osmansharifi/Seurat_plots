@@ -16,13 +16,13 @@ deg_tools = c("LimmaVoomCC")
 base_path = ("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression")
 # Create a vector containing all the files 
 e18_males <- list.files(glue("{base_path}/males/M_MUT_and_WT_M_E18_WB/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
-p30_males <- list.files(glue("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/males/M_MUT_and_WT_M_P30_CORT/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
-p60_males <- list.files(glue("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/males/M_MUT_and_WT_M_P60_CORT/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
-p120_males <- list.files(glue("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/males/M_MUT_and_WT_M_P120_CORT/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
-e18_females <- list.files(glue("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/females/M_MUT_and_WT_F_E18_WB/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
-p30_females <- list.files(glue("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/females/M_MUT_and_WT_F_P30_CORT/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
-p60_females <- list.files(glue("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/females/M_MUT_and_WT_F_P60_CORT/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
-p150_females <- list.files(glue("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/females/M_MUT_and_WT_F_P150_CORT/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
+p30_males <- list.files(glue("{base_path}/males/M_MUT_and_WT_M_P30_CORT/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
+p60_males <- list.files(glue("{base_path}/males/M_MUT_and_WT_M_P60_CORT/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
+p120_males <- list.files(glue("{base_path}/males/M_MUT_and_WT_M_P120_CORT/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
+e18_females <- list.files(glue("{base_path}/females/M_MUT_and_WT_F_E18_WB/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
+p30_females <- list.files(glue("{base_path}/females/M_MUT_and_WT_F_P30_CORT/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
+p60_females <- list.files(glue("{base_path}/females/M_MUT_and_WT_F_P60_CORT/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
+p150_females <- list.files(glue("{base_path}/females/M_MUT_and_WT_F_P150_CORT/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
 all_files_paths <- c(e18_males, p30_males, p60_males, p120_males, e18_females, p30_females, p60_females, p150_females)
 
 # List of file locations
@@ -62,8 +62,8 @@ df_final$Tissue <- split_metadata[,7]
 print(df_final)
 
 # Write the final dataframe to a new csv file
-write.csv(df_final,"/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/total_mouse_DEGs_limmaVoom.csv",row.names = TRUE)
+write.csv(df_final,"{base_path}/total_mouse_DEGs_limmaVoom.csv",row.names = TRUE)
 
 # Write csv containing only the significant DEGs based on adj.P.Val
 total_sig_mouse_DEGs_limmaVoom <- filter(df_final, adj.P.Val <= 0.05)
-write.csv(total_sig_mouse_DEGs_limmaVoom,"/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/total_sig_mouse_DEGs_limmaVoom.csv", row.names = TRUE)
+write.csv(total_sig_mouse_DEGs_limmaVoom,"{base_path}/total_sig_mouse_DEGs_limmaVoom.csv", row.names = TRUE)
