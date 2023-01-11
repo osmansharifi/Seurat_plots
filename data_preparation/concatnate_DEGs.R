@@ -12,8 +12,10 @@ cell_types = c("L2_3_IT", "L6", "Sst", "L5", "L4", "Pvalb", "Sncg", "Non_neurona
 # DEG methods
 deg_tools = c("LimmaVoomCC")
 
+# Path to files
+base_path = ("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression")
 # Create a vector containing all the files 
-e18_males <- list.files(glue("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/males/M_MUT_and_WT_M_E18_WB/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
+e18_males <- list.files(glue("{base_path}/males/M_MUT_and_WT_M_E18_WB/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
 p30_males <- list.files(glue("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/males/M_MUT_and_WT_M_P30_CORT/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
 p60_males <- list.files(glue("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/males/M_MUT_and_WT_M_P60_CORT/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
 p120_males <- list.files(glue("/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/males/M_MUT_and_WT_M_P120_CORT/{deg_tools}/{cell_types}"), pattern = "DEGs.xlsx", full.names = TRUE)
