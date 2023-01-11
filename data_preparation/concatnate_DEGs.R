@@ -59,6 +59,7 @@ df_final$Time_point <- split_metadata[,6]
 df_final$Tissue <- split_metadata[,7]
 
 print(df_final)
+
 # Write the final dataframe to a new csv file
 write.csv(df_final,"/Users/osman/Desktop/LaSalle_lab/Rett_Data/Differential_expression/total_mouse_DEGs_limmaVoom.csv",row.names = TRUE)
 total_sig_mouse_DEGs_limmaVoom <- filter(df_final, adj.P.Val <= 0.05)
