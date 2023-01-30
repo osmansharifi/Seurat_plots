@@ -72,6 +72,11 @@ p60_female <- p60_female %>% arrange(Adjusted.P.value) %>%
   group_by(Cell.Type) %>% top_n(10)
 p60_female <- p60_female[order(p60_female$Odds.Ratio),]
 
+p60_female_limma <- master_df[which(master_df$Metadata=='M_MUT_and_WT_F_P60_CORT' & master_df$Time.Point =="P60" & master_df$deg_method == "LimmaVoomCC"),]
+p60_female_limma <- filter(p60_female_limma, Adjusted.P.value <= 0.05)
+p60_female_limma <- p60_female_limma %>% arrange(Adjusted.P.value) %>%
+  group_by(Cell.Type) %>% top_n(30)
+p60_female_limma <- p60_female_limma[order(p60_female_limma$Odds.Ratio),]
 #subset P60 males
 p60_male <- master_df[which(master_df$Metadata=='M_MUT_and_WT_M_P60_CORT' & master_df$Time.Point =="P60"),]
 p60_male <- filter(p60_male, Adjusted.P.value <= 0.05)
@@ -86,6 +91,11 @@ p150_female <- p150_female %>% arrange(Adjusted.P.value) %>%
   group_by(Cell.Type) %>% top_n(10)
 p150_female <- p150_female[order(p150_female$Odds.Ratio),]
 
+p150_female_limma <- master_df[which(master_df$Metadata=='M_MUT_and_WT_F_P150_CORT' & master_df$Time.Point =="P150" & master_df$deg_method == "LimmaVoomCC"),]
+p150_female_limma <- filter(p150_female_limma, Adjusted.P.value <= 0.05)
+p150_female_limma <- p150_female_limma %>% arrange(Adjusted.P.value) %>%
+  group_by(Cell.Type) %>% top_n(30)
+p150_female_limma <- p150_female_limma[order(p150_female_limma$Odds.Ratio),]
 #subset P120 males
 p120_male <- master_df[which(master_df$Metadata=='M_MUT_and_WT_M_P120_CORT' & master_df$Time.Point =="P120"),]
 p120_male <- filter(p120_male, Adjusted.P.value <= 0.05)
@@ -442,7 +452,7 @@ female_total_kegg$Time.Point <- as.numeric(female_total_kegg$Time.Point)
 female_total_kegg<- female_total_kegg %>%
   mutate(Cell.Type =  factor(Cell.Type, levels = x)) %>%
   arrange(Cell.Type) 
-female_kegg_limma <- female_total_kegg[which(female_total_kegg$deg_method == "LimmaVoomCC"),]
+female_kegg_limma <- female_total_kegg[which(female_total_kegg$deg_method == "LimmaVoomCC", female_total_kegg$Tissue == "CORT"),]
 
 #common female terms plot
 female_common <- ggplot(female_total_kegg,
@@ -539,7 +549,7 @@ male_total_kegg$Time.Point <- as.numeric(male_total_kegg$Time.Point)
 male_total_kegg<- male_total_kegg %>%
   mutate(Cell.Type =  factor(Cell.Type, levels = x)) %>%
   arrange(Cell.Type) 
-male_kegg_limma <- male_total_kegg[which(male_total_kegg$deg_method == "LimmaVoomCC"),]
+male_kegg_limma <- male_total_kegg[which(male_total_kegg$deg_method == "LimmaVoomCC", male_total_kegg$Tissue == "CORT"),]
 
 #common female terms plot
 male_common <- ggplot(male_total_kegg,
@@ -580,7 +590,7 @@ ggsave(glue::glue("{pdf_path}common_male_KEGGTerms_dotplot.pdf"), width = 15,
 
 #plot of males across time via limmaVoomCC only
 male_common_limma <- ggplot(male_kegg_limma,
-                      aes(x = Term, y = Cell.Type, size = Time.Point, fill = Adjusted.P.value)) +
+                      aes(x = Term, y = Cell.Type, shape = Time.Point, fill = Adjusted.P.value)) +
   geom_point(shape = 21) +
   scale_size(range = c(2.5,12.5)) +
   scale_size_continuous(breaks = c(30, 60, 120)) +
@@ -613,4 +623,98 @@ male_common_limma <- ggplot(male_kegg_limma,
     title = element_text(size = 14, face = "bold")) +
   coord_flip()
 ggsave(glue::glue("{pdf_path}common_male_KEGG_limma.pdf"), width = 15,
+       height = 12)
+
+library(ggplot2)
+
+# filter terms that are present in all time points
+filtered_df <- female_kegg_limma %>% 
+  group_by(Term) %>% 
+  filter(n_distinct(Time.Point) == max(n_distinct(Time.Point)))
+
+# create the plot using ggplot
+filtered_df$Cell.Type <- as.factor(filtered_df$Cell.Type)
+filtered_df$Cell.Type <- factor(filtered_df$Cell.Type, levels = c("Pvalb", "Sst", "L4", "L5", "L6", "Astro"))
+filtered_df <- filtered_df[which(filtered_df$Tissue == "CORT"),]
+filtered_df$Time.Point <- as.factor(filtered_df$Time.Point)
+filtered_df$Time.Point <- factor(filtered_df$Time.Point, levels = c("P30", "P60", "P150" )) 
+
+ggplot(filtered_df, aes(x = Term, y = Cell.Type, shape = Time.Point, color = Adjusted.P.value)) +
+  geom_point(size = 8) +
+  scale_color_gradientn(name = "Adjusted p-value", colors = RColorBrewer::brewer.pal(n = 11, name = "RdBu")) +
+  scale_size_continuous(range = c(3, 8)) +
+  scale_y_discrete(name = "Cell Type") +
+  scale_x_discrete(name = "Terms") +
+  theme_minimal() +
+  guides(shape = guide_legend(override.aes = list(size = 5))) +
+  labs(title = 'Female KEGG Terms') +
+  theme(legend.position = "bottom")+
+  theme_bw(base_size = 24) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 18, face = 'bold', vjust = 1),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    
+    axis.text.x = element_text(angle = 90, size = 18, face = 'bold', hjust = 1.0, vjust = 0.5, colour = "black"),
+    axis.text.y = element_text(angle = 0, size = 18, face = 'bold', vjust = 0.5, colour = "black"),
+    axis.title = element_text(size = 18, face = 'bold', colour = "black"),
+    axis.title.x = element_text(size = 18, face = 'bold', colour = "black"),
+    axis.title.y = element_text(size = 18, face = 'bold', colour = "black"),
+    axis.line = element_line(colour = 'black'),
+    
+    #Legend
+    legend.key = element_blank(), # removes the border
+    legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
+    legend.text = element_text(size = 18, face = "bold"), # Text size
+    title = element_text(size = 18, face = "bold")) +
+  coord_flip()
+ggsave(glue::glue("{pdf_path}common_female_KEGG_limma2.pdf"), width = 15,
+       height = 12)
+
+
+# filter terms that are present in all time points
+filtered_df <- male_kegg_limma %>% 
+  group_by(Term) %>% 
+  filter(n_distinct(Time.Point) == max(n_distinct(Time.Point)))
+
+# create the plot using ggplot
+filtered_df <- filtered_df[which(filtered_df$Tissue == "CORT"),]
+filtered_df$Time.Point <- paste("P", filtered_df$Time.Point, sep = "")
+filtered_df$Time.Point <- as.factor(filtered_df$Time.Point)
+filtered_df$Time.Point <- factor(filtered_df$Time.Point, levels = c("P30", "P60", "P120" )) 
+
+ggplot(filtered_df, aes(x = Term, y = Cell.Type, shape = Time.Point, color = Adjusted.P.value)) +
+  geom_point(size = 8) +
+  scale_color_gradientn(name = "Adjusted p-value", colors = RColorBrewer::brewer.pal(n = 11, name = "RdBu")) +
+  scale_size_continuous(range = c(3, 8)) +
+  scale_y_discrete(name = "Cell Type") +
+  scale_x_discrete(name = "Terms") +
+  theme_minimal() +
+  guides(shape = guide_legend(override.aes = list(size = 5))) +
+  labs(title = 'Male KEGG Terms') +
+  theme(legend.position = "bottom")+
+  theme_bw(base_size = 24) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 18, face = 'bold', vjust = 1),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    
+    axis.text.x = element_text(angle = 90, size = 18, face = 'bold', hjust = 1.0, vjust = 0.5, colour = "black"),
+    axis.text.y = element_text(angle = 0, size = 18, face = 'bold', vjust = 0.5, colour = "black"),
+    axis.title = element_text(size = 18, face = 'bold', colour = "black"),
+    axis.title.x = element_text(size = 18, face = 'bold', colour = "black"),
+    axis.title.y = element_text(size = 18, face = 'bold', colour = "black"),
+    axis.line = element_line(colour = 'black'),
+    
+    #Legend
+    legend.key = element_blank(), # removes the border
+    legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
+    legend.text = element_text(size = 18, face = "bold"), # Text size
+    title = element_text(size = 18, face = "bold")) +
+  coord_flip()
+ggsave(glue::glue("{pdf_path}common_male_KEGG_limma2.pdf"), width = 15,
        height = 12)
