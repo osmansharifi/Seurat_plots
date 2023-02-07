@@ -223,14 +223,4 @@ PlotModuleTraitCorrelation(
 moduleDendro <- getDendro(MEs, distance = "bicor")
 plotDendro(moduleDendro, labelSize = 4, nBreaks = 5)
 
-moduleCor <- getCor(MEs, corType = "bicor")
-plotHeatmap(moduleCor, rowDendro = moduleDendro, colDendro = moduleDendro)
-moduleCorStats <- getMEtraitCor(MEs, colData = MEs, corType = "bicor", robustY = TRUE)
 
-MEtraitCor <- getMEtraitCor(MEs, colData = colData, corType = "bicor")
-traitDendro <- getCor(MEs, y = colData, corType = "bicor", robustY = FALSE) %>% getDendro(transpose = TRUE)
-plotDendro(traitDendro, labelSize = 3.5, expandY = c(0.65,0.08), file = "Trait_Dendrogram.pdf")
-
-plotMEtraitCor(mt_cor, moduleOrder = moduleDendro$order, traitOrder = traitDendro$order, topOnly = TRUE, label.type = "p", label.size = 4, label.nudge_y = 0, legend.position = c(1.11, 0.795), colColorMargins = c(-1,4.75,0.5,10.1), file = "Top_ME_Trait_Correlation_Heatmap.pdf", width = 8.5, height = 4.25)
-
-plotMEtraitCor(mt_cor, moduleOrder = moduleDendro$order, traitOrder = traitDendro$order)
