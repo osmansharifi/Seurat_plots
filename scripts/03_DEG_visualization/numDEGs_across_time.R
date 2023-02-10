@@ -60,7 +60,7 @@ plotData_male_desingle <- plotData %>%
   arrange(cell_type) 
 
 male_desingle <- ggplot(data=plotData_male_desingle, aes(x=Age, y=numDEGs, color=cell_type)) +
-  geom_line(size = 1.5) +
+  geom_line(linewidth = 1.5) +
   scale_color_manual(values = polychrome_palette)+
   geom_point(size = 3) +
   theme_classic() +
@@ -108,7 +108,7 @@ for(i in s.obj.names) {
   names(DEGlists[[i]]) = cell_types
   
   numDEGs = sapply(cell_types, function(cellType) {
-    length(which(DEGlists[[i]][[cellType]][,4] < 0.1))
+    length(which(DEGlists[[i]][[cellType]][,4] < 0.05))
   })
   
   plotDataList[[i]] = data.frame(cell_type = cell_types, numDEGs = as.numeric(numDEGs))
@@ -132,7 +132,7 @@ plotData_male_limma <- plotData %>%
   arrange(cell_type) 
 
 male_limma <- ggplot(data=plotData_male_limma, aes(x=Age, y=numDEGs, color=cell_type)) +
-  geom_line(size = 1.5) +
+  geom_line(linewidth = 1.5) +
   scale_color_manual(values = polychrome_palette)+
   geom_point(size = 3) +
   theme_classic() +
@@ -259,7 +259,7 @@ for(i in s.obj.names) {
   names(DEGlists[[i]]) = cell_types
   
   numDEGs = sapply(cell_types, function(cellType) {
-    length(which(DEGlists[[i]][[cellType]][,4] < 0.1))
+    length(which(DEGlists[[i]][[cellType]][,4] < 0.05))
   })
   
   plotDataList[[i]] = data.frame(cell_type = cell_types, numDEGs = as.numeric(numDEGs))
