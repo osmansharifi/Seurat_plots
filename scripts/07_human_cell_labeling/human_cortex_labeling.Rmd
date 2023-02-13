@@ -309,3 +309,30 @@ save(list = ls(), file = "human_rett_cort_filt_labeled.RData")
 ```{r}
 sessionInfo()
 ```
+```{test}
+# Load required packages
+library(SingleCellExperiment)
+library(limma)
+
+# Load the single cell data into a SingleCellExperiment object
+human_rettcort <- readRDS("single_cell_data.rds")
+
+# Assign condition labels to the cells (e.g. "control" or "treatment")
+condition <- c(rep("control", nrow(human_rettcort[,colData(human_rettcort)$condition == "control"])), 
+               rep("treatment", nrow(human_rettcort[,colData(human_rettcort)$condition == "treatment"])))
+colData(human_rettcort)$condition <- condition
+
+# Normalize the gene expression data
+human_rettcort <- logNormalize(human_rettcort)
+
+# Perform DEG analysis using limma
+design <- model.matrix(~ Condition, data = colData(human_rettcort))
+fit <- lmFit(human_rettcort, design)
+contrast.matrix <- makeContrasts(RTT - WT, levels = design)
+fit2 <- contrasts.fit(fit, contrast.matrix)
+results <- topTable(fit2, adjust = "fdr", sort.by = "abs")
+
+# Extract the differentially expressed genes
+degs <- rownames(results[abs(results$`RTT - WT`) > 0,])
+
+```
