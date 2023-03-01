@@ -309,30 +309,49 @@ save(list = ls(), file = "human_rett_cort_filt_labeled.RData")
 ```{r}
 sessionInfo()
 ```
-```{test}
-# Load required packages
-library(SingleCellExperiment)
+```{r test}
+library(Seurat)
 library(limma)
 
-# Load the single cell data into a SingleCellExperiment object
-human_rettcort <- readRDS("single_cell_data.rds")
+# Check if the cell_type column exists in the metadata
+if (!("cell_type" %in% colnames(human_rettcort@meta.data))) {
+  print("cell_type column not found in metadata. Skipping DEG analysis.")
+} else {
+  # Get the cell types
+  cell_types <- human_rettcort@meta.data$cell_type
 
-# Assign condition labels to the cells (e.g. "control" or "treatment")
-condition <- c(rep("control", nrow(human_rettcort[,colData(human_rettcort)$condition == "control"])), 
-               rep("treatment", nrow(human_rettcort[,colData(human_rettcort)$condition == "treatment"])))
-colData(human_rettcort)$condition <- condition
-
-# Normalize the gene expression data
-human_rettcort <- logNormalize(human_rettcort)
-
-# Perform DEG analysis using limma
-design <- model.matrix(~ Condition, data = colData(human_rettcort))
-fit <- lmFit(human_rettcort, design)
-contrast.matrix <- makeContrasts(RTT - WT, levels = design)
-fit2 <- contrasts.fit(fit, contrast.matrix)
-results <- topTable(fit2, adjust = "fdr", sort.by = "abs")
-
-# Extract the differentially expressed genes
-degs <- rownames(results[abs(results$`RTT - WT`) > 0,])
-
+  # Check if there are any cell types
+  if (length(cell_types) == 0) {
+    print("No cell types found in cell_type column. Skipping DEG analysis.")
+  } else {
+    # Loop through each cell type
+    for (cell_type in cell_types) {
+      # Filter the cells for this cell type
+      cell_type_filter <- human_rettcort@meta.data$cell_type == cell_type
+      human_rettcort_cell_type <- human_rettcort[cell_type_filter, ]
+      
+      # Get the control and RTT samples
+      control_samples <- human_rettcort_cell_type@meta.data$sample_type == "control"
+      RTT_samples <- human_rettcort_cell_type@meta.data$sample_type == "RTT"
+      
+      # Get the control and RTT gene expression matrices
+      control_mat <- human_rettcort_cell_type@assays$RNA@scale.data[, control_samples]
+      RTT_mat <- human_rettcort_cell_type@assays$RNA@scale.data[, RTT_samples]
+      
+      # Get the control and RTT sample labels
+      control_labels <- rep("control", sum(control_samples))
+      RTT_labels <- rep("RTT", sum(RTT_samples))
+      
+      # Combine the control and RTT matrices and labels
+      combined_mat <- cbind(control_mat, RTT_mat)
+      sample_labels <- c(control_labels, RTT_labels)
+      
+      # Perform DEG analysis using Limma
+      fit <- lmFit(combined_mat, model.matrix(~0 + sample_labels))
+      contrast <- makeContrasts(RTT - control, levels = fit)
+      fit2 <- contrasts.fit(fit, contrast)
+      lrt <- lm.lik(fit2)
+      pvals <- p.value(lrt)
+      results <- topTable(fit2, adjust = "BH", number = Inf, sort.by = "none")
+    }}}
 ```
