@@ -58,16 +58,14 @@ dic = {}
 column_names = ['SYMBOL', 'logFC', 'P.Value', 'adj.P.Val', 'celltype', 'sex', 'timepoint', 'region', 'method']
 total_df = pd.DataFrame(columns=column_names)
 
-for root, dirs, files in os.walk(arg.dir):
+for root, dirs, files in os.walk(os.path.abspath(arg.dir)):
 	if len(files) == 0: continue
 	for file in files:
 		if not file.endswith('.xlsx'): continue
 		meta = root.split('/')
-		print(root)
-		
-		tp_reg = meta[9]
-		method = meta[10]
-		ct = meta[10]
+		tp_reg = meta[-3]
+		method = meta[-2]
+		ct = meta[-1]
 		sex = tp_reg.split('_')[4]
 		tp  = tp_reg.split('_')[5]
 		reg = tp_reg.split('_')[6]
