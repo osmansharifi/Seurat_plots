@@ -41,7 +41,7 @@ rownames(pvm) <- pv_df$SYMBOL
 col_fun = colorRamp2(c(min(m), 0.0, max(m)), c("#2166AC", "#EEEEEE", "#B2182B")) 
 
 
-pdf(file=args$save, height = 15, width = 12)
+pdf(file=args$save, height = 15, width = 16)
 map = grid.grabExpr(
 	draw(
 		Heatmap(
