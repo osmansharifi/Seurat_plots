@@ -38,8 +38,9 @@ column_ha = HeatmapAnnotation(`Cell Type` = male_metadata$Cell.Type,
                               col = list(`Time Point` = c("P30" = "#E6B8BFFF","P60"= "#CC7A88FF","P120"= "#B33E52FF", "P150" = "#990F26FF"), 
                                          Sex = c("Male" = "#0F8299FF", "Female" = "#3D0F99FF"),
                                          `Cell Type` = c("L2_3_IT" = polychrome_palette[1], "L4" = polychrome_palette[2], "L5"= polychrome_palette[3], "Pvalb"= polychrome_palette[4],"Vip"= polychrome_palette[5], "Sst"= polychrome_palette[6],"Sncg"= polychrome_palette[7], "Lamp5"= polychrome_palette[8], "Peri"= polychrome_palette[9], "Astro"= polychrome_palette[13])),
-                              annotation_name_gp = gpar(fontsize = 14, fontface = 'bold'))
-
+                              annotation_name_gp = gpar(fontsize = 20, fontface = 'bold', fontfamily = 'Times'))
+column_ha@anno_list$`Cell Type`@color_mapping@levels <- c("L2_3_IT", "L4", "L5", "Pvalb","Vip", "Sst","Sncg", "Lamp5", "Peri", "Astro")
+column_ha@anno_list$`Time Point`@color_mapping@levels<- c("P30", "P60", "P120")
 # Create heatmap
 
 pdf(file="Top Postnatal Male DEGs.pdf", height = 15, width = 16)
@@ -49,19 +50,19 @@ map = grid.grabExpr(
             name = "logFC", 
             top_annotation = column_ha, 
             col = col_fun, 
-            row_names_gp=gpar(fontsize=14),
-            column_names_gp=gpar(fontsize=14),
+            row_names_gp=gpar(fontsize=18, fontface = 'bold', fontfamily = 'Times'),
+            column_names_gp=gpar(fontsize=20, fontface = 'bold'),
             cluster_columns = FALSE, 
             column_title = "Top Postnatal Male DEGs", 
             heatmap_legend_param = list(title="logFC", 
-                                        title_gp = gpar(fontsize = 14, fontface = 'bold'), 
-                                        labels_gp = gpar(fontsize = 12, fontface = 'bold')), 
+                                        title_gp = gpar(fontsize = 18, fontface = 'bold', fontfamily = 'Times'), 
+                                        labels_gp = gpar(fontsize = 12, fontface = 'bold', fontfamily = 'Times')), 
             cell_fun = function(j, i, x, y, width, height, fill) {
   if( pv_male[i, j] <= 0.05 ) {
-    grid.text(print("*"), x, y-height/3, gp = gpar(fontsize=14)) #grid.text(print("*"), x, y, gp = gpar(fontsize=9)) 
+    grid.text(print("*"), x, y-height/3, gp = gpar(fontsize=18, fontface = 'bold')) #grid.text(print("*"), x, y, gp = gpar(fontsize=9)) 
   }
 })))
 grid.newpage()
 grid.draw(map)
-popViewport()
 dev.off()
+
