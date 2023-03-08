@@ -63,7 +63,7 @@ map = grid.grabExpr(
     grid.text(print("*"), x, y-height/3, gp = gpar(fontsize=18, fontface = 'bold')) #grid.text(print("*"), x, y, gp = gpar(fontsize=9)) 
   }
 })))
-grid.newpage()
+#grid.newpage()
 grid.draw(map)
 dev.off()
 ####################
@@ -116,7 +116,7 @@ map = grid.grabExpr(
             column_title = "Top Postnatal Female DEGs", 
             heatmap_legend_param = list(title="logFC", 
                                         title_gp = gpar(fontsize = 18, fontface = 'bold', fontfamily = 'Times'), 
-                                        labels_gp = gpar(fontsize = 12, fontface = 'bold', fontfamily = 'Times')), 
+                                        labels_gp = gpar(fontsize = 12, fontface = 'bold', fontfamily = 'Times')),
             cell_fun = function(j, i, x, y, width, height, fill) {
               if( pv_female[i, j] <= 0.05 ) {
                 grid.text(print("*"), x, y-height/3, gp = gpar(fontsize=18, fontface = 'bold')) 
