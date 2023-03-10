@@ -18,47 +18,51 @@ theme_set(theme_cowplot())
 set.seed(1234)
 
 # load the snRNA-seq dataset
-load("/Users/osman/Desktop/LaSalle_lab/Seurat_objects/all_male_mouse_cortex.RData")
+load("/Users/osman/Desktop/LaSalle_lab/Seurat_objects/all.cortex.combined.RData")
+setwd("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/08_hdWGCNA_analysis")
+Idents(all.cortex.combined) <- "celltype.call"
+# Set up multithreading
+enableWGCNAThreads(nThreads = 8)
 
 # Prepare Seurat Object for WGCNA
-metadata <- all_male@meta.data
+metadata <- adult_postnatal@meta.data
 timepoint <- lapply(metadata$orig.ident, function(x) {
   split_name <- strsplit(x, "_")[[1]]
   return(split_name[3])
 })
-all_male@meta.data$Time_Point <- unlist(timepoint)
+adult_postnatal@meta.data$Time_Point <- unlist(timepoint)
 
 genotype <- lapply(metadata$orig.ident, function(x) {
   split_name <- strsplit(x, "_")[[1]]
   return(split_name[1])
 })
-all_male@meta.data$genotype <- unlist(genotype)
+adult_postnatal@meta.data$genotype <- unlist(genotype)
 
 # Subset on a value in the object meta data
-adult_male <- subset(x = all_male, subset = Time_Point != "E18")
+adult_postnatal <- subset(x = all.cortex.combined, subset = Age != "E18")
 
 # Preprocess
-adult_male <- NormalizeData(adult_male, normalization.method = "LogNormalize", scale.factor = 10000)
-all.genes <- rownames(adult_male)
-adult_male <- ScaleData(adult_male, features = all.genes)
-adult_male <- FindVariableFeatures(adult_male, selection.method = "vst", nfeatures = 2000)
-adult_male <- RunPCA(adult_male, features = VariableFeatures(object = adult_male))
-adult_male <- RunUMAP(adult_male, dims = 1:20)
-DimPlot(adult_male, group.by='celltype.call', label=TRUE) +
+adult_postnatal <- NormalizeData(adult_postnatal, normalization.method = "LogNormalize", scale.factor = 10000)
+all.genes <- rownames(adult_postnatal)
+adult_postnatal <- ScaleData(adult_postnatal)#, features = all.genes)
+adult_postnatal <- FindVariableFeatures(adult_postnatal, selection.method = "vst", nfeatures = 2000)
+adult_postnatal <- RunPCA(adult_postnatal, features = VariableFeatures(object = adult_postnatal))
+adult_postnatal <- RunUMAP(adult_postnatal, dims = 1:20)
+DimPlot(adult_postnatal, group.by='celltype.call', label=TRUE) +
   umap_theme() 
 
 # Set up Seurat object for WGCNA
-adult_male <- SetupForWGCNA(
-  adult_male,
+adult_postnatal <- SetupForWGCNA(
+  adult_postnatal,
   gene_select = "fraction", # the gene selection approach
   fraction = 0.05, # fraction of cells that a gene needs to be expressed in order to be included
   wgcna_name = "postnatal_mouse_cortex" # the name of the hdWGCNA experiment
 )
 
 # construct metacells  in each group
-adult_male <- MetacellsByGroups(
-  adult_male,
-  group.by = c("celltype.call", "Time_Point"), # specify the columns in adult_male@meta.data to group by
+adult_postnatal <- MetacellsByGroups(
+  adult_postnatal,
+  group.by = c("celltype.call", "Time_Point", "Sex"), # specify the columns in adult_postnatal@meta.data to group by
   k = 25, # nearest-neighbors parameter
   max_shared = 10, # maximum number of shared cells between two metacells
   ident.group = 'celltype.call' # set the Idents of the metacell seurat object
@@ -66,11 +70,11 @@ adult_male <- MetacellsByGroups(
 ## Removing the following groups that did not meet min_cells: Endo#P120#MUT, Endo#P120#WT, Endo#P30#MUT, Endo#P30#WT, Endo#P60#MUT, Endo#P60#WT, Peri#P30#MUT, Peri#P30#WT, Peri#P60#MUT, Peri#P60#WT, Sncg#P30#MUT, Sncg#P30#WT, Sncg#P60#WT ##
 
 # normalize metacell expression matrix:
-adult_male <- NormalizeMetacells(adult_male)
+adult_postnatal <- NormalizeMetacells(adult_postnatal)
 
 # Set up the expression matrix
-adult_male <- SetDatExpr(
-  adult_male,
+adult_postnatal <- SetDatExpr(
+  adult_postnatal,
   group_name = "P30", # the name of the group of interest in the group.by column
   group.by='Time_Point', # the metadata column containing the cell type info. This same column should have also been used in MetacellsByGroups
   assay = 'RNA', # using RNA assay
@@ -78,56 +82,56 @@ adult_male <- SetDatExpr(
 )
 
 # Test different soft powers:
-adult_male <- TestSoftPowers(
-  adult_male,
+adult_postnatal <- TestSoftPowers(
+  adult_postnatal,
   networkType = 'signed' # you can also use "unsigned" or "signed hybrid"
 )
 
 # plot the results:
-plot_list <- PlotSoftPowers(adult_male)
+plot_list <- PlotSoftPowers(adult_postnatal)
 
 # assemble with patchwork
 wrap_plots(plot_list, ncol=2)
 
 # construct co-expression network:
-adult_male <- ConstructNetwork(
-  adult_male, soft_power=5,
+adult_postnatal <- ConstructNetwork(
+  adult_postnatal, soft_power=5,
   setDatExpr=FALSE,
   overwrite_tom = TRUE# name of the topoligical overlap matrix written to disk
 )
 
-PlotDendrogram(adult_male, main='hdWGCNA Dendrogram')
+PlotDendrogram(adult_postnatal, main='hdWGCNA Dendrogram')
 
 # need to run ScaleData first or else harmony throws an error:
-adult_male <- ScaleData(adult_male, features=VariableFeatures(adult_male))
+adult_postnatal <- ScaleData(adult_postnatal, features=VariableFeatures(adult_postnatal))
 
 # compute all MEs in the full single-cell dataset
-adult_male <- ModuleEigengenes(
-  adult_male,
+adult_postnatal <- ModuleEigengenes(
+  adult_postnatal,
   group.by.vars="orig.ident"
 )
 
 # harmonized module eigengenes:
-hMEs <- GetMEs(adult_male)
+hMEs <- GetMEs(adult_postnatal)
 
 # module eigengenes:
-MEs <- GetMEs(adult_male, harmonized=FALSE)
+MEs <- GetMEs(adult_postnatal, harmonized=FALSE)
 
 # compute eigengene-based connectivity (kME):
-adult_male <- ModuleConnectivity(
-  adult_male,
+adult_postnatal <- ModuleConnectivity(
+  adult_postnatal,
   group.by = 'Time_Point', group_name = "P30"
 )
 
 # plot genes ranked by kME for each module
-p <- PlotKMEs(adult_male, ncol=5)
+p <- PlotKMEs(adult_postnatal, ncol=5)
 
 p
 
 # compute gene scoring for the top 25 hub genes by kME for each module
 # with Seurat method
-adult_male <- ModuleExprScore(
-  adult_male,
+adult_postnatal <- ModuleExprScore(
+  adult_postnatal,
   n_genes = 25,
   method='Seurat'
 )
@@ -135,15 +139,15 @@ adult_male <- ModuleExprScore(
 # compute gene scoring for the top 25 hub genes by kME for each module
 # with UCell method
 library(UCell)
-adult_male <- ModuleExprScore(
-  adult_male,
+adult_postnatal <- ModuleExprScore(
+  adult_postnatal,
   n_genes = 25,
   method='UCell'
 )
 
 # make a featureplot of hMEs for each module
 plot_list <- ModuleFeaturePlot(
-  adult_male,
+  adult_postnatal,
   features='hMEs', # plot the hMEs
   order=TRUE # order so the points with highest hMEs are on top
 )
@@ -153,7 +157,7 @@ wrap_plots(plot_list, ncol=3)
 
 # make a featureplot of hub scores for each module
 plot_list <- ModuleFeaturePlot(
-  adult_male,
+  adult_postnatal,
   features='scores', # plot the hub gene scores
   order='shuffle', # order so cells are shuffled
   ucell = TRUE) # depending on Seurat vs UCell for gene scoring
@@ -163,16 +167,16 @@ plot_list <- ModuleFeaturePlot(
 wrap_plots(plot_list, ncol=3)
 
 # plot module correlagram
-ModuleCorrelogram(adult_male)
+ModuleCorrelogram(adult_postnatal)
 
 # get hMEs from seurat object
-MEs <- GetMEs(adult_male, harmonized=TRUE)
+MEs <- GetMEs(adult_postnatal, harmonized=TRUE)
 mods <- colnames(MEs); mods <- mods[mods != 'grey']
 
 # add hMEs to Seurat meta-data:
-adult_male@meta.data <- cbind(adult_male@meta.data, MEs)
+adult_postnatal@meta.data <- cbind(adult_postnatal@meta.data, MEs)
 # plot with Seurat's DotPlot function
-p <- DotPlot(adult_male, features=mods, group.by = 'celltype.call')
+p <- DotPlot(adult_postnatal, features=mods, group.by = 'celltype.call')
 
 # flip the x/y axes, rotate the axis labels, and change color scheme:
 p <- p +
@@ -185,29 +189,29 @@ p
 
 ## Compute Correlations
 # convert genotype to factor
-adult_male$Genotype <- as.factor(adult_male$Genotype)
+adult_postnatal$Genotype <- as.factor(adult_postnatal$Genotype)
 # convert time point to factor
-adult_male$Time_Point <- as.factor(adult_male$Time_Point)
+adult_postnatal$Time_Point <- as.factor(adult_postnatal$Time_Point)
 # convert celltype to factor
-adult_male$celltype.call <- as.factor(adult_male$celltype.call)
+adult_postnatal$celltype.call <- as.factor(adult_postnatal$celltype.call)
 # convert celltype to factor
-adult_male$orig.ident <- as.factor(adult_male$orig.ident)
+adult_postnatal$orig.ident <- as.factor(adult_postnatal$orig.ident)
 
 # list of traits to correlate
 cur_traits <- c('Genotype', 'Time_Point')
 
-adult_male <- ModuleTraitCorrelation(
-  adult_male,
+adult_postnatal <- ModuleTraitCorrelation(
+  adult_postnatal,
   traits = cur_traits,
   group.by='celltype.call'
 )
 
 # get the mt-correlation results
-mt_cor <- GetModuleTraitCorrelation(adult_male)
+mt_cor <- GetModuleTraitCorrelation(adult_postnatal)
 
 names(mt_cor$cor)
 PlotModuleTraitCorrelation(
-  adult_male,
+  adult_postnatal,
   label = 'fdr',
   label_symbol = 'stars',
   text_size = 2,
