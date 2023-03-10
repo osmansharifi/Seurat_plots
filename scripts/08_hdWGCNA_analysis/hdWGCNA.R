@@ -67,7 +67,6 @@ adult_postnatal <- MetacellsByGroups(
   max_shared = 10, # maximum number of shared cells between two metacells
   ident.group = 'celltype.call' # set the Idents of the metacell seurat object
 )
-## Removing the following groups that did not meet min_cells: Endo#P120#MUT, Endo#P120#WT, Endo#P30#MUT, Endo#P30#WT, Endo#P60#MUT, Endo#P60#WT, Peri#P30#MUT, Peri#P30#WT, Peri#P60#MUT, Peri#P60#WT, Sncg#P30#MUT, Sncg#P30#WT, Sncg#P60#WT ##
 
 # normalize metacell expression matrix:
 adult_postnatal <- NormalizeMetacells(adult_postnatal)
