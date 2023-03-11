@@ -75,7 +75,7 @@ adult_postnatal <- NormalizeMetacells(adult_postnatal)
 adult_postnatal <- SetDatExpr(
   adult_postnatal,
   group_name = "P30", # the name of the group of interest in the group.by column
-  group.by='Time_Point', # the metadata column containing the cell type info. This same column should have also been used in MetacellsByGroups
+  group.by=c("celltype.call", "Time_Point", "Sex"), # the metadata column containing the cell type info. This same column should have also been used in MetacellsByGroups
   assay = 'RNA', # using RNA assay
   slot = 'data' # using normalized data
 )
@@ -91,10 +91,13 @@ plot_list <- PlotSoftPowers(adult_postnatal)
 
 # assemble with patchwork
 wrap_plots(plot_list, ncol=2)
-
+ggplot2::ggsave("Softpowerthreshold.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
 # construct co-expression network:
 adult_postnatal <- ConstructNetwork(
-  adult_postnatal, soft_power=5,
+  adult_postnatal, soft_power=12,
   setDatExpr=FALSE,
   overwrite_tom = TRUE# name of the topoligical overlap matrix written to disk
 )
