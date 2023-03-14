@@ -62,7 +62,7 @@ adult_postnatal <- SetupForWGCNA(
 # construct metacells  in each group
 adult_postnatal <- MetacellsByGroups(
   adult_postnatal,
-  group.by = c("celltype.call", "Time_Point", "Sex"), # specify the columns in adult_postnatal@meta.data to group by
+  group.by = c("celltype.call", "Time_Point", "Sex", "genotype"), # specify the columns in adult_postnatal@meta.data to group by
   k = 25, # nearest-neighbors parameter
   max_shared = 10, # maximum number of shared cells between two metacells
   ident.group = 'celltype.call' # set the Idents of the metacell seurat object
@@ -70,12 +70,12 @@ adult_postnatal <- MetacellsByGroups(
 
 # normalize metacell expression matrix:
 adult_postnatal <- NormalizeMetacells(adult_postnatal)
-
+Idents(adult_postnatal) <- "celltype.call"
 # Set up the expression matrix
 adult_postnatal <- SetDatExpr(
   adult_postnatal,
-  group_name = "P30", # the name of the group of interest in the group.by column
-  group.by=c("celltype.call", "Time_Point", "Sex"), # the metadata column containing the cell type info. This same column should have also been used in MetacellsByGroups
+  group_name = c("L2_3_IT", "L4", "L5", "L6", "Sst", "Pvalb", "Vip", "Sncg", "Non-neuronal", "Astro", "Oligo", "Lamp5"), # the name of the group of interest in the group.by column
+  group.by="celltype.call", # the metadata column containing the cell type info. This same column should have also been used in MetacellsByGroups
   assay = 'RNA', # using RNA assay
   slot = 'data' # using normalized data
 )
@@ -97,13 +97,16 @@ ggplot2::ggsave("Softpowerthreshold.pdf",
                 width = 12)
 # construct co-expression network:
 adult_postnatal <- ConstructNetwork(
-  adult_postnatal, soft_power=12,
+  adult_postnatal, soft_power=8,
   setDatExpr=FALSE,
   overwrite_tom = TRUE# name of the topoligical overlap matrix written to disk
 )
 
 PlotDendrogram(adult_postnatal, main='hdWGCNA Dendrogram')
-
+ggplot2::ggsave("WGCNA_Dendrogram.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
 # need to run ScaleData first or else harmony throws an error:
 adult_postnatal <- ScaleData(adult_postnatal, features=VariableFeatures(adult_postnatal))
 
@@ -122,7 +125,7 @@ MEs <- GetMEs(adult_postnatal, harmonized=FALSE)
 # compute eigengene-based connectivity (kME):
 adult_postnatal <- ModuleConnectivity(
   adult_postnatal,
-  group.by = 'Time_Point', group_name = "P30"
+  group.by = 'celltype.call', group_name = c("L2_3_IT", "L4", "L5", "L6", "Sst", "Pvalb", "Vip", "Sncg", "Non-neuronal", "Astro", "Oligo", "Lamp5")
 )
 
 # plot genes ranked by kME for each module
