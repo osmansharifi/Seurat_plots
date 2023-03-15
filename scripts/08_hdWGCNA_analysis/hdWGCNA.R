@@ -132,7 +132,10 @@ adult_postnatal <- ModuleConnectivity(
 p <- PlotKMEs(adult_postnatal, ncol=5)
 
 p
-
+ggplot2::ggsave("kME.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
 # compute gene scoring for the top 25 hub genes by kME for each module
 # with Seurat method
 adult_postnatal <- ModuleExprScore(
