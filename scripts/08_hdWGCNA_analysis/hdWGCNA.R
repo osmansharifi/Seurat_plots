@@ -162,7 +162,17 @@ plot_list <- ModuleFeaturePlot(
 
 # stitch together with patchwork
 wrap_plots(plot_list, ncol=3)
+ggplot2::ggsave("module_UMAPs.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
 
+levels(adult_postnatal) <- c("L2_3_IT", "L4", "L5", "L6","Pvalb", "Vip", "Sst","Sncg","Lamp5","Peri", "Endo", "Oligo","Astro","Non-neuronal")
+DimPlot_scCustom(seurat_object = adult_postnatal, label = FALSE, pt.size = 0.5)
+ggplot2::ggsave("celltype_UMAPs.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
 # make a featureplot of hub scores for each module
 plot_list <- ModuleFeaturePlot(
   adult_postnatal,
@@ -197,16 +207,18 @@ p
 
 ## Compute Correlations
 # convert genotype to factor
-adult_postnatal$Genotype <- as.factor(adult_postnatal$Genotype)
+adult_postnatal$Genotype <- as.factor(adult_postnatal$genotype)
 # convert time point to factor
 adult_postnatal$Time_Point <- as.factor(adult_postnatal$Time_Point)
 # convert celltype to factor
 adult_postnatal$celltype.call <- as.factor(adult_postnatal$celltype.call)
 # convert celltype to factor
 adult_postnatal$orig.ident <- as.factor(adult_postnatal$orig.ident)
+# convert celltype to factor
+adult_postnatal$Sex <- as.factor(adult_postnatal$Sex)
 
 # list of traits to correlate
-cur_traits <- c('Genotype', 'Time_Point')
+cur_traits <- c('Genotype', 'Time_Point','Sex')
 
 adult_postnatal <- ModuleTraitCorrelation(
   adult_postnatal,
