@@ -183,9 +183,16 @@ plot_list <- ModuleFeaturePlot(
 
 # stitch together with patchwork
 wrap_plots(plot_list, ncol=3)
-
+ggplot2::ggsave("hubgene_scores_UMAPs.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
 # plot module correlagram
 ModuleCorrelogram(adult_postnatal)
+ggplot2::ggsave("module_to_module_cor.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
 
 # get hMEs from seurat object
 MEs <- GetMEs(adult_postnatal, harmonized=TRUE)
@@ -194,16 +201,11 @@ mods <- colnames(MEs); mods <- mods[mods != 'grey']
 # add hMEs to Seurat meta-data:
 adult_postnatal@meta.data <- cbind(adult_postnatal@meta.data, MEs)
 # plot with Seurat's DotPlot function
-p <- DotPlot(adult_postnatal, features=mods, group.by = 'celltype.call')
-
-# flip the x/y axes, rotate the axis labels, and change color scheme:
-p <- p +
-  coord_flip() +
-  RotatedAxis() +
-  scale_color_gradient2(high='red', mid='grey95', low='blue')
-
-# plot output
-p
+DotPlot_scCustom(seurat_object = adult_postnatal, features=mods, flip_axes = TRUE, x_lab_rotate = TRUE, remove_axis_titles = FALSE) + xlab("Modules") + ylab("Cell_Type")
+ggplot2::ggsave("Average_expression_hubgenes.pdf",
+                device = NULL,
+                height = 8.5,
+                width = 12)
 
 ## Compute Correlations
 # convert genotype to factor
@@ -218,7 +220,7 @@ adult_postnatal$orig.ident <- as.factor(adult_postnatal$orig.ident)
 adult_postnatal$Sex <- as.factor(adult_postnatal$Sex)
 
 # list of traits to correlate
-cur_traits <- c('Genotype', 'Time_Point','Sex')
+cur_traits <- c('Sex','Time_Point','Genotype')
 
 adult_postnatal <- ModuleTraitCorrelation(
   adult_postnatal,
@@ -234,15 +236,29 @@ PlotModuleTraitCorrelation(
   adult_postnatal,
   label = 'fdr',
   label_symbol = 'stars',
-  text_size = 2,
-  text_digits = 3,
-  text_color = 'white',
-  high_color = 'purple',
-  mid_color = 'black',
-  low_color = 'yellow',
-  plot_max = 0.1,
+  text_size = 5,
+  text_digits = 10,
+  text_color = 'black',
+  high_color = '#B2182B',
+  mid_color = '#EEEEEE',
+  low_color = '#2166AC',
+  plot_max = 0.4,
   combine=TRUE
 )
+
+#Warning messages:1: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :Trait Genotype is a factor with levels MUT, WT. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order? 
+#2: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  : Trait Time_Point is a factor with levels P30, P60, P120, P150. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
+#3: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :Trait Sex is a factor with levels Female, Male. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
+
+# get modules
+modules <- GetModules(adult_postnatal)
+head(modules)
+write.csv(modules, "modules.csv", row.names = FALSE)
+# get hub genes
+hub_genesdf <- GetHubGenes(adult_postnatal, n_hubs = 10)
+head(hub_genesdf)
+write.csv(hub_genesdf, "top10_hub_genes.csv", row.names = FALSE)
+
 
 moduleDendro <- getDendro(MEs, distance = "bicor")
 plotDendro(moduleDendro, labelSize = 4, nBreaks = 5)
