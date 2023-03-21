@@ -214,13 +214,17 @@ adult_postnatal$Genotype <- as.factor(adult_postnatal$genotype)
 adult_postnatal$Time_Point <- as.factor(adult_postnatal$Time_Point)
 # convert celltype to factor
 adult_postnatal$celltype.call <- as.factor(adult_postnatal$celltype.call)
-# convert celltype to factor
+# convert sample name to factor
 adult_postnatal$orig.ident <- as.factor(adult_postnatal$orig.ident)
-# convert celltype to factor
+# convert sex to factor
 adult_postnatal$Sex <- as.factor(adult_postnatal$Sex)
+# convert sex to factor
+adult_postnatal$Disease_score <- as.factor(adult_postnatal$Disease_score)
+# convert bodyweight to factor
+adult_postnatal$Body_weight <- as.factor(adult_postnatal$Body_weight)
 
 # list of traits to correlate
-cur_traits <- c('Sex','Time_Point','Genotype')
+cur_traits <- c('Sex','Time_Point','Genotype', 'Disease_score', 'Body_weight')
 
 adult_postnatal <- ModuleTraitCorrelation(
   adult_postnatal,
@@ -236,8 +240,8 @@ PlotModuleTraitCorrelation(
   adult_postnatal,
   label = 'fdr',
   label_symbol = 'stars',
-  text_size = 5,
-  text_digits = 10,
+  text_size = 4,
+  text_digits = 4,
   text_color = 'black',
   high_color = '#B2182B',
   mid_color = '#EEEEEE',
@@ -246,9 +250,20 @@ PlotModuleTraitCorrelation(
   combine=TRUE
 )
 
-#Warning messages:1: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :Trait Genotype is a factor with levels MUT, WT. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order? 
-#2: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  : Trait Time_Point is a factor with levels P30, P60, P120, P150. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
-#3: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :Trait Sex is a factor with levels Female, Male. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
+
+Warning messages:
+  1: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :
+                                 Trait Sex is a factor with levels Female, Male. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
+                                 2: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :
+                                                                Trait Time_Point is a factor with levels P30, P60, P120, P150. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
+                                                                3: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :
+                                                                                               Trait Genotype is a factor with levels MUT, WT. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
+                                                                                               4: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :
+                                                                                                                              Trait disease_score is a factor with levels 0, 0.5, 1, 2, 3.5, 5. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
+                                                                                                                              5: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :
+                                                                                                                                                             Trait body_weight is a factor with levels 22, 24, 25, 29, 30, 35, 38, 45, 47, 50. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
+                                                                                                                                                             
+                                                                                                                                                             
 
 # get modules
 modules <- GetModules(adult_postnatal)
