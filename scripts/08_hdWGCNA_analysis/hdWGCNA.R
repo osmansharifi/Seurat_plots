@@ -250,21 +250,13 @@ PlotModuleTraitCorrelation(
   combine=TRUE
 )
 
-
-Warning messages:
-  1: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :
-                                 Trait Sex is a factor with levels Female, Male. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
-                                 2: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :
-                                                                Trait Time_Point is a factor with levels P30, P60, P120, P150. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
-                                                                3: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :
-                                                                                               Trait Genotype is a factor with levels MUT, WT. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
-                                                                                               4: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :
-                                                                                                                              Trait disease_score is a factor with levels 0, 0.5, 1, 2, 3.5, 5. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
-                                                                                                                              5: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :
-                                                                                                                                                             Trait body_weight is a factor with levels 22, 24, 25, 29, 30, 35, 38, 45, 47, 50. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
-                                                                                                                                                             
-                                                                                                                                                             
-
+#Warning messages:
+#1: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :Trait Sex is a factor with levels Female, Male. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
+#2: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :Trait Time_Point is a factor with levels P30, P60, P120, P150. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
+#3: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :Trait Genotype is a factor with levels MUT, WT. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
+#4: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :Trait disease_score is a factor with levels 0, 0.5, 1, 2, 3.5, 5. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
+#5: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :Trait body_weight is a factor with levels 22, 24, 25, 29, 30, 35, 38, 45, 47, 50. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
+                                                                                           
 # get modules
 modules <- GetModules(adult_postnatal)
 head(modules)
