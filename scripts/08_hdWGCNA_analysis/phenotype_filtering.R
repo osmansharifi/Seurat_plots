@@ -74,3 +74,9 @@ phenotype$Sample_name <- sample_name
 phenotype[phenotype == "?"] <- NA
 
 write.csv(phenotype, "phenotype.csv", row.names = FALSE)
+
+phenotype <- read.csv(file = "/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/08_hdWGCNA_analysis/phenotype.csv", 
+                        fill = TRUE,
+                        header = TRUE,)
+adult_postnatal@meta.data <- merge(adult_postnatal@meta.data, phenotype, by = "orig.ident", all.x = TRUE)
+
