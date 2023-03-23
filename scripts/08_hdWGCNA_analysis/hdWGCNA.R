@@ -219,9 +219,9 @@ adult_postnatal$orig.ident <- as.factor(adult_postnatal$orig.ident)
 # convert sex to factor
 adult_postnatal$Sex <- as.factor(adult_postnatal$Sex)
 # convert sex to factor
-adult_postnatal$Disease_score <- as.factor(adult_postnatal$Disease_score)
+adult_postnatal$Disease_score <- as.numeric(adult_postnatal$Disease_score)
 # convert bodyweight to factor
-adult_postnatal$Body_weight <- as.factor(adult_postnatal$Body_weight)
+adult_postnatal$Body_weight <- as.numeric(adult_postnatal$Body_weight)
 
 # list of traits to correlate
 cur_traits <- c('Sex','Time_Point','Genotype', 'Disease_score', 'Body_weight')
@@ -256,6 +256,8 @@ PlotModuleTraitCorrelation(
 #3: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :Trait Genotype is a factor with levels MUT, WT. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
 #4: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :Trait disease_score is a factor with levels 0, 0.5, 1, 2, 3.5, 5. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
 #5: In ModuleTraitCorrelation(adult_postnatal, traits = cur_traits,  :Trait body_weight is a factor with levels 22, 24, 25, 29, 30, 35, 38, 45, 47, 50. Levels will be converted to numeric IN THIS ORDER for the correlation, is this the expected order?
+
+mod_trait_cor <- mt_cor$cor
                                                                                            
 # get modules
 modules <- GetModules(adult_postnatal)
@@ -266,8 +268,4 @@ hub_genesdf <- GetHubGenes(adult_postnatal, n_hubs = 10)
 head(hub_genesdf)
 write.csv(hub_genesdf, "top10_hub_genes.csv", row.names = FALSE)
 
-
-moduleDendro <- getDendro(MEs, distance = "bicor")
-plotDendro(moduleDendro, labelSize = 4, nBreaks = 5)
-
-
+save(list = ls(), file = "mouse_cortex_WGCNA.RData")
