@@ -16,7 +16,7 @@ library(hdWGCNA)
 theme_set(theme_cowplot())
 
 # set random seed for reproducibility
-set.seed(12345)
+set.seed(1234)
 setwd('/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/08_hdWGCNA_analysis')
 
 # re-load the Zhou et al snRNA-seq dataset processed with hdWGCNA
@@ -49,7 +49,7 @@ test_split <- data.frame(do.call(rbind, strsplit(row.names(test), "-")))
 # name the columns
 colnames(test_split) <- c("Barcodes", "Sample_name")
 
-# split the Barcodes column by _ and keep only the info to the right
+# split the Barcodes column by _ and keep only the info to the right of the _
 test_split$Barcodes <- sub(".*_", "", test_split$Barcodes)
 
 # merge the test_split and adult_postnatal@meta.data dataframes
