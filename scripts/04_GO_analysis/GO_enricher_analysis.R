@@ -15,8 +15,8 @@ library(tidyverse)
 ## load data ##
 ###############
 
-master_df_female <- read.csv("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/04_GO_analysis/female_GO.csv") 
-master_df_male <- read.csv("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/04_GO_analysis/male_GO.csv") 
+master_df_female <- read.csv("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/04_GO_analysis/female_GO.csv", header = TRUE) 
+master_df_male <- read.csv("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/04_GO_analysis/male_GO.csv", header = TRUE) 
 ######################################
 ## set path and order of cell types ##
 ######################################
@@ -29,6 +29,14 @@ master_df_female<- master_df_female %>%
 master_df_male<- master_df_male %>%
   mutate(Cell.Type =  factor(Cell.Type, levels = x)) %>%
   arrange(Cell.Type) 
+
+##########################
+## Apply FDR correction ##
+##########################
+master_df_female$`p-value` <- 10^-(master_df_female$X.log10.p.value)
+master_df_female$`Adjusted p-value` <- p.adjust(master_df_female$`p-value`, method = 'bonferroni')
+master_df_male$`p-value` <- 10^-(master_df_male$X.log10.p.value)
+master_df_male$`Adjusted p-value` <- p.adjust(master_df_male$`p-value`, method = 'bonferroni')
 
 ######################
 ## Subset master_df ##
