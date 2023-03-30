@@ -37,7 +37,8 @@ complete_df2 = pd.read_csv(arg.csv2)
 complete_df1 = complete_df1.sort_values(by='pv', ascending=True)
 sig_df1 = complete_df1[complete_df1['pv'] < arg.pval]
 sig_df1 = sig_df1[sig_df1['logfc'].abs() > arg.logFC]
-#sig_df1 = sig_df1[sig_df1['timepoint'] != 'E18']
+sig_df1 = sig_df1[sig_df1['timepoint'] != 'E18']
+sig_df1 = sig_df1[sig_df1['sex'] == 'F']
 print(len(sig_df1[sig_df1['timepoint'] == 'E18']))
 print(len(sig_df1[sig_df1['timepoint'] == 'P30']))
 print(len(sig_df1[sig_df1['timepoint'] == 'P60']))

@@ -68,15 +68,18 @@ for gene,fc in human_logfc.items():
 	mean = np.mean(np.array(fc))
 	human_logfc[gene] = mean
 	
-#print("Human_Gene,Human_logFC,Mouse_logFC,Mouse_Gene")
+print("Human_Gene,Human_logFC,Mouse_logFC,Mouse_Gene")
 for gene in human_logfc:
 	if gene in mouse_logfc:
-		#print(gene, human_logfc[gene], mouse_logfc[gene], gene[0]+ gene[1:].lower(), sep=",")
+		print(gene, human_logfc[gene], mouse_logfc[gene], gene[0]+ gene[1:].lower(), sep=",")
+		
+'''			
+		
 		if human_logfc[gene] > 0 and mouse_logfc[gene] > 0:
 			if human_logfc[gene] > 0.4 or mouse_logfc[gene] > 0.4:
 				print(human_logfc[gene],mouse_logfc[gene], gene)
 
-'''		
+	
 g = sns.jointplot(x=a, y=b, kind='reg', color='royalblue')
 r, p = stats.spearmanr(a, b)
 print(p)
