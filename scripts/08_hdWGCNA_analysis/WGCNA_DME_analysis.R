@@ -53,7 +53,7 @@ colnames(test_split) <- c("Barcodes", "Sample_name")
 test_split$Barcodes <- sub(".*_", "", test_split$Barcodes)
 
 # merge the test_split and adult_postnatal@meta.data dataframes
-merged <- merge(test_split, adult_postnatal@meta.data, by.x="Sample_name", by.y="orig.ident", all.x=TRUE)
+merged <- merge(test_split, adult_postnatal@meta.data, by.x="Sample_name", by.y="orig.ident", all.x=TRUE) # barcodes did not match cell names
 
 # replace the existing Barcodes column in adult_postnatal@meta.data with the new one from merged
 adult_postnatal@meta.data$Barcodes <- merged$Barcodes
