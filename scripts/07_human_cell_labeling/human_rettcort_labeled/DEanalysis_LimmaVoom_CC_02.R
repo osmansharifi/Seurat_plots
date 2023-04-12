@@ -151,6 +151,9 @@ GOplot <- function(slimmedGO = slimmedGO){
     return()
 }
 
+#Set color palette
+polychrome_palette <- c("#5A5156FF","#E4E1E3FF","#F6222EFF","#FE00FAFF","#16FF32FF","#3283FEFF","#FEAF16FF","#B00068FF","#1CFFCEFF","#90AD1CFF","#2ED9FFFF","#DEA0FDFF","#AA0DFEFF","#F8A19FFF","#325A9BFF","#C4451CFF","#1C8356FF","#85660DFF","#B10DA1FF","#FBE426FF","#1CBE4FFF","#FA0087FF","#FC1CBFFF","#F7E1A0FF","#C075A6FF","#782AB6FF","#AAF400FF","#BDCDFFFF","#822E1CFF","#B5EFB5FF","#7ED7D1FF","#1C7F93FF","#D85FF7FF","#683B79FF","#66B0FFFF", "#3B00FBFF")
+
 ###############
 ## Load Data ##
 ###############
@@ -174,10 +177,10 @@ cell_types_all = names(DGEList_high)
 cell_types_all = cell_types_all[c(19:32)] # not enough cells for these cell types
 
 for (i in cell_types_all) {
-  DGEList_high[[i]]$samples$group = ifelse(grepl("WT", colnames(DGEList_high[[i]]$counts))=="TRUE", "WT", "MUTANT")
+  DGEList_high[[i]]$samples$group = ifelse(grepl("CTRL", colnames(DGEList_high[[i]]$counts))=="TRUE", "CTRL", "RTT")
 }
 
-cell_types_all = cell_types_all[c(5:10)]
+cell_types_all = cell_types_all[c(2:14)]
 
 for (i in cell_types_all) {
   
@@ -188,24 +191,7 @@ for (i in cell_types_all) {
   print(glue::glue("Normalizing {i} cells"))
   
   #subsetting design matrix by cell type
-  activation = ifelse(grepl("activated", i)=="TRUE", "activated", ifelse(grepl("not", i)=="TRUE", "unactivated", "both"))
-  
-  cellType = sub("-.*", "", i)
-  
-  design.new <- design %>%
-    dplyr::filter(cell_type == cellType)
-  
-  design.new <- if (activation == "activated") {
-    dplyr::filter(design.new, activation.status == "activated")
-  } else {
-    if (activation == "unactivated") {
-      dplyr::filter(design.new, activation.status == "unactivated")
-    } else {
-      dplyr::filter(design.new, activation.status == "activated" | activation.status == "unactivated")
-    }
-  }
-  
-  design.new$genotype = factor(design.new$genotype, levels=c("WT", "MUTANT"))
+  design$genotype = factor(design$genotype, levels=c("CTRL", "RTT"))
   
   # Raw density of log-CPM values
   
@@ -214,7 +200,7 @@ for (i in cell_types_all) {
   
   logCPM <- cpm(DGEList_high[[i]], log=TRUE)
   nsamples <- ncol(DGEList_high[[i]])
-  col <- brewer.pal(nsamples, "Paired")
+  col <- polychrome_palette
   
   pdf(glue::glue("{i}/density_plot.pdf"), height=8.5, width=5.5)
   
@@ -229,7 +215,7 @@ for (i in cell_types_all) {
   dev.off()
   
   Glimma::glMDSPlot(DGEList_high[[i]],
-                    groups = design.new$genotype,
+                    groups = design$genotype,
                     path = getwd(),
                     folder = "interactivePlots",
                     html = glue::glue("{i}_MDS-Plot"),
@@ -237,7 +223,7 @@ for (i in cell_types_all) {
   
   
   mm <- model.matrix(~genotype + cell_cycle + percent.mito,
-                     data = design.new)
+                     data = design)
   
   
   # Voom
@@ -249,7 +235,7 @@ for (i in cell_types_all) {
   
   correlations <- duplicateCorrelation(voomLogCPM,
                                        mm,
-                                       block = design.new$sample_ID)
+                                       block = design$sample_ID)
   
   correlations <- correlations$consensus.correlation
   
@@ -272,7 +258,7 @@ for (i in cell_types_all) {
   fit <- lmFit(voomLogCPM,
                mm,
                correlation = correlations,
-               block = design.new$sample_ID)
+               block = design$sample_ID)
   
   head(coef(fit))
   
