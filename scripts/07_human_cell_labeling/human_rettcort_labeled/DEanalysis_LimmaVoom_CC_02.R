@@ -157,30 +157,30 @@ polychrome_palette <- c("#5A5156FF","#E4E1E3FF","#F6222EFF","#FE00FAFF","#16FF32
 ###############
 ## Load Data ##
 ###############
-setwd(glue::glue("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rettcort_labeled"))
-load("DEanalysis_01.RData")
-s.obj = "rett_E18_with_labels_proportions" #change this to the name of the Seurat object you started with
+#setwd(glue::glue("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rettcort_labeled"))
+load("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rettcort_labeled/DEanalysis_01.1.RData")
+s.obj = human #change this to the name of the Seurat object you started with
 
-dir.create("limmaVoomCC2")
-setwd("limmaVoomCC2")
+dir.create("limmaVoomCC")
+setwd("limmaVoomCC")
 
 ##############################
 ## DEG and Pathway Analysis ##
 ##############################
 
-#DGEList_high = DGEList_high[-c(which(names(DGEList_high)=="Non-neuronal"))] #removing non-neuronal cells due to lack of sufficient cell numbers across genotypes
+#DGEList_high = DGEList_high[-c(which(names(DGEList_high)!="Micro"))] #removing non-neuronal cells due to lack of sufficient cell numbers across genotypes
 
 cell_types_all = names(DGEList_high)
 
 #cell_types_all = cell_types_all[-(c(which(grepl("Sncg-activated", cell_types_all)=="TRUE")))] #removing Sncg-activated from analysis bc not enough cells
 
-cell_types_all = cell_types_all[c(19:32)] # not enough cells for these cell types
+cell_types_all = cell_types_all[c(1:15)] # not enough cells for these cell types
 
 for (i in cell_types_all) {
-  DGEList_high[[i]]$samples$group = ifelse(grepl("CTRL", colnames(DGEList_high[[i]]$counts))=="TRUE", "CTRL", "RTT")
+  DGEList_high[[i]]$samples$group = ifelse(grepl("WT", colnames(DGEList_high[[i]]$counts))=="TRUE", "WT", "RTT")
 }
 
-cell_types_all = cell_types_all[c(2:14)]
+cell_types_all = cell_types_all[c(1:15)]
 
 for (i in cell_types_all) {
   
@@ -214,12 +214,12 @@ for (i in cell_types_all) {
   
   dev.off()
   
-  Glimma::glMDSPlot(DGEList_high[[i]],
-                    groups = design$genotype,
-                    path = getwd(),
-                    folder = "interactivePlots",
-                    html = glue::glue("{i}_MDS-Plot"),
-                    launch = FALSE)
+  #Glimma::glMDSPlot(DGEList_high[[i]],
+                    #groups = design$genotype,
+                   # path = getwd(),
+                   # folder = "interactivePlots",
+                   # html = glue::glue("{i}_MDS-Plot"),
+                   # launch = FALSE)
   
   
   mm <- model.matrix(~genotype + cell_cycle + percent.mito,
