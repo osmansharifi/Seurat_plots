@@ -6,9 +6,6 @@ stopifnot(suppressMessages(sapply(packages, require, character.only=TRUE)))
 
 enrichR:::.onAttach()
 
-param <- SnowParam(2, "SOCK", progressbar = TRUE)
-register(param)
-
 ############################
 ## Load Pathway Functions ##
 ############################

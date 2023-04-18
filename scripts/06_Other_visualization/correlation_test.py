@@ -42,7 +42,7 @@ sig_df1 = complete_df1[complete_df1['pv'] < arg.pval]
 sig_df1 = sig_df1[sig_df1['sex'] == 'F']
 sig_df1 = sig_df1[sig_df1['timepoint'] != 'E18']
 #print(sig_df1)
-
+'''
 mouse_logfc = {}
 for ind,row in sig_df1.iterrows():
 	if row['gene'].upper() not in mouse_logfc:
@@ -72,7 +72,11 @@ print("Human_Gene,Human_logFC,Mouse_logFC,Mouse_Gene")
 for gene in human_logfc:
 	if gene in mouse_logfc:
 		print(gene, human_logfc[gene], mouse_logfc[gene], gene[0]+ gene[1:].lower(), sep=",")
-		
+'''
+
+
+
+#notes		
 '''			
 		
 		if human_logfc[gene] > 0 and mouse_logfc[gene] > 0:
