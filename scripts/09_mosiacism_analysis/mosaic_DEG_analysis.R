@@ -11,7 +11,7 @@ library(ggrepel)
 ## Load samples ##
 ##################
 base_path <- '/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/09_mosiacism_analysis/'
-load(glue('{base_path}/all.female.cortex.parsed.RData')
+load(glue('{base_path}/all.female.cortex.parsed.RData'))
 mosaic.cortex <- subset(x = all.female.cortex, subset = Condition == 'MUTANT')
 cluster <- subset(mosaic.cortex, idents = c("L2_3_IT", "L4", "L5", "L6","Pvalb", "Vip", "Sst","Sncg","Lamp5", "Oligo","Astro","Non-neuronal"))
 
