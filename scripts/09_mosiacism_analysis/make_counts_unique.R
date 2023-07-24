@@ -65,4 +65,4 @@ combined_female <- rbind(p150_F_counts, p60_F_counts, p30_F_counts)
 non_unique_rows <- combined_female[duplicated(combined_female$Barcode) | duplicated(combined_female$Barcode, fromLast = TRUE), ]
 # Remove non-unique rows from the original e18_F_counts
 combined_female <- combined_female[!duplicated(combined_female$Barcode) & !duplicated(combined_female$Barcode, fromLast = TRUE), ]
-write.csv(combined_male, file = glue('{base_path}/combined_female_unique.csv'))
+write.csv(combined_female, file = glue('{base_path}/combined_female_unique.csv'))
