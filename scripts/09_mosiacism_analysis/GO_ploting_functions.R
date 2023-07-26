@@ -142,7 +142,7 @@ GOplot <- function(slimmedGO = slimmedGO){
                       color = "Black") +
     ggplot2::coord_flip() +
     ggplot2::scale_y_continuous(expand = c(0, 0, 0.1, 0)) +
-    ggsci::scale_fill_d3() +
+    #ggsci::scale_fill_d3() +
     ggplot2::labs(y = expression("-log"[10](p))) +
     ggplot2::theme_classic() +
     ggplot2::theme(axis.text = ggplot2::element_text(size = 14),

@@ -129,8 +129,13 @@ for (age_group in age_groups) {
   # summary(decideTests(tmp))
 }
 deg_results$P30$Timepoint <- 'P30'
-deg_results$P30$Timepoint <- 'P30'
+deg_results$P60$Timepoint <- 'P60'
+deg_results$P150$Timepoint <- 'P150'
+deg_results$P30$DEG_Test <- 'MUT cells from HET vs WT cells from HET'
+deg_results$P60$DEG_Test <- 'MUT cells from HET vs WT cells from HET'
+deg_results$P150$DEG_Test <- 'MUT cells from HET vs WT cells from HET'
 MUTvsWT_within_mosaic <- rbind(deg_results$P30, deg_results$P60, deg_results$P150)
+write.csv(MUTvsWT_within_mosaic, file = glue('{base_path}/mutvswt_DEG.csv'))
 
 top.table <- deg_results$P150
 top.table$Gene <- rownames(top.table)
