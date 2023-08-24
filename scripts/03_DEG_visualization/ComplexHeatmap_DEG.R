@@ -39,25 +39,25 @@ column_ha = HeatmapAnnotation(`Cell Type` = male_metadata$Cell.Type,
                               col = list(`Time Point` = c("P30" = "#E6B8BFFF","P60"= "#CC7A88FF","P120"= "#B33E52FF", "P150" = "#990F26FF"), 
                                          Sex = c("Male" = "#0F8299FF", "Female" = "#3D0F99FF"),
                                          `Cell Type` = c("L2_3_IT" = polychrome_palette[1], "L4" = polychrome_palette[2], "L5"= polychrome_palette[3], "L6"= polychrome_palette[4],"Pvalb"= polychrome_palette[5], "Vip"= polychrome_palette[6], "Sst"= polychrome_palette[7],"Sncg"= polychrome_palette[8], "Lamp5"= polychrome_palette[9], "Peri"= polychrome_palette[10], "Endo"= polychrome_palette[11],"Oligo"= polychrome_palette[12],"Astro"= polychrome_palette[13]), 
-                                         annotation_name_gp = gpar(fontsize = 16,  fontfamily = 'Times')),
-                              annotation_name_gp = gpar(fontsize = 16,  fontfamily = 'Times'))
+                                         annotation_name_gp = gpar(fontsize = 16 )),
+                              annotation_name_gp = gpar(fontsize = 16 ))
 column_ha@anno_list$`Cell Type`@color_mapping@levels <- c("L2_3_IT", "L4", "L5", "Pvalb","Vip", "Sst","Sncg", "Lamp5", "Peri", "Astro")
 column_ha@anno_list$`Time Point`@color_mapping@levels<- c("P30", "P60", "P120")
 # Create heatmap
 
-pdf(file="Top Postnatal Male DEGs.pdf", height = 12, width = 14)
+pdf("Top Postnatal Male DEGs.pdf", height = 12, width = 14)
 map = grid.grabExpr(
   draw(
     Heatmap(male_matrix, 
             name = "logFC", 
             top_annotation = column_ha, 
             col = col_fun, 
-            row_names_gp=gpar(fontsize=16,  fontfamily = 'Times'),
+            row_names_gp=gpar(fontsize=16,  ),
             column_names_gp=gpar(fontsize=0),
             cluster_columns = FALSE, 
             heatmap_legend_param = list(#title="logFC", 
-                                        title_gp = gpar(fontsize = 16,  fontfamily = 'Times'), 
-                                        labels_gp = gpar(fontsize = 12,  fontfamily = 'Times')), 
+                                        title_gp = gpar(fontsize = 16,  ), 
+                                        labels_gp = gpar(fontsize = 12,  )), 
             cell_fun = function(j, i, x, y, width, height, fill) {
   if( pv_male[i, j] <= 0.05 ) {
     grid.text(print("*"), x, y-height/3, gp = gpar(fontsize=18, fontface = 'bold')) #grid.text(print("*"), x, y, gp = gpar(fontsize=9)) 
@@ -66,6 +66,31 @@ map = grid.grabExpr(
 #grid.newpage()
 grid.draw(map)
 dev.off()
+
+# Generate the heatmap and save it as a PDF file
+pdf("Top Postnatal Male DEGs.pdf", height = 12, width = 14)
+map <- grid.grabExpr(
+  draw(
+    Heatmap(male_matrix, 
+            name = "logFC", 
+            top_annotation = column_ha, 
+            col = col_fun, 
+            row_names_gp = gpar(fontsize = 16),
+            column_names_gp = gpar(fontsize = 0),
+            cluster_columns = FALSE, 
+            heatmap_legend_param = list(#title = "logFC", 
+              title_gp = gpar(fontsize = 16), 
+              labels_gp = gpar(fontsize = 12)), 
+            cell_fun = function(j, i, x, y, width, height, fill) {
+              if (pv_male[i, j] <= 0.05) {
+                grid.text(print("*"), x, y - height / 3, gp = gpar(fontsize = 18, fontface = 'bold'))
+              }
+            })))
+grid.draw(map)
+dev.off()
+
+
+
 ####################
 ## Female Heatmap ##
 ####################
@@ -98,8 +123,8 @@ column_ha = HeatmapAnnotation(`Cell Type` = female_metadata$Cell.Type,
                               col = list(`Time Point` = c("P30" = "#E6B8BFFF","P60"= "#CC7A88FF","P120"= "#B33E52FF", "P150" = "#990F26FF"),
                                          Sex = c("Male" = "#0F8299FF", "Female" = "#3D0F99FF"),
                                          `Cell Type` = c("L2_3_IT" = polychrome_palette[1], "L4" = polychrome_palette[2], "L5"= polychrome_palette[3], "L6" = polychrome_palette[4], "Pvalb"= polychrome_palette[5],"Vip"= polychrome_palette[6], "Sst"= polychrome_palette[7],"Sncg"= polychrome_palette[8], "Lamp5"= polychrome_palette[9], "Oligo"= polychrome_palette[10], "Astro"= polychrome_palette[11]),
-                                         annotation_name_gp = gpar(fontsize = 16,  fontfamily = 'Times')),
-                              annotation_name_gp = gpar(fontsize = 16,  fontfamily = 'Times'))
+                                         annotation_name_gp = gpar(fontsize = 16)),
+                              annotation_name_gp = gpar(fontsize = 16))
                               
 column_ha@anno_list$`Cell Type`@color_mapping@levels <- c("L2_3_IT", "L4", "L5", "L6", "Pvalb","Vip", "Sst","Sncg", "Lamp5", "Oligo", "Astro")
 column_ha@anno_list$`Time Point`@color_mapping@levels<- c("P30", "P60", "P150")
@@ -112,12 +137,12 @@ map = grid.grabExpr(
             name = "logFC", 
             top_annotation = column_ha, 
             col = col_fun,
-            row_names_gp=gpar(fontsize=16,  fontfamily = 'Times'),
-            column_names_gp=gpar(fontsize=0,  fontfamily = 'Times'),
+            row_names_gp=gpar(fontsize=16,  ),
+            column_names_gp=gpar(fontsize=0,  ),
             cluster_columns = FALSE, 
             heatmap_legend_param = list(#title="logFC", 
-                                        title_gp = gpar(fontsize = 16,  fontfamily = 'Times'), 
-                                        labels_gp = gpar(fontsize = 12,  fontfamily = 'Times')),
+                                        title_gp = gpar(fontsize = 16,  ), 
+                                        labels_gp = gpar(fontsize = 12,  )),
             cell_fun = function(j, i, x, y, width, height, fill) {
               if( pv_female[i, j] <= 0.05 ) {
                 grid.text(print("*"), x, y-height/3, gp = gpar(fontsize=18, fontface = 'bold')) 
