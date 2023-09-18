@@ -152,3 +152,62 @@ map = grid.grabExpr(
 grid.draw(map)
 dev.off()
 
+####################################
+##Load and prepare data for human ##
+####################################
+setwd("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rett_cort_filt")
+human_matrix <- read.csv("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rett_cort_filt/_logFC.csv")
+rownames(human_matrix) = human_matrix$SYMBOL
+human_matrix$SYMBOL <- NULL
+human_matrix$X <- NULL
+human_matrix = as.matrix(human_matrix)
+pv_human <- read.csv("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rett_cort_filt/_pv.csv")
+rownames(pv_human) = pv_human$SYMBOL
+pv_human$SYMBOL <- NULL
+pv_human$X <- NULL
+pv_human = as.matrix(pv_human)
+human_metadata <- read.csv("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rett_cort_filt/female_human_meta.csv")
+
+####################
+## Create Heatmap ##
+####################
+
+#Set color palette
+polychrome_palette <- c("#5A5156FF","#E4E1E3FF","#F6222EFF","#FE00FAFF","#16FF32FF","#3283FEFF","#FEAF16FF","#B00068FF","#1CFFCEFF","#90AD1CFF","#2ED9FFFF","#DEA0FDFF","#AA0DFEFF","#F8A19FFF","#325A9BFF","#C4451CFF","#1C8356FF","#85660DFF","#B10DA1FF","#FBE426FF","#1CBE4FFF","#FA0087FF","#FC1CBFFF","#F7E1A0FF","#C075A6FF","#782AB6FF","#AAF400FF","#BDCDFFFF","#822E1CFF","#B5EFB5FF","#7ED7D1FF","#1C7F93FF","#D85FF7FF","#683B79FF","#66B0FFFF", "#3B00FBFF")
+col_fun = colorRamp2(c(min(human_matrix), 0.0, max(human_matrix)), c("#2166AC", "#EEEEEE", "#B2182B")) 
+
+# Set column and row annotations
+
+row_ha = rowAnnotation(Genes = rownames(human_matrix))
+column_ha = HeatmapAnnotation(`Cell Type` = human_metadata$Cell_Type, 
+                              Sex = human_metadata$Sex,
+                              col = list(Sex = c("Male" = "#0F8299FF", "Female" = "#F7901E"),
+                                         `Cell Type` = c("L2_3_IT" = polychrome_palette[1], "L5" = polychrome_palette[2], "L5_6"= polychrome_palette[3], "L6"= polychrome_palette[4],"Pvalb"= polychrome_palette[5], "Vip"= polychrome_palette[6], "Sst"= polychrome_palette[7],"Sncg"= polychrome_palette[8], "Lamp5"= polychrome_palette[9], "Peri"= polychrome_palette[10], "Endo"= polychrome_palette[11],"Oligo"= polychrome_palette[12],"OPC"= polychrome_palette[13], "Astro"= polychrome_palette[14], "Micro"= polychrome_palette[15]), 
+                                         annotation_name_gp = gpar(fontsize = 16 )),
+                              annotation_name_gp = gpar(fontsize = 16 ))
+column_ha@anno_list$`Cell Type`@color_mapping@levels <- c("L2_3_IT", "L5", "L5_6", "L6", "Pvalb","Vip", "Sst","Sncg" ,"Lamp5","Peri" ,"Endo" ,"Oligo","OPC", "Astro", "Micro")
+
+# Create heatmap
+
+# Generate the heatmap and save it as a PDF file
+pdf("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rett_cort_filt/Top_human_DEGs.pdf", height = 12, width = 14)
+map <- grid.grabExpr(
+  draw(
+    Heatmap(human_matrix, 
+            name = "logFC", 
+            top_annotation = column_ha, 
+            col = col_fun, 
+            row_names_gp = gpar(fontsize = 16),
+            column_names_gp = gpar(fontsize = 0),
+            cluster_columns = FALSE, 
+            heatmap_legend_param = list(#title = "logFC", 
+              title_gp = gpar(fontsize = 16), 
+              labels_gp = gpar(fontsize = 12)), 
+            cell_fun = function(j, i, x, y, width, height, fill) {
+              if (pv_human[i, j] <= 0.05) {
+                grid.text(print("*"), x, y - height / 3, gp = gpar(fontsize = 18, fontface = 'bold'))
+              }
+            })))
+grid.draw(map)
+dev.off()
+
