@@ -160,11 +160,46 @@ human_matrix <- read.csv("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scrip
 rownames(human_matrix) = human_matrix$SYMBOL
 human_matrix$SYMBOL <- NULL
 human_matrix$X <- NULL
+# Rearrange columns as per your preference
+human_matrix <- human_matrix %>%
+  select(
+    L2_3_IT_female_Postmortem_CORT_2, 
+    L5_6_female_Postmortem_CORT_2, 
+    L6_female_Postmortem_CORT_2, 
+    Pvalb_female_Postmortem_CORT_2,
+    Vip_female_Postmortem_CORT_2, 
+    Sst_female_Postmortem_CORT_2,
+    Sncg_female_Postmortem_CORT_2,
+    Lamp5_female_Postmortem_CORT_2,
+    Endo_female_Postmortem_CORT_2,
+    Oligo_female_Postmortem_CORT_2,
+    OPC_female_Postmortem_CORT_2,
+    Astro_female_Postmortem_CORT_2,
+    Non.neuronal_female_Postmortem_CORT_2)
+# Make metadata dataframe before matrix conversion
+human_metadata <- data.frame(Cell_Type = names(human_matrix)[1:ncol(human_matrix)])
+human_metadata$Cell_Type <- sub("_female.*", "", human_metadata$Cell_Type)
+human_metadata$Sex <- 'Female'
 human_matrix = as.matrix(human_matrix)
 pv_human <- read.csv("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rett_cort_filt/_pv.csv")
 rownames(pv_human) = pv_human$SYMBOL
 pv_human$SYMBOL <- NULL
 pv_human$X <- NULL
+pv_human <- pv_human %>%
+  select(
+    L2_3_IT_female_Postmortem_CORT_2, 
+    L5_6_female_Postmortem_CORT_2, 
+    L6_female_Postmortem_CORT_2, 
+    Pvalb_female_Postmortem_CORT_2,
+    Vip_female_Postmortem_CORT_2, 
+    Sst_female_Postmortem_CORT_2,
+    Sncg_female_Postmortem_CORT_2,
+    Lamp5_female_Postmortem_CORT_2,
+    Endo_female_Postmortem_CORT_2,
+    Oligo_female_Postmortem_CORT_2,
+    OPC_female_Postmortem_CORT_2,
+    Astro_female_Postmortem_CORT_2,
+    Non.neuronal_female_Postmortem_CORT_2)
 pv_human = as.matrix(pv_human)
 human_metadata <- read.csv("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rett_cort_filt/female_human_meta.csv")
 human_metadata$X <- NULL
@@ -183,7 +218,7 @@ row_ha = rowAnnotation(Genes = rownames(human_matrix))
 column_ha = HeatmapAnnotation(`Cell Type` = human_metadata$Cell_Type, 
                               Sex = human_metadata$Sex,
                               col = list(Sex = c("Male" = "#0F8299FF", "Female" = "#F7901E"),
-                                         `Cell Type` = c("L2_3_IT" = polychrome_palette[1], "L5_6"= polychrome_palette[2], "L6"= polychrome_palette[3],"Pvalb"= polychrome_palette[4], "Vip"= polychrome_palette[5], "Sst"= polychrome_palette[6],"Sncg"= polychrome_palette[7], "Lamp5"= polychrome_palette[8], "Endo"= polychrome_palette[9],"Oligo"= polychrome_palette[10],"OPC"= polychrome_palette[11], "Astro"= polychrome_palette[12], "Non.neuronal"= polychrome_palette[113]), 
+                                         `Cell Type` = c("L2_3_IT" = polychrome_palette[1], "L5_6"= polychrome_palette[2], "L6"= polychrome_palette[3],"Pvalb"= polychrome_palette[4], "Vip"= polychrome_palette[5], "Sst"= polychrome_palette[6],"Sncg"= polychrome_palette[7], "Lamp5"= polychrome_palette[8], "Endo"= polychrome_palette[9],"Oligo"= polychrome_palette[10],"OPC"= polychrome_palette[11], "Astro"= polychrome_palette[12], "Non.neuronal"= polychrome_palette[13]), 
                                          annotation_name_gp = gpar(fontsize = 16 )),
                               annotation_name_gp = gpar(fontsize = 16 ))
 column_ha@anno_list$`Cell Type`@color_mapping@levels <- c("L2_3_IT", "L5_6", "L6", "Pvalb","Vip", "Sst","Sncg" ,"Lamp5","Endo" ,"Oligo","OPC", "Astro", "Non.neuronal")
@@ -191,7 +226,7 @@ column_ha@anno_list$`Cell Type`@color_mapping@levels <- c("L2_3_IT", "L5_6", "L6
 # Create heatmap
 
 # Generate the heatmap and save it as a PDF file
-pdf("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rett_cort_filt/Top_human_DEGs_test.pdf", height = 12, width = 14)
+pdf("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rett_cort_filt/Top_human_DEGs.pdf", height = 12, width = 14)
 map <- grid.grabExpr(
   draw(
     Heatmap(human_matrix, 
