@@ -87,7 +87,7 @@ for (age_group in age_groups) {
   # summary(decideTests(tmp))
 }
 
-top.table <- deg_results$P60
+top.table <- deg_results$P150
 top.table$Gene <- rownames(top.table)
 top.table$diffexpressed <- 'NO'
 top.table$diffexpressed[top.table$logFC > 0 & top.table$adj.P.Val < 0.05] <- 'UP'
@@ -98,45 +98,12 @@ thresh = head(arrange(top.table, adj.P.Val), 10)$adj.P.Val[10]
 top.table$delabel[top.table$adj.P.Val <=thresh] <-(top.table$Gene[top.table$adj.P.Val<=thresh])
 
 # Volcano Plot
-ggplot(data = top.table, aes(x = logFC, y = -log(adj.P.Val), col = diffexpressed, label = delabel))+
-  geom_point(size=3)+
-  theme_minimal()+
-  geom_text_repel(max.overlaps = Inf)+
-  scale_color_manual(values = c('blue', 'black', 'red'))+
-  theme(text = element_text(size=16)) +
-  theme_bw(base_size = 24) +
-  theme(
-    legend.position = 'right',
-    legend.background = element_rect(),
-    plot.title = element_text(angle = 0, size = 16, face = 'bold', vjust = 1),
-    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
-    plot.caption = element_text(angle = 0, size = 12, face = 'bold', vjust = 1),
-    
-    axis.text.x = element_text(angle = 0, size = 12, face = 'bold', hjust = 1.10),
-    axis.text.y = element_text(angle = 0, size = 12, face = 'bold', vjust = 0.5),
-    axis.title = element_text(size = 12, face = 'bold'),
-    axis.title.x = element_text(size = 12, face = 'bold'),
-    axis.title.y = element_text(size = 12, face = 'bold'),
-    axis.line = element_line(colour = 'black'),
-    
-    #Legend
-    legend.key = element_blank(), # removes the border
-    legend.key.size = unit(1, "cm"), # Sets overall area/size of the legend
-    legend.text = element_text(size = 14, face = "bold"), # Text size
-    title = element_text(size = 14, face = "bold"))+
-  labs(title = 'Glutamatergic WT cells from WT P60 females vs Glutamatergic WT cells from P60 mosaic')
-ggplot2::ggsave(glue("{base_path}/broad_group_analysis/Vol_glut_WTvsWT_P60females.pdf"),
-                device = NULL,
-                height = 8.5,
-                width = 12)
-
-
-ggplot(data = top.table, aes(x = logFC, y = -log(adj.P.Val), col = diffexpressed, label = delabel)) +
+ggplot(data = top.table, aes(x = logFC, y = -log2(adj.P.Val), col = diffexpressed, label = delabel)) +
   geom_point(size = 3) +
   theme_minimal() +
-  geom_text_repel(max.overlaps = Inf) +
+  geom_text_repel(max.overlaps = Inf, box.padding = 0.8) +
   scale_color_manual(values = c('blue', 'black', 'red')) +
-  scale_y_continuous(limits = c(0, 11)) +  # Set the limits here
+  scale_y_continuous(limits = c(0, 18)) +  # Set the limits here
   theme(
     text = element_text(size = 16),
     legend.position = 'right',
@@ -155,13 +122,16 @@ ggplot(data = top.table, aes(x = logFC, y = -log(adj.P.Val), col = diffexpressed
     legend.text = element_text(size = 14, face = "bold"),
     title = element_text(size = 14, face = "bold")
   ) +
-  labs(title = 'Glutamatergic WT cells from WT P30 females vs Glutamatergic WT cells from P30 mosaic')
-ggplot2::ggsave(glue("{base_path}/broad_group_analysis/Vol_glut_WTvsWT_P30females.pdf"),
+  labs(title = 'Glutamatergic WT cells from WT P150 females vs Glutamatergic WT cells from P150 mosaic')
+ggplot2::ggsave(glue("{base_path}/broad_group_analysis/Vol_glut_WTvsWT_P150females.pdf"),
                 device = NULL,
                 height = 8.5,
                 width = 12)
 
-
+ggplot2::ggsave(glue("{base_path}/broad_group_analysis/celltype_UMAP.pdf"),
+                device = NULL,
+                height = 8.5,
+                width = 12)
 #Write csv files
 WTvsWT <- rbind(deg_results$P30, deg_results$P60, deg_results$P150)
 ###########################################
@@ -218,7 +188,7 @@ getOddsRatio(go.obj)
 getJaccard(go.obj)
 getContbl(go.obj)
 print(go.obj)
-write.csv(as.data.frame(go.obj), file = '{base_path}/broad_group_analysis/venn_GABAergic_overlap.txt')
+write.csv(as.data.frame(go.obj), file = glue('{base_path}/broad_group_analysis/geneoverlap_gaba_3timepoints.txt'))
 DEGs = top.table
 # Top DEGs
 
