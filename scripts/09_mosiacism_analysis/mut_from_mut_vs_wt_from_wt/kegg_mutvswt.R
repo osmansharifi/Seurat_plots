@@ -60,13 +60,14 @@ sig_kegg_P60 <- rownames(deg_results$P60)[deg_results$P60$adj.P.Val < 0.05]
 sig_kegg_P150 <- rownames(deg_results$P150)[deg_results$P150$adj.P.Val < 0.05]
 intersection_all2 <- intersect(sig_genes_P150,sig_genes_P30)
 intersection_all3 <- intersect(intersection_all2,sig_genes_P60)
-
-
+# Extract KEGG terms
 p30_rows <- subset(kegg_terms, Time_Point == "P30")
 # Filter rows for P60
 p60_rows <- subset(kegg_terms, Time_Point == "P60")
 # Filter rows for P150
 p150_rows <- subset(kegg_terms, Time_Point == "P150")
+intersection_all2 <- intersect(p30_rows$Term,p60_rows$Term)
+intersection_all3 <- intersect(intersection_all2,p150_rows$Term)
 # Create a Venn diagram
 pdf(file=glue("{base_path}mut_from_mut_vs_wt_from_wt/venn_kegg_Glut.pdf"))
 temp<- venn.diagram(
