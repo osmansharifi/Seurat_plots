@@ -4,7 +4,7 @@ library(dplyr)
 library(ggplot2)
 base_path <- '/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/09_mosiacism_analysis/'
 # Load data
-kegg_terms <- readxl::read_xlsx(glue::glue("{base_path}mut_from_mut_vs_wt_from_wt/Glut_kegg_all.xlsx",col_names = TRUE))
+kegg_terms <- readxl::read_xlsx(glue::glue("{base_path}mut_from_mut_vs_wt_from_wt/GABA_kegg_all.xlsx",col_names = TRUE))
 kegg_terms <- filter(kegg_terms, P.value <= 0.05)
 kegg_terms$Time_Point = kegg_terms$Time_point
 # Get the top 5 terms for each cell type
@@ -21,7 +21,7 @@ ggplot(top_terms, aes(x = Term, y = Time_Point, color = P.value, size = Odds.Rat
   scale_x_discrete(name = "Terms") +
   theme_minimal() +
   guides(shape = guide_legend(override.aes = list(size = 5))) +
-  labs(title = 'Top10 Glutamatergic KEGG terms') +
+  labs(title = 'Top10 GABAergic KEGG terms') +
   theme(legend.position = "bottom")+
   theme_bw(base_size = 24) +
   theme(
@@ -44,7 +44,7 @@ ggplot(top_terms, aes(x = Term, y = Time_Point, color = P.value, size = Odds.Rat
     legend.text = element_text(size = 18, face = "bold"), # Text size
     title = element_text(size = 18, face = "bold")) +
   coord_flip()
-ggsave(glue::glue("{base_path}mut_from_mut_vs_wt_from_wt/Glut_top10_kegg.pdf"), 
+ggsave(glue::glue("{base_path}mut_from_mut_vs_wt_from_wt/GABA_top10_kegg.pdf"), 
        device = NULL,
        height = 8.5,
        width = 7)
@@ -69,7 +69,7 @@ p150_rows <- subset(kegg_terms, Time_Point == "P150")
 intersection_all2 <- intersect(p30_rows$Term,p60_rows$Term)
 intersection_all3 <- intersect(intersection_all2,p150_rows$Term)
 # Create a Venn diagram
-pdf(file=glue("{base_path}mut_from_mut_vs_wt_from_wt/venn_kegg_Glut.pdf"))
+pdf(file=glue("{base_path}mut_from_mut_vs_wt_from_wt/venn_kegg_GABA.pdf"))
 temp<- venn.diagram(
   x = list(
     P30 = p30_rows$Term,
@@ -77,7 +77,7 @@ temp<- venn.diagram(
     P150 = p150_rows$Term
   ),
   category.names = c("P30", "P60", "P150"),
-  main = 'Glut KEGG Terms of MUT cells from MUT females and WT cells from WT females ',
+  main = 'GABA KEGG Terms of MUT cells from MUT females and WT cells from WT females ',
   filename = NULL,
   col = c("#E6B8BFFF","#CC7A88FF","#990F26FF"),
   fill = c("#E6B8BFFF","#CC7A88FF","#990F26FF"),
