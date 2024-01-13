@@ -1,0 +1,14 @@
+Detailed information about this GeneOverlap object:
+listA size=799, e.g. Rxfp1 Ttll5 Mto1
+listB size=840, e.g. Sept4 Enpp2 Zmym5
+Intersection size=132, e.g. Il6st Zfand6 Gm12063
+Union size=1507, e.g. Rxfp1 Ttll5 Mto1
+Genome size=22000
+# Contingency Table:
+      notA inA
+notB 20493 667
+inB    708 132
+Overlapping p-value=5.7e-48
+Odds ratio=5.7
+Overlap tested using Fisher's exact test (alternative=greater)
+Jaccard Index=0.1

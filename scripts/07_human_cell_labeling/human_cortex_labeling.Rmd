@@ -32,7 +32,7 @@ human_rett_cort_filt <- ScaleData(human_rett_cort_filt)
 Idents(human_rett_cort_filt) <- "predicted.subclass"
 ```
 ```{r load seurat object directly}
-load("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rett_cort_filt_labeled.RData")
+load("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_rett_cort_filt.RData")
 # Rename classes.
 human_rett_cort_filt <- RenameIdents(object = human_rett_cort_filt, `L2/3 IT` = "L2_3_IT", `L6 CT` = "L6", `L6 IT` = "L6", `L6b` = "L6", `L6 IT Car3` = "L6", `Sst Chodl` = "Sst", `L5 IT` = "L5", `L5 ET` = "L5", `Micro-PVM` = "Micro", `VLMC` = "Peri", `L5/6 NP` = "L5_6_NP")
 levels(human_rett_cort_filt) <- c("L2_3_IT", "L5",  "L5_6_NP", "L6","Pvalb", "Vip", "Sst","Sncg","Lamp5","Peri", "Endo", "Oligo", "OPC", "Astro","Micro")
@@ -266,6 +266,12 @@ ggsave("unbiased_markers_dotplot.pdf",
        height = 8.5,
        width = 12,
        dpi = 500)
+
+DimPlot_scCustom(human_rett_cort_filt,  pt.size = 0.8, label = FALSE, figure_plot = TRUE)
+ggsave("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/07_human_cell_labeling/human_cortex_umap.pdf",
+       device = NULL,
+       height = 8.5,
+       width = 12)
 ```
 
 
