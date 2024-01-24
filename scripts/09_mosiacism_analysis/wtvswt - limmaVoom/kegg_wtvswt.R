@@ -7,7 +7,7 @@ base_path <- '/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/09_mosiac
 kegg_terms <- readxl::read_xlsx(glue::glue("{base_path}broad_group_analysis/GABA_kegg_all.xlsx",col_names = TRUE))
 
 kegg_terms <- filter(kegg_terms, P.value <= 0.05)
-kegg_terms$Time_Point = kegg_terms$Time_point
+kegg_terms$Time_Point = kegg_terms$Time_Point
 # Get the top 5 terms for each cell type
 top_terms <- kegg_terms %>%
   group_by(Time_Point) %>%
