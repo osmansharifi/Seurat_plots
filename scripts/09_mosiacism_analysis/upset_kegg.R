@@ -68,7 +68,9 @@ listInput <- list(Experiment3_P30 = expr3_glut_list$P30,
                   Experiment4_P30 = expr4_glut_list$P30, 
                   Experiment4_P60 = expr4_glut_list$P60, 
                   Experiment4_P150 = expr4_glut_list$P150)
-upset(fromList(listInput), sets = c('Experiment3_P30', 'Experiment4_P30', 'Experiment3_P60', 'Experiment4_P60', 'Experiment3_P150', 'Experiment4_P150'), keep.order = TRUE)
+pdf(glue("{base_path}upset_glut_kegg.pdf"))
+upset(fromList(listInput), sets = c('Experiment4_P150','Experiment3_P150', 'Experiment4_P60','Experiment3_P60', 'Experiment4_P30', 'Experiment3_P30'), keep.order = TRUE)
+dev.off()
 
 
 listInput <- list(Experiment3_P30 = expr3_gaba_list$P30,
@@ -78,4 +80,4 @@ listInput <- list(Experiment3_P30 = expr3_gaba_list$P30,
                   Experiment4_P60 = expr4_gaba_list$P60,
                   Experiment4_P150 = expr4_gaba_list$P150)
 
-upset(fromList(listInput), sets = c('Experiment3_P30', 'Experiment4_P30', 'Experiment3_P60', 'Experiment4_P60', 'Experiment3_P150', 'Experiment4_P150'), keep.order = TRUE)
+upset(fromList(listInput), sets = c('Experiment3_P150', 'Experiment4_P150', 'Experiment3_P60', 'Experiment4_P60','Experiment3_P30', 'Experiment4_P30'), keep.order = TRUE)
