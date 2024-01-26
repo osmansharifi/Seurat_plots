@@ -87,7 +87,7 @@ for (age_group in age_groups) {
   # summary(decideTests(tmp))
 }
 
-top.table <- deg_results$P150
+top.table <- deg_results$P30
 top.table$Gene <- rownames(top.table)
 top.table$diffexpressed <- 'NO'
 top.table$diffexpressed[top.table$logFC > 0 & top.table$adj.P.Val < 0.05] <- 'UP'
@@ -133,7 +133,12 @@ ggplot2::ggsave(glue("{base_path}/broad_group_analysis/celltype_UMAP.pdf"),
                 height = 8.5,
                 width = 12)
 #Write csv files
+deg_results$P30$Time_point <- "P30"
+deg_results$P60$Time_point <- "P60"
+deg_results$P150$Time_point <- "P150"
 WTvsWT <- rbind(deg_results$P30, deg_results$P60, deg_results$P150)
+WTvsWT$SYMBOL <- rownames(WTvsWT)
+write.csv(WTvsWT, file = glue('{base_path}WTvsWT_DEGs.csv'))
 ###########################################
 ## Venn diagram of the overlapping genes ##
 ###########################################
