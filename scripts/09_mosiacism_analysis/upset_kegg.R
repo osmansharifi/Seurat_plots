@@ -60,8 +60,8 @@ expr3_gaba_list <- create_list_from_df(expr3_gaba)
 expr3_glut_list <- create_list_from_df(expr3_glut)
 expr4_gaba_list <- create_list_from_df(expr4_gaba)
 expr4_glut_list <- create_list_from_df(expr4_glut)
-# Convert the combined list into a named list
-# Combine all lists into one
+
+#Create input lists and make upset PDF
 listInput <- list(Experiment3_P30 = expr3_glut_list$P30, 
                   Experiment3_P60 = expr3_glut_list$P60, 
                   Experiment3_P150 = expr3_glut_list$P150,
@@ -72,12 +72,12 @@ pdf(glue("{base_path}upset_glut_kegg.pdf"))
 upset(fromList(listInput), sets = c('Experiment4_P150','Experiment3_P150', 'Experiment4_P60','Experiment3_P60', 'Experiment4_P30', 'Experiment3_P30'), keep.order = TRUE)
 dev.off()
 
-
 listInput <- list(Experiment3_P30 = expr3_gaba_list$P30,
                   Experiment3_P60 = expr3_gaba_list$P60,
                   Experiment3_P150 = expr3_gaba_list$P150,
                   Experiment4_P30 = expr4_gaba_list$P30,
                   Experiment4_P60 = expr4_gaba_list$P60,
                   Experiment4_P150 = expr4_gaba_list$P150)
-
-upset(fromList(listInput), sets = c('Experiment3_P150', 'Experiment4_P150', 'Experiment3_P60', 'Experiment4_P60','Experiment3_P30', 'Experiment4_P30'), keep.order = TRUE)
+pdf(glue("{base_path}upset_gaba_kegg.pdf"))
+upset(fromList(listInput), sets = c('Experiment4_P150','Experiment3_P150', 'Experiment4_P60','Experiment3_P60', 'Experiment4_P30', 'Experiment3_P30'), keep.order = TRUE)
+dev.off()
