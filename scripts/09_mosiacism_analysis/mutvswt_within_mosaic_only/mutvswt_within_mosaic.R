@@ -40,7 +40,8 @@ WT_from_MUT = Cells(all.female.cortex)[which(all.female.cortex$Mecp2_allele == "
 slct_MUT_from_MUT = sample(MUT_from_MUT, size = 539)
 slct_WT_from_MUT = sample(WT_from_MUT, size = 539)
 subset_cell_nonautonomous = subset(all.female.cortex, cells = c(slct_MUT_from_MUT, slct_WT_from_MUT))
-subset_cell_nonautonomous <- subset(x = subset_cell_nonautonomous, subset = broad_class == 'GABAergic')
+#Used when parsing cell types
+#subset_cell_nonautonomous <- subset(x = subset_cell_nonautonomous, subset = broad_class == 'GABAergic')
 age_groups <- unique(subset_cell_nonautonomous@meta.data$Age)
 deg_results <- list()
 
@@ -85,7 +86,7 @@ for (age_group in age_groups) {
   # summary(decideTests(tmp))
 }
 
-top.table <- deg_results$P30
+top.table <- deg_results$P150
 top.table$Gene <- rownames(top.table)
 top.table$diffexpressed <- 'NO'
 top.table$diffexpressed[top.table$logFC > 0 & top.table$adj.P.Val < 0.05] <- 'UP'
@@ -120,8 +121,8 @@ ggplot(data = top.table, aes(x = logFC, y = -log2(adj.P.Val), col = diffexpresse
     legend.text = element_text(size = 14, face = "bold"),
     title = element_text(size = 14, face = "bold")
   ) +
-  labs(title = 'P30 GABAergic MUT vs WT cells within mosaic brains')
-ggplot2::ggsave(glue("{base_path}mutvswt_within_mosaic_only/GABA_P30_MUTvsWT_withinfemales.pdf"),
+  labs(title = 'All cells P150 MUT vs WT cells within mosaic brains')
+ggplot2::ggsave(glue("{base_path}mutvswt_within_mosaic_only/AllCells_P150_MUTvsWT_withinfemales.pdf"),
                 device = NULL,
                 height = 8.5,
                 width = 12)
@@ -132,7 +133,7 @@ deg_results$P60$Time_point <- "P60"
 deg_results$P150$Time_point <- "P150"
 MUTvsWT <- rbind(deg_results$P30, deg_results$P60, deg_results$P150)
 MUTvsWT$SYMBOL <- rownames(MUTvsWT)
-write.csv(MUTvsWT, file = glue('{base_path}mutvswt_within_mosaic_only/MUTvsWT_within_mosaic_DEGs_GABA.csv'))
+write.csv(MUTvsWT, file = glue('{base_path}mutvswt_within_mosaic_only/AllCells_MUTvsWT_within_mosaic_DEGs.csv'))
 
 ###########################################
 ## Venn diagram of the overlapping genes ##
@@ -146,7 +147,7 @@ intersection_all2 <- intersect(sig_genes_P150,sig_genes_P30)
 intersection_all3 <- intersect(intersection_all2,sig_genes_P60)
 intersection_all4 <- intersect(sig_genes_P30,sig_genes_P60)
 # Create a Venn diagram
-pdf(glue("{base_path}/broad_group_analysis/venn_Glutamatergic.pdf"))
+pdf(glue("{base_path}mutvswt_within_mosaic_only/venn_AllCells_DEGs.pdf"))
 temp <- venn.diagram(
   x = list(
     P30 = sig_genes_P30,
@@ -154,7 +155,7 @@ temp <- venn.diagram(
     P150 = sig_genes_P150
   ),
   category.names = c("P30", "P60", "P150"),
-  main = 'Glutamatergic DEGs from WT cells from WT females and WT cells from mosaic females ',
+  main = 'All Cells comparing MUT and WT cells within the mosaic brains',
   #filename = glue("{base_path}/broad_group_analysis/venn_glutamatergic.pdf"),
   filename = NULL,
   col = c('#E6B8BFFF', '#CC7A88FF', '#990F26FF'), 
@@ -192,7 +193,7 @@ write.csv(as.data.frame(go.obj), file = glue('{base_path}/broad_group_analysis/g
 DEGs = top.table
 # Top DEGs
 
-DEGs <- deg_results$P30 %>%
+DEGs <- deg_results$P60 %>%
   tibble::rownames_to_column() %>%
   tibble::as_tibble() %>%
   dplyr::rename(SYMBOL = rowname) %>%
@@ -217,13 +218,13 @@ tryCatch({
                        "Reactome_2016",
                        "RNA-Seq_Disease_Gene_and_Drug_Signatures_from_GEO")) %>%
     purrr::set_names(names(.) %>% stringr::str_trunc(31, ellipsis="")) %T>%
-    openxlsx::write.xlsx(file=glue::glue("{base_path}mutvswt_within_mosaic_only/GABA_P30_enrichr.xlsx")) %>%
+    openxlsx::write.xlsx(file=glue::glue("{base_path}mutvswt_within_mosaic_only/AllCells_P60_enrichr.xlsx")) %>%
     slimGO(tool = "enrichR",
            annoDb = "org.Mm.eg.db",
            plots = FALSE) %T>%
-    openxlsx::write.xlsx(file = glue::glue("{base_path}mutvswt_within_mosaic_only/GABA_P30_rrvgo_enrichr.xlsx")) %>%
+    openxlsx::write.xlsx(file = glue::glue("{base_path}mutvswt_within_mosaic_only/AllCells_P60_rrvgo_enrichr.xlsx")) %>%
     GOplot() %>%
-    ggplot2::ggsave(glue::glue("{base_path}mutvswt_within_mosaic_only/GABA_P30_enrichr_plot.pdf"),
+    ggplot2::ggsave(glue::glue("{base_path}mutvswt_within_mosaic_only/AllCells_P60_enrichr_plot.pdf"),
                     plot = .,
                     device = NULL,
                     height = 8.5,
