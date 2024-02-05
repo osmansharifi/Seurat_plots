@@ -25,6 +25,7 @@ read_and_filter_kegg <- function(file_path) {
 }
 base_path <- '/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/09_mosiacism_analysis/'
 
+# Load DEGs 
 # Read and filter GABA kegg terms
 gaba_kegg_terms_path <- glue::glue("{base_path}broad_group_analysis/GABA_kegg_all.xlsx")
 expr3_gaba <- read_and_filter_kegg(gaba_kegg_terms_path)
