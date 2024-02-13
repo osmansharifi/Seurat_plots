@@ -1,0 +1,23 @@
+     Unnamed: 0    SYMBOL  FC_mouse  ...  Tissue_human  broad_class_human       Sum
+243         244     PCDH9  3.226973  ...          CORT          GABAergic  2.348823
+245         246     PCDH9  3.226973  ...          CORT          GABAergic  2.336749
+324         325     RSRP1  2.803276  ...          CORT      Glutamatergic  2.019115
+438         439      XIST  2.565439  ...          CORT      Glutamatergic  1.846022
+342         343   SLC24A2  2.218687  ...          CORT          GABAergic  1.664265
+173         174    MALAT1  2.516915  ...          CORT       Non-neuronal  1.633160
+300         301     RSRP1  1.875618  ...          CORT      Glutamatergic  1.439367
+165         166     LSAMP  1.695118  ...          CORT          GABAergic  1.324726
+244         245     PCDH9  3.226973  ...          CORT       Non-neuronal  1.313788
+141         142  HSP90AB1  1.713693  ...          CORT       Non-neuronal  1.306724
+48           49   ATP6V0B -1.891615  ...          CORT          GABAergic -1.337537
+47           48   ATP6V0B -1.891615  ...          CORT          GABAergic -1.343058
+434         435      WSB1 -1.700610  ...          CORT          GABAergic -1.352059
+428         429      WSB1 -1.700610  ...          CORT          GABAergic -1.364751
+111         112     FXYD7 -1.623429  ...          CORT          GABAergic -1.371739
+122         123      GNAQ -1.515604  ...          CORT      Glutamatergic -1.375132
+228         229     NRXN1 -1.934348  ...          CORT          GABAergic -1.377057
+357         358    SLC9A9 -1.668735  ...          CORT          GABAergic -1.410853
+433         434      WSB1 -1.700610  ...          CORT          GABAergic -1.482481
+250         251     PDIA6 -1.514197  ...          CORT      Glutamatergic -2.122607
+
+[20 rows x 27 columns]
