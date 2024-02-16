@@ -21,70 +21,87 @@ load('/Users/osman/Desktop/LaSalle_lab/Seurat_objects/postnatal_cortex_20221109.
 base_path <- '/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/09_mosiacism_analysis/wtvswt_replicate_test'
 
 ##################################################################
-## select the mut cells from het females and wt from wt females ##
+## select the wt cells from wt females and wt from wt females ##
 ##################################################################
 # filter samples 
 postnatal_cortex <- subset(postnatal_cortex, subset = Age == 'P150' & Condition == 'WT')
+postnatal_cortex$broad_class <- ifelse(
+  postnatal_cortex$celltype.call %in% c("Lamp5", "Pvalb", "Sncg", "Sst", "Vip"), 
+  "GABAergic", 
+  ifelse(
+    postnatal_cortex$celltype.call %in% c("L2_3_IT", "L4", "L5", "L6"), 
+    "Glutamatergic", 
+    ifelse(
+      postnatal_cortex$celltype.call %in% c("Astro", "Non-neuronal", "Oligo"), 
+      "Non-neuronal", 
+      "Other"
+    )
+  )
+)
+
+# Create a new column in the metadata called "replicates"
+postnatal_cortex$replicates <- NA
+
+# Assign values based on conditions
+postnatal_cortex$replicates[postnatal_cortex$orig.ident %in% c("WT_F_P150_CORT1", "WT_F_P150_CORT3")] <- "rep1rep2"
+postnatal_cortex$replicates[postnatal_cortex$orig.ident %in% c("WT_F_P150_CORT2")] <- "rep3rep4"
+# Select cells
 WT1_WT3 = Cells(postnatal_cortex)[which(postnatal_cortex$orig.ident == c("WT_F_P150_CORT1", "WT_F_P150_CORT3"))]
-WT2_WT4 = Cells(postnatal_cortex)[which(postnatal_cortex$orig.ident == c("WT_F_P150_CORT2", "WT_F_P150_CORT4"))]
-slct_WT1_WT3 = sample(WT1_WT3, size = 2580)
-slct_WT2_WT4 = sample(WT2_WT4, size = 2580)
+WT2_WT4 = Cells(postnatal_cortex)[which(postnatal_cortex$orig.ident == c("WT_F_P150_CORT2"))]
+slct_WT1_WT3 = sample(WT1_WT3, size = 2000)
+slct_WT2_WT4 = sample(WT2_WT4, size = 2000)
 downsampled_cells = subset(postnatal_cortex, cells = c(slct_WT1_WT3, slct_WT2_WT4))
 
-DimPlot_scCustom(seurat_object = downsampled_cells, split.by = 'orig.ident', pt.size = 0.8)
+DimPlot_scCustom(seurat_object = postnatal_cortex, split.by = 'orig.ident', pt.size = 0.8)
 ############################################################
 ## Perform DEG analysis WT cells from the WT mouse cortex ##
 ############################################################
-age_groups <- unique(downsampled_cells@meta.data$predicted.class)
+celltype_groups <- unique(downsampled_cells@meta.data$predicted.class)
 deg_results <- list()
 
-for (age_group in age_groups) {
-  cat("Performing DEG analysis for", age_group, "\n")
+for (celltype_group in celltype_groups) {
+  cat("Performing DEG analysis for", celltype_group, "\n")
   
-  # Subset cells based on age
-  age_subset <- subset(downsampled_cells, subset = predicted.class == age_group)
+  # Subset cells based on celltype
+  celltype_subset <- subset(downsampled_cells, subset = predicted.class == celltype_group)
   
   # Get expression info
-  expr <- as.matrix(GetAssayData(age_subset))
+  expr <- as.matrix(GetAssayData(celltype_subset))
   
   # Filter out genes that are 0 for every cell
   bad <- which(rowSums(expr) == 0)
   expr <- expr[-bad, ]
   
   logcpm <- cpm(expr, prior.count = 2, log = TRUE)
-  mm <- model.matrix(~0 + Condition, data = age_subset@meta.data)
+  mm <- model.matrix(~0 + replicates, data = celltype_subset@meta.data)
   y <- voom(expr, mm, plot = TRUE)
   fit <- lmFit(y, mm)
   
   # Extract DEG results
-  contrasts <- makeContrasts(c(ConditionMUTANT) - c(ConditionWT), levels = colnames(coef(fit)))
+  contrasts <- makeContrasts(c(replicatesrep1rep2) - c(replicatesrep3rep4), levels = colnames(coef(fit)))
   tmp <- contrasts.fit(fit, contrasts = contrasts)
   tmp <- eBayes(tmp)
   top_table <- topTable(tmp, sort.by = "M", n = Inf) # top 20 DE genes
   
-  # Store DEG results for this age group
-  deg_results[[age_group]] <- top_table
+  # Store DEG results for this celltype group
+  deg_results[[celltype_group]] <- top_table
 }
 
-deg_results$P30$Timepoint <- 'P30'
-deg_results$P60$Timepoint <- 'P60'
-deg_results$P150$Timepoint <- 'P150'
-deg_results$P30$DEG_Test <- 'MUT cells from HET vs WT cells from WT'
-deg_results$P60$DEG_Test <- 'MUT cells from HET vs WT cells from WT'
-deg_results$P150$DEG_Test <- 'MUT cells from HET vs WT cells from WT'
+deg_results$Glutamatergic$broad_class <- 'Glutamatergic'
+deg_results$Glutamatergic$DEG_Test <- 'WT cells from P150 WT vs WT cells from P150 WT'
 MUTvsWT <- rbind(deg_results$P30, deg_results$P60, deg_results$P150)
 MUTvsWT$SYMBOL <- rownames(MUTvsWT)
 write.csv(MUTvsWT, file = glue('{base_path}/mutvswt_DEG_Glut.csv'))
 # Create an empty data frame to store results
 result_df <- data.frame()
 
-for (age_group in age_groups) {
-  cat("DEG analysis results for", age_group, "\n")
+for (rep_group in rep_groups) {
+  cat("DEG analysis results for", rep_group, "\n")
   
-  deg_table <- deg_results[[age_group]]
+  deg_table <- deg_results[[rep_group]]
   
-  # Add a new column "Time_point" with the current age_group
-  deg_table$Time_point <- age_group
+  # Add a new column "Time_point" with the current rep_group
+  deg_table$Time_point <- rep_group
   
   # Filter rows where adj.P.Val < 0.05
   deg_table_filtered <- deg_table[deg_table$adj.P.Val < 0.05, ]
@@ -112,7 +129,7 @@ if (nrow(result_df) > 0) {
   cat("result_df is empty, nothing to write to CSV.\n")
 }
 
-top.table <- deg_results$P30
+top.table <- deg_results$GABAergic
 top.table$Gene <- rownames(top.table)
 top.table$diffexpressed <- 'NO'
 top.table$diffexpressed[top.table$logFC > 0 & top.table$adj.P.Val < 0.05] <- 'UP'
@@ -129,7 +146,7 @@ ggplot(data = top.table, aes(x = logFC, y = -log2(adj.P.Val), col = diffexpresse
   geom_text_repel(max.overlaps = Inf, box.padding = 0.8) +
   scale_color_manual(values = c('blue', 'black', 'red')) +
   #scale_color_manual(values = c('black')) +
-  scale_y_continuous(limits = c(0, 18)) +  # Set the limits here
+  #scale_y_continuous(limits = c(0, 18)) +  # Set the limits here
   theme(
     text = element_text(size = 16),
     legend.position = 'right',
@@ -148,8 +165,8 @@ ggplot(data = top.table, aes(x = logFC, y = -log2(adj.P.Val), col = diffexpresse
     legend.text = element_text(size = 14, face = "bold"),
     title = element_text(size = 14, face = "bold")
   ) +
-  labs(title = 'P30 GABAergic MUT cells from MUT females vs WT cells from WT female')
-ggplot2::ggsave(glue("{base_path}/Vol_glut_MUTvsWT_P30females.pdf"),
+  labs(title = 'P150 replicates test')
+ggplot2::ggsave(glue("{base_path}/Vol_glut_reps.pdf"),
                 device = NULL,
                 height = 8.5,
                 width = 12)
