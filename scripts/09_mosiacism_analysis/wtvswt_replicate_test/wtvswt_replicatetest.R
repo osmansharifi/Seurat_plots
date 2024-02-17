@@ -19,7 +19,7 @@ library(tidyverse)
 ##################
 load('/Users/osman/Desktop/LaSalle_lab/Seurat_objects/postnatal_cortex_20221109.RData')
 base_path <- '/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/09_mosiacism_analysis/wtvswt_replicate_test'
-
+DefaultAssay(postnatal_cortex) <- "integrated"
 ##################################################################
 ## select the wt cells from wt females and wt from wt females ##
 ##################################################################
@@ -44,26 +44,30 @@ postnatal_cortex$replicates <- NA
 
 # Assign values based on conditions
 postnatal_cortex$replicates[postnatal_cortex$orig.ident %in% c("WT_F_P150_CORT1", "WT_F_P150_CORT3")] <- "rep1rep2"
-postnatal_cortex$replicates[postnatal_cortex$orig.ident %in% c("WT_F_P150_CORT2")] <- "rep3rep4"
+postnatal_cortex$replicates[postnatal_cortex$orig.ident %in% c("WT_F_P150_CORT2", "WT_F_P150_CORT4")] <- "rep3rep4"
 # Select cells
-WT1_WT3 = Cells(postnatal_cortex)[which(postnatal_cortex$orig.ident == c("WT_F_P150_CORT1", "WT_F_P150_CORT3"))]
-WT2_WT4 = Cells(postnatal_cortex)[which(postnatal_cortex$orig.ident == c("WT_F_P150_CORT2"))]
-slct_WT1_WT3 = sample(WT1_WT3, size = 2000)
-slct_WT2_WT4 = sample(WT2_WT4, size = 2000)
+WT1_WT3 = Cells(postnatal_cortex)[which(postnatal_cortex$replicates == "rep1rep2")]
+WT2_WT4 = Cells(postnatal_cortex)[which(postnatal_cortex$replicates == "rep3rep4")]
+slct_WT1_WT3 = sample(WT1_WT3, size = 5000)
+slct_WT2_WT4 = sample(WT2_WT4, size = 5000)
 downsampled_cells = subset(postnatal_cortex, cells = c(slct_WT1_WT3, slct_WT2_WT4))
 
-DimPlot_scCustom(seurat_object = postnatal_cortex, split.by = 'orig.ident', pt.size = 0.8)
+DimPlot_scCustom(seurat_object = postnatal_cortex, split.by = 'orig.ident', pt.size = 0.8, label = FALSE)
+ggplot2::ggsave(glue("{base_path}/P150_replicate.pdf"),
+                device = NULL,
+                height = 8.5,
+                width = 12)
 ############################################################
 ## Perform DEG analysis WT cells from the WT mouse cortex ##
 ############################################################
-celltype_groups <- unique(downsampled_cells@meta.data$predicted.class)
+celltype_groups <- unique(downsampled_cells@meta.data$broad_class)
 deg_results <- list()
 
 for (celltype_group in celltype_groups) {
   cat("Performing DEG analysis for", celltype_group, "\n")
   
   # Subset cells based on celltype
-  celltype_subset <- subset(downsampled_cells, subset = predicted.class == celltype_group)
+  celltype_subset <- subset(downsampled_cells, subset = broad_class == celltype_group)
   
   # Get expression info
   expr <- as.matrix(GetAssayData(celltype_subset))
@@ -86,50 +90,53 @@ for (celltype_group in celltype_groups) {
   # Store DEG results for this celltype group
   deg_results[[celltype_group]] <- top_table
 }
-
+################################Test
+for (celltype_group in celltype_groups) {
+  cat("Performing DEG analysis for", celltype_group, "\n")
+  
+  # Subset cells based on celltype
+  celltype_subset <- subset(downsampled_cells, subset = broad_class == celltype_group)
+  
+  # Get expression info
+  expr <- as.matrix(GetAssayData(celltype_subset))
+  
+  # Filter out genes that are 0 for every cell
+  bad <- which(rowSums(expr) == 0)
+  expr <- expr[-bad, ]
+  
+  # Check variation in gene expression
+  if (nrow(expr) < 2) {
+    cat("Not enough genes with variation for", celltype_group, "\n")
+    next  # Skip to the next cell type
+  }
+  
+  # Filter low-expressed genes
+  expr <- expr[rowSums(expr) >= threshold, ]
+  
+  logcpm <- cpm(expr, prior.count = 2, log = TRUE)
+  mm <- model.matrix(~0 + replicates, data = celltype_subset@meta.data)
+  y <- voom(expr, mm, plot = TRUE)
+  fit <- lmFit(y, mm)
+  
+  # Extract DEG results
+  contrasts <- makeContrasts(c(replicatesrep1rep2) - c(replicatesrep3rep4), levels = colnames(coef(fit)))
+  tmp <- contrasts.fit(fit, contrasts = contrasts)
+  tmp <- eBayes(tmp)
+  top_table <- topTable(tmp, sort.by = "M", n = Inf) # top 20 DE genes
+  
+  # Store DEG results for this celltype group
+  deg_results[[celltype_group]] <- top_table
+}
+################################Test End
 deg_results$Glutamatergic$broad_class <- 'Glutamatergic'
 deg_results$Glutamatergic$DEG_Test <- 'WT cells from P150 WT vs WT cells from P150 WT'
-MUTvsWT <- rbind(deg_results$P30, deg_results$P60, deg_results$P150)
-MUTvsWT$SYMBOL <- rownames(MUTvsWT)
-write.csv(MUTvsWT, file = glue('{base_path}/mutvswt_DEG_Glut.csv'))
-# Create an empty data frame to store results
-result_df <- data.frame()
-
-for (rep_group in rep_groups) {
-  cat("DEG analysis results for", rep_group, "\n")
-  
-  deg_table <- deg_results[[rep_group]]
-  
-  # Add a new column "Time_point" with the current rep_group
-  deg_table$Time_point <- rep_group
-  
-  # Filter rows where adj.P.Val < 0.05
-  deg_table_filtered <- deg_table[deg_table$adj.P.Val < 0.05, ]
-  
-  num_degs <- nrow(deg_table_filtered)
-  print(num_degs)
-  
-  # Append the filtered deg_table to the result_df
-  # Now result_df contains only rows with adj.P.Val < 0.05
-  result_df <- rbind(result_df, deg_table_filtered)
-}
+#MUTvsWT <- rbind(deg_results$P30, deg_results$P60, deg_results$P150)
+#MUTvsWT$SYMBOL <- rownames(MUTvsWT)
+#write.csv(MUTvsWT, file = glue('{base_path}/mutvswt_DEG_Glut.csv'))
 ####################
-## Write csv file ##
+## Create volcano ##
 ####################
-# Assuming result_df is not empty
-if (nrow(result_df) > 0) {
-  # Specify the file path where you want to save the CSV file
-  csv_file_path <- glue("{base_path}/sig_DEGs_MUTvsWT_gaba.csv")
-  
-  # Write result_df to CSV
-  write.csv(result_df, file = csv_file_path, row.names = FALSE)
-  
-  cat("result_df has been successfully written to", csv_file_path, "\n")
-} else {
-  cat("result_df is empty, nothing to write to CSV.\n")
-}
-
-top.table <- deg_results$GABAergic
+top.table <- deg_results$Glutamatergic
 top.table$Gene <- rownames(top.table)
 top.table$diffexpressed <- 'NO'
 top.table$diffexpressed[top.table$logFC > 0 & top.table$adj.P.Val < 0.05] <- 'UP'
@@ -138,15 +145,23 @@ top.table$diffexpressed[top.table$adj.P.Val > 0.05] <- 'Not Sig'
 top.table$delabel <- NA
 thresh = head(arrange(top.table, adj.P.Val), 10)$adj.P.Val[10]
 top.table$delabel[top.table$adj.P.Val <=thresh] <-(top.table$Gene[top.table$adj.P.Val<=thresh])
+# Count the number of UP, DOWN, and Not Sig genes
+count_genes <- table(top.table$diffexpressed)
 
+# Print the counts
+cat("Number of UP genes:", count_genes["UP"], "\n")
+cat("Number of DOWN genes:", count_genes["DOWN"], "\n")
+cat("Number of Not Sig genes:", count_genes["Not Sig"], "\n")
 # Volcano Plot
+# Count the number of UP, DOWN, and Not Sig genes
+count_genes <- table(top.table$diffexpressed)
+
+# Create the plot with the information added to the title
 ggplot(data = top.table, aes(x = logFC, y = -log2(adj.P.Val), col = diffexpressed, label = delabel)) +
   geom_point(size = 3) +
   theme_minimal() +
   geom_text_repel(max.overlaps = Inf, box.padding = 0.8) +
-  scale_color_manual(values = c('blue', 'black', 'red')) +
-  #scale_color_manual(values = c('black')) +
-  #scale_y_continuous(limits = c(0, 18)) +  # Set the limits here
+  scale_color_manual(values = c('blue','black','red')) +
   theme(
     text = element_text(size = 16),
     legend.position = 'right',
@@ -162,11 +177,13 @@ ggplot(data = top.table, aes(x = logFC, y = -log2(adj.P.Val), col = diffexpresse
     axis.line = element_line(colour = 'black'),
     legend.key = element_blank(),
     legend.key.size = unit(1, "cm"),
-    legend.text = element_text(size = 14, face = "bold"),
-    title = element_text(size = 14, face = "bold")
+    legend.text = element_text(size = 14, face = "bold")
   ) +
-  labs(title = 'P150 replicates test')
-ggplot2::ggsave(glue("{base_path}/Vol_glut_reps.pdf"),
+  labs(title = 'P150 replicates test',
+       subtitle = paste('UP:', count_genes["UP"], '  ',
+                        'DOWN:', count_genes["DOWN"], '  ',
+                        'Not Sig:', count_genes["Not Sig"]))
+ggplot2::ggsave(glue("{base_path}/Vol_gaba_reps_cort1_3.pdf"),
                 device = NULL,
                 height = 8.5,
                 width = 12)
