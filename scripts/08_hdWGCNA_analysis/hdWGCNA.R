@@ -24,6 +24,7 @@ Idents(all.cortex.combined) <- "celltype.call"
 # Set up multithreading
 enableWGCNAThreads(nThreads = 8)
 
+adult_postnatal <- subset(all.cortex.combined, subset = Age != 'E18')
 # Prepare Seurat Object for WGCNA
 metadata <- adult_postnatal@meta.data
 timepoint <- lapply(metadata$orig.ident, function(x) {
@@ -38,8 +39,6 @@ genotype <- lapply(metadata$orig.ident, function(x) {
 })
 adult_postnatal@meta.data$genotype <- unlist(genotype)
 
-# Subset on a value in the object meta data
-adult_postnatal <- subset(x = all.cortex.combined, subset = Age != "E18")
 
 # Preprocess
 adult_postnatal <- NormalizeData(adult_postnatal, normalization.method = "LogNormalize", scale.factor = 10000)
@@ -50,7 +49,8 @@ adult_postnatal <- RunPCA(adult_postnatal, features = VariableFeatures(object = 
 adult_postnatal <- RunUMAP(adult_postnatal, dims = 1:20)
 DimPlot(adult_postnatal, group.by='celltype.call', label=TRUE) +
   umap_theme() 
-
+DefaultAssay(adult_postnatal) <- 'RNA'
+Idents(adult_postnatal) <- 'celltype.call'
 # Set up Seurat object for WGCNA
 adult_postnatal <- SetupForWGCNA(
   adult_postnatal,
