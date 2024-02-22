@@ -47,7 +47,7 @@ def process_directory(parent_directory, file_name):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python read_DEGs.py <file_path>")
+        print("Usage: python3 read_DEGs.py <file_path>")
         sys.exit(1)
 
     file_path = sys.argv[1]
