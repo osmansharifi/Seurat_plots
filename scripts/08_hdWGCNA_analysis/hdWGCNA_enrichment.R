@@ -96,24 +96,87 @@ plot_list <- OverlapBarPlot(overlap_df)
 # stitch plots with patchwork
 wrap_plots(plot_list, ncol=3)
 
+OverlapDotPlot <- function(
+    overlap_df, plot_var = 'odds_ratio',
+    logscale=TRUE,
+    neglog=FALSE,
+    plot_significance=TRUE,
+    ...
+){
+  
+  label <- plot_var
+  if(logscale){
+    overlap_df[[plot_var]] <- log(overlap_df[[plot_var]])
+    label <- paste0('log(', plot_var, ')')
+  }
+  if(neglog){
+    overlap_df[[plot_var]] <- -1 * overlap_df[[plot_var]]
+    label <- paste0('-', label)
+  }
+  
+  p <- overlap_df %>% ggplot(aes(x=module, y=group)) +
+    geom_point(aes(
+      size=get(plot_var)),
+      #alpha=get(plot_var)),
+      color=overlap_df$color
+    ) +
+    RotatedAxis() +
+    ylab('') + xlab('') + labs(size=label) +
+    theme(
+      plot.title = element_text(hjust = 0.5),
+      axis.line.x = element_blank(),
+      axis.line.y = element_blank(),
+      panel.border = element_rect(colour = "black", fill=NA, size=1)
+    )
+  
+  # plot significance level?
+  if(plot_significance){
+    p <- p + geom_text(aes(label=Significance))
+  }
+  
+  p
+}
 # plot odds ratio of the overlap as a dot plot
 OverlapDotPlot(
   overlap_df,
-  plot_var = 'odds_ratio') +
-  ggtitle('Overlap of modules & cell-type markers')
+  plot_var = 'odds_ratio',logscale = TRUE) +
+  ggtitle('Overlap of modules & cell-type markers') +
+  theme_minimal() +
+  guides(shape = guide_legend(override.aes = list(size = 5))) +
+  theme(legend.position = "bottom") +
+  theme_bw(base_size = 10) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 18, face = 'bold', vjust = 1),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    
+    axis.text.x = element_text(angle = 90, size = 12, face = 'bold', hjust = 1.0, vjust = 0.5, colour = "black"),
+    axis.text.y = element_text(angle = 0, size = 8, face = 'plain', vjust = 0.5, colour = "black"),
+    axis.title = element_text(size = 18, face = 'bold', colour = "black"),
+    axis.title.x = element_text(size = 18, face = 'bold', colour = "black"),
+    axis.title.y = element_text(size = 18, face = 'bold', colour = "black"),
+    axis.line = element_line(colour = 'black'),
+    
+    # Legend
+    legend.key = element_blank(),  # removes the border
+    legend.key.size = unit(1, "cm"),  # Sets overall area/size of the legend
+    legend.text = element_text(size = 18, face = "bold"),  # Text size
+    title = element_text(size = 18, face = "bold"),
+  )
 ggplot2::ggsave(glue("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/08_hdWGCNA_analysis/module_marker_overlap.pdf"),
                 device = NULL,
                 height = 8.5,
                 width = 12)
-
-test <- subset(seurat_obj, subset = seurat_obj@meta.data[['predicted_cell_type']] == '0:CD8 T cell')
-
+csv_file_path <- paste0(directory_path, "marker_module_overlap.csv")
+write.csv(overlap_df, file = csv_file_path, row.names = FALSE)
 PlotModuleTraitCorrelation(
   seurat_obj,
   label = 'fdr',
   label_symbol = 'stars',
-  text_size = 2,
-  text_digits = 2,
+  text_size = 6,
+  text_digits = 6,
   text_color = 'black',
   high_color = '#B2182B',
   mid_color = '#EEEEEE',
@@ -121,4 +184,90 @@ PlotModuleTraitCorrelation(
   plot_max = 0.2,
   combine=FALSE
 )[1] #this specifies the celltype
+ggplot2::ggsave(glue("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/08_hdWGCNA_analysis/all_cells_module_trait.pdf"),
+                device = NULL,
+                height = 8.5,
+                width = 12)
+
+# Extract the relevant information from meta.data
+plot_data <- seurat_obj@meta.data[, c("Sex", "turquoise", "Age", "Genotype")]
+plot_data$Age <- factor(plot_data$Age, levels = c("P30", "P60", "P120", "P150"))
+# Create a violin plot with different colors for male and female
+p <- ggplot(plot_data, aes(x = Age, y = turquoise, fill = Sex)) +
+  geom_violin() +
+  labs(title = "Violin Plot of Time point vs Turquoise",
+       x = "Time point",
+       y = "Module Turquoise Eigennode") +
+  theme_minimal() +
+  guides(shape = guide_legend(override.aes = list(size = 5))) +
+  labs(title = 'Module Trait correlation') +
+  theme(legend.position = "bottom") +
+  theme_bw(base_size = 10) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 18, face = 'bold', vjust = 1),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    
+    axis.text.x = element_text(angle = 90, size = 12, face = 'bold', hjust = 1.0, vjust = 0.5, colour = "black"),
+    axis.text.y = element_text(angle = 0, size = 8, face = 'plain', vjust = 0.5, colour = "black"),
+    axis.title = element_text(size = 18, face = 'bold', colour = "black"),
+    axis.title.x = element_text(size = 18, face = 'bold', colour = "black"),
+    axis.title.y = element_text(size = 18, face = 'bold', colour = "black"),
+    axis.line = element_line(colour = 'black'),
+    
+    # Legend
+    legend.key = element_blank(),  # removes the border
+    legend.key.size = unit(1, "cm"),  # Sets overall area/size of the legend
+    legend.text = element_text(size = 18, face = "bold"),  # Text size
+    title = element_text(size = 18, face = "bold"),
+  )
+# Add p-value annotation
+p + stat_compare_means(comparisons = list(c("P30", "P60"), c("P30", "P120"), c("P30", "P150"), c("P60", "P120"), c("P60", "P150"), c("P120", "P150")), method = "t.test", label = "p.format")
+p
+ggplot2::ggsave(glue("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/08_hdWGCNA_analysis/Timepoint_eigennode.pdf"),
+                device = NULL,
+                height = 8.5,
+                width = 12)
+
+# Create a violin plot with different colors for genotype
+p <- ggplot(plot_data, aes(x = Genotype, y = turquoise, fill = Sex)) +
+  geom_violin() +
+  labs(title = "Violin Plot of Genotype vs Turquoise",
+       x = "Genotype",
+       y = "Module Turquoise Eigennode") +
+  theme_minimal() +
+  guides(shape = guide_legend(override.aes = list(size = 5))) +
+  labs(title = 'Module Trait correlation') +
+  theme(legend.position = "bottom") +
+  theme_bw(base_size = 10) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 18, face = 'bold', vjust = 1),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    
+    axis.text.x = element_text(angle = 90, size = 12, face = 'bold', hjust = 1.0, vjust = 0.5, colour = "black"),
+    axis.text.y = element_text(angle = 0, size = 8, face = 'plain', vjust = 0.5, colour = "black"),
+    axis.title = element_text(size = 18, face = 'bold', colour = "black"),
+    axis.title.x = element_text(size = 18, face = 'bold', colour = "black"),
+    axis.title.y = element_text(size = 18, face = 'bold', colour = "black"),
+    axis.line = element_line(colour = 'black'),
+    
+    # Legend
+    legend.key = element_blank(),  # removes the border
+    legend.key.size = unit(1, "cm"),  # Sets overall area/size of the legend
+    legend.text = element_text(size = 18, face = "bold"),  # Text size
+    title = element_text(size = 18, face = "bold"),
+  )
+
+# Add p-value annotation
+p + stat_compare_means(comparisons = list(c("WT", "MUT")), method = "t.test", label = ('p.format'))
+ggplot2::ggsave(glue("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/08_hdWGCNA_analysis/Genotype_eigennode.pdf"),
+                device = NULL,
+                height = 8.5,
+                width = 12)
+
 
