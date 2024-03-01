@@ -225,11 +225,43 @@ p <- ggplot(plot_data, aes(x = Age, y = turquoise, fill = Sex)) +
   )
 # Add p-value annotation
 p + stat_compare_means(comparisons = list(c("P30", "P60"), c("P30", "P120"), c("P30", "P150"), c("P60", "P120"), c("P60", "P150"), c("P120", "P150")), method = "t.test", label = "p.format")
-p
 ggplot2::ggsave(glue("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/08_hdWGCNA_analysis/Timepoint_eigennode.pdf"),
                 device = NULL,
                 height = 8.5,
                 width = 12)
+
+
+# Assuming plot_data is your data frame
+# You can use the t.test function to compare turquoise values between the two sexes for each age category
+# Create an empty data frame to store the results
+results_df <- data.frame(Age_Category = character(), p_value = numeric(), stringsAsFactors = FALSE)
+
+# Get unique age categories
+unique_age_categories <- unique(plot_data$Age)
+
+# Loop through each age category
+for (age_category in unique_age_categories) {
+  
+  # Subset data for the current age category
+  subset_data <- subset(plot_data, Age == age_category)
+  
+  # Check the age category
+  if (age_category == "P120") {
+    # For P120, compare it to P150
+    t_test_result <- t.test(turquoise ~ 1, data = subset_data, subset = (Age %in% c("P120", "P150")))
+  } else if (age_category == "P150") {
+    # Skip the comparison for P150
+    next
+  } else {
+    # For other age categories, compare 'Male' to 'Female'
+    t_test_result <- t.test(turquoise ~ Sex, data = subset_data, subset = (Sex %in% c("Male", "Female")))
+  }
+  
+  # Store the result in the data frame
+  results_df <- rbind(results_df, data.frame(Age_Category = age_category, p_value = t_test_result$p.value))
+}
+csv_file_path <- paste0(directory_path, "trait_module_statistics.csv")
+write.csv(results_df, file = csv_file_path, row.names = FALSE)
 
 # Create a violin plot with different colors for genotype
 p <- ggplot(plot_data, aes(x = Genotype, y = turquoise, fill = Sex)) +
@@ -270,4 +302,44 @@ ggplot2::ggsave(glue("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/0
                 height = 8.5,
                 width = 12)
 
+mut <- filtered_plot_data <- plot_data %>%
+  filter(Genotype == "MUT")
 
+# Create a violin plot with different colors for genotype
+p <- ggplot(mut, aes(x = Sex, y = turquoise, fill = Sex)) +
+  geom_violin() +
+  labs(title = "Violin Plot of Genotype vs Turquoise",
+       x = "Genotype",
+       y = "Module Turquoise Eigennode") +
+  theme_minimal() +
+  guides(shape = guide_legend(override.aes = list(size = 5))) +
+  labs(title = 'Module Trait correlation') +
+  theme(legend.position = "bottom") +
+  theme_bw(base_size = 10) +
+  theme(
+    legend.position = 'right',
+    legend.background = element_rect(),
+    plot.title = element_text(angle = 0, size = 18, face = 'bold', vjust = 1),
+    plot.subtitle = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    plot.caption = element_text(angle = 0, size = 14, face = 'bold', vjust = 1),
+    
+    axis.text.x = element_text(angle = 90, size = 12, face = 'bold', hjust = 1.0, vjust = 0.5, colour = "black"),
+    axis.text.y = element_text(angle = 0, size = 8, face = 'plain', vjust = 0.5, colour = "black"),
+    axis.title = element_text(size = 18, face = 'bold', colour = "black"),
+    axis.title.x = element_text(size = 18, face = 'bold', colour = "black"),
+    axis.title.y = element_text(size = 18, face = 'bold', colour = "black"),
+    axis.line = element_line(colour = 'black'),
+    
+    # Legend
+    legend.key = element_blank(),  # removes the border
+    legend.key.size = unit(1, "cm"),  # Sets overall area/size of the legend
+    legend.text = element_text(size = 18, face = "bold"),  # Text size
+    title = element_text(size = 18, face = "bold"),
+  )
+
+# Add p-value annotation
+p + stat_compare_means(comparisons = list(c("Male", "Female")), method = "t.test", label = ('p.format'))
+ggplot2::ggsave(glue("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/08_hdWGCNA_analysis/Genotype_eigennode.pdf"),
+                device = NULL,
+                height = 8.5,
+                width = 12)
