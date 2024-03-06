@@ -22,7 +22,7 @@ load("/Users/osman/Desktop/LaSalle_lab/Seurat_objects/all.cortex.combined.RData"
 setwd("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/scripts/08_hdWGCNA_analysis")
 Idents(all.cortex.combined) <- "celltype.call"
 # Set up multithreading
-enableWGCNAThreads(nThreads = 8)
+enableWGCNAThreads(nThreads = 16)
 
 adult_postnatal <- subset(all.cortex.combined, subset = Age != 'E18')
 # Prepare Seurat Object for WGCNA
