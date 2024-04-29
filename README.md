@@ -1,5 +1,5 @@
 
-# Single-nucleus RNA-seq 5’ reveals cell-to-cell heterogeneity in Rett Syndrome mouse brain temporally
+# Sex-specific single cell-level transcriptomic signatures of Rett syndrome disease progression 
 
 This pipeline is developed to analyze 10X single nucleus RNA-seq 5' data from mouse brain. It includes mapping of reads via cellranger, preprocessing, DEG analysis, gene ontology analysis, trajectory analysis and velocity analysis.
 
