@@ -1,7 +1,7 @@
 
 # Sex-specific single cell-level transcriptomic signatures of Rett syndrome disease progression 
 
-This pipeline is developed to analyze 10X single nucleus RNA-seq 5' data from mouse brain. It includes mapping of reads via cellranger, preprocessing, DEG analysis, gene ontology analysis, and mosaic analysis.
+This pipeline is developed to analyze 10X single nucleus RNA-seq 5' data from mouse brain. It includes mapping of reads via cellranger, preprocessing, DEG analysis, KEGG analysis, hdWGCNA analysis and mosaic analysis.
 
 
 ## Study Design
