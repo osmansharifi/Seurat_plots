@@ -1,6 +1,0 @@
-"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0033270","paranode region of axon",14,9,0.99,"5.8e-08"
-"2","GO:0043209","myelin sheath",167,35,11.78,"1.6e-06"
-"3","GO:0015629","actin cytoskeleton",232,33,16.36,"7.4e-05"
-"4","GO:0044224","juxtaparanode region of axon",10,5,0.71,"0.00032"
-"5","GO:0033010","paranodal junction",3,3,0.21,"0.00035"

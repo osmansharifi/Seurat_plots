@@ -1,6 +1,0 @@
-"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0031492","nucleosomal DNA binding",7,1,0,"0.0011"
-"2","GO:0000979","RNA polymerase II core promoter sequence-specific DNA binding",18,1,0,"0.0029"
-"3","GO:0004715","non-membrane spanning protein tyrosine kinase activity",25,1,0,"0.0040"
-"4","GO:0000978","RNA polymerase II cis-regulatory region sequence-specific DNA binding",754,1,0.12,"0.1175"
-"5","GO:0000987","cis-regulatory region sequence-specific DNA binding",768,1,0.12,"0.1196"

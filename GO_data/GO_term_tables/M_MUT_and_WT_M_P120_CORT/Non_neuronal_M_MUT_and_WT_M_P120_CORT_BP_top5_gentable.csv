@@ -1,6 +1,0 @@
-"","GO.ID","Term","Annotated","Significant","Expected","Fisher"
-"1","GO:0034766","negative regulation of ion transmembrane transport",99,5,0.71,"0.0007"
-"2","GO:0048024","regulation of mRNA splicing, via spliceosome",93,6,0.66,"0.0023"
-"3","GO:0006338","chromatin remodeling",139,5,0.99,"0.0031"
-"4","GO:0045176","apical protein localization",12,2,0.09,"0.0032"
-"5","GO:0006406","mRNA export from nucleus",45,3,0.32,"0.0040"
