@@ -18,9 +18,9 @@ maleP30 <- subset(rett_mouse_cortex, subset = Age == "P30" & Sex == "Male")
 maleP60 <- subset(rett_mouse_cortex, subset = Age == "P60" & Sex == "Male")
 maleP120 <- subset(rett_mouse_cortex, subset = Age == "P120" & Sex == "Male")
 
-maleP30 <- subset(rett_mouse_cortex, subset = Age == "P30" & Sex == "Male")
-maleP60 <- subset(rett_mouse_cortex, subset = Age == "P60" & Sex == "Male")
-maleP120 <- subset(rett_mouse_cortex, subset = Age == "P120" & Sex == "Male")
+femaleP30 <- subset(rett_mouse_cortex, subset = Age == "P30" & Sex == "Female")
+femaleP60 <- subset(rett_mouse_cortex, subset = Age == "P60" & Sex == "Female")
+femaleP120 <- subset(rett_mouse_cortex, subset = Age == "P150" & Sex == "Female")
 
 
 setwd("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/DEG_data/EdgeR_temporal")
@@ -28,17 +28,17 @@ setwd("/Users/osman/Documents/GitHub/snRNA-seq-pipeline/DEG_data/EdgeR_temporal"
 # Replace 'Condition' with your actual column name if different
 
 # Replace 'Condition' with your actual column name if different
-condition <- maleP60$Condition
+condition <- maleP120$Condition
 
 # List of cell types in your Seurat object
-cell_types <- unique(Idents(maleP60))
+cell_types <- unique(Idents(maleP120))
 
 # Loop over each cell type
 for (cell_type in cell_types) {
   cat("Performing DEG analysis for cell type:", cell_type, "\n")
   
   # Subset Seurat object for the current cell type
-  subset_obj <- subset(maleP60, idents = cell_type)
+  subset_obj <- subset(maleP120, idents = cell_type)
   
   # Get expression matrix
   counts <- as.matrix(subset_obj@assays$RNA@counts)
