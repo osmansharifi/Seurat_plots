@@ -1,6 +1,7 @@
 library(Seurat)
 library(edgeR)
-
+library(limma)
+library(ggplot2)
 ################################################################################
 # EdgeR Analysis
 # By Viktoria Haghani
